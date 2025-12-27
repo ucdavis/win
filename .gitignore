@@ -8,7 +8,6 @@ _site/
 .Rhistory
 .RData
 .Ruserdata
-*.Rproj
 
 # Python
 __pycache__/
