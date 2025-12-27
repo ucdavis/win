@@ -1,0 +1,106 @@
+---
+title: "Chapter 1: Introduction"
+format:
+  html:
+    toc: true
+  revealjs:
+    slide-number: true
+---
+
+## Overview
+
+::: {.content-visible when-format="html"}
+This chapter introduces the fundamental concepts of causal inference. The content is presented in a book format optimized for reading and reference.
+:::
+
+::: {.content-visible when-format="revealjs"}
+Introduction to Causal Inference
+:::
+
+## What is Causal Inference?
+
+Causal inference is the process of drawing conclusions about causal connections based on the conditions of the occurrence of an effect.
+
+::: {.content-visible when-format="html"}
+In observational studies, unlike randomized experiments, we cannot directly observe the counterfactual outcomes. This fundamental problem of causal inference requires us to make certain assumptions and use appropriate methods.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Key Questions
+
+- What would have happened if...?
+- How do we estimate causal effects?
+- What assumptions are needed?
+:::
+
+## Fundamental Problem
+
+::: {.content-visible when-format="html"}
+The fundamental problem of causal inference is that for any given individual, we can observe only one potential outcome - the one corresponding to the actual treatment received. We cannot observe what would have happened under a different treatment.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### The Counterfactual
+
+- We observe what **did** happen
+- We cannot observe what **would have** happened
+- This is the fundamental problem
+:::
+
+## Notation and Framework
+
+Let's define our notation:
+
+- $Y$: outcome variable
+- $A$: treatment variable  
+- $Y^{a}$: potential outcome under treatment $a$
+
+::: {.content-visible when-format="html"}
+The potential outcome $Y^{a}$ represents the outcome that would be observed if, possibly contrary to fact, the individual received treatment level $a$. This counterfactual framework, formalized by Neyman and Rubin, is central to modern causal inference.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Average Causal Effect
+
+$$E[Y^{a=1}] - E[Y^{a=0}]$$
+
+The difference in expected outcomes under treatment vs. control
+:::
+
+## Assumptions
+
+::: {.content-visible when-format="html"}
+To identify causal effects from observational data, we typically need several key assumptions:
+
+1. **Consistency**: The potential outcome $Y^a$ equals the observed outcome $Y$ when treatment equals $a$
+2. **Exchangeability**: Treatment assignment is independent of potential outcomes (no unmeasured confounding)
+3. **Positivity**: Every individual has a non-zero probability of receiving each treatment level
+
+These assumptions, sometimes called "identifiability conditions," allow us to link the observed data distribution to causal quantities of interest.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Key Assumptions
+
+1. Consistency
+2. Exchangeability  
+3. Positivity
+
+::: {.fragment}
+Without these, causal identification is not possible from observational data
+:::
+:::
+
+## Summary
+
+::: {.content-visible when-format="html"}
+This chapter has introduced the basic framework for causal inference. We've defined potential outcomes, discussed the fundamental problem of causal inference, and outlined the key assumptions needed for causal identification. In subsequent chapters, we'll explore methods for estimating causal effects under various scenarios and assumptions.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Next Steps
+
+- Chapter 2: Randomized Experiments
+- Chapter 3: Observational Studies
+- Chapter 4: Confounding and Bias
+:::

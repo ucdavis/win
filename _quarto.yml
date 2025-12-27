@@ -1,0 +1,33 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "What If? - Lecture Notes"
+  author: "Based on Hernán MA, Robins JM"
+  chapters:
+    - index.qmd
+    - chapters/01-introduction.qmd
+  
+  sidebar:
+    style: "docked"
+    search: true
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    
+  revealjs:
+    theme: simple
+    slide-number: true
+    chalkboard: true
+    preview-links: auto
+    controls: true
+    transition: slide
+    background-transition: fade
+    output-file: "{stem}-slides.html"
