@@ -1,0 +1,151 @@
+---
+title: "Introduction to Causal Inference"
+subtitle: "Lecture 1"
+format: html
+---
+
+## Overview
+
+This lecture introduces the fundamental concepts of causal inference, focusing on causal effects and counterfactuals as presented in Chapter 1 of "What If" by Miguel Hernán and James Robins.
+
+## Learning Objectives
+
+By the end of this lecture, you should be able to:
+
+1. Define causal effects in terms of counterfactuals
+2. Understand the fundamental problem of causal inference
+3. Distinguish between association and causation
+4. Explain the concept of exchangeability
+
+## Causal Effects
+
+### Individual Causal Effects
+
+A **causal effect** is defined as a contrast between two potential outcomes:
+
+- $Y^{a=1}$: The outcome if the individual receives treatment ($a=1$)
+- $Y^{a=0}$: The outcome if the individual does not receive treatment ($a=0$)
+
+The individual causal effect is:
+
+$$Y^{a=1} - Y^{a=0}$$
+
+::: {.definition}
+**Definition: Potential Outcomes**
+
+For each individual $i$ and treatment level $a$, there exists a potential outcome $Y_i^a$ that would be observed if the individual received treatment level $a$.
+:::
+
+### The Fundamental Problem
+
+The **fundamental problem of causal inference** is that we can only observe one of the potential outcomes for each individual:
+
+- If individual receives treatment ($A=1$), we observe $Y^{a=1}$
+- If individual does not receive treatment ($A=0$), we observe $Y^{a=0}$
+
+We can never observe both $Y^{a=1}$ and $Y^{a=0}$ for the same individual at the same time.
+
+## Average Causal Effects
+
+Since we cannot compute individual causal effects, we focus on **average causal effects** in populations:
+
+$$E[Y^{a=1}] - E[Y^{a=0}]$$
+
+This represents the average difference in outcomes if everyone in the population were treated versus if everyone were untreated.
+
+### Association vs. Causation
+
+Association is what we observe in the data:
+
+$$E[Y|A=1] - E[Y|A=0]$$
+
+This is the difference in average outcomes between those who were actually treated and those who were not treated.
+
+::: {.callout-note}
+## Key Distinction
+
+**Association is not causation!**
+
+$$E[Y|A=1] - E[Y|A=0] \neq E[Y^{a=1}] - E[Y^{a=0}]$$
+
+unless certain conditions (like randomization) hold.
+:::
+
+## Exchangeability
+
+::: {.definition}
+**Definition: Exchangeability**
+
+Treatment groups are **exchangeable** if:
+
+$$Y^a \perp\!\!\!\perp A \text{ for all } a$$
+
+That is, the potential outcomes are independent of the actual treatment received.
+:::
+
+Under exchangeability:
+
+$$E[Y^{a=1}] = E[Y^{a=1}|A=1] = E[Y|A=1]$$
+$$E[Y^{a=0}] = E[Y^{a=0}|A=0] = E[Y|A=0]$$
+
+Therefore, association equals causation:
+
+$$E[Y|A=1] - E[Y|A=0] = E[Y^{a=1}] - E[Y^{a=0}]$$
+
+## Randomization
+
+**Randomization** ensures exchangeability by making treatment assignment independent of all potential outcomes.
+
+In a randomized experiment:
+
+- Treatment assignment is determined by chance (e.g., coin flip)
+- No confounding factors influence who gets treated
+- Groups are comparable on average
+
+## Example: Heart Transplant Study
+
+Consider a study examining the effect of heart transplantation on survival.
+
+**Observational comparison:**
+
+- Among patients who received transplants: 75% survived 1 year
+- Among patients who did not receive transplants: 55% survived 1 year
+- Observed difference: 20 percentage points
+
+**Problems:**
+
+1. Patients who received transplants may have been healthier (selection bias)
+2. Surgeons may have selected patients with better prognosis
+3. Association does not equal causation
+
+**Solution:** Randomization would ensure comparable groups.
+
+## Summary
+
+1. Causal effects are defined using potential outcomes
+2. We face a fundamental problem: can't observe all potential outcomes
+3. We estimate average causal effects in populations
+4. Association ≠ Causation (in general)
+5. Exchangeability is required for causal inference
+6. Randomization achieves exchangeability
+
+## Key Terms
+
+- **Potential outcomes**: $Y^a$
+- **Causal effect**: $Y^{a=1} - Y^{a=0}$
+- **Average causal effect**: $E[Y^{a=1}] - E[Y^{a=0}]$
+- **Association**: $E[Y|A=1] - E[Y|A=0]$
+- **Exchangeability**: $Y^a \perp\!\!\!\perp A$
+
+## Further Reading
+
+- Hernán MA, Robins JM. Causal Inference: What If. Chapter 1.
+- Pearl J. Causality: Models, Reasoning, and Inference.
+- Rubin DB. Estimating causal effects of treatments in randomized and nonrandomized studies.
+
+## Exercises
+
+1. Explain why we cannot observe individual causal effects.
+2. Give an example where association differs from causation.
+3. What conditions are required for association to equal causation?
+4. How does randomization help with causal inference?

@@ -1,0 +1,612 @@
+---
+title: "Observational Studies"
+subtitle: "Lecture 3"
+format: revealjs
+---
+
+## Overview {.center}
+
+**Causal Inference Without Randomization**
+
+Methods for observational studies
+
+---
+
+## Learning Objectives
+
+::: {.incremental}
+1. Understand confounding
+2. Learn adjustment methods
+3. Master propensity scores and IPW
+4. Recognize selection bias
+:::
+
+---
+
+## Why Observational Studies?
+
+Sometimes we **cannot** randomize:
+
+::: {.incremental}
+- **Unethical**: Harmful exposures (smoking)
+- **Infeasible**: Immutable characteristics (genetics)
+- **Impractical**: Too expensive or slow
+:::
+
+. . .
+
+Must use observational data carefully!
+
+---
+
+## The Challenge {.center}
+
+Without randomization:
+
+**Association ≠ Causation**
+
+---
+
+## Confounding
+
+A common cause of both treatment and outcome
+
+. . .
+
+```
+    L (confounder)
+   ↙ ↘
+  A → Y
+```
+
+. . .
+
+$L$ affects both $A$ and $Y$
+
+---
+
+## Example: Coffee & Heart Disease
+
+**Observation:** Coffee drinkers have more heart disease
+
+. . .
+
+**Confounder?** Smoking!
+
+::: {.fragment}
+- Smokers drink more coffee
+- Smoking causes heart disease
+- Association doesn't imply coffee causes heart disease
+:::
+
+---
+
+## Causal Diagram
+
+```
+  Smoking
+   ↙    ↘
+Coffee → Heart Disease?
+```
+
+. . .
+
+Need to **adjust** for smoking to see if coffee has an effect
+
+---
+
+## Identification Assumptions
+
+Three key assumptions:
+
+::: {.incremental}
+1. **Exchangeability**: $Y^a \perp\!\!\!\perp A | L$
+2. **Positivity**: $0 < P[A=1|L] < 1$
+3. **Consistency**: $Y^a = Y$ when $A=a$
+:::
+
+---
+
+## Exchangeability
+
+**Conditional** on measured variables $L$:
+
+$$Y^a \perp\!\!\!\perp A | L$$
+
+. . .
+
+"No unmeasured confounding"
+
+. . .
+
+Within levels of $L$, treatment is as-if randomized
+
+---
+
+## Positivity
+
+Every subgroup has some chance of both treatments
+
+$$0 < P[A=1|L=l] < 1$$
+
+. . .
+
+**Example:**
+
+✗ Only men get prostate surgery
+
+✓ Both men and women could receive blood pressure medication
+
+---
+
+## Consistency
+
+The potential outcome under treatment $a$ equals the observed outcome when treatment is $a$
+
+. . .
+
+Seems obvious, but requires:
+
+::: {.incremental}
+- Well-defined interventions
+- No interference between units
+- No multiple versions of treatment
+:::
+
+---
+
+## Methods for Adjustment
+
+Five main approaches:
+
+::: {.incremental}
+1. Stratification
+2. Matching
+3. Regression
+4. Inverse Probability Weighting (IPW)
+5. Doubly Robust methods
+:::
+
+---
+
+## Stratification
+
+Compare within strata of confounders
+
+. . .
+
+**Example: Coffee & Heart Disease**
+
+::: {.fragment}
+Among smokers:
+
+- Coffee drinkers: 15% heart disease
+- Non-drinkers: 14% heart disease
+:::
+
+. . .
+
+::: {.fragment}
+Among non-smokers:
+
+- Coffee drinkers: 5% heart disease
+- Non-drinkers: 5% heart disease
+:::
+
+. . .
+
+No effect after stratifying!
+
+---
+
+## Standardization
+
+Compute weighted average across strata:
+
+$$E[Y^{a=1}] = \sum_l E[Y|A=1, L=l] P[L=l]$$
+
+. . .
+
+Also called **G-formula**
+
+---
+
+## Matching
+
+For each treated person, find similar untreated person(s)
+
+. . .
+
+**Types:**
+
+::: {.incremental}
+- Exact matching (same $L$)
+- Propensity score matching
+- Nearest neighbor matching
+:::
+
+---
+
+## Matching Example
+
+| ID | Treatment | Age | Sex | Match |
+|----|-----------|-----|-----|-------|
+| 1  | Yes       | 45  | M   | →  5  |
+| 2  | Yes       | 52  | F   | →  6  |
+| 5  | No        | 44  | M   |       |
+| 6  | No        | 53  | F   |       |
+
+Compare matched pairs
+
+---
+
+## Regression Adjustment
+
+Model the outcome:
+
+$$E[Y|A, L] = \beta_0 + \beta_1 A + \beta_2 L$$
+
+. . .
+
+Coefficient $\beta_1$ estimates causal effect
+
+. . .
+
+⚠️ Assumes model is correct!
+
+---
+
+## Propensity Score
+
+**Probability** of treatment given confounders:
+
+$$e(L) = P[A=1|L]$$
+
+. . .
+
+"Propensity to be treated"
+
+---
+
+## Why Propensity Scores?
+
+Balances **all** confounders with one number
+
+. . .
+
+::: {.incremental}
+- High-dimensional $L$ → 1-dimensional $e(L)$
+- Easier to check balance
+- Reduces dimensionality
+:::
+
+---
+
+## Inverse Probability Weighting
+
+Weight by inverse of propensity score:
+
+$$W = \frac{1}{P[A|L]}$$
+
+. . .
+
+Creates **pseudo-population** where $A \perp\!\!\!\perp L$
+
+---
+
+## IPW Illustrated
+
+| Person | $A$ | $P[A\|L]$ | Weight |
+|--------|-----|----------|--------|
+| 1      | 1   | 0.8      | 1.25   |
+| 2      | 1   | 0.2      | 5.0    |
+| 3      | 0   | 0.7      | 3.33   |
+| 4      | 0   | 0.3      | 1.43   |
+
+. . .
+
+Rare treatments/controls get more weight
+
+---
+
+## IPW Estimator
+
+$$E[Y^{a=1}] = E\left[\frac{Y \cdot I(A=1)}{P[A=1|L]}\right]$$
+
+. . .
+
+Average weighted outcomes in treated group
+
+---
+
+## IPW: Advantages & Disadvantages
+
+✓ **Advantages:**
+
+::: {.incremental}
+- No outcome model needed
+- Balances confounders
+- Intuitive interpretation
+:::
+
+. . .
+
+✗ **Disadvantages:**
+
+::: {.incremental}
+- Unstable with extreme weights
+- Requires correct propensity model
+:::
+
+---
+
+## Doubly Robust Estimation
+
+Combines outcome regression AND propensity scores
+
+. . .
+
+**Advantage:**
+
+Consistent if **either** model is correct!
+
+. . .
+
+**Two chances to get it right**
+
+---
+
+## Selection Bias
+
+Sample analyzed ≠ target population
+
+. . .
+
+**Examples:**
+
+::: {.incremental}
+- Loss to follow-up
+- Healthy worker effect
+- Self-selection into study
+:::
+
+---
+
+## Collider Bias
+
+**Collider:** Common effect of two variables
+
+```
+  A → C ← Y
+```
+
+. . .
+
+⚠️ **Do NOT adjust for colliders!**
+
+. . .
+
+Creates spurious association between $A$ and $Y$
+
+---
+
+## Collider Example: Celebrity Paradox
+
+```
+Beauty → Celebrity ← Talent
+```
+
+. . .
+
+Among celebrities, beauty and talent are negatively correlated!
+
+. . .
+
+(Beautiful celebrities may have less talent, talented ones may be less beautiful)
+
+---
+
+## Directed Acyclic Graphs (DAGs)
+
+Visual representation of causal relationships
+
+. . .
+
+**Elements:**
+
+::: {.incremental}
+- Nodes = Variables
+- Arrows = Direct causal effects
+- No cycles (acyclic)
+:::
+
+---
+
+## DAG Structures
+
+**Fork (confounder):**
+
+```
+X ← Z → Y
+```
+
+. . .
+
+**Chain (mediator):**
+
+```
+X → Z → Y
+```
+
+. . .
+
+**Collider:**
+
+```
+X → Z ← Y
+```
+
+---
+
+## Adjustment Rules
+
+To identify causal effect of $A$ on $Y$:
+
+::: {.incremental}
+1. Block all **backdoor paths** (confounders)
+2. Don't block **frontdoor paths** (mediators)
+3. Don't condition on **colliders**
+:::
+
+---
+
+## Time-Varying Confounding
+
+Confounders that change over time:
+
+```
+L₀ → A₀ → L₁ → A₁ → Y
+```
+
+. . .
+
+**Problem:** Standard methods fail when treatment affects future confounders
+
+. . .
+
+**Solution:** G-methods (g-formula, marginal structural models)
+
+---
+
+## Example: Smoking & Lung Cancer
+
+**Historical challenge:** No randomized trials
+
+. . .
+
+**Evidence for causation:**
+
+::: {.incremental}
+- Strong association
+- Dose-response relationship
+- Temporal sequence
+- Biological plausibility
+- Adjusted for confounders
+:::
+
+---
+
+## Bradford Hill Criteria
+
+Guidelines for causal inference from observational data:
+
+::: {.incremental}
+1. Strength of association
+2. Consistency across studies
+3. Specificity
+4. Temporality
+5. Biological gradient (dose-response)
+6. Plausibility
+7. Coherence
+8. Experiment
+9. Analogy
+:::
+
+---
+
+## Sensitivity Analysis
+
+How strong would unmeasured confounding need to be?
+
+. . .
+
+**E-value:** Minimum strength of association required to explain away effect
+
+. . .
+
+Assesses robustness of conclusions
+
+---
+
+## Methods Comparison
+
+| Method | Pros | Cons |
+|--------|------|------|
+| Stratification | Simple | Limited confounders |
+| Matching | Intuitive | Discards data |
+| Regression | Familiar | Model-dependent |
+| IPW | Balances | Unstable weights |
+| Doubly Robust | Two chances | Complex |
+
+---
+
+## Key Takeaways
+
+::: {.incremental}
+1. Observational studies require careful analysis
+2. Confounding is the main threat
+3. Need exchangeability, positivity, consistency
+4. Multiple adjustment methods available
+5. Selection bias also problematic
+6. DAGs help identify confounders
+7. Sensitivity analysis important
+:::
+
+---
+
+## Workflow Summary
+
+```
+1. Draw DAG
+2. Identify confounders
+3. Check positivity
+4. Choose method
+5. Estimate effect
+6. Check balance
+7. Sensitivity analysis
+```
+
+---
+
+## When to Use Each Method?
+
+**Stratification:** Few categorical confounders
+
+**Matching:** Want comparable groups
+
+**Regression:** Many continuous confounders
+
+**IPW:** Don't trust outcome model
+
+**Doubly Robust:** Want robustness
+
+---
+
+## Common Pitfalls
+
+::: {.incremental}
+- ✗ Adjusting for colliders
+- ✗ Ignoring positivity violations
+- ✗ Assuming no unmeasured confounding
+- ✗ Over-interpreting associations
+- ✗ Forgetting temporal order
+:::
+
+---
+
+## Questions? {.center}
+
+**"All models are wrong,**
+
+**but some are useful"**
+
+*- George Box*
+
+---
+
+## Further Reading
+
+- Hernán MA, Robins JM. *Causal Inference: What If*. Chapters 6-12
+- Pearl J. *Causality: Models, Reasoning, and Inference*
+- Greenland S, Robins JM. *Identifiability, exchangeability, and confounding*
+- VanderWeele TJ. *Sensitivity analysis in observational research*

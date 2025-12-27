@@ -1,0 +1,424 @@
+---
+title: "Randomized Experiments"
+subtitle: "Lecture 2"
+format: revealjs
+---
+
+## Overview {.center}
+
+**The Gold Standard for Causal Inference**
+
+Randomized experiments and their analysis
+
+---
+
+## Learning Objectives
+
+::: {.incremental}
+1. Understand why randomization works
+2. Learn different randomization schemes
+3. Master intention-to-treat analysis
+4. Recognize limitations of randomization
+:::
+
+---
+
+## Why Randomize?
+
+Randomization achieves **exchangeability** by design
+
+. . .
+
+$$Y^a \perp\!\!\!\perp A$$
+
+. . .
+
+::: {.incremental}
+- Treatment independent of potential outcomes
+- No confounding (on average)
+- Groups are comparable
+- Association = Causation ✓
+:::
+
+---
+
+## Simple Randomization
+
+Each person has probability $p$ of treatment
+
+. . .
+
+**Example:** Flip a coin for each patient
+
+::: {.fragment}
+Heads → Treatment
+
+Tails → Control
+:::
+
+---
+
+## Simple Randomization
+
+✓ **Advantages:**
+
+::: {.incremental}
+- Very simple
+- Guarantees exchangeability
+- Easy to implement
+:::
+
+. . .
+
+✗ **Disadvantages:**
+
+::: {.incremental}
+- May have unequal group sizes
+- Characteristics may differ by chance (in small samples)
+:::
+
+---
+
+## Stratified Randomization
+
+1. Divide into strata (e.g., age groups)
+2. Randomize within each stratum
+3. Ensures balance on stratification variables
+
+. . .
+
+**Example:**
+
+- Stratum 1: Age < 50
+- Stratum 2: Age ≥ 50
+- Randomize separately in each stratum
+
+---
+
+## Block Randomization
+
+Randomize in blocks to ensure equal group sizes
+
+. . .
+
+**Example: Block size = 4**
+
+::: {.fragment}
+Block 1: AABB (randomly ordered)
+
+Block 2: ABAB (randomly ordered)
+
+Block 3: BBAA (randomly ordered)
+:::
+
+. . .
+
+Ensures exactly 50:50 allocation
+
+---
+
+## Analysis Approaches
+
+Three main approaches:
+
+::: {.incremental}
+1. **Intention-to-Treat (ITT)**
+2. **Per-Protocol**
+3. **As-Treated**
+:::
+
+---
+
+## Intention-to-Treat Analysis
+
+Compare by **assigned** treatment, regardless of what happened
+
+. . .
+
+$$\text{ITT effect} = E[Y|Z=1] - E[Y|Z=0]$$
+
+where $Z$ = randomized assignment
+
+---
+
+## ITT: Advantages
+
+::: {.incremental}
+- ✓ Preserves randomization
+- ✓ No selection bias
+- ✓ Reflects real-world effectiveness
+- ✓ Easy to interpret
+:::
+
+. . .
+
+::: {.callout-tip}
+## Gold Standard
+ITT is the primary analysis in most trials
+:::
+
+---
+
+## ITT: Example
+
+Randomized 100 patients to medication vs placebo
+
+::: {.fragment}
+**What happened:**
+
+- 10 in medication group didn't take it
+- 5 in placebo group took medication
+:::
+
+. . .
+
+**ITT Analysis:**
+
+Compare all 50 assigned to medication vs all 50 assigned to placebo
+
+---
+
+## Per-Protocol Analysis
+
+Compare outcomes among those who followed the protocol
+
+. . .
+
+⚠️ **Warning:** May introduce selection bias!
+
+. . .
+
+Why? Compliance may be related to outcomes
+
+---
+
+## Non-Compliance
+
+Types of participants:
+
+::: {.incremental}
+- **Compliers**: Follow assignment
+- **Always-takers**: Take treatment regardless
+- **Never-takers**: Never take treatment
+- **Defiers**: Do opposite (rare)
+:::
+
+---
+
+## Compliance Table
+
+| Assigned | Would Take if Z=0 | Would Take if Z=1 | Type |
+|----------|-------------------|-------------------|------|
+| 0        | 0                 | 1                 | Complier |
+| 0        | 0                 | 0                 | Never-taker |
+| 1        | 1                 | 1                 | Always-taker |
+| 1        | 0                 | 1                 | Complier |
+
+---
+
+## Instrumental Variables
+
+When non-compliance exists, randomization is an **instrument**
+
+. . .
+
+Estimate effect among compliers:
+
+$$\text{LATE} = \frac{E[Y|Z=1] - E[Y|Z=0]}{E[A|Z=1] - E[A|Z=0]}$$
+
+. . .
+
+**LATE** = Local Average Treatment Effect
+
+---
+
+## LATE Interpretation
+
+Effect of treatment **among compliers**
+
+. . .
+
+::: {.callout-note}
+## Important
+LATE ≠ Average Treatment Effect (in general)
+
+Only estimates effect for those who comply with assignment
+:::
+
+---
+
+## Conditional Randomization
+
+Randomization probability depends on covariates $L$
+
+. . .
+
+**Example:** Randomize separately by hospital
+
+. . .
+
+$$P[A=1|L=l]$$ varies with $L$
+
+---
+
+## Conditional vs Marginal Exchangeability
+
+**Marginal:** $Y^a \perp\!\!\!\perp A$
+
+**Conditional:** $Y^a \perp\!\!\!\perp A | L$
+
+. . .
+
+Need to **adjust** for $L$ to get marginal effect!
+
+---
+
+## Standardization (G-Formula)
+
+To get marginal effect from conditional randomization:
+
+$$E[Y^{a=1}] = \sum_l E[Y|A=1, L=l] P[L=l]$$
+
+. . .
+
+Average over distribution of $L$
+
+---
+
+## Blinding
+
+Prevent knowledge of treatment from affecting results
+
+. . .
+
+::: {.incremental}
+- **Single-blind**: Participants don't know
+- **Double-blind**: Participants and investigators don't know
+- **Triple-blind**: Data analysts also don't know
+:::
+
+---
+
+## Why Blind?
+
+Knowledge of treatment can affect:
+
+::: {.incremental}
+- Participant behavior
+- Outcome assessment
+- Treatment decisions
+- Data analysis
+:::
+
+---
+
+## Limitations of Randomization
+
+::: {.incremental}
+1. **Ethics**: Can't randomize harmful exposures
+2. **Feasibility**: Some exposures can't be randomized
+3. **External validity**: Trial population ≠ target population
+4. **Cost**: Expensive and time-consuming
+5. **Non-compliance**: People don't always follow assignment
+:::
+
+---
+
+## Example: Vitamin A Trial
+
+**Study:** Effect of vitamin A on child mortality
+
+::: {.fragment}
+**Design:**
+
+- 450 villages randomized
+- Treatment: Vitamin A supplement
+- Control: Placebo
+:::
+
+---
+
+## Vitamin A Trial Results
+
+| Group | Mortality per 1000 |
+|-------|-------------------|
+| Vitamin A | 7.2 |
+| Placebo | 9.5 |
+
+. . .
+
+**Relative Risk:** 0.76 (95% CI: 0.68-0.85)
+
+. . .
+
+**Interpretation:** 24% reduction in mortality!
+
+---
+
+## Key Takeaways
+
+::: {.incremental}
+1. Randomization eliminates confounding
+2. Different randomization schemes exist
+3. ITT preserves randomization benefits
+4. Non-compliance requires special methods
+5. Blinding prevents information bias
+6. Randomization has practical limitations
+:::
+
+---
+
+## Decision Tree: Which Analysis?
+
+```
+Start
+  ├── Perfect compliance? 
+  │   ├── Yes → Simple comparison (ITT = PP)
+  │   └── No → ITT analysis
+  │       └── Want complier effect? → IV/LATE
+  └── Conditional randomization?
+      └── Yes → Standardization
+```
+
+---
+
+## Sample Size Planning
+
+Adequate sample size needed for:
+
+::: {.incremental}
+- Sufficient **power** to detect effects
+- Precise **estimates**
+- Good **balance** on baseline characteristics
+:::
+
+. . .
+
+Depends on: effect size, variability, significance level
+
+---
+
+## Next Steps
+
+::: {.incremental}
+- **Next lecture**: Observational studies
+- What to do when randomization isn't possible
+- Confounding and how to control it
+- Advanced adjustment methods
+:::
+
+---
+
+## Questions? {.center}
+
+**"Randomization is the gold standard,**
+
+**but gold is expensive!"**
+
+---
+
+## Further Reading
+
+- Hernán MA, Robins JM. *Causal Inference: What If*. Chapters 2-3
+- Friedman LM, et al. *Fundamentals of Clinical Trials*
+- Piantadosi S. *Clinical Trials: A Methodologic Perspective*

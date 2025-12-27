@@ -1,0 +1,284 @@
+---
+title: "Observational Studies"
+subtitle: "Lecture 3"
+format: html
+---
+
+## Overview
+
+This lecture addresses causal inference from observational data where treatment is not randomized.
+
+## Learning Objectives
+
+1. Understand confounding and its sources
+2. Learn methods for controlling confounding
+3. Apply adjustment techniques
+4. Recognize selection bias and how to address it
+
+## Why Observational Studies?
+
+Sometimes randomization is:
+
+- **Unethical**: Cannot randomize harmful exposures (e.g., smoking)
+- **Infeasible**: Cannot randomize immutable characteristics (e.g., genetics)
+- **Impractical**: Too expensive or time-consuming
+
+We must use observational data, which requires careful analysis to draw causal conclusions.
+
+## Confounding
+
+::: {.definition}
+**Definition: Confounding**
+
+A variable $L$ is a **confounder** if:
+
+1. It affects treatment assignment: $L \rightarrow A$
+2. It affects the outcome: $L \rightarrow Y$
+3. It is not affected by treatment: $A \not\rightarrow L$
+:::
+
+**Result:** Association between $A$ and $Y$ may be due to their common cause $L$, not a causal effect of $A$ on $Y$.
+
+### Example: Coffee and Heart Disease
+
+Observed association: Coffee drinkers have higher rates of heart disease.
+
+**Potential confounder:** Smoking
+
+- Smokers tend to drink more coffee
+- Smoking causes heart disease
+- Coffee drinking is associated with heart disease through smoking
+
+After adjusting for smoking, the association between coffee and heart disease may disappear.
+
+## Identification Assumptions
+
+To identify causal effects from observational data, we need:
+
+### 1. Exchangeability (No Unmeasured Confounding)
+
+$$Y^a \perp\!\!\!\perp A | L$$
+
+Conditional on measured covariates $L$, treatment is independent of potential outcomes.
+
+### 2. Positivity (Overlap)
+
+$$0 < P[A=1|L=l] < 1$$
+
+For all values of $L$ observed in the population, both treatment and control are possible.
+
+### 3. Consistency
+
+The potential outcome $Y^a$ equals the observed outcome $Y$ when $A=a$.
+
+::: {.callout-note}
+## Identification Assumptions
+
+These three assumptions (exchangeability, positivity, consistency) allow us to identify causal effects from observational data.
+
+Together, they ensure: $E[Y^a] = \sum_l E[Y|A=a, L=l] P[L=l]$
+:::
+
+## Methods for Controlling Confounding
+
+### Stratification
+
+Compare treated and untreated within strata of confounders.
+
+$$E[Y^{a=1}] = \sum_l E[Y|A=1, L=l] P[L=l]$$
+
+**Example:** Compare smokers to smokers and non-smokers to non-smokers when studying coffee and heart disease.
+
+**Limitation:** Doesn't work well with many or continuous confounders ("curse of dimensionality").
+
+### Matching
+
+For each treated individual, find one or more untreated individuals with similar values of $L$.
+
+**Types:**
+
+- **Exact matching**: Match on exact values of $L$
+- **Propensity score matching**: Match on $P[A=1|L]$
+
+**Advantages:**
+
+- Intuitive
+- Ensures positivity in matched sample
+
+**Disadvantages:**
+
+- Discards unmatched individuals
+- Choice of matching method affects estimates
+
+### Regression Adjustment
+
+Model the relationship between $Y$, $A$, and $L$:
+
+$$E[Y|A, L] = \beta_0 + \beta_1 A + \beta_2 L$$
+
+The coefficient $\beta_1$ estimates the causal effect under assumptions.
+
+**Advantages:**
+
+- Can handle many confounders
+- Familiar to researchers
+
+**Disadvantages:**
+
+- Model misspecification leads to bias
+- May violate positivity implicitly
+
+### Inverse Probability Weighting (IPW)
+
+Weight each individual by the inverse of their probability of receiving the treatment they actually received:
+
+$$W^A = \frac{1}{P[A|L]}$$
+
+The weighted sample mimics a randomized experiment.
+
+::: {.definition}
+**Definition: Propensity Score**
+
+The **propensity score** is the probability of treatment given confounders:
+
+$$e(L) = P[A=1|L]$$
+:::
+
+IPW estimator:
+
+$$E[Y^{a=1}] = E\left[\frac{Y \cdot I(A=1)}{P[A=1|L]}\right]$$
+
+**Advantages:**
+
+- Does not require outcome model
+- Balances confounders
+
+**Disadvantages:**
+
+- Unstable with extreme weights
+- Requires correct propensity score model
+
+### Doubly Robust Estimation
+
+Combine outcome regression and IPW:
+
+$$\hat{E}[Y^a] = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i=a)(Y_i - \hat{E}[Y|A=a, L_i])}{\hat{P}[A=a|L_i]} + \hat{E}[Y|A=a, L_i]\right]$$
+
+**Advantage:** Consistent if either the outcome model or propensity score model is correct.
+
+## Selection Bias
+
+::: {.definition}
+**Definition: Selection Bias**
+
+**Selection bias** occurs when the sample analyzed is not representative of the target population for the causal question.
+:::
+
+### Types of Selection Bias
+
+1. **Loss to follow-up**: Subjects drop out non-randomly
+2. **Healthy worker bias**: Workers are healthier than general population
+3. **Collider stratification**: Conditioning on a common effect of treatment and outcome
+
+### Collider Bias
+
+A **collider** is a variable affected by both treatment and outcome:
+
+$$A \rightarrow C \leftarrow Y$$
+
+Conditioning on a collider induces association between $A$ and $Y$ even if there is no causal effect.
+
+**Example:** Studying the effect of beauty on talent among celebrities (both affect probability of being a celebrity).
+
+## Directed Acyclic Graphs (DAGs)
+
+DAGs are graphical tools for representing causal relationships:
+
+- **Nodes**: Variables
+- **Edges**: Direct causal effects
+- **Paths**: Sequences of edges
+
+### Rules for DAGs
+
+1. **Fork**: $X \leftarrow Z \rightarrow Y$ - $Z$ confounds $X$ and $Y$
+2. **Chain**: $X \rightarrow Z \rightarrow Y$ - $Z$ mediates effect of $X$ on $Y$
+3. **Collider**: $X \rightarrow Z \leftarrow Y$ - $Z$ is a collider
+
+**Adjustment Rule:** To identify the effect of $A$ on $Y$, adjust for variables that:
+
+- Block backdoor paths (confounders)
+- Do not create new paths (colliders)
+
+## Time-Varying Confounding
+
+In longitudinal studies, confounders may change over time:
+
+$$L_0 \rightarrow A_0 \rightarrow L_1 \rightarrow A_1 \rightarrow Y$$
+
+Standard methods fail when:
+
+- Treatment affects future confounders
+- Confounders affect future treatment
+
+**Solution:** Use g-methods (g-formula, IPW of marginal structural models, g-estimation).
+
+## Sensitivity Analysis
+
+Since we can never verify exchangeability, perform **sensitivity analysis**:
+
+- How strong would unmeasured confounding need to be to change conclusions?
+- E-value: Minimum strength of association required to explain away the effect
+
+## Example: Smoking and Lung Cancer
+
+Early observational studies found strong association between smoking and lung cancer.
+
+**Potential confounders:**
+
+- Genetic factors
+- Socioeconomic status
+- Occupational exposures
+
+**Analyses:**
+
+- Stratification by potential confounders
+- Dose-response relationship
+- Temporal sequence
+- Biological plausibility
+
+**Conclusion:** Overwhelming evidence for causal effect despite lack of randomization.
+
+## Summary
+
+1. Observational studies are necessary when randomization is not possible
+2. Confounding threatens validity of observational studies
+3. Identification requires exchangeability, positivity, and consistency
+4. Methods include stratification, matching, regression, IPW, and doubly robust estimation
+5. Selection bias arises from non-representative samples
+6. DAGs help identify confounders and colliders
+7. Time-varying confounding requires advanced methods
+8. Sensitivity analysis assesses robustness to unmeasured confounding
+
+## Key Terms
+
+- **Confounding**: Common cause of treatment and outcome
+- **Exchangeability**: $Y^a \perp\!\!\!\perp A | L$
+- **Positivity**: $0 < P[A=1|L] < 1$
+- **Propensity score**: $P[A=1|L]$
+- **IPW**: Inverse probability weighting
+- **Selection bias**: Non-representative sample
+- **Collider**: Common effect of two variables
+- **DAG**: Directed acyclic graph
+
+## Further Reading
+
+- Hernán MA, Robins JM. Causal Inference: What If. Chapters 6-12.
+- Pearl J. Causality: Models, Reasoning, and Inference.
+- Greenland S, Robins JM, Pearl J. Confounding and collapsibility in causal inference.
+
+## Exercises
+
+1. Draw a DAG representing confounding, mediation, and collider bias.
+2. Why can't we adjust for confounders using simple regression when treatment affects future confounders?
+3. Explain the difference between matching and IPW.
+4. What is the advantage of doubly robust estimation?

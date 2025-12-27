@@ -1,0 +1,45 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "What If: Causal Inference"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Lectures"
+        menu:
+          - text: "Introduction"
+            href: lectures/01-introduction.qmd
+          - text: "Randomized Experiments"
+            href: lectures/02-randomized-experiments.qmd
+          - text: "Observational Studies"
+            href: lectures/03-observational-studies.qmd
+      - text: "Slides"
+        menu:
+          - text: "Introduction"
+            href: slides/01-introduction.qmd
+          - text: "Randomized Experiments"
+            href: slides/02-randomized-experiments.qmd
+          - text: "Observational Studies"
+            href: slides/03-observational-studies.qmd
+    right:
+      - icon: github
+        href: https://github.com/ucdavis/win
+  page-footer:
+    left: "Based on 'What If' by Miguel Hernán and James Robins"
+    right: "Built with [Quarto](https://quarto.org/)"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+  revealjs:
+    theme: dark
+    slide-number: true
+    transition: slide
+    background-transition: fade

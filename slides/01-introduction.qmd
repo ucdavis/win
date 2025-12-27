@@ -1,0 +1,251 @@
+---
+title: "Introduction to Causal Inference"
+subtitle: "Lecture 1"
+format: revealjs
+---
+
+## Welcome {.center}
+
+**Causal Inference: What If**
+
+Based on the book by Miguel Hernán and James Robins
+
+---
+
+## Learning Objectives
+
+::: {.incremental}
+1. Define causal effects in terms of counterfactuals
+2. Understand the fundamental problem of causal inference
+3. Distinguish between association and causation
+4. Explain the concept of exchangeability
+:::
+
+---
+
+## What is a Causal Effect?
+
+A contrast between potential outcomes:
+
+- $Y^{a=1}$: Outcome if treated
+- $Y^{a=0}$: Outcome if untreated
+
+. . .
+
+**Individual causal effect:**
+
+$$Y^{a=1} - Y^{a=0}$$
+
+---
+
+## Potential Outcomes
+
+For each individual and treatment level, there exists a potential outcome
+
+::: {.fragment}
+**Example:**
+
+- Alice's blood pressure if she takes medication: $Y^{a=1} = 120$
+- Alice's blood pressure if she doesn't take medication: $Y^{a=0} = 140$
+- Alice's causal effect: $120 - 140 = -20$ mmHg
+:::
+
+---
+
+## The Fundamental Problem {.center}
+
+### We can only observe ONE potential outcome per person!
+
+. . .
+
+::: {.fragment}
+If Alice takes medication → we see $Y^{a=1}$ but not $Y^{a=0}$
+
+If Alice doesn't take medication → we see $Y^{a=0}$ but not $Y^{a=1}$
+:::
+
+. . .
+
+::: {.fragment}
+**Can't compute individual causal effects!**
+:::
+
+---
+
+## Average Causal Effects
+
+Solution: Focus on **populations**
+
+$$E[Y^{a=1}] - E[Y^{a=0}]$$
+
+. . .
+
+Average difference in outcomes if everyone were treated vs. untreated
+
+---
+
+## Association vs. Causation
+
+**Association** (what we observe):
+
+$$E[Y|A=1] - E[Y|A=0]$$
+
+. . .
+
+**Causation** (what we want):
+
+$$E[Y^{a=1}] - E[Y^{a=0}]$$
+
+. . .
+
+::: {.callout-warning}
+## Warning!
+These are **NOT** the same in general!
+:::
+
+---
+
+## When Does Association = Causation?
+
+. . .
+
+**When treatment groups are exchangeable**
+
+$$Y^a \perp\!\!\!\perp A \text{ for all } a$$
+
+. . .
+
+Potential outcomes are independent of actual treatment
+
+---
+
+## Exchangeability Explained
+
+If groups are exchangeable:
+
+::: {.incremental}
+- Treated group would have same outcomes if untreated
+- Untreated group would have same outcomes if treated
+- Groups are comparable
+- No confounding
+:::
+
+---
+
+## How to Achieve Exchangeability? {.center}
+
+. . .
+
+### RANDOMIZATION!
+
+---
+
+## Randomization
+
+::: {.incremental}
+- Assign treatment by chance (flip a coin)
+- Makes treatment independent of everything
+- Ensures $Y^a \perp\!\!\!\perp A$
+- Association = Causation ✓
+:::
+
+---
+
+## Example: Heart Transplant
+
+Observed data:
+
+- Transplant group: 75% survived
+- No transplant: 55% survived
+- Difference: 20 percentage points
+
+. . .
+
+**Problem:** Who gets transplanted?
+
+. . .
+
+::: {.fragment}
+Sicker patients might be excluded → Selection bias!
+:::
+
+---
+
+## The Problem Illustrated
+
+| Patient | Health | Treatment | Survival |
+|---------|--------|-----------|----------|
+| 1       | Good   | Yes       | ✓        |
+| 2       | Good   | Yes       | ✓        |
+| 3       | Poor   | No        | ✗        |
+| 4       | Poor   | No        | ✗        |
+
+. . .
+
+Is transplant effective or are healthier people selected?
+
+---
+
+## Solution: Randomization
+
+| Patient | Health | Random Assignment | Survival |
+|---------|--------|-------------------|----------|
+| 1       | Good   | Yes (coin flip)   | ✓        |
+| 2       | Good   | No (coin flip)    | ✓        |
+| 3       | Poor   | Yes (coin flip)   | ?        |
+| 4       | Poor   | No (coin flip)    | ?        |
+
+Now groups are comparable!
+
+---
+
+## Key Concepts Summary
+
+::: {.incremental}
+1. **Causal effects**: Difference in potential outcomes
+2. **Fundamental problem**: Can't observe both outcomes
+3. **Average effects**: Population-level contrasts
+4. **Association ≠ Causation** (usually)
+5. **Exchangeability**: Key condition for causal inference
+6. **Randomization**: Achieves exchangeability
+:::
+
+---
+
+## Mathematical Notation
+
+| Symbol | Meaning |
+|--------|---------|
+| $Y^a$ | Potential outcome under treatment $a$ |
+| $A$ | Actual treatment received |
+| $Y$ | Observed outcome |
+| $E[Y^a]$ | Average potential outcome |
+| $\perp\!\!\!\perp$ | Statistical independence |
+
+---
+
+## Next Steps
+
+::: {.incremental}
+- **Next lecture**: Randomized experiments
+- Learn about different randomization designs
+- Understand intention-to-treat analysis
+- Address non-compliance
+:::
+
+---
+
+## Questions? {.center}
+
+**"Association is not causation"**
+
+*- Every statistician ever*
+
+---
+
+## Further Reading
+
+- Hernán MA, Robins JM. *Causal Inference: What If*. Chapter 1
+- Available free at: [www.hsph.harvard.edu/miguel-hernan/causal-inference-book/](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/)
+- Pearl J. *Causality: Models, Reasoning, and Inference*
+- Rubin DB. *Estimating causal effects of treatments*

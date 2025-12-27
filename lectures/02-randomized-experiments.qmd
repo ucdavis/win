@@ -1,0 +1,229 @@
+---
+title: "Randomized Experiments"
+subtitle: "Lecture 2"
+format: html
+---
+
+## Overview
+
+This lecture covers the design and analysis of randomized experiments, the gold standard for causal inference.
+
+## Learning Objectives
+
+1. Understand the principles of randomized experiments
+2. Learn about different randomization schemes
+3. Analyze data from randomized trials
+4. Recognize limitations of randomization
+
+## Why Randomize?
+
+Randomization achieves **exchangeability** by design:
+
+- Treatment assignment is independent of potential outcomes
+- Confounding is eliminated (on average)
+- Groups are comparable in expectation
+
+## Types of Randomization
+
+### Simple Randomization
+
+Each individual has probability $p$ of receiving treatment, independently.
+
+**Advantages:**
+
+- Simple to implement
+- Guarantees exchangeability
+
+**Disadvantages:**
+
+- Group sizes may be unbalanced
+- Baseline characteristics may differ by chance in small samples
+
+### Stratified Randomization
+
+Randomize separately within strata defined by baseline characteristics.
+
+::: {.definition}
+**Definition: Stratified Randomization**
+
+1. Divide population into strata based on covariates $L$
+2. Randomize independently within each stratum
+3. Ensures balance on stratification variables
+:::
+
+**Example:** In a clinical trial, stratify by age group and sex before randomizing.
+
+### Block Randomization
+
+Randomize in blocks to ensure similar group sizes.
+
+- Divide subjects into blocks of size $n$
+- Within each block, assign exactly $n/2$ to treatment
+- Ensures balanced allocation
+
+## Analysis of Randomized Experiments
+
+### Intention-to-Treat (ITT) Analysis
+
+Compare outcomes based on **assigned** treatment, regardless of compliance.
+
+$$\text{ITT effect} = E[Y|Z=1] - E[Y|Z=0]$$
+
+where $Z$ is the randomized treatment assignment.
+
+**Advantages:**
+
+- Preserves randomization
+- Avoids selection bias
+- Reflects real-world effectiveness
+
+### Per-Protocol Analysis
+
+Compare outcomes based on **received** treatment, only among compliers.
+
+**Caution:** May introduce selection bias if compliance is related to outcomes.
+
+### As-Treated Analysis
+
+Compare outcomes based on actual treatment received.
+
+**Problem:** Destroys randomization, may lead to bias.
+
+## Conditional Randomization
+
+Sometimes randomization probability depends on measured covariates $L$:
+
+$$P[A=1|L=l]$$
+
+This is still a randomized experiment if $P[A=1|L, Y^a] = P[A=1|L]$ (no unmeasured confounding).
+
+::: {.callout-note}
+## Conditional vs. Marginal Exchangeability
+
+- **Marginal exchangeability**: $Y^a \perp\!\!\!\perp A$
+- **Conditional exchangeability**: $Y^a \perp\!\!\!\perp A | L$
+
+Conditional randomization gives conditional exchangeability.
+:::
+
+## Standardization
+
+To estimate marginal effects from conditionally randomized experiments:
+
+$$E[Y^{a=1}] = \sum_l E[Y|A=1, L=l] P[L=l]$$
+
+This is called **standardization** or **g-formula**.
+
+## Sample Size and Power
+
+Randomized experiments require adequate sample size to detect effects.
+
+**Power** depends on:
+
+- Effect size
+- Sample size
+- Variability
+- Significance level
+
+Larger samples provide:
+
+- More precise estimates
+- Greater power to detect effects
+- Better balance on baseline characteristics
+
+## Limitations of Randomization
+
+1. **Ethical concerns**: May not be ethical to randomize certain treatments
+2. **Feasibility**: Some exposures cannot be randomized (e.g., smoking)
+3. **External validity**: Trial populations may differ from target populations
+4. **Cost**: Randomized trials are expensive and time-consuming
+5. **Non-compliance**: Subjects may not adhere to assigned treatment
+
+## Non-Compliance
+
+Types of non-compliance:
+
+- **One-sided non-compliance**: Only treatment group can deviate
+- **Two-sided non-compliance**: Both groups can cross over
+
+::: {.definition}
+**Definition: Compliance Classes**
+
+- **Always-takers**: Would take treatment regardless of assignment
+- **Never-takers**: Would never take treatment regardless of assignment
+- **Compliers**: Follow their assignment
+- **Defiers**: Do opposite of assignment (often assumed to not exist)
+:::
+
+## Instrumental Variables
+
+When there's non-compliance, randomization acts as an **instrumental variable**:
+
+$$\text{LATE} = \frac{E[Y|Z=1] - E[Y|Z=0]}{E[A|Z=1] - E[A|Z=0]}$$
+
+This estimates the **Local Average Treatment Effect (LATE)** among compliers.
+
+## Double-Blind Studies
+
+**Blinding** prevents knowledge of treatment assignment from affecting:
+
+- Subject behavior
+- Outcome assessment
+- Treatment decisions
+
+Types:
+
+- **Single-blind**: Subjects don't know their assignment
+- **Double-blind**: Neither subjects nor investigators know
+- **Triple-blind**: Data analysts also blinded
+
+## Example: Vitamin A Supplementation Trial
+
+A randomized trial in Indonesia examined whether vitamin A supplementation reduces child mortality.
+
+**Design:**
+
+- 450 villages randomized
+- Treatment: Vitamin A supplementation
+- Control: Placebo
+- Outcome: Child mortality rate
+
+**Results:**
+
+- Treatment group mortality: 7.2 per 1000
+- Control group mortality: 9.5 per 1000
+- Relative risk: 0.76 (95% CI: 0.68-0.85)
+
+**Conclusion:** Vitamin A supplementation reduces child mortality by 24%.
+
+## Summary
+
+1. Randomization is the gold standard for causal inference
+2. Various randomization schemes exist (simple, stratified, block)
+3. ITT analysis preserves randomization
+4. Conditional randomization requires adjustment
+5. Randomization has limitations (ethics, feasibility, cost)
+6. Non-compliance can be addressed with instrumental variables
+7. Blinding prevents bias from knowledge of assignment
+
+## Key Terms
+
+- **Randomization**: Random assignment of treatment
+- **Exchangeability**: Independence of potential outcomes and treatment
+- **ITT analysis**: Analysis by assigned treatment
+- **Standardization**: Adjustment for baseline covariates
+- **Instrumental variable**: Variable affecting treatment but not outcome directly
+- **LATE**: Local Average Treatment Effect
+
+## Further Reading
+
+- Hernán MA, Robins JM. Causal Inference: What If. Chapters 2-3.
+- Friedman LM, et al. Fundamentals of Clinical Trials.
+- Piantadosi S. Clinical Trials: A Methodologic Perspective.
+
+## Exercises
+
+1. Why does randomization eliminate confounding?
+2. Compare ITT and per-protocol analyses. When is each appropriate?
+3. What is the advantage of stratified randomization?
+4. Explain the LATE and when it differs from the average treatment effect.

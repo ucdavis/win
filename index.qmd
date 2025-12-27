@@ -1,0 +1,47 @@
+---
+title: "What If: Causal Inference"
+subtitle: "Lecture Notes and Slides"
+---
+
+## Welcome
+
+Welcome to the lecture notes and slides based on **"What If"** by Miguel Hernán and James Robins.
+
+This website provides:
+
+- **HTML Lecture Notes**: Detailed written materials with examples and explanations
+- **RevealJS Slides**: Presentation slides for each lecture topic
+
+## About the Book
+
+"What If" (also known as "Causal Inference: What If") is a comprehensive textbook on causal inference methods. The book is freely available at [https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/).
+
+## Course Topics
+
+This course covers fundamental concepts in causal inference including:
+
+1. **Introduction to Causal Inference**
+   - Causal effects and counterfactuals
+   - Randomization and exchangeability
+   
+2. **Randomized Experiments**
+   - Design principles
+   - Analysis methods
+   - Limitations
+   
+3. **Observational Studies**
+   - Confounding
+   - Selection bias
+   - Adjustment strategies
+
+## Navigation
+
+Use the navigation bar above to access:
+
+- **Lectures**: Detailed HTML notes for each topic
+- **Slides**: RevealJS presentation slides
+
+## Resources
+
+- [Book Website](https://miguelhernan.org/whatifbook)
+- [GitHub Repository](https://github.com/ucdavis/win)
