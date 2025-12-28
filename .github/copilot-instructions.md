@@ -1,6 +1,6 @@
 # Copilot Instructions for win Repository
 
-This document provides essential guidelines for GitHub Copilot when working on the "What If?" lecture notes repository. The project is a Quarto book that renders to both HTML and RevealJS formats.
+This document provides essential guidelines for GitHub Copilot when working on the "What If?" lecture notes repository. The project is a Quarto website that renders to HTML, RevealJS, and PDF formats.
 
 ## Installation and Setup
 
@@ -50,6 +50,24 @@ Verify installation:
 quarto --version
 ```
 
+### Installing TinyTeX (for PDF rendering)
+
+TinyTeX is required for rendering PDF handouts:
+
+```bash
+# Install via Quarto (preferred method)
+quarto install tinytex --no-prompt
+
+# Verify installation
+quarto list tools
+```
+
+Alternative via R:
+```r
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+
 ### Key Dependencies
 
 The project uses packages including:
@@ -58,14 +76,17 @@ The project uses packages including:
 
 ## Build, Test, and Lint Commands
 
-### Building the Book
+### Building the Website
 
 ```bash
-# Preview the book locally (with live reload)
+# Preview the website locally (with live reload)
 quarto preview
 
-# Render the entire book (both HTML and RevealJS formats)
+# Render the entire website (HTML, RevealJS, and PDF formats)
 quarto render
+
+# Render without PDF (if TinyTeX is not installed)
+quarto render --to html,revealjs
 
 # Render a specific chapter
 quarto render chapters/01-introduction.qmd
@@ -75,14 +96,21 @@ quarto render --to html
 
 # Render only RevealJS slides
 quarto render --to revealjs
+
+# Render using specific profiles
+QUARTO_PROFILE=revealjs quarto render  # Standalone slides in _slides/
+QUARTO_PROFILE=handout quarto render    # Standalone PDFs in _handouts/
 ```
 
 ### Output Structure
 
-After rendering, you'll find:
-- `_book/index.html` - HTML book homepage
-- `_book/chapters/01-introduction.html` - HTML chapter pages
-- `_book/chapters/01-introduction-slides.html` - RevealJS slide presentations
+After rendering with the default profile, you'll find in `_site/`:
+- `index.html` - Website homepage
+- `index-slides.html` - RevealJS slides for homepage
+- `index-handout.pdf` - PDF handout for homepage (requires TinyTeX)
+- `chapters/01-introduction.html` - HTML chapter pages
+- `chapters/01-introduction-slides.html` - RevealJS slide presentations
+- `chapters/01-introduction-handout.pdf` - PDF handouts (requires TinyTeX)
 
 ### Running Tests
 
@@ -144,7 +172,7 @@ spelling::spell_check_files("README.md")
 
 - Chapter notes in `chapters/*.qmd` files with numbered prefixes
 - Main index in `index.qmd`
-- Configuration in `_quarto.yml`
+- Configuration files: `_quarto.yml` (shared settings), `_quarto-website.yml` (website config), `_quarto-revealjs.yml` (slides config), `_quarto-handout.yml` (PDF config)
 - Styling in `styles.css`
 - Documentation in `README.md`, `DUAL_FORMAT_GUIDE.md`, `STRUCTURE_VERIFICATION.md`
 
@@ -163,10 +191,15 @@ win/
 │   ├── 01-introduction.qmd     # Chapter 1: Introduction
 │   ├── 02-randomized-experiments.qmd # Chapter 2: Randomized Experiments
 │   └── ...                     # Additional chapters
-├── _book/                      # Generated output (gitignored)
+├── _site/                      # Generated website output (gitignored)
+├── _slides/                    # Generated slides output (gitignored)
+├── _handouts/                  # Generated PDF handouts (gitignored)
 ├── .quarto/                    # Quarto cache (gitignored)
-├── index.qmd                   # Book homepage
-├── _quarto.yml                 # Quarto book configuration (dual-format)
+├── index.qmd                   # Website homepage
+├── _quarto.yml                 # Shared Quarto configuration with default profile
+├── _quarto-website.yml         # Website configuration (multi-format: HTML, RevealJS, PDF)
+├── _quarto-revealjs.yml        # Standalone RevealJS slides configuration
+├── _quarto-handout.yml         # Standalone PDF handouts configuration
 ├── styles.css                  # Custom CSS styling
 ├── renv.lock                   # Package dependency lockfile
 ├── .Rprofile                   # R session configuration (when renv is used)
@@ -180,23 +213,34 @@ win/
 
 ### Front Matter
 
-Each `.qmd` file should have YAML front matter:
+Each `.qmd` file should have YAML front matter with format specifications:
 
 ```yaml
 ---
 title: "Chapter Title"
+format:
+  html: default
+  revealjs:
+    output-file: filename-slides.html
+  pdf:
+    output-file: filename-handout.pdf
 ---
 ```
 
+This allows the same source file to generate three outputs:
+- HTML page for the website
+- RevealJS slides with `-slides.html` suffix
+- PDF handout with `-handout.pdf` suffix
+
 ### Format-Specific Content
 
-Use conditional visibility to create different content for HTML and RevealJS:
+Use conditional visibility to create different content for HTML, RevealJS, and PDF:
 
 ```markdown
 ## Section Title
 
 ::: {.content-visible when-format="html"}
-Detailed explanations and comprehensive content for book format.
+Detailed explanations and comprehensive content for website format.
 Multiple paragraphs, in-depth examples, full mathematical derivations.
 :::
 
@@ -210,6 +254,10 @@ Multiple paragraphs, in-depth examples, full mathematical derivations.
 ::: {.fragment}
 Progressive reveal elements
 :::
+:::
+
+::: {.content-visible when-format="pdf"}
+Print-optimized content with references and links as notes.
 :::
 ```
 
@@ -247,13 +295,16 @@ ATE &= E[Y^1] - E[Y^0] \\
 
 The repository uses GitHub Actions for continuous integration:
 
-1. **publish.yml**: Builds and publishes the Quarto book to GitHub Pages
+1. **publish.yml**: Builds and publishes the Quarto website to GitHub Pages
    - Runs on push to main branch
    - Uses Quarto actions to render and deploy
-   - Outputs to `_book/` directory
-2. **preview.yml**: Generates preview of the book for pull requests
+   - Installs TinyTeX for PDF rendering
+   - Outputs to `_site/` directory
+2. **preview.yml**: Generates preview of the website for pull requests
    - Uses PR preview action to deploy to separate preview URL
    - Allows reviewers to see rendered changes
+   - Watches `_quarto-*.yml` files for configuration changes
+   - Outputs to `_site/` directory
 3. **lint-changed-files.yaml**: Runs lintr on changed R files in pull requests
 4. **check-spelling.yaml**: Checks spelling across the repository
 
@@ -269,19 +320,42 @@ All workflows run on relevant triggers (push to main, pull requests, etc.).
 - Explain DAGs and causal assumptions clearly
 - Use clear notation for potential outcomes and interventions
 
-### Dual-Format Rendering
+### Multi-Format Rendering
 
-**IMPORTANT**: This project uses a dual-format structure where each chapter renders to both HTML and RevealJS.
+**IMPORTANT**: This project uses a multi-format structure where each chapter renders to HTML, RevealJS, and PDF.
 
 Key considerations:
-- **HTML format**: Detailed, comprehensive book content for reading and study
+- **HTML format**: Detailed, comprehensive website content for reading and study
 - **RevealJS format**: Concise, presentation-oriented slides for teaching
+- **PDF format**: Print-friendly handouts with references and notes
 - **Content visibility**: Use `.content-visible when-format=` divs to show/hide content based on output format
 - **Slide structure**: In RevealJS sections, use `##` for slide titles and `###` for content within slides
 - **Progressive reveal**: Use `.fragment` classes for incremental display in slides
-- **Output files**: RevealJS uses `{stem}-slides.html` naming pattern (e.g., `01-introduction-slides.html`)
+- **Output files**: 
+  - HTML: `{filename}.html` (e.g., `01-introduction.html`)
+  - RevealJS: `{filename}-slides.html` (e.g., `01-introduction-slides.html`)
+  - PDF: `{filename}-handout.pdf` (e.g., `01-introduction-handout.pdf`)
 
 See `DUAL_FORMAT_GUIDE.md` for comprehensive patterns and best practices.
+
+### Profile-Based Rendering
+
+The project supports multiple rendering profiles:
+
+1. **Default (website)**: Renders all formats (HTML, RevealJS, PDF) to `_site/`
+   ```bash
+   quarto render
+   ```
+
+2. **RevealJS profile**: Renders only slides to `_slides/`
+   ```bash
+   QUARTO_PROFILE=revealjs quarto render
+   ```
+
+3. **Handout profile**: Renders only PDFs to `_handouts/`
+   ```bash
+   QUARTO_PROFILE=handout quarto render
+   ```
 
 ### Data Visualization
 
@@ -289,20 +363,20 @@ See `DUAL_FORMAT_GUIDE.md` for comprehensive patterns and best practices.
 - Follow tidyverse aesthetic principles
 - Include axis labels and titles
 - Use appropriate color schemes for accessibility
-- Consider how visualizations will appear in both formats (slides may need larger fonts/simpler layouts)
+- Consider how visualizations will appear in all formats (slides may need larger fonts/simpler layouts, PDFs need to be printer-friendly)
 
 ### Making Changes
 
 - When modifying `.qmd` files, ensure code chunks execute successfully
-- Run `quarto preview` to verify changes render correctly in both formats
+- Run `quarto preview` to verify changes render correctly in all formats
 - Check mathematical notation renders properly
-- Ensure figures display as intended in both HTML and RevealJS
+- Ensure figures display as intended in HTML, RevealJS, and PDF
 - Verify cross-references and links work
-- Update `_quarto.yml` if adding/removing chapters
+- Update `_quarto-website.yml` if adding/removing chapters (and also update `_quarto-handout.yml` render list)
 
 ### Pull Request Development
 
-**IMPORTANT**: When developing new pull requests, always run `quarto render` to ensure the book can be rendered successfully before finalizing your changes.
+**IMPORTANT**: When developing new pull requests, always run `quarto render` to ensure the website can be rendered successfully before finalizing your changes.
 
 - **Always run `quarto render`** during PR development to verify that all changes render correctly
 - **CRITICAL**: Test `quarto render` yourself and verify it actually succeeds before claiming success
@@ -310,13 +384,14 @@ See `DUAL_FORMAT_GUIDE.md` for comprehensive patterns and best practices.
   - Check the exit code to confirm success (exit code 0)
   - Do not claim success based on partial output or assumptions
   - If the render fails, investigate and fix the issue before proceeding
-  - **"Software not installed" is NOT a valid excuse** - install required software (R, Quarto, etc.) first if needed (see Installation section above)
+  - **"Software not installed" is NOT a valid excuse** - install required software (R, Quarto, TinyTeX) first if needed (see Installation section above)
   - **CRITICAL**: When installing R, you MUST use the latest R release from CRAN (see Installation section)
     - **NEVER** use the default R from Ubuntu repositories (e.g., `apt-get install r-base` without adding CRAN repo)
     - The default Ubuntu R is outdated (e.g., R 4.3.3) and will cause issues
     - Always add the CRAN repository first, then install R to get the latest version (R 4.5.2+)
     - Verify the R version with `R --version` before proceeding
-- Check that the rendering completes without errors or warnings for both formats
+  - **Note**: If TinyTeX cannot be installed due to network restrictions, you can render without PDF using `quarto render --to html,revealjs`
+- Check that the rendering completes without errors or warnings for all formats
 - Review the generated output in the `_book/` directory to ensure quality in both HTML and RevealJS
 - Verify that format-specific content appears correctly in each format
 - Fix any rendering issues before requesting review
