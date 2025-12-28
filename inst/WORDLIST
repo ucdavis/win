@@ -10,6 +10,7 @@ LaTeX
 lifecycle
 lintr
 MERCHANTABILITY
+metadata
 miguelhernan
 multiarch
 Multi
@@ -19,6 +20,7 @@ Quarto
 Rbuildignore
 README
 renv
+repo
 RevealJS
 rmarkdown
 Rmd
@@ -33,5 +35,6 @@ ucdavis
 VignetteBuilder
 whatifbook
 WORDLIST
+workflow
 YAML
 yml
