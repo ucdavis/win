@@ -1,5 +1,11 @@
 ---
 title: "What If? - Lecture Notes"
+format:
+  html: default
+  revealjs:
+    output-file: index-slides.html
+  pdf:
+    output-file: index-handout.pdf
 ---
 
 # Welcome {.unnumbered}

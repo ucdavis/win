@@ -1,0 +1,101 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "What If? - Lecture Notes"
+  site-url: https://ucdavis.github.io/win/
+  description: "Lecture notes based on 'What If?' by Hernán MA, Robins JM"
+  page-footer:
+    center: "Based on [What If?](https://miguelhernan.org/whatifbook) by Hernán MA, Robins JM"
+  back-to-top-navigation: true
+  page-navigation: true
+  reader-mode: true
+  repo-url: https://github.com/ucdavis/win
+  repo-actions: [edit, issue, source]
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Chapters"
+        menu:
+          - text: "Chapter 1: Introduction"
+            href: chapters/01-introduction.qmd
+          - text: "Chapter 2: Randomized Experiments"
+            href: chapters/02-randomized-experiments.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-location: right
+    toc-depth: 3
+    code-fold: false
+    code-tools: true
+    code-link: true
+    highlight-style: pygments
+    lightbox: true
+    link-external-icon: true
+    embed-resources: false
+    fig-cap-location: top
+    html-math-method: mathjax
+    number-sections: true
+    number-depth: 3
+    df-print: paged
+    date: last-modified
+    date-format: "[Last modified:] YYYY-MM-DD HH:mm:ss (z)"
+  revealjs:
+    theme: simple
+    slide-number: true
+    chalkboard: true
+    preview-links: auto
+    controls: true
+    transition: slide
+    background-transition: fade
+    lightbox: true
+    fig-cap-location: top
+    html-math-method: mathjax
+    smaller: true
+    number-sections: true
+    progress: true
+    incremental: false
+    df-print: paged
+    number-depth: 2
+    shift-heading-level-by: -1
+    slide-level: 2
+    scrollable: true
+    echo: true
+    margin: 0.0
+    code-fold: true
+    code-link: true
+    code-summary: "[R code]"
+    auto-stretch: true
+    fig-height: 5
+    fig-width: 7
+  pdf:
+    geometry:
+      - top=15mm
+      - bottom=20mm
+    keep-md: false
+    keep-tex: false
+    toc: true
+    fig-pos: "H"
+    toc-title: Contents
+    df-print: tibble
+    links-as-notes: true
+    documentclass: article
+    colorlinks: true
+    number-sections: true
+    number-depth: 3
+
+execute:
+  warning: false
+  message: false
+  cache: false
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"

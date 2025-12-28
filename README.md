@@ -2,37 +2,55 @@
 
 Lecture notes based on https://miguelhernan.org/whatifbook
 
-## Dual-Format Rendering
+## Multi-Format Rendering
 
-This Quarto book project is configured to render each chapter in two formats:
+This Quarto website project is configured to render each chapter in multiple formats:
 
-1. **HTML Book Format**: Traditional book layout with navigation sidebar
+1. **HTML Website**: Traditional website layout with navigation navbar
 2. **RevealJS Slides Format**: Presentation slides for each chapter
+3. **PDF Handouts**: PDF documents for each chapter
 
 ### Structure
 
-The project uses Quarto's multi-format rendering capability as described in:
-- [Quarto Discussions #1751](https://github.com/orgs/quarto-dev/discussions/1751)
-- [quarto_html_revealjs_test example](https://github.com/perellonieto/quarto_html_revealjs_test)
+The project uses Quarto's multi-format rendering capability with profile-based configuration:
+- Default profile: website (generates HTML, RevealJS, and PDF in `_site/`)
+- RevealJS profile: standalone slides rendering (generates slides in `_slides/`)
+- Handout profile: standalone PDF rendering (generates PDFs in `_handouts/`)
 
 ### Files
 
-- `_quarto.yml`: Main configuration file with both HTML and RevealJS formats
-- `index.qmd`: Book homepage
+- `_quarto.yml`: Main configuration file with shared settings and default profile
+- `_quarto-website.yml`: Website configuration with HTML, RevealJS, and PDF formats
+- `_quarto-revealjs.yml`: Standalone RevealJS slides configuration
+- `_quarto-handout.yml`: Standalone PDF handouts configuration
+- `index.qmd`: Website homepage
 - `chapters/`: Directory containing chapter files
 - `styles.css`: Custom CSS for the HTML format
 
 ### Rendering
 
-To render both formats:
+To render the default website with all formats:
 
 ```bash
 quarto render
 ```
 
-This will generate:
-- HTML book in `_book/` directory
-- RevealJS slides with `-slides.html` suffix for each chapter
+This will generate in `_site/` directory:
+- HTML pages: `index.html`, `chapters/01-introduction.html`, etc.
+- RevealJS slides: `index-slides.html`, `chapters/01-introduction-slides.html`, etc.
+- PDF handouts: `index-handout.pdf`, `chapters/01-introduction-handout.pdf`, etc.
+
+To render only slides:
+
+```bash
+QUARTO_PROFILE=revealjs quarto render
+```
+
+To render only PDF handouts:
+
+```bash
+QUARTO_PROFILE=handout quarto render
+```
 
 ### Chapter Structure
 
@@ -40,7 +58,7 @@ Each chapter uses conditional content blocks to provide format-specific content:
 
 ```markdown
 ::: {.content-visible when-format="html"}
-Detailed content for book format
+Detailed content for website format
 :::
 
 ::: {.content-visible when-format="revealjs"}
@@ -48,4 +66,4 @@ Concise content for slides
 :::
 ```
 
-This allows the same source file to generate both a comprehensive HTML page and focused presentation slides.
+This allows the same source file to generate comprehensive HTML pages, focused presentation slides, and PDF handouts.

@@ -1,34 +1,20 @@
-project:
-  type: book
-  output-dir: _book
+profile:
+  default: website
 
-book:
-  title: "What If? - Lecture Notes"
-  author: "Based on Hernán MA, Robins JM"
-  chapters:
-    - index.qmd
-    - chapters/01-introduction.qmd
-    - chapters/02-randomized-experiments.qmd
-  
-  sidebar:
-    style: "docked"
-    search: true
+editor_options:
+  chunk_output_type: console
 
-format:
-  html:
-    theme: cosmo
-    css: styles.css
-    toc: true
-    toc-depth: 3
-    number-sections: true
-    code-fold: false
-    
-  revealjs:
-    theme: simple
-    slide-number: true
-    chalkboard: true
-    preview-links: auto
-    controls: true
-    transition: slide
-    background-transition: fade
-    output-file: "{stem}-slides.html"
+editor:
+  markdown:
+    wrap: 72
+
+execute:
+  warning: false
+  message: false
+  cache: false
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
