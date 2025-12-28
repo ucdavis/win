@@ -1,6 +1,12 @@
 project:
   type: website
   output-dir: _site
+  render:
+    - "*.qmd"
+    - "chapters/*.qmd"
+    - "!README.md"
+    - "!DUAL_FORMAT_GUIDE.md"
+    - "!STRUCTURE_VERIFICATION.md"
 
 website:
   title: "What If? - Lecture Notes"

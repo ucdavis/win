@@ -29,7 +29,11 @@ The project uses Quarto's multi-format rendering capability with profile-based c
 
 ### Rendering
 
-To render the default website with all formats:
+**Note**: PDF rendering requires TinyTeX to be installed. If you don't have TinyTeX installed, you can:
+- Install it with: `quarto install tinytex --no-prompt`
+- Or skip PDF rendering by using `--to html,revealjs` flag
+
+To render the default website with all formats (HTML, RevealJS, and PDF):
 
 ```bash
 quarto render
@@ -38,7 +42,13 @@ quarto render
 This will generate in `_site/` directory:
 - HTML pages: `index.html`, `chapters/01-introduction.html`, etc.
 - RevealJS slides: `index-slides.html`, `chapters/01-introduction-slides.html`, etc.
-- PDF handouts: `index-handout.pdf`, `chapters/01-introduction-handout.pdf`, etc.
+- PDF handouts: `index-handout.pdf`, `chapters/01-introduction-handout.pdf`, etc. (requires TinyTeX)
+
+To render only HTML and RevealJS (without PDF):
+
+```bash
+quarto render --to html,revealjs
+```
 
 To render only slides:
 
