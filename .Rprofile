@@ -1,3 +1,6 @@
-if (file.exists("renv/activate.R")) {
-  source("renv/activate.R")
+source("renv/activate.R")
+
+if (interactive()) {
+  require(usethis)
+  require(devtools)
 }

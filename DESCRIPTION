@@ -2,7 +2,7 @@ Package: win
 Title: What If? - Lecture Notes
 Version: 0.1.0
 Authors@R: 
-    person("d-morrison", email = "demorrison@ucdavis.edu", role = c("aut", "cre"))
+    person("Douglas Ezra Morrison", email = "demorrison@ucdavis.edu", role = c("aut", "cre"))
 Description: Lecture notes and materials based on "Causal Inference: What If?" 
     by Hernán MA and Robins JM. This package contains Quarto-based lecture notes,
     slides, and handouts for teaching causal inference.
