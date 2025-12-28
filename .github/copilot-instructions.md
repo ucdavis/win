@@ -212,6 +212,7 @@ spelling::spell_check_files("README.md")
 - Include explanatory text before code chunks
 - Add comments within complex code blocks
 - Reference the "What If?" textbook (Hernán MA, Robins JM) when applicable
+- **Use bullet points for lists**: When presenting lists of items, tools, formats, or steps, use bullet points rather than comma-separated lists for better readability and clarity
 - Use code chunk options appropriately:
   - `echo=FALSE` to hide code in HTML, or use format-specific visibility
   - `message=FALSE` to suppress messages
