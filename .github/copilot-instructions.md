@@ -436,6 +436,37 @@ This project uses `renv` for R package dependency management. The workflows are 
 - Check that `.Rprofile` is activating renv (it should have `source("renv/activate.R")` uncommented)
 - In CI/CD, the `setup-renv` action handles restoration automatically
 
+## Security Considerations
+
+When working on this repository:
+
+- **No secrets in code**: Never commit API keys, tokens, or credentials to the repository
+- **No sensitive data**: This is a public educational repository - do not include personal or sensitive data in examples
+- **Dependencies**: When adding new R packages, ensure they come from trusted sources (CRAN, Bioconductor)
+- **Code execution**: Be cautious when running code from external sources - review before executing
+- **Safe rendering**: Quarto rendering executes R code chunks - ensure all code is safe before rendering
+
+## Contribution Guidelines
+
+When contributing to this repository:
+
+1. **Create a branch**: Work on feature branches, not directly on `main`
+2. **Test locally**: Always run `quarto render` before creating a PR to ensure your changes work
+3. **Follow conventions**: Use the coding style and documentation standards described in this file
+4. **Small commits**: Make focused, incremental commits with clear messages
+5. **PR description**: Clearly describe what changes you made and why
+6. **Review feedback**: Address review comments and re-run `quarto render` if making significant changes
+7. **CI/CD checks**: Ensure all workflow checks pass before requesting final review
+
+## Common Pitfalls
+
+- **Outdated R version**: Using Ubuntu's default R (4.3.x) instead of latest CRAN R (4.5.x+) causes package compatibility issues
+- **Missing TinyTeX**: PDF rendering will fail without TinyTeX - install it or use `--to html,revealjs` flag
+- **renv not activated**: Forgetting to run `renv::restore()` leads to "package not found" errors
+- **Format-specific content**: Not using `.content-visible when-format=` divs results in slides with too much content
+- **Cache issues**: Stale Quarto cache can cause rendering problems - delete `.quarto/` directory if needed
+- **Path issues**: Always use project-relative paths, not absolute paths, for portability
+
 ## Getting Help
 
 - Project GitHub: https://github.com/ucdavis/win
