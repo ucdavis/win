@@ -1,0 +1,324 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "What If? - Lecture Notes",
+    "section": "",
+    "text": "This is a Quarto book project based on the textbook “What If?” by Miguel Hernán and James Robins.\nThe notes are available in two formats:\n\nHTML Book: Navigate using the sidebar for a traditional book reading experience\nRevealJS Slides: Each chapter also generates a presentation format with -slides.html suffix\n\n\n\nThese lecture notes follow the structure and content from What If? by Hernán MA, Robins JM.\n\n\n\nUse the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL)"
+  },
+  {
+    "objectID": "index.html#about-this-project",
+    "href": "index.html#about-this-project",
+    "title": "What If? - Lecture Notes",
+    "section": "",
+    "text": "These lecture notes follow the structure and content from What If? by Hernán MA, Robins JM."
+  },
+  {
+    "objectID": "index.html#navigation",
+    "href": "index.html#navigation",
+    "title": "What If? - Lecture Notes",
+    "section": "",
+    "text": "Use the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL)"
+  },
+  {
+    "objectID": "chapters/01-introduction.html",
+    "href": "chapters/01-introduction.html",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "",
+    "text": "This chapter introduces the fundamental concepts of causal inference through the definition of causal effects. We begin with individual causal effects, extend to average causal effects in populations, discuss various measures of causal effect, address the role of random variability, and distinguish between causation and association.\n\nThe content is based on Hernán and Robins (2020, chap. 1). This chapter lays the foundation for all subsequent material by precisely defining what we mean by a “causal effect” using the potential outcomes framework."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#overview",
+    "href": "chapters/01-introduction.html#overview",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "",
+    "text": "This chapter introduces the fundamental concepts of causal inference through the definition of causal effects. We begin with individual causal effects, extend to average causal effects in populations, discuss various measures of causal effect, address the role of random variability, and distinguish between causation and association.\n\nThe content is based on Hernán and Robins (2020, chap. 1). This chapter lays the foundation for all subsequent material by precisely defining what we mean by a “causal effect” using the potential outcomes framework."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#individual-causal-effects",
+    "href": "chapters/01-introduction.html#individual-causal-effects",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "2 1.1 Individual Causal Effects",
+    "text": "2 1.1 Individual Causal Effects\nTo introduce the concept of causation, consider a simple example. Suppose Zeus has a headache and is considering whether to take aspirin. We are interested in the causal effect of aspirin (treatment \\(A\\)) on his headache (outcome \\(Y\\)).\nWe can represent Zeus’s treatment and outcome in the following way:\n\nLet \\(A = 1\\) if Zeus takes aspirin, \\(A = 0\\) if he does not\nLet \\(Y = 1\\) if Zeus’s headache is present an hour later, \\(Y = 0\\) if it is gone\n\nNow, to define a causal effect, we need to compare two potential outcomes for Zeus:\n\n\\(Y^{a=1}\\): The outcome if Zeus takes aspirin (treatment level \\(a = 1\\))\n\\(Y^{a=0}\\): The outcome if Zeus does not take aspirin (treatment level \\(a = 0\\))\n\nThese are called potential outcomes or counterfactual outcomes. For Zeus, there are four possible scenarios:\n\n\n\n\n\n\n\n\n\nScenario\n\\(Y^{a=1}\\)\n\\(Y^{a=0}\\)\nIndividual Causal Effect\n\n\n\n\n1\n1\n1\nNo effect (headache persists either way)\n\n\n2\n1\n0\nNegative effect (aspirin causes headache)\n\n\n3\n0\n1\nPositive effect (aspirin cures headache)\n\n\n4\n0\n0\nNo effect (headache gone either way)\n\n\n\nWe say there is an individual causal effect of treatment \\(A\\) on outcome \\(Y\\) if \\(Y^{a=1} \\neq Y^{a=0}\\) for an individual. In scenarios 2 and 3, there is an individual causal effect; in scenarios 1 and 4, there is not.\n\n2.1 The Fundamental Problem of Causal Inference\nThe fundamental problem is that we can never observe both \\(Y^{a=1}\\) and \\(Y^{a=0}\\) for the same individual at the same time. Zeus either takes aspirin or he doesn’t. We observe one potential outcome, but the other remains counterfactual (contrary to fact).\n\nFor example, if Zeus takes aspirin and his headache goes away (we observe \\(A = 1\\) and \\(Y = 0\\)), we know that \\(Y^{a=1} = 0\\), but we don’t know what would have happened if he hadn’t taken aspirin (we don’t know \\(Y^{a=0}\\)). Perhaps his headache would have gone away anyway, or perhaps it would have persisted.\nThis is why causal inference is inherently a problem of missing data: for each individual, we observe one potential outcome but not the others. This fundamental problem means we cannot generally compute individual causal effects. However, we can define and, under certain conditions, estimate average causal effects in populations."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#average-causal-effects",
+    "href": "chapters/01-introduction.html#average-causal-effects",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "3 1.2 Average Causal Effects",
+    "text": "3 1.2 Average Causal Effects\nSince we cannot generally measure individual causal effects, we focus on average causal effects in a population. Consider a population of \\(n\\) individuals. Each individual \\(i\\) has two potential outcomes: \\(Y_i^{a=1}\\) and \\(Y_i^{a=0}\\).\nWe define the average causal effect in the population as:\n\\[E[Y^{a=1}] - E[Y^{a=0}]\\]\nwhere \\(E[Y^{a}]\\) denotes the mean of the potential outcome \\(Y^{a}\\) in the population. This is also called the average treatment effect or causal risk difference.\n\nThere is an average causal effect in the population if \\(E[Y^{a=1}] \\neq E[Y^{a=0}]\\), even if there is no causal effect for some individuals. Conversely, there can be individual causal effects for some people even when the average causal effect is zero if the effects in different directions cancel out.\n\n\n3.1 Example: A Simple Population\nConsider a population of 20 individuals. For each person, we can imagine (but not observe) both potential outcomes:\n\n\n\nPerson\n\\(Y^{a=1}\\)\n\\(Y^{a=0}\\)\nIndividual Effect\n\n\n\n\n1\n1\n1\n0\n\n\n2\n1\n1\n0\n\n\n…\n…\n…\n…\n\n\n13\n0\n1\n-1\n\n\n14\n0\n1\n-1\n\n\n…\n…\n…\n…\n\n\n20\n0\n0\n0\n\n\n\nSuppose in this population:\n\n3 individuals have \\(Y^{a=1} = 1\\) and \\(Y^{a=0} = 1\\)\n4 individuals have \\(Y^{a=1} = 0\\) and \\(Y^{a=0} = 0\\)\n\n13 individuals have \\(Y^{a=1} = 0\\) and \\(Y^{a=0} = 1\\)\n0 individuals have \\(Y^{a=1} = 1\\) and \\(Y^{a=0} = 0\\)\n\nThen:\n\\[E[Y^{a=1}] = \\frac{3 + 0 + 0 + 0}{20} = \\frac{3}{20} = 0.15\\]\n\\[E[Y^{a=0}] = \\frac{3 + 0 + 13 + 0}{20} = \\frac{16}{20} = 0.8\\]\n\\[E[Y^{a=1}] - E[Y^{a=0}] = 0.15 - 0.8 = -0.65\\]\n\nThe average causal effect is \\(-0.65\\), which we interpret as follows: if everyone in the population had been treated, the proportion with \\(Y = 1\\) would have been 0.15; if everyone had been untreated, the proportion with \\(Y = 1\\) would have been 0.8. Treatment reduces the risk of \\(Y = 1\\) by 0.65 on average.\nNote that 13 individuals have an individual causal effect (their potential outcomes differ), while 7 do not. The average causal effect is determined by the distribution of individual causal effects in the population.\n\n\n\n3.2 Causal Effects in Subgroups\nWe can also define average causal effects in subgroups of the population. For example, we might be interested in the average causal effect among women:\n\\[E[Y^{a=1}|V=1] - E[Y^{a=0}|V=1]\\]\nwhere \\(V = 1\\) indicates female sex.\n\nThe average causal effect in the entire population is a weighted average of the average causal effects in subgroups, with weights proportional to the size of each subgroup."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#measures-of-causal-effect",
+    "href": "chapters/01-introduction.html#measures-of-causal-effect",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "4 1.3 Measures of Causal Effect",
+    "text": "4 1.3 Measures of Causal Effect\nThe average causal effect can be measured in different ways, depending on the scale we choose. The most common measures for binary outcomes are:\n\n4.1 Risk Difference (Causal Risk Difference)\n\\[E[Y^{a=1}] - E[Y^{a=0}]\\]\nThis is an additive measure that quantifies the absolute difference in risk between treatment levels.\n\n\n4.2 Risk Ratio (Causal Risk Ratio)\n\\[\\frac{E[Y^{a=1}]}{E[Y^{a=0}]}\\]\nThis is a multiplicative measure that quantifies the relative risk under treatment compared to no treatment.\n\nIn our previous example, the risk ratio would be: \\(\\frac{0.15}{0.8} = 0.1875\\). This means the risk under treatment is about 19% of the risk under no treatment, or equivalently, treatment reduces risk to less than one-fifth of its untreated level.\n\n\n\n4.3 Odds Ratio (Causal Odds Ratio)\n\\[\\frac{E[Y^{a=1}]/(1-E[Y^{a=1}])}{E[Y^{a=0}]/(1-E[Y^{a=0}])}\\]\nThis is the ratio of the odds of \\(Y = 1\\) under treatment to the odds under no treatment.\n\n\n4.4 Choosing a Measure\nDifferent measures can lead to different conclusions about the presence of a causal effect:\n\nIf the risk difference is zero, the risk ratio and odds ratio are both 1\nIf the risk ratio is 1, the risk difference and odds ratio may not indicate “no effect”\nIf the odds ratio is 1, the risk difference and risk ratio may not indicate “no effect”\n\n\nTherefore, we need to specify which measure we are using when we discuss “causal effects.” The null hypothesis of no average causal effect depends on the measure:\n\nFor risk difference: \\(E[Y^{a=1}] - E[Y^{a=0}] = 0\\)\nFor risk ratio: \\(E[Y^{a=1}]/E[Y^{a=0}] = 1\\)\n\nFor odds ratio: \\(\\{E[Y^{a=1}]/(1-E[Y^{a=1}])\\}/\\{E[Y^{a=0}]/(1-E[Y^{a=0}])\\} = 1\\)\n\nThese are equivalent null hypotheses: if one is true, all are true (assuming risks are not 0 or 1).\n\n\n\n4.5 Continuous Outcomes\nWhen the outcome \\(Y\\) is continuous rather than binary, the most common measure of causal effect is the mean difference:\n\\[E[Y^{a=1}] - E[Y^{a=0}]\\]"
+  },
+  {
+    "objectID": "chapters/01-introduction.html#random-variability",
+    "href": "chapters/01-introduction.html#random-variability",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "5 1.4 Random Variability",
+    "text": "5 1.4 Random Variability\nUp to now, we have treated the population as fixed and discussed causal effects in that specific population. In practice, however, we often view our study population as a random sample from a larger superpopulation.\n\n5.1 Sample vs. Superpopulation\nSuppose we observe a random sample of individuals from a very large superpopulation. Even if the average causal effect in the superpopulation is zero, the average causal effect in our particular sample may not be exactly zero due to random variability (sampling variation).\n\nFor example, suppose the true average causal effect in the superpopulation is: \\(E[Y^{a=1}] - E[Y^{a=0}] = 0\\). If we draw a random sample of 20 people and compute the sample average causal effect, we might get \\(-0.05\\) or \\(+0.03\\) or some other value close to but not exactly zero. This is random sampling variability.\n\n\n\n5.2 Statistical Inference\nThe goal of statistical inference is to determine whether an observed association in our sample is due to a true causal effect in the superpopulation or merely due to random variability. We use methods such as:\n\nConfidence intervals: Provide a range of plausible values for the average causal effect\nHypothesis tests: Quantify the probability of observing an effect as large as (or larger than) the one we observed, if the null hypothesis of no average causal effect were true\nStandard errors: Quantify the uncertainty in our estimates due to random sampling\n\n\n\n5.3 Point vs. Interval Estimates\nWhen we report an estimated average causal effect, we typically provide:\n\nA point estimate: Our best single-number estimate of the effect\nAn interval estimate: A confidence interval that reflects our uncertainty\n\n\nThe width of the confidence interval depends on:\n\nThe sample size (larger samples give narrower intervals)\nThe variability in the outcome (more variable outcomes give wider intervals)\nThe confidence level (95% intervals are wider than 90% intervals)\n\n\n\n\n5.4 Systematic vs. Random Error\nIt’s important to distinguish between two types of error:\n\nRandom error: Due to sampling variability, can be quantified with confidence intervals\nSystematic error (bias): Due to problems in study design or analysis that make our estimate systematically too high or too low\n\n\nIncreasing the sample size reduces random error but does not reduce systematic error. In fact, with a very large sample, random error becomes negligible, and systematic error dominates. This is why proper study design and appropriate causal inference methods are crucial."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#causation-versus-association",
+    "href": "chapters/01-introduction.html#causation-versus-association",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "6 1.5 Causation versus Association",
+    "text": "6 1.5 Causation versus Association\nA key distinction in causal inference is between causation and association. We’ve defined causation in terms of potential outcomes. Now we need to understand when associations reflect causation.\n\n6.1 Associational Measures\nUnlike causal effects, which are defined in terms of potential outcomes, associations are defined in terms of observed data. The associational risk difference is:\n\\[E[Y|A=1] - E[Y|A=0]\\]\nThis compares the mean outcome in the group that actually received treatment (\\(A = 1\\)) with the mean outcome in the group that actually did not receive treatment (\\(A = 0\\)).\n\nSimilarly, we can define an associational risk ratio (\\(\\frac{E[Y|A=1]}{E[Y|A=0]}\\)) and an associational odds ratio (\\(\\frac{E[Y|A=1]/(1-E[Y|A=1])}{E[Y|A=0]/(1-E[Y|A=0])}\\)).\n\n\n\n6.2 When Does Association Equal Causation?\nThe crucial question is: when does the associational measure equal the causal measure? That is, when does:\n\\[E[Y|A=1] - E[Y|A=0] = E[Y^{a=1}] - E[Y^{a=0}]\\]\nThis equality holds when the treated and untreated groups are exchangeable. Exchangeability means that the potential outcomes are independent of treatment:\n\\[Y^{a=1}, Y^{a=0} \\perp\\!\\!\\!\\perp A\\]\nWhen exchangeability holds, we can interpret the associational measure as a causal effect. When exchangeability does not hold, there is confounding, and the association does not equal the causal effect.\n\n\n6.3 Example: Confounding\nSuppose we observe that people who take aspirin regularly have more heart attacks than people who don’t. The associational risk difference is positive (aspirin is associated with more heart attacks). Does this mean aspirin causes heart attacks?\n\nNot necessarily. It may be that people who take aspirin regularly do so because they have existing heart conditions that put them at higher risk. In this case:\n\n\\(E[Y|A=1] &gt; E[Y|A=0]\\) (association: aspirin users have more heart attacks)\nBut \\(E[Y^{a=1}] &lt; E[Y^{a=0}]\\) (causation: aspirin actually prevents heart attacks)\n\nThe association does not equal the causal effect because of confounding by underlying heart disease. The treated and untreated groups are not exchangeable: they differ in ways (heart disease) that affect the outcome (heart attacks).\n\n\n\n6.4 Randomization and Exchangeability\nOne way to ensure exchangeability is through randomization. If we randomly assign treatment, then by design:\n\\[Y^{a=1}, Y^{a=0} \\perp\\!\\!\\!\\perp A\\]\nbecause treatment assignment is independent of all baseline characteristics, including potential outcomes. In a randomized experiment:\n\\[E[Y|A=1] - E[Y|A=0] = E[Y^{a=1}] - E[Y^{a=0}]\\]\nThis is why randomized experiments are considered the gold standard for causal inference: they guarantee that association equals causation.\n\n\n6.5 Observational Studies\nIn observational studies, treatment is not randomly assigned, so we cannot automatically assume exchangeability. Much of this book is devoted to methods for identifying and estimating causal effects from observational data, where we need to account for confounding through various techniques:\n\nStratification\nMatching\nRegression adjustment\nInverse probability weighting\nInstrumental variables\nAnd others\n\n\nThese methods attempt to eliminate or adjust for confounding so that we can validly estimate causal effects from observational data.\n\n\n\n6.6 The Goal of Causal Inference\nThe goal of causal inference is to estimate causal effects (defined in terms of potential outcomes) using observed data (which only give us associations). This requires:\n\nClear definition of the causal question in terms of potential outcomes\nIdentification of assumptions (like exchangeability) needed to link observed associations to causal effects\nAppropriate statistical methods to estimate causal effects under those assumptions\n\n\nThe remainder of this book develops these ideas systematically, providing a rigorous framework for causal inference from both randomized and observational data."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#summary",
+    "href": "chapters/01-introduction.html#summary",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "7 Summary",
+    "text": "7 Summary\nThis chapter has introduced the fundamental concepts for defining and thinking about causal effects:\n\nIndividual causal effects are defined as differences in an individual’s potential outcomes under different treatments, but cannot be observed due to the fundamental problem of causal inference\nAverage causal effects quantify the mean difference in potential outcomes across a population and can be measured using different scales (risk difference, risk ratio, odds ratio)\nMeasures of causal effect include additive measures (risk difference) and multiplicative measures (risk ratio, odds ratio), and the choice of measure affects the definition of “no effect”\nRandom variability arises when we view our study as a sample from a larger superpopulation, and we use statistical inference to distinguish true effects from chance\nCausation versus association: Associations can be measured from observed data, but they equal causal effects only when exchangeability holds; confounding occurs when association does not equal causation\n\nThese concepts form the foundation for all subsequent chapters, which will develop methods for identifying and estimating causal effects in various settings."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#references",
+    "href": "chapters/01-introduction.html#references",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "8 References",
+    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#the-fundamental-problem-of-causal-inference",
+    "href": "chapters/01-introduction-slides.html#the-fundamental-problem-of-causal-inference",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "The Fundamental Problem of Causal Inference",
+    "text": "The Fundamental Problem of Causal Inference\nThe fundamental problem is that we can never observe both \\(Y^{a=1}\\) and \\(Y^{a=0}\\) for the same individual at the same time. Zeus either takes aspirin or he doesn’t. We observe one potential outcome, but the other remains counterfactual (contrary to fact).\n\nFor example, if Zeus takes aspirin and his headache goes away (we observe \\(A = 1\\) and \\(Y = 0\\)), we know that \\(Y^{a=1} = 0\\), but we don’t know what would have happened if he hadn’t taken aspirin (we don’t know \\(Y^{a=0}\\)). Perhaps his headache would have gone away anyway, or perhaps it would have persisted.\nThis is why causal inference is inherently a problem of missing data: for each individual, we observe one potential outcome but not the others. This fundamental problem means we cannot generally compute individual causal effects. However, we can define and, under certain conditions, estimate average causal effects in populations."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#example-a-simple-population",
+    "href": "chapters/01-introduction-slides.html#example-a-simple-population",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Example: A Simple Population",
+    "text": "Example: A Simple Population\nConsider a population of 20 individuals. For each person, we can imagine (but not observe) both potential outcomes:\n\n\n\nPerson\n\\(Y^{a=1}\\)\n\\(Y^{a=0}\\)\nIndividual Effect\n\n\n\n\n1\n1\n1\n0\n\n\n2\n1\n1\n0\n\n\n…\n…\n…\n…\n\n\n13\n0\n1\n-1\n\n\n14\n0\n1\n-1\n\n\n…\n…\n…\n…\n\n\n20\n0\n0\n0\n\n\n\nSuppose in this population:\n\n3 individuals have \\(Y^{a=1} = 1\\) and \\(Y^{a=0} = 1\\)\n4 individuals have \\(Y^{a=1} = 0\\) and \\(Y^{a=0} = 0\\)\n\n13 individuals have \\(Y^{a=1} = 0\\) and \\(Y^{a=0} = 1\\)\n0 individuals have \\(Y^{a=1} = 1\\) and \\(Y^{a=0} = 0\\)\n\nThen:\n\\[E[Y^{a=1}] = \\frac{3 + 0 + 0 + 0}{20} = \\frac{3}{20} = 0.15\\]\n\\[E[Y^{a=0}] = \\frac{3 + 0 + 13 + 0}{20} = \\frac{16}{20} = 0.8\\]\n\\[E[Y^{a=1}] - E[Y^{a=0}] = 0.15 - 0.8 = -0.65\\]\n\nThe average causal effect is \\(-0.65\\), which we interpret as follows: if everyone in the population had been treated, the proportion with \\(Y = 1\\) would have been 0.15; if everyone had been untreated, the proportion with \\(Y = 1\\) would have been 0.8. Treatment reduces the risk of \\(Y = 1\\) by 0.65 on average.\nNote that 13 individuals have an individual causal effect (their potential outcomes differ), while 7 do not. The average causal effect is determined by the distribution of individual causal effects in the population."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#causal-effects-in-subgroups",
+    "href": "chapters/01-introduction-slides.html#causal-effects-in-subgroups",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Causal Effects in Subgroups",
+    "text": "Causal Effects in Subgroups\nWe can also define average causal effects in subgroups of the population. For example, we might be interested in the average causal effect among women:\n\\[E[Y^{a=1}|V=1] - E[Y^{a=0}|V=1]\\]\nwhere \\(V = 1\\) indicates female sex.\n\nThe average causal effect in the entire population is a weighted average of the average causal effects in subgroups, with weights proportional to the size of each subgroup."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#risk-difference-causal-risk-difference",
+    "href": "chapters/01-introduction-slides.html#risk-difference-causal-risk-difference",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Risk Difference (Causal Risk Difference)",
+    "text": "Risk Difference (Causal Risk Difference)\n\\[E[Y^{a=1}] - E[Y^{a=0}]\\]\nThis is an additive measure that quantifies the absolute difference in risk between treatment levels."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#risk-ratio-causal-risk-ratio",
+    "href": "chapters/01-introduction-slides.html#risk-ratio-causal-risk-ratio",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Risk Ratio (Causal Risk Ratio)",
+    "text": "Risk Ratio (Causal Risk Ratio)\n\\[\\frac{E[Y^{a=1}]}{E[Y^{a=0}]}\\]\nThis is a multiplicative measure that quantifies the relative risk under treatment compared to no treatment.\n\nIn our previous example, the risk ratio would be: \\(\\frac{0.15}{0.8} = 0.1875\\). This means the risk under treatment is about 19% of the risk under no treatment, or equivalently, treatment reduces risk to less than one-fifth of its untreated level."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#odds-ratio-causal-odds-ratio",
+    "href": "chapters/01-introduction-slides.html#odds-ratio-causal-odds-ratio",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Odds Ratio (Causal Odds Ratio)",
+    "text": "Odds Ratio (Causal Odds Ratio)\n\\[\\frac{E[Y^{a=1}]/(1-E[Y^{a=1}])}{E[Y^{a=0}]/(1-E[Y^{a=0}])}\\]\nThis is the ratio of the odds of \\(Y = 1\\) under treatment to the odds under no treatment."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#choosing-a-measure",
+    "href": "chapters/01-introduction-slides.html#choosing-a-measure",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Choosing a Measure",
+    "text": "Choosing a Measure\nDifferent measures can lead to different conclusions about the presence of a causal effect:\n\nIf the risk difference is zero, the risk ratio and odds ratio are both 1\nIf the risk ratio is 1, the risk difference and odds ratio may not indicate “no effect”\nIf the odds ratio is 1, the risk difference and risk ratio may not indicate “no effect”\n\n\nTherefore, we need to specify which measure we are using when we discuss “causal effects.” The null hypothesis of no average causal effect depends on the measure:\n\nFor risk difference: \\(E[Y^{a=1}] - E[Y^{a=0}] = 0\\)\nFor risk ratio: \\(E[Y^{a=1}]/E[Y^{a=0}] = 1\\)\n\nFor odds ratio: \\(\\{E[Y^{a=1}]/(1-E[Y^{a=1}])\\}/\\{E[Y^{a=0}]/(1-E[Y^{a=0}])\\} = 1\\)\n\nThese are equivalent null hypotheses: if one is true, all are true (assuming risks are not 0 or 1)."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#continuous-outcomes",
+    "href": "chapters/01-introduction-slides.html#continuous-outcomes",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Continuous Outcomes",
+    "text": "Continuous Outcomes\nWhen the outcome \\(Y\\) is continuous rather than binary, the most common measure of causal effect is the mean difference:\n\\[E[Y^{a=1}] - E[Y^{a=0}]\\]"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#sample-vs.-superpopulation",
+    "href": "chapters/01-introduction-slides.html#sample-vs.-superpopulation",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Sample vs. Superpopulation",
+    "text": "Sample vs. Superpopulation\nSuppose we observe a random sample of individuals from a very large superpopulation. Even if the average causal effect in the superpopulation is zero, the average causal effect in our particular sample may not be exactly zero due to random variability (sampling variation).\n\nFor example, suppose the true average causal effect in the superpopulation is: \\(E[Y^{a=1}] - E[Y^{a=0}] = 0\\). If we draw a random sample of 20 people and compute the sample average causal effect, we might get \\(-0.05\\) or \\(+0.03\\) or some other value close to but not exactly zero. This is random sampling variability."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#statistical-inference",
+    "href": "chapters/01-introduction-slides.html#statistical-inference",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Statistical Inference",
+    "text": "Statistical Inference\nThe goal of statistical inference is to determine whether an observed association in our sample is due to a true causal effect in the superpopulation or merely due to random variability. We use methods such as:\n\nConfidence intervals: Provide a range of plausible values for the average causal effect\nHypothesis tests: Quantify the probability of observing an effect as large as (or larger than) the one we observed, if the null hypothesis of no average causal effect were true\nStandard errors: Quantify the uncertainty in our estimates due to random sampling"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#point-vs.-interval-estimates",
+    "href": "chapters/01-introduction-slides.html#point-vs.-interval-estimates",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Point vs. Interval Estimates",
+    "text": "Point vs. Interval Estimates\nWhen we report an estimated average causal effect, we typically provide:\n\nA point estimate: Our best single-number estimate of the effect\nAn interval estimate: A confidence interval that reflects our uncertainty\n\n\nThe width of the confidence interval depends on:\n\nThe sample size (larger samples give narrower intervals)\nThe variability in the outcome (more variable outcomes give wider intervals)\nThe confidence level (95% intervals are wider than 90% intervals)"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#systematic-vs.-random-error",
+    "href": "chapters/01-introduction-slides.html#systematic-vs.-random-error",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Systematic vs. Random Error",
+    "text": "Systematic vs. Random Error\nIt’s important to distinguish between two types of error:\n\nRandom error: Due to sampling variability, can be quantified with confidence intervals\nSystematic error (bias): Due to problems in study design or analysis that make our estimate systematically too high or too low\n\n\nIncreasing the sample size reduces random error but does not reduce systematic error. In fact, with a very large sample, random error becomes negligible, and systematic error dominates. This is why proper study design and appropriate causal inference methods are crucial."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#associational-measures",
+    "href": "chapters/01-introduction-slides.html#associational-measures",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Associational Measures",
+    "text": "Associational Measures\nUnlike causal effects, which are defined in terms of potential outcomes, associations are defined in terms of observed data. The associational risk difference is:\n\\[E[Y|A=1] - E[Y|A=0]\\]\nThis compares the mean outcome in the group that actually received treatment (\\(A = 1\\)) with the mean outcome in the group that actually did not receive treatment (\\(A = 0\\)).\n\nSimilarly, we can define an associational risk ratio (\\(\\frac{E[Y|A=1]}{E[Y|A=0]}\\)) and an associational odds ratio (\\(\\frac{E[Y|A=1]/(1-E[Y|A=1])}{E[Y|A=0]/(1-E[Y|A=0])}\\))."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#when-does-association-equal-causation",
+    "href": "chapters/01-introduction-slides.html#when-does-association-equal-causation",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "When Does Association Equal Causation?",
+    "text": "When Does Association Equal Causation?\nThe crucial question is: when does the associational measure equal the causal measure? That is, when does:\n\\[E[Y|A=1] - E[Y|A=0] = E[Y^{a=1}] - E[Y^{a=0}]\\]\nThis equality holds when the treated and untreated groups are exchangeable. Exchangeability means that the potential outcomes are independent of treatment:\n\\[Y^{a=1}, Y^{a=0} \\perp\\!\\!\\!\\perp A\\]\nWhen exchangeability holds, we can interpret the associational measure as a causal effect. When exchangeability does not hold, there is confounding, and the association does not equal the causal effect."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#example-confounding",
+    "href": "chapters/01-introduction-slides.html#example-confounding",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Example: Confounding",
+    "text": "Example: Confounding\nSuppose we observe that people who take aspirin regularly have more heart attacks than people who don’t. The associational risk difference is positive (aspirin is associated with more heart attacks). Does this mean aspirin causes heart attacks?\n\nNot necessarily. It may be that people who take aspirin regularly do so because they have existing heart conditions that put them at higher risk. In this case:\n\n\\(E[Y|A=1] &gt; E[Y|A=0]\\) (association: aspirin users have more heart attacks)\nBut \\(E[Y^{a=1}] &lt; E[Y^{a=0}]\\) (causation: aspirin actually prevents heart attacks)\n\nThe association does not equal the causal effect because of confounding by underlying heart disease. The treated and untreated groups are not exchangeable: they differ in ways (heart disease) that affect the outcome (heart attacks)."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#randomization-and-exchangeability",
+    "href": "chapters/01-introduction-slides.html#randomization-and-exchangeability",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Randomization and Exchangeability",
+    "text": "Randomization and Exchangeability\nOne way to ensure exchangeability is through randomization. If we randomly assign treatment, then by design:\n\\[Y^{a=1}, Y^{a=0} \\perp\\!\\!\\!\\perp A\\]\nbecause treatment assignment is independent of all baseline characteristics, including potential outcomes. In a randomized experiment:\n\\[E[Y|A=1] - E[Y|A=0] = E[Y^{a=1}] - E[Y^{a=0}]\\]\nThis is why randomized experiments are considered the gold standard for causal inference: they guarantee that association equals causation."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#observational-studies",
+    "href": "chapters/01-introduction-slides.html#observational-studies",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Observational Studies",
+    "text": "Observational Studies\nIn observational studies, treatment is not randomly assigned, so we cannot automatically assume exchangeability. Much of this book is devoted to methods for identifying and estimating causal effects from observational data, where we need to account for confounding through various techniques:\n\nStratification\nMatching\nRegression adjustment\nInverse probability weighting\nInstrumental variables\nAnd others\n\n\nThese methods attempt to eliminate or adjust for confounding so that we can validly estimate causal effects from observational data."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#the-goal-of-causal-inference",
+    "href": "chapters/01-introduction-slides.html#the-goal-of-causal-inference",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "The Goal of Causal Inference",
+    "text": "The Goal of Causal Inference\nThe goal of causal inference is to estimate causal effects (defined in terms of potential outcomes) using observed data (which only give us associations). This requires:\n\nClear definition of the causal question in terms of potential outcomes\nIdentification of assumptions (like exchangeability) needed to link observed associations to causal effects\nAppropriate statistical methods to estimate causal effects under those assumptions\n\n\nThe remainder of this book develops these ideas systematically, providing a rigorous framework for causal inference from both randomized and observational data."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#key-benefits",
+    "href": "chapters/02-randomized-experiments-slides.html#key-benefits",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Key Benefits",
+    "text": "Key Benefits\n\nEliminates confounding\nBalances groups\nSimplifies analysis\nClear causal interpretation\n\n\nResult: Simple difference in means estimates the average causal effect!"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#randomization-ensures",
+    "href": "chapters/02-randomized-experiments-slides.html#randomization-ensures",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Randomization Ensures",
+    "text": "Randomization Ensures\n\\[P(A=a|L) = P(A=a)\\]\nTreatment independent of baseline covariates"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#causal-effect-estimation",
+    "href": "chapters/02-randomized-experiments-slides.html#causal-effect-estimation",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Causal Effect Estimation",
+    "text": "Causal Effect Estimation\n\\[E[Y^{a=1}] - E[Y^{a=0}] = E[Y|A=1] - E[Y|A=0]\\]\nSimple difference in means!"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#randomization-approaches",
+    "href": "chapters/02-randomized-experiments-slides.html#randomization-approaches",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Randomization Approaches",
+    "text": "Randomization Approaches\n\nSimple: Flip a coin\nStratified: Balance on key variables\nBlock: Equal group sizes\nCluster: Randomize groups\n\n\nChoice depends on study design and constraints"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#analysis-approaches",
+    "href": "chapters/02-randomized-experiments-slides.html#analysis-approaches",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Analysis Approaches",
+    "text": "Analysis Approaches\n\nITT: Analyze as randomized ✓\nPer-protocol: Only adherent\nAs-treated: Actual treatment received\n\n\nITT is preferred for validity"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#limitations-of-rcts",
+    "href": "chapters/02-randomized-experiments-slides.html#limitations-of-rcts",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Limitations of RCTs",
+    "text": "Limitations of RCTs\n\nEthical constraints\nHigh cost\nGeneralizability concerns\nCompliance issues\nFeasibility constraints\n\n\nThis is why we need observational study methods!"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#key-takeaways",
+    "href": "chapters/02-randomized-experiments-slides.html#key-takeaways",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Key Takeaways",
+    "text": "Key Takeaways\n\nRandomization eliminates confounding\nSimple analysis: difference in means\nITT preserves validity\nLimitations drive need for observational methods"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#next-observational-studies",
+    "href": "chapters/02-randomized-experiments-slides.html#next-observational-studies",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Next: Observational Studies",
+    "text": "Next: Observational Studies"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html",
+    "href": "chapters/02-randomized-experiments.html",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "",
+    "text": "Randomized experiments are considered the gold standard for causal inference. In a randomized experiment, treatment assignment is determined by a random mechanism, which ensures that treatment groups are comparable in expectation with respect to all baseline characteristics, both measured and unmeasured."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#introduction-to-randomized-experiments",
+    "href": "chapters/02-randomized-experiments.html#introduction-to-randomized-experiments",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "",
+    "text": "Randomized experiments are considered the gold standard for causal inference. In a randomized experiment, treatment assignment is determined by a random mechanism, which ensures that treatment groups are comparable in expectation with respect to all baseline characteristics, both measured and unmeasured."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#why-randomize",
+    "href": "chapters/02-randomized-experiments.html#why-randomize",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "2 Why Randomize?",
+    "text": "2 Why Randomize?\nRandomization provides several key benefits:\n\nEliminates confounding: By randomly assigning treatment, we break any association between treatment and pre-treatment covariates\nBalances groups: Treated and untreated groups are comparable in expectation on all baseline characteristics\nSimplifies analysis: The average treatment effect can be estimated by a simple difference in means\nProvides validity: Results have a clear causal interpretation without requiring untestable assumptions"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#mathematical-framework",
+    "href": "chapters/02-randomized-experiments.html#mathematical-framework",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "3 Mathematical Framework",
+    "text": "3 Mathematical Framework\nIn a randomized experiment with treatment \\(A \\in \\{0,1\\}\\) and outcome \\(Y\\), we have:\n\\[P(A=a|L) = P(A=a)\\]\nwhere \\(L\\) represents all pre-treatment covariates. This means treatment assignment is independent of all baseline characteristics. As a result, the average causal effect can be estimated as:\n\\[E[Y^{a=1}] - E[Y^{a=0}] = E[Y|A=1] - E[Y|A=0]\\]\nThe right-hand side is simply the difference in observed mean outcomes between treatment groups, which can be estimated from the data without bias."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#types-of-randomization",
+    "href": "chapters/02-randomized-experiments.html#types-of-randomization",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "4 Types of Randomization",
+    "text": "4 Types of Randomization\nThere are several approaches to randomization:\nSimple Randomization: Each individual is assigned to treatment or control with a fixed probability (e.g., 50%). This is easy to implement but can result in imbalanced group sizes in small samples.\nStratified Randomization: Randomization is performed separately within strata defined by important covariates. This ensures balance on these key variables and can improve precision.\nBlock Randomization: Randomization is done in blocks to ensure approximately equal numbers in each treatment group. This is particularly useful in sequential trials.\nCluster Randomization: Groups (clusters) of individuals are randomized together. This is used when individual randomization is not feasible."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#analysis-of-randomized-trials",
+    "href": "chapters/02-randomized-experiments.html#analysis-of-randomized-trials",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "5 Analysis of Randomized Trials",
+    "text": "5 Analysis of Randomized Trials\nThe analysis of randomized experiments is straightforward due to the exchangeability guaranteed by randomization:\n\nIntention-to-treat (ITT): Compare groups as randomized, regardless of actual treatment received. This preserves randomization and provides a valid causal estimate.\nPer-protocol: Compare only those who adhered to their assigned treatment. This can be biased if adherence is related to potential outcomes.\nAs-treated: Analyze based on treatment actually received. This is essentially an observational analysis and loses the benefits of randomization.\n\nThe ITT analysis is generally preferred as it maintains the validity of randomization and provides an unbiased estimate of the causal effect of treatment assignment."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#limitations",
+    "href": "chapters/02-randomized-experiments.html#limitations",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "6 Limitations",
+    "text": "6 Limitations\nDespite their advantages, randomized experiments have limitations:\n\nEthical constraints: Not all questions can be studied via randomization\nCost: Randomized trials can be expensive and time-consuming\nExternal validity: Results may not generalize to other populations\nCompliance: Non-adherence can complicate analysis\nFeasibility: Some interventions cannot be randomized\n\nThese limitations explain why observational studies remain important and why methods for causal inference from observational data are necessary."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#summary",
+    "href": "chapters/02-randomized-experiments.html#summary",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "7 Summary",
+    "text": "7 Summary\nRandomized experiments provide the strongest foundation for causal inference by ensuring exchangeability through random treatment assignment. The causal effect can be estimated by a simple comparison of outcomes between randomized groups. However, practical and ethical constraints limit the applicability of randomization, necessitating methods for causal inference from observational data, which we will explore in subsequent chapters."
+  }
+]
