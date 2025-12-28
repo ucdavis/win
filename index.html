@@ -338,7 +338,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#navigation" id="toc-navigation" class="nav-link" data-scroll-target="#navigation"><span class="header-section-number">0.2</span> Navigation</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/ucdavis/win/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ucdavis/win/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/ucdavis/win/blob/main/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="index-handout.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/ucdavis/win/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ucdavis/win/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/ucdavis/win/blob/main/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="index-handout.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="index.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -357,7 +357,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last modified: 2025-12-28 11:57:41 (UTC)</p>
+      <p class="date">Last modified: 2025-12-28 19:10:58 (UTC)</p>
     </div>
   </div>
   
@@ -372,10 +372,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="welcome" class="level1 unnumbered">
 <h1 class="unnumbered">Welcome</h1>
 <p>This is a Quarto book project based on the textbook “What If?” by Miguel Hernán and James Robins.</p>
-<p>The notes are available in two formats:</p>
+<p>The notes are available in multiple formats:</p>
 <ul>
 <li><strong>HTML Book</strong>: Navigate using the sidebar for a traditional book reading experience</li>
 <li><strong>RevealJS Slides</strong>: Each chapter also generates a presentation format with <code>-slides.html</code> suffix</li>
+<li><strong>PDF Handouts</strong>: Each chapter generates a PDF handout with <code>-handout.pdf</code> suffix</li>
+<li><strong>DOCX Documents</strong>: Each chapter generates a Microsoft Word document with <code>.docx</code> extension</li>
 </ul>
 <section id="about-this-project" class="level2" data-number="0.1">
 <h2 data-number="0.1" class="anchored" data-anchor-id="about-this-project"><span class="header-section-number">0.1</span> About this project</h2>
@@ -383,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="navigation" class="level2" data-number="0.2">
 <h2 data-number="0.2" class="anchored" data-anchor-id="navigation"><span class="header-section-number">0.2</span> Navigation</h2>
-<p>Use the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add <code>-slides.html</code> to the chapter URL)</p>
+<p>Use the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add <code>-slides.html</code> to the chapter URL) - PDF handout (add <code>-handout.pdf</code> to the chapter URL) - DOCX document (replace <code>.html</code> with <code>.docx</code> in the chapter URL)</p>
 
 
 <!-- -->
@@ -866,26 +868,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: index-slides.html</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf:</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: index-handout.pdf</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu"># Welcome {.unnumbered}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  docx:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: index.docx</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>This is a Quarto book project based on the textbook "What If?" by Miguel Hernán and James Robins.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu"># Welcome {.unnumbered}</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>The notes are available in two formats:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>This is a Quarto book project based on the textbook "What If?" by Miguel Hernán and James Robins.</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**HTML Book**: Navigate using the sidebar for a traditional book reading experience</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**RevealJS Slides**: Each chapter also generates a presentation format with <span class="in">`-slides.html`</span> suffix</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this project</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>These lecture notes follow the structure and content from <span class="co">[</span><span class="ot">What If? by Hernán MA, Robins JM</span><span class="co">](https://miguelhernan.org/whatifbook)</span>.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>The notes are available in multiple formats:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**HTML Book**: Navigate using the sidebar for a traditional book reading experience</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**RevealJS Slides**: Each chapter also generates a presentation format with <span class="in">`-slides.html`</span> suffix</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**PDF Handouts**: Each chapter generates a PDF handout with <span class="in">`-handout.pdf`</span> suffix</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**DOCX Documents**: Each chapter generates a Microsoft Word document with <span class="in">`.docx`</span> extension</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Navigation</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this project</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Use the sidebar to navigate between chapters. Each chapter is available as:</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A traditional HTML page (click the chapter name)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>RevealJS slides (add <span class="in">`-slides.html`</span> to the chapter URL)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>These lecture notes follow the structure and content from <span class="co">[</span><span class="ot">What If? by Hernán MA, Robins JM</span><span class="co">](https://miguelhernan.org/whatifbook)</span>.</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Navigation</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Use the sidebar to navigate between chapters. Each chapter is available as:</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A traditional HTML page (click the chapter name)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>RevealJS slides (add <span class="in">`-slides.html`</span> to the chapter URL)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>PDF handout (add <span class="in">`-handout.pdf`</span> to the chapter URL)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>DOCX document (replace <span class="in">`.html`</span> with <span class="in">`.docx`</span> in the chapter URL)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

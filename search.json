@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "What If? - Lecture Notes",
     "section": "",
-    "text": "This is a Quarto book project based on the textbook “What If?” by Miguel Hernán and James Robins.\nThe notes are available in two formats:\n\nHTML Book: Navigate using the sidebar for a traditional book reading experience\nRevealJS Slides: Each chapter also generates a presentation format with -slides.html suffix\n\n\n\nThese lecture notes follow the structure and content from What If? by Hernán MA, Robins JM.\n\n\n\nUse the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL)"
+    "text": "This is a Quarto book project based on the textbook “What If?” by Miguel Hernán and James Robins.\nThe notes are available in multiple formats:\n\nHTML Book: Navigate using the sidebar for a traditional book reading experience\nRevealJS Slides: Each chapter also generates a presentation format with -slides.html suffix\nPDF Handouts: Each chapter generates a PDF handout with -handout.pdf suffix\nDOCX Documents: Each chapter generates a Microsoft Word document with .docx extension\n\n\n\nThese lecture notes follow the structure and content from What If? by Hernán MA, Robins JM.\n\n\n\nUse the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL) - PDF handout (add -handout.pdf to the chapter URL) - DOCX document (replace .html with .docx in the chapter URL)"
   },
   {
     "objectID": "index.html#about-this-project",
@@ -18,7 +18,7 @@
     "href": "index.html#navigation",
     "title": "What If? - Lecture Notes",
     "section": "",
-    "text": "Use the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL)"
+    "text": "Use the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL) - PDF handout (add -handout.pdf to the chapter URL) - DOCX document (replace .html with .docx in the chapter URL)"
   },
   {
     "objectID": "chapters/01-introduction.html",
