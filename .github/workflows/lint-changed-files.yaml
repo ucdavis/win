@@ -26,7 +26,7 @@ jobs:
 
       - name: Add lintr options
         run: |
-          cat('\noptions(lintr.linter_file = ".lintr")\n', file = "~/.Rprofile", append = TRUE)
+          cat('\noptions(lintr.linter_file = ".lintr.R")\n', file = "~/.Rprofile", append = TRUE)
         shell: Rscript {0}
 
       - name: Extract and lint files changed by this PR
