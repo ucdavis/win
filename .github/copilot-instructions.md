@@ -212,6 +212,11 @@ spelling::spell_check_files("README.md")
 - Include explanatory text before code chunks
 - Add comments within complex code blocks
 - Reference the "What If?" textbook (Hernán MA, Robins JM) when applicable
+- **Include original textbook page numbers in section headers**: When creating chapter content based on the "What If?" textbook, include the corresponding page numbers from the original text in section headers to help readers cross-reference with the source material
+  - Format: `## Section Title (pp. XX-YY)` for page ranges or `## Section Title (p. XX)` for single pages
+  - Example: `## Randomization (pp. 11-15)` or `## Consistency Assumption (p. 8)`
+  - Include page numbers for major sections (level 2 headers `##`) when the content directly corresponds to specific textbook sections
+  - Page numbers should reference the print edition of "Causal Inference: What If?" by Hernán MA and Robins JM
 - Use code chunk options appropriately:
   - `echo=FALSE` to hide code in HTML, or use format-specific visibility
   - `message=FALSE` to suppress messages
@@ -408,6 +413,7 @@ This is a mandatory step - do not skip reading the logs when debugging workflow 
 
 - Set random seeds for reproducibility: `set.seed()` or `withr::local_seed()`
 - Document the causal concepts and their sources (refer to Hernán & Robins when applicable)
+- Include original textbook page numbers in section headers when content corresponds to specific sections of the "What If?" textbook
 - Include references to papers and textbooks
 - Explain DAGs and causal assumptions clearly
 - Use clear notation for potential outcomes and interventions
