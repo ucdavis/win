@@ -10,6 +10,7 @@ on:
     paths:
       - 'chapters/**'
       - '_quarto.yml'
+      - '_quarto-*.yml'
       - '.github/workflows/preview.yml'
       - '.github/workflows/publish.yml'
       - '*.qmd'
@@ -47,12 +48,12 @@ jobs:
       - name: list files
         shell: bash
         run: |
-          echo "contents of _book:"
-          ls _book/ || echo "_book directory not found"
+          echo "contents of _site:"
+          ls _site/ || echo "_site directory not found"
           echo "contents of .:"
           ls .
       - name: Deploy PR Preview
         uses: rossjrw/pr-preview-action@main
         with:
-          source-dir: _book/
+          source-dir: _site/
           pages-base-url: scaling-robot-wry3qok.pages.github.io

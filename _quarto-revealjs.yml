@@ -1,0 +1,44 @@
+project:
+  output-dir: _slides
+
+format:
+  revealjs:
+    lightbox: true
+    theme: simple
+    embed-resources: true
+    fig-cap-location: top
+    html-math-method: mathjax
+    smaller: true
+    number-sections: true
+    progress: true
+    incremental: false
+    df-print: paged
+    number-depth: 2
+    slide-number: true
+    shift-heading-level-by: -1
+    slide-level: 2
+    scrollable: true
+    echo: true
+    margin: 0.0
+    code-fold: true
+    code-link: true
+    code-summary: "[R code]"
+    auto-stretch: true
+    fig-height: 5
+    fig-width: 7
+    chalkboard: true
+    preview-links: auto
+    controls: true
+    transition: slide
+    background-transition: fade
+
+execute:
+  warning: false
+  message: false
+  cache: false
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"

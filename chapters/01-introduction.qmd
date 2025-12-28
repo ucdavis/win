@@ -1,10 +1,11 @@
 ---
 title: "Chapter 1: Introduction"
 format:
-  html:
-    toc: true
+  html: default
   revealjs:
-    slide-number: true
+    output-file: 01-introduction-slides.html
+  pdf:
+    output-file: 01-introduction-handout.pdf
 ---
 
 ## Overview

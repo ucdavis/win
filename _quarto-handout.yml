@@ -1,0 +1,34 @@
+project:
+  output-dir: _handouts
+  render:
+    - "index.qmd"
+    - "chapters/01-introduction.qmd"
+    - "chapters/02-randomized-experiments.qmd"
+
+format:
+  pdf:
+    geometry:
+      - top=15mm
+      - bottom=20mm
+    keep-md: false
+    keep-tex: false
+    toc: true
+    fig-pos: "H"
+    toc-title: Contents
+    df-print: tibble
+    links-as-notes: true
+    documentclass: article
+    colorlinks: true
+    number-sections: true
+    number-depth: 3
+
+execute:
+  warning: false
+  message: false
+  cache: false
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"

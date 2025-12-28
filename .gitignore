@@ -1,4 +1,7 @@
 /_book/
+/_site/
+/_slides/
+/_handouts/
 /.quarto/
 *_cache/
 *_files/
@@ -8,4 +11,5 @@
 .Ruserdata
 *.html
 !docs/*.html
+*.tex
 .DS_Store
