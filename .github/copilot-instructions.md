@@ -1,61 +1,117 @@
-# Copilot Instructions for win Repository
+# GitHub Copilot Instructions for win Repository
 
-This document provides essential guidelines for GitHub Copilot when working on the "What If?" lecture notes repository. The project is a Quarto website that renders to HTML, RevealJS, and PDF formats.
+> [!IMPORTANT]
+> **MANDATORY ENVIRONMENT SETUP - DO THIS FIRST, ALWAYS:**
+> 
+> At the START of EVERY work session on this repository:
+> 1. **IMMEDIATELY install R 4.5.2+, Quarto, TinyTeX** (see Installation section below)
+> 2. **Run `renv::restore()`** to install all R packages
+> 3. **Verify tools are working** with `quarto --version` and `R --version`
+>
+> **MANDATORY TESTING BEFORE EVERY COMMIT:**
+> 
+> Before committing ANY changes to `.qmd` or config files:
+> 1. **Run `quarto render` on the FULL repository** (not individual files)
+> 2. **Verify it completes successfully** (exit code 0, no errors)
+> 3. **Check all 3 output formats exist** in `_site/`: HTML, RevealJS slides, PDF handouts
+> 4. Only then commit your changes
+>
+> **CRITICAL RULES:**
+> - **CI is NOT the test** - you must test locally BEFORE pushing
+> - **NEVER rely on CI to discover rendering errors** - that's your job
+> - **ALWAYS run full `quarto render`** - testing individual files is insufficient
+> - **This is a hard requirement - no exceptions, no excuses**
 
-## Installation and Setup
+## Project Overview
 
-### Installing R
+`win` is a Quarto website containing lecture notes based on Hernán MA and Robins JM's "Causal Inference: What If?" textbook. The project demonstrates Quarto's multi-format capabilities, rendering each chapter as HTML pages, RevealJS slides, and PDF handouts from the same source files.
 
-**CRITICAL**: When installing R, you MUST use the latest R release from CRAN.
+## Technology Stack
 
-**On Ubuntu/Debian**:
+- **Language**: R (version 4.0+, **always use the latest R release** in development and CI/CD)
+- **Documentation Format**: Quarto (.qmd files)
+- **Dependency Management**: renv for R package management
+- **Visualization**: ggplot2, tidyverse
+- **Code Style**: tidyverse style guide
+- **CI/CD**: GitHub Actions workflows
+- **Version Control**: Git/GitHub
+- **Website Generation**: Quarto with multi-format rendering (HTML, RevealJS, PDF)
+
+## Development Setup
+
+### General Principles
+
+**CRITICAL**: Do not make assumptions about what code will do - always test it yourself.
+
+**ENVIRONMENT SETUP IS MANDATORY:**
+- At the START of EVERY work session, install R, Quarto, and TinyTeX IMMEDIATELY
+- Never start making changes without having the full development environment ready
+- CI is for final verification ONLY - you must test locally FIRST
+- Your working environment should mirror the CI environment
+
+**MANDATORY WORKFLOW FOR ANY `.qmd` OR CONFIG CHANGES:**
+1. **FIRST: Install required tools** (R 4.5.2+, Quarto, TinyTeX) if not already installed
+2. **ALWAYS run FULL `quarto render`** on the entire repository before committing
+3. **Test individual files only for rapid iteration** - final verification MUST be full render
+4. **NEVER commit changes without successful full `quarto render`**
+5. **CI is NOT a substitute for local testing** - CI failures mean you failed to test properly
+
+- **Install required software first**: Ensure all necessary tools (R, Quarto, TinyTeX) are installed before starting work
+- **Test your changes**: Run the actual commands to verify functionality
+- **Run `quarto render` on FULL repository**: Testing individual files misses cross-file issues
+- **Verify output**: Check that expected files are created with correct content
+- **Never claim success without evidence**: Only report that something works after you've confirmed it yourself
+
+### Prerequisites
+
+1. R (**always use the latest R release**, currently R 4.5.2 or later)
+2. RStudio (optional but recommended)
+3. Quarto CLI (https://quarto.org/docs/get-started/)
+4. pandoc (usually bundled with RStudio or Quarto)
+5. **TinyTeX** (required for PDF rendering - see installation below)
+
+### Installation
+
+**CRITICAL**: Always install the latest R release AND all required tools before starting development or testing.
+
+**On Ubuntu/Debian systems**:
 ```bash
-# Add CRAN repository first to get the latest R version
-sudo apt update -qq
-sudo apt install --no-install-recommends software-properties-common dirmngr
-wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.gpg | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
-sudo apt install --no-install-recommends r-base
+# Add CRAN GPG key
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 
-# Verify R version (should be 4.5.2 or later)
+# Add CRAN repository (replace $(lsb_release -cs) with your Ubuntu codename if needed)
+sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+
+# Update and install latest R
+sudo apt-get update
+sudo apt-get install -y r-base r-base-dev
+
+# Verify you have the latest version (should be 4.5.2 or later)
 R --version
 ```
 
-**NEVER** use the default Ubuntu R package (e.g., `apt-get install r-base` without adding CRAN repo) as it will be outdated (e.g., R 4.3.3 instead of R 4.5.2).
+**NEVER** use the R version from standard Ubuntu repositories (apt-get install r-base without adding CRAN repo) as it will be outdated (e.g., R 4.3.3 instead of R 4.5.2).
 
 **On other systems**: Download the latest R release from https://cloud.r-project.org/
 
-To set up the development environment:
+**Install Quarto** (required for rendering):
 
-```r
-# Install renv if not already installed
-install.packages("renv")
-
-# Restore package dependencies from renv.lock
-renv::restore()
-```
-
-### Installing Quarto
-
-Download and install Quarto from https://quarto.org/docs/get-started/
-
+On Ubuntu/Linux:
 ```bash
-# On Ubuntu/Debian
+# Download and install Quarto (check https://quarto.org/docs/get-started/ for latest version)
 wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.550/quarto-1.4.550-linux-amd64.deb
 sudo dpkg -i quarto-1.4.550-linux-amd64.deb
-```
 
-Verify installation:
-```bash
+# Verify installation
 quarto --version
 ```
 
-### Installing TinyTeX (for PDF rendering)
+On macOS/Windows: Download installer from https://quarto.org/docs/get-started/
 
-TinyTeX is required for rendering PDF handouts:
+**Install TinyTeX** (required for PDF rendering):
 
 ```bash
-# Install via Quarto (preferred method)
+# Via Quarto (preferred method)
 quarto install tinytex --no-prompt
 
 # Verify installation
@@ -66,6 +122,16 @@ Alternative via R:
 ```r
 install.packages("tinytex")
 tinytex::install_tinytex()
+```
+
+**Install R package dependencies**:
+
+```r
+# Install renv if not already installed
+install.packages("renv")
+
+# Restore package dependencies from renv.lock
+renv::restore()
 ```
 
 ### Key Dependencies
@@ -82,35 +148,12 @@ The project uses packages including:
 # Preview the website locally (with live reload)
 quarto preview
 
-# Render the entire website (HTML, RevealJS, and PDF formats)
+# Render the entire website
 quarto render
 
-# Render without PDF (if TinyTeX is not installed)
-quarto render --to html,revealjs
-
-# Render a specific chapter
+# Render a specific document
 quarto render chapters/01-introduction.qmd
-
-# Render only HTML format
-quarto render --to html
-
-# Render only RevealJS slides
-quarto render --to revealjs
-
-# Render using specific profiles
-QUARTO_PROFILE=revealjs quarto render  # Standalone slides in _slides/
-QUARTO_PROFILE=handout quarto render    # Standalone PDFs in _handouts/
 ```
-
-### Output Structure
-
-After rendering with the default profile, you'll find in `_site/`:
-- `index.html` - Website homepage
-- `index-slides.html` - RevealJS slides for homepage
-- `index-handout.pdf` - PDF handout for homepage (requires TinyTeX)
-- `chapters/01-introduction.html` - HTML chapter pages
-- `chapters/01-introduction-slides.html` - RevealJS slide presentations
-- `chapters/01-introduction-handout.pdf` - PDF handouts (requires TinyTeX)
 
 ### Running Tests
 
@@ -310,6 +353,35 @@ The repository uses GitHub Actions for continuous integration:
 
 All workflows run on relevant triggers (push to main, pull requests, etc.).
 
+### Debugging Workflow Failures
+
+**CRITICAL**: When asked to fix workflow errors or when workflows fail:
+
+1. **ALWAYS** read the workflow logs using GitHub MCP tools
+2. Use `list_workflow_runs` to find recent runs
+3. Use `get_job_logs` or similar tools to get detailed failure logs
+4. **NEVER** assume what the error might be - always verify by reading the actual logs
+5. Search for error messages in the logs to identify the root cause
+6. Fix the specific error found in the logs, not what you think the error might be
+
+This is a mandatory step - do not skip reading the logs when debugging workflow failures.
+
+### Validating Rendering Success
+
+**CRITICAL**: Before declaring that rendering works or that fixes are successful:
+
+1. **ALWAYS** test `quarto render` yourself in your working environment
+2. Verify that **ALL** output formats are generated successfully:
+   - HTML pages (`*.html`)
+   - RevealJS slides (`*-slides.html`)  
+   - PDF handouts (`*-handout.pdf`)
+3. Check that files actually exist in the output directory (`_site/`)
+4. Verify file sizes are reasonable (not 0 bytes, not truncated)
+5. **NEVER** claim success based on assumptions or partial output
+6. **NEVER** declare rendering works without actually testing it
+
+**For this project specifically**: The default `quarto render` command generates HTML, RevealJS, and PDF outputs. All three formats must render successfully for the build to pass.
+
 ## Important Notes
 
 ### Working with Causal Inference Examples
@@ -367,12 +439,40 @@ The project supports multiple rendering profiles:
 
 ### Making Changes
 
+**CRITICAL - MANDATORY TESTING REQUIREMENT:**
+
+**STEP 0 - ENVIRONMENT SETUP (DO THIS FIRST, EVERY SESSION):**
+- Install R 4.5.2+, Quarto, TinyTeX if not already installed (see Installation section)
+- Run `renv::restore()` to install all R packages
+- Verify tools work: `quarto --version`, `R --version`
+- **NEVER start making code changes without having the environment ready**
+
+**BEFORE MAKING ANY COMMIT** with `.qmd` or configuration file changes, you MUST:
+
+1. **Run FULL `quarto render`** on the entire repository (not individual files)
+2. **Wait for it to complete** - do not interrupt or assume success
+3. **Verify exit code is 0** (success) - rendering MUST complete without errors
+4. **Check all three output formats** exist in `_site/` for ALL documents:
+   - `{filename}.html` (website pages)
+   - `{filename}-slides.html` (RevealJS presentations)
+   - `{filename}-handout.pdf` (PDF handouts)
+5. **Only then** can you commit your changes
+
+**CRITICAL RULES:**
+- **CI is NOT the test** - it's final verification only
+- **Testing individual files is insufficient** - always do full `quarto render`
+- **If CI fails, you failed to test properly** - this should never happen
+- **No exceptions, no excuses** - this is a hard requirement
+
+Additional guidelines:
 - When modifying `.qmd` files, ensure code chunks execute successfully
-- Run `quarto preview` to verify changes render correctly in all formats
-- Check mathematical notation renders properly
-- Ensure figures display as intended in HTML, RevealJS, and PDF
+- Use `quarto render file.qmd` for rapid iteration ONLY
+- Always follow up with FULL `quarto render` before committing
+- Run `quarto preview` to verify changes render correctly
+- Check mathematical notation renders properly (especially in PDF format)
+- Ensure figures display as intended
 - Verify cross-references and links work
-- Update `_quarto-website.yml` if adding/removing chapters (and also update `_quarto-handout.yml` render list)
+- Update `_quarto.yml` if adding/removing pages
 
 ### Pull Request Development
 
@@ -384,16 +484,14 @@ The project supports multiple rendering profiles:
   - Check the exit code to confirm success (exit code 0)
   - Do not claim success based on partial output or assumptions
   - If the render fails, investigate and fix the issue before proceeding
-  - **"Software not installed" is NOT a valid excuse** - install required software (R, Quarto, TinyTeX) first if needed (see Installation section above)
+  - **"Software not installed" is NOT a valid excuse** - install required software (R, Quarto, etc.) first if needed (see Installation section above)
   - **CRITICAL**: When installing R, you MUST use the latest R release from CRAN (see Installation section)
     - **NEVER** use the default R from Ubuntu repositories (e.g., `apt-get install r-base` without adding CRAN repo)
     - The default Ubuntu R is outdated (e.g., R 4.3.3) and will cause issues
     - Always add the CRAN repository first, then install R to get the latest version (R 4.5.2+)
     - Verify the R version with `R --version` before proceeding
-  - **Note**: If TinyTeX cannot be installed due to network restrictions, you can render without PDF using `quarto render --to html,revealjs`
-- Check that the rendering completes without errors or warnings for all formats
-- Review the generated output in the `_site/` directory to ensure quality in HTML, RevealJS, and PDF formats
-- Verify that format-specific content appears correctly in each format
+- Check that the rendering completes without errors or warnings
+- Review the generated output in the `_site/` directory to ensure quality
 - Fix any rendering issues before requesting review
 - This practice helps maintain the quality of rendered outputs and streamlines the contribution process
 - Note: The CI/CD workflows (preview.yml and publish.yml) will also render the website, but catching issues locally saves time
@@ -435,6 +533,75 @@ This project uses `renv` for R package dependency management. The workflows are 
 - If `quarto render` fails with "package not found" errors, ensure you've run `renv::restore()` first
 - Check that `.Rprofile` is activating renv (it should have `source("renv/activate.R")` uncommented)
 - In CI/CD, the `setup-renv` action handles restoration automatically
+
+### TinyTeX for PDF Rendering
+
+**CRITICAL**: TinyTeX **MUST** be installed in your working environment when developing PRs for this project, as PDF format is included in the default website rendering.
+
+**Installation**: See the "Installation" section above for TinyTeX installation instructions. This should be done at the start of PR development.
+
+**When PDF output is required**:
+- **ALWAYS at the start of PR development** - This is now a required step
+- Before rendering PDF output formats
+- Before running multi-format rendering that includes PDF
+- When you see the error: "No TeX installation was detected"
+
+**Important**: TinyTeX installation requires internet access to GitHub releases and CTAN mirrors. Without TinyTeX, the website rendering will fail when trying to generate PDF handouts.
+
+**Note**: The separate `_quarto-handout.yml` profile exists as an alternative method for PDF rendering and can be used independently.
+
+### Quarto Multi-Format Rendering
+
+This project uses multi-format rendering to generate HTML, RevealJS slides, and PDF handouts simultaneously.
+
+**Default website rendering** (`quarto render`):
+- Generates **all three formats** in `_site/` directory:
+  - `{filename}.html` - Website page
+  - `{filename}-slides.html` - RevealJS presentation
+  - `{filename}-handout.pdf` - PDF handout (requires TinyTeX)
+
+**Alternative profile-based rendering**:
+1. **RevealJS profile**: `QUARTO_PROFILE=revealjs quarto render` - Generates slides in `_slides/`
+2. **PDF handout profile**: `QUARTO_PROFILE=handout quarto render` - Generates PDFs in `_handouts/`
+
+**Implementation approach**:
+Following the pattern from https://github.com/perellonieto/quarto_html_revealjs_test:
+- **Project-level config** (`_quarto-website.yml`): Defines html, revealjs, and pdf formats
+- **File-level frontmatter**: Each .qmd file specifies all three formats with `output-file` for non-html formats:
+  ```yaml
+  format:
+    html: default
+    revealjs:
+      output-file: {filename}-slides.html
+    pdf:
+      output-file: {filename}-handout.pdf
+  ```
+- This generates three separate output files per source file, avoiding naming conflicts
+
+**Key insights**:
+- Both formats must be specified at two levels: project configuration AND individual file frontmatter
+- The `output-file` parameter is used at the file level to avoid naming conflicts
+- See: https://github.com/orgs/quarto-dev/discussions/1751
+
+## Continuous Learning and Improvement
+
+**IMPORTANT**: When you learn new skills, techniques, or encounter solutions to problems while working on this project, **you MUST update this instructions file** to document them for future reference.
+
+This includes:
+- New installation procedures or dependencies
+- Solutions to rendering or build issues
+- Workarounds for technical limitations
+- New tools or commands that prove useful
+- Configuration patterns that work well for this project type
+- Debugging techniques specific to Quarto/R/renv
+
+**How to update**:
+1. Identify which section the new information belongs in (or create a new section if needed)
+2. Add clear, concise instructions with examples where helpful
+3. Include references to external resources (documentation, discussions, issues) when relevant
+4. Use `store_memory` tool to save important facts about the codebase for future tasks
+
+This ensures the instructions stay current and helpful for both yourself and other contributors.
 
 ## Getting Help
 
