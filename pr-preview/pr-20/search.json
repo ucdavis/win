@@ -1,0 +1,219 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "What If? - Lecture Notes",
+    "section": "",
+    "text": "This is a Quarto book project based on the textbook “What If?” by Miguel Hernán and James Robins.\nThe notes are available in multiple formats:\n\nHTML Book: Navigate using the sidebar for a traditional book reading experience\nRevealJS Slides: Each chapter also generates a presentation format with -slides.html suffix\nPDF Handouts: Each chapter generates a PDF handout with -handout.pdf suffix\nDOCX Documents: Each chapter generates a Microsoft Word document with .docx extension\n\n\n\nThese lecture notes follow the structure and content from What If? by Hernán MA, Robins JM.\n\n\n\nUse the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL) - PDF handout (add -handout.pdf to the chapter URL) - DOCX document (replace .html with .docx in the chapter URL)"
+  },
+  {
+    "objectID": "index.html#about-this-project",
+    "href": "index.html#about-this-project",
+    "title": "What If? - Lecture Notes",
+    "section": "",
+    "text": "These lecture notes follow the structure and content from What If? by Hernán MA, Robins JM."
+  },
+  {
+    "objectID": "index.html#navigation",
+    "href": "index.html#navigation",
+    "title": "What If? - Lecture Notes",
+    "section": "",
+    "text": "Use the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL) - PDF handout (add -handout.pdf to the chapter URL) - DOCX document (replace .html with .docx in the chapter URL)"
+  },
+  {
+    "objectID": "chapters/01-introduction.html",
+    "href": "chapters/01-introduction.html",
+    "title": "Chapter 1: Introduction",
+    "section": "",
+    "text": "This chapter introduces the fundamental concepts of causal inference. The content is presented in a book format optimized for reading and reference."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#overview",
+    "href": "chapters/01-introduction.html#overview",
+    "title": "Chapter 1: Introduction",
+    "section": "",
+    "text": "This chapter introduces the fundamental concepts of causal inference. The content is presented in a book format optimized for reading and reference."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#what-is-causal-inference",
+    "href": "chapters/01-introduction.html#what-is-causal-inference",
+    "title": "Chapter 1: Introduction",
+    "section": "2 What is Causal Inference?",
+    "text": "2 What is Causal Inference?\nCausal inference is the process of drawing conclusions about causal connections based on the conditions of the occurrence of an effect.\nIn observational studies, unlike randomized experiments, we cannot directly observe the counterfactual outcomes. This fundamental problem of causal inference requires us to make certain assumptions and use appropriate methods."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#fundamental-problem",
+    "href": "chapters/01-introduction.html#fundamental-problem",
+    "title": "Chapter 1: Introduction",
+    "section": "3 Fundamental Problem",
+    "text": "3 Fundamental Problem\nThe fundamental problem of causal inference is that for any given individual, we can observe only one potential outcome - the one corresponding to the actual treatment received. We cannot observe what would have happened under a different treatment."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#notation-and-framework",
+    "href": "chapters/01-introduction.html#notation-and-framework",
+    "title": "Chapter 1: Introduction",
+    "section": "4 Notation and Framework",
+    "text": "4 Notation and Framework\nLet’s define our notation:\n\n\\(Y\\): outcome variable\n\\(A\\): treatment variable\n\n\\(Y^{a}\\): potential outcome under treatment \\(a\\)\n\nThe potential outcome \\(Y^{a}\\) represents the outcome that would be observed if, possibly contrary to fact, the individual received treatment level \\(a\\). This counterfactual framework, formalized by Neyman and Rubin, is central to modern causal inference."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#assumptions",
+    "href": "chapters/01-introduction.html#assumptions",
+    "title": "Chapter 1: Introduction",
+    "section": "5 Assumptions",
+    "text": "5 Assumptions\nTo identify causal effects from observational data, we typically need several key assumptions:\n\nConsistency: The potential outcome \\(Y^a\\) equals the observed outcome \\(Y\\) when treatment equals \\(a\\)\nExchangeability: Treatment assignment is independent of potential outcomes (no unmeasured confounding)\nPositivity: Every individual has a non-zero probability of receiving each treatment level\n\nThese assumptions, sometimes called “identifiability conditions,” allow us to link the observed data distribution to causal quantities of interest."
+  },
+  {
+    "objectID": "chapters/01-introduction.html#summary",
+    "href": "chapters/01-introduction.html#summary",
+    "title": "Chapter 1: Introduction",
+    "section": "6 Summary",
+    "text": "6 Summary\nThis chapter has introduced the basic framework for causal inference. We’ve defined potential outcomes, discussed the fundamental problem of causal inference, and outlined the key assumptions needed for causal identification. In subsequent chapters, we’ll explore methods for estimating causal effects under various scenarios and assumptions."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#key-questions",
+    "href": "chapters/01-introduction-slides.html#key-questions",
+    "title": "Chapter 1: Introduction",
+    "section": "Key Questions",
+    "text": "Key Questions\n\nWhat would have happened if…?\nHow do we estimate causal effects?\nWhat assumptions are needed?"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#the-counterfactual",
+    "href": "chapters/01-introduction-slides.html#the-counterfactual",
+    "title": "Chapter 1: Introduction",
+    "section": "The Counterfactual",
+    "text": "The Counterfactual\n\nWe observe what did happen\nWe cannot observe what would have happened\nThis is the fundamental problem"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#average-causal-effect",
+    "href": "chapters/01-introduction-slides.html#average-causal-effect",
+    "title": "Chapter 1: Introduction",
+    "section": "Average Causal Effect",
+    "text": "Average Causal Effect\n\\[E[Y^{a=1}] - E[Y^{a=0}]\\]\nThe difference in expected outcomes under treatment vs. control"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#key-assumptions",
+    "href": "chapters/01-introduction-slides.html#key-assumptions",
+    "title": "Chapter 1: Introduction",
+    "section": "Key Assumptions",
+    "text": "Key Assumptions\n\nConsistency\nExchangeability\n\nPositivity\n\n\nWithout these, causal identification is not possible from observational data"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#next-steps",
+    "href": "chapters/01-introduction-slides.html#next-steps",
+    "title": "Chapter 1: Introduction",
+    "section": "Next Steps",
+    "text": "Next Steps\n\nChapter 2: Randomized Experiments\nChapter 3: Observational Studies\nChapter 4: Confounding and Bias"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#key-benefits",
+    "href": "chapters/02-randomized-experiments-slides.html#key-benefits",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Key Benefits",
+    "text": "Key Benefits\n\nEliminates confounding\nBalances groups\nSimplifies analysis\nClear causal interpretation\n\n\nResult: Simple difference in means estimates the average causal effect!"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#randomization-ensures",
+    "href": "chapters/02-randomized-experiments-slides.html#randomization-ensures",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Randomization Ensures",
+    "text": "Randomization Ensures\n\\[P(A=a|L) = P(A=a)\\]\nTreatment independent of baseline covariates"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#causal-effect-estimation",
+    "href": "chapters/02-randomized-experiments-slides.html#causal-effect-estimation",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Causal Effect Estimation",
+    "text": "Causal Effect Estimation\n\\[E[Y^{a=1}] - E[Y^{a=0}] = E[Y|A=1] - E[Y|A=0]\\]\nSimple difference in means!"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#randomization-approaches",
+    "href": "chapters/02-randomized-experiments-slides.html#randomization-approaches",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Randomization Approaches",
+    "text": "Randomization Approaches\n\nSimple: Flip a coin\nStratified: Balance on key variables\nBlock: Equal group sizes\nCluster: Randomize groups\n\n\nChoice depends on study design and constraints"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#analysis-approaches",
+    "href": "chapters/02-randomized-experiments-slides.html#analysis-approaches",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Analysis Approaches",
+    "text": "Analysis Approaches\n\nITT: Analyze as randomized ✓\nPer-protocol: Only adherent\nAs-treated: Actual treatment received\n\n\nITT is preferred for validity"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#limitations-of-rcts",
+    "href": "chapters/02-randomized-experiments-slides.html#limitations-of-rcts",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Limitations of RCTs",
+    "text": "Limitations of RCTs\n\nEthical constraints\nHigh cost\nGeneralizability concerns\nCompliance issues\nFeasibility constraints\n\n\nThis is why we need observational study methods!"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#key-takeaways",
+    "href": "chapters/02-randomized-experiments-slides.html#key-takeaways",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Key Takeaways",
+    "text": "Key Takeaways\n\nRandomization eliminates confounding\nSimple analysis: difference in means\nITT preserves validity\nLimitations drive need for observational methods"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments-slides.html#next-observational-studies",
+    "href": "chapters/02-randomized-experiments-slides.html#next-observational-studies",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "Next: Observational Studies",
+    "text": "Next: Observational Studies"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html",
+    "href": "chapters/02-randomized-experiments.html",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "",
+    "text": "Randomized experiments are considered the gold standard for causal inference. In a randomized experiment, treatment assignment is determined by a random mechanism, which ensures that treatment groups are comparable in expectation with respect to all baseline characteristics, both measured and unmeasured."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#introduction-to-randomized-experiments",
+    "href": "chapters/02-randomized-experiments.html#introduction-to-randomized-experiments",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "",
+    "text": "Randomized experiments are considered the gold standard for causal inference. In a randomized experiment, treatment assignment is determined by a random mechanism, which ensures that treatment groups are comparable in expectation with respect to all baseline characteristics, both measured and unmeasured."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#why-randomize",
+    "href": "chapters/02-randomized-experiments.html#why-randomize",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "2 Why Randomize?",
+    "text": "2 Why Randomize?\nRandomization provides several key benefits:\n\nEliminates confounding: By randomly assigning treatment, we break any association between treatment and pre-treatment covariates\nBalances groups: Treated and untreated groups are comparable in expectation on all baseline characteristics\nSimplifies analysis: The average treatment effect can be estimated by a simple difference in means\nProvides validity: Results have a clear causal interpretation without requiring untestable assumptions"
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#mathematical-framework",
+    "href": "chapters/02-randomized-experiments.html#mathematical-framework",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "3 Mathematical Framework",
+    "text": "3 Mathematical Framework\nIn a randomized experiment with treatment \\(A \\in \\{0,1\\}\\) and outcome \\(Y\\), we have:\n\\[P(A=a|L) = P(A=a)\\]\nwhere \\(L\\) represents all pre-treatment covariates. This means treatment assignment is independent of all baseline characteristics. As a result, the average causal effect can be estimated as:\n\\[E[Y^{a=1}] - E[Y^{a=0}] = E[Y|A=1] - E[Y|A=0]\\]\nThe right-hand side is simply the difference in observed mean outcomes between treatment groups, which can be estimated from the data without bias."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#types-of-randomization",
+    "href": "chapters/02-randomized-experiments.html#types-of-randomization",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "4 Types of Randomization",
+    "text": "4 Types of Randomization\nThere are several approaches to randomization:\nSimple Randomization: Each individual is assigned to treatment or control with a fixed probability (e.g., 50%). This is easy to implement but can result in imbalanced group sizes in small samples.\nStratified Randomization: Randomization is performed separately within strata defined by important covariates. This ensures balance on these key variables and can improve precision.\nBlock Randomization: Randomization is done in blocks to ensure approximately equal numbers in each treatment group. This is particularly useful in sequential trials.\nCluster Randomization: Groups (clusters) of individuals are randomized together. This is used when individual randomization is not feasible."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#analysis-of-randomized-trials",
+    "href": "chapters/02-randomized-experiments.html#analysis-of-randomized-trials",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "5 Analysis of Randomized Trials",
+    "text": "5 Analysis of Randomized Trials\nThe analysis of randomized experiments is straightforward due to the exchangeability guaranteed by randomization:\n\nIntention-to-treat (ITT): Compare groups as randomized, regardless of actual treatment received. This preserves randomization and provides a valid causal estimate.\nPer-protocol: Compare only those who adhered to their assigned treatment. This can be biased if adherence is related to potential outcomes.\nAs-treated: Analyze based on treatment actually received. This is essentially an observational analysis and loses the benefits of randomization.\n\nThe ITT analysis is generally preferred as it maintains the validity of randomization and provides an unbiased estimate of the causal effect of treatment assignment."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#limitations",
+    "href": "chapters/02-randomized-experiments.html#limitations",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "6 Limitations",
+    "text": "6 Limitations\nDespite their advantages, randomized experiments have limitations:\n\nEthical constraints: Not all questions can be studied via randomization\nCost: Randomized trials can be expensive and time-consuming\nExternal validity: Results may not generalize to other populations\nCompliance: Non-adherence can complicate analysis\nFeasibility: Some interventions cannot be randomized\n\nThese limitations explain why observational studies remain important and why methods for causal inference from observational data are necessary."
+  },
+  {
+    "objectID": "chapters/02-randomized-experiments.html#summary",
+    "href": "chapters/02-randomized-experiments.html#summary",
+    "title": "Chapter 2: Randomized Experiments",
+    "section": "7 Summary",
+    "text": "7 Summary\nRandomized experiments provide the strongest foundation for causal inference by ensuring exchangeability through random treatment assignment. The causal effect can be estimated by a simple comparison of outcomes between randomized groups. However, practical and ethical constraints limit the applicability of randomization, necessitating methods for causal inference from observational data, which we will explore in subsequent chapters."
+  }
+]
