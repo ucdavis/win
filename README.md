@@ -37,18 +37,19 @@ This Quarto website project is configured to render each chapter in multiple for
 1. **HTML Website**: Traditional website layout with navigation navbar
 2. **RevealJS Slides Format**: Presentation slides for each chapter
 3. **PDF Handouts**: PDF documents for each chapter
+4. **DOCX Documents**: Microsoft Word format documents for each chapter
 
 ### Structure
 
 The project uses Quarto's multi-format rendering capability with profile-based configuration:
-- Default profile: website (generates HTML, RevealJS, and PDF in `_site/`)
+- Default profile: website (generates HTML, RevealJS, PDF, and DOCX in `_site/`)
 - RevealJS profile: standalone slides rendering (generates slides in `_slides/`)
 - Handout profile: standalone PDF rendering (generates PDFs in `_handouts/`)
 
 ### Files
 
 - `_quarto.yml`: Main configuration file with shared settings and default profile
-- `_quarto-website.yml`: Website configuration with HTML, RevealJS, and PDF formats
+- `_quarto-website.yml`: Website configuration with HTML, RevealJS, PDF, and DOCX formats
 - `_quarto-revealjs.yml`: Standalone RevealJS slides configuration
 - `_quarto-handout.yml`: Standalone PDF handouts configuration
 - `index.qmd`: Website homepage
@@ -59,9 +60,9 @@ The project uses Quarto's multi-format rendering capability with profile-based c
 
 **Note**: PDF rendering requires TinyTeX to be installed. If you don't have TinyTeX installed, you can:
 - Install it with: `quarto install tinytex --no-prompt`
-- Or skip PDF rendering by using `--to html,revealjs` flag
+- Or skip PDF rendering by using `--to html,revealjs,docx` flag
 
-To render the default website with all formats (HTML, RevealJS, and PDF):
+To render the default website with all formats (HTML, RevealJS, PDF, and DOCX):
 
 ```bash
 quarto render
@@ -71,11 +72,12 @@ This will generate in `_site/` directory:
 - HTML pages: `index.html`, `chapters/01-introduction.html`, etc.
 - RevealJS slides: `index-slides.html`, `chapters/01-introduction-slides.html`, etc.
 - PDF handouts: `index-handout.pdf`, `chapters/01-introduction-handout.pdf`, etc. (requires TinyTeX)
+- DOCX documents: `index.docx`, `chapters/01-introduction.docx`, etc.
 
-To render only HTML and RevealJS (without PDF):
+To render without PDF:
 
 ```bash
-quarto render --to html,revealjs
+quarto render --to html,revealjs,docx
 ```
 
 To render only slides:
@@ -104,7 +106,7 @@ Concise content for slides
 :::
 ```
 
-This allows the same source file to generate comprehensive HTML pages, focused presentation slides, and PDF handouts.
+This allows the same source file to generate comprehensive HTML pages, focused presentation slides, PDF handouts, and DOCX documents.
 
 ## R Package Structure
 
