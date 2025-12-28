@@ -6,6 +6,8 @@ format:
     output-file: 01-introduction-slides.html
   pdf:
     output-file: 01-introduction-handout.pdf
+  docx:
+    output-file: 01-introduction.docx
 ---
 
 ## Overview

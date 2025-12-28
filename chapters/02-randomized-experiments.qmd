@@ -6,6 +6,8 @@ format:
     output-file: 02-randomized-experiments-slides.html
   pdf:
     output-file: 02-randomized-experiments-handout.pdf
+  docx:
+    output-file: 02-randomized-experiments.docx
 ---
 
 ## Introduction to Randomized Experiments
