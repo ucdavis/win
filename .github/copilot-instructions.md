@@ -392,11 +392,11 @@ The project supports multiple rendering profiles:
     - Verify the R version with `R --version` before proceeding
   - **Note**: If TinyTeX cannot be installed due to network restrictions, you can render without PDF using `quarto render --to html,revealjs`
 - Check that the rendering completes without errors or warnings for all formats
-- Review the generated output in the `_book/` directory to ensure quality in both HTML and RevealJS
+- Review the generated output in the `_site/` directory to ensure quality in HTML, RevealJS, and PDF formats
 - Verify that format-specific content appears correctly in each format
 - Fix any rendering issues before requesting review
 - This practice helps maintain the quality of rendered outputs and streamlines the contribution process
-- Note: The CI/CD workflows (preview.yml and publish.yml) will also render the book, but catching issues locally saves time
+- Note: The CI/CD workflows (preview.yml and publish.yml) will also render the website, but catching issues locally saves time
 
 ### Dependencies
 
