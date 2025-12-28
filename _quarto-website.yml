@@ -96,6 +96,13 @@ format:
     colorlinks: true
     number-sections: true
     number-depth: 3
+  docx:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    number-depth: 3
+    df-print: tibble
+    prefer-html: true
 
 execute:
   warning: false
