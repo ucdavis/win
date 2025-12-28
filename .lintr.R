@@ -59,15 +59,14 @@ linters <- lintr::linters_with_defaults(
   lintr::undesirable_function_linter(
     fun = undesirable_functions,
     symbol_is_undesirable = TRUE
-  ),
-  cyclocomp_linter = NULL
+  )
 )
 
 # prevent warnings from lintr::read_settings:
 rm(undesirable_functions)
 rm(snake_case_ACROs1)
 exclusions <- list(
-  "renv" = list.files("renv", recursive = TRUE, full.names = TRUE),
+  "renv",
   "renv/activate.R",
   `data-raw` = list(
     pipe_consistency_linter = Inf
