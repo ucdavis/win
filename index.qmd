@@ -6,16 +6,20 @@ format:
     output-file: index-slides.html
   pdf:
     output-file: index-handout.pdf
+  docx:
+    output-file: index.docx
 ---
 
 # Welcome {.unnumbered}
 
 This is a Quarto book project based on the textbook "What If?" by Miguel Hernán and James Robins.
 
-The notes are available in two formats:
+The notes are available in multiple formats:
 
 - **HTML Book**: Navigate using the sidebar for a traditional book reading experience
 - **RevealJS Slides**: Each chapter also generates a presentation format with `-slides.html` suffix
+- **PDF Handouts**: Each chapter generates a PDF handout with `-handout.pdf` suffix
+- **DOCX Documents**: Each chapter generates a Microsoft Word document with `.docx` extension
 
 ## About this project
 
@@ -26,3 +30,5 @@ These lecture notes follow the structure and content from [What If? by Hernán M
 Use the sidebar to navigate between chapters. Each chapter is available as:
 - A traditional HTML page (click the chapter name)
 - RevealJS slides (add `-slides.html` to the chapter URL)
+- PDF handout (add `-handout.pdf` to the chapter URL)
+- DOCX document (replace `.html` with `.docx` in the chapter URL)
