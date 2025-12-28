@@ -141,7 +141,6 @@ _site/
 - Useful for collaboration and comments
 - Compatible with Microsoft Word and similar applications
 - Easy to share and edit
-- Progressive disclosure with fragments
 
 ### Structuring Chapters
 
