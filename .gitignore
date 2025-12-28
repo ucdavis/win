@@ -13,3 +13,12 @@
 !docs/*.html
 *.tex
 .DS_Store
+
+# R package build artifacts
+*.tar.gz
+*.Rcheck/
+*.o
+*.so
+*.dll
+/man/*.Rd
+!/man/figures/
