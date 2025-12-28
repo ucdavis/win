@@ -12,10 +12,17 @@ jobs:
       contents: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@HEAD
+
+      - name: list files
+        shell: bash
+        run: |
+          ls
 
       - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+        uses: quarto-dev/quarto-actions/setup@HEAD
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tinytex: true
 
@@ -28,7 +35,7 @@ jobs:
           cache-version: 1
 
       - name: Render and Publish
-        uses: quarto-dev/quarto-actions/publish@v2
+        uses: quarto-dev/quarto-actions/publish@HEAD
         with:
           target: gh-pages
         env:
