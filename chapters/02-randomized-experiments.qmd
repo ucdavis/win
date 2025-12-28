@@ -1,0 +1,168 @@
+---
+title: "Chapter 2: Randomized Experiments"
+format:
+  html:
+    toc: true
+  revealjs:
+    slide-number: true
+---
+
+## Introduction to Randomized Experiments
+
+::: {.content-visible when-format="html"}
+Randomized experiments are considered the gold standard for causal inference. In a randomized experiment, treatment assignment is determined by a random mechanism, which ensures that treatment groups are comparable in expectation with respect to all baseline characteristics, both measured and unmeasured.
+:::
+
+::: {.content-visible when-format="revealjs"}
+The **gold standard** for causal inference
+:::
+
+## Why Randomize?
+
+Randomization provides several key benefits:
+
+::: {.content-visible when-format="html"}
+1. **Eliminates confounding**: By randomly assigning treatment, we break any association between treatment and pre-treatment covariates
+2. **Balances groups**: Treated and untreated groups are comparable in expectation on all baseline characteristics
+3. **Simplifies analysis**: The average treatment effect can be estimated by a simple difference in means
+4. **Provides validity**: Results have a clear causal interpretation without requiring untestable assumptions
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Key Benefits
+
+- Eliminates confounding
+- Balances groups
+- Simplifies analysis
+- Clear causal interpretation
+
+::: {.fragment}
+**Result**: Simple difference in means estimates the average causal effect!
+:::
+:::
+
+## Mathematical Framework
+
+::: {.content-visible when-format="html"}
+In a randomized experiment with treatment $A \in \{0,1\}$ and outcome $Y$, we have:
+
+$$P(A=a|L) = P(A=a)$$
+
+where $L$ represents all pre-treatment covariates. This means treatment assignment is independent of all baseline characteristics. As a result, the average causal effect can be estimated as:
+
+$$E[Y^{a=1}] - E[Y^{a=0}] = E[Y|A=1] - E[Y|A=0]$$
+
+The right-hand side is simply the difference in observed mean outcomes between treatment groups, which can be estimated from the data without bias.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Randomization Ensures
+
+$$P(A=a|L) = P(A=a)$$
+
+Treatment independent of baseline covariates
+
+### Causal Effect Estimation
+
+$$E[Y^{a=1}] - E[Y^{a=0}] = E[Y|A=1] - E[Y|A=0]$$
+
+Simple difference in means!
+:::
+
+## Types of Randomization
+
+::: {.content-visible when-format="html"}
+There are several approaches to randomization:
+
+**Simple Randomization**: Each individual is assigned to treatment or control with a fixed probability (e.g., 50%). This is easy to implement but can result in imbalanced group sizes in small samples.
+
+**Stratified Randomization**: Randomization is performed separately within strata defined by important covariates. This ensures balance on these key variables and can improve precision.
+
+**Block Randomization**: Randomization is done in blocks to ensure approximately equal numbers in each treatment group. This is particularly useful in sequential trials.
+
+**Cluster Randomization**: Groups (clusters) of individuals are randomized together. This is used when individual randomization is not feasible.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Randomization Approaches
+
+1. **Simple**: Flip a coin
+2. **Stratified**: Balance on key variables
+3. **Block**: Equal group sizes
+4. **Cluster**: Randomize groups
+
+::: {.fragment}
+Choice depends on study design and constraints
+:::
+:::
+
+## Analysis of Randomized Trials
+
+::: {.content-visible when-format="html"}
+The analysis of randomized experiments is straightforward due to the exchangeability guaranteed by randomization:
+
+1. **Intention-to-treat (ITT)**: Compare groups as randomized, regardless of actual treatment received. This preserves randomization and provides a valid causal estimate.
+
+2. **Per-protocol**: Compare only those who adhered to their assigned treatment. This can be biased if adherence is related to potential outcomes.
+
+3. **As-treated**: Analyze based on treatment actually received. This is essentially an observational analysis and loses the benefits of randomization.
+
+The ITT analysis is generally preferred as it maintains the validity of randomization and provides an unbiased estimate of the causal effect of treatment assignment.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Analysis Approaches
+
+- **ITT**: Analyze as randomized ✓
+- **Per-protocol**: Only adherent
+- **As-treated**: Actual treatment received
+
+::: {.fragment}
+ITT is preferred for validity
+:::
+:::
+
+## Limitations
+
+::: {.content-visible when-format="html"}
+Despite their advantages, randomized experiments have limitations:
+
+- **Ethical constraints**: Not all questions can be studied via randomization
+- **Cost**: Randomized trials can be expensive and time-consuming
+- **External validity**: Results may not generalize to other populations
+- **Compliance**: Non-adherence can complicate analysis
+- **Feasibility**: Some interventions cannot be randomized
+
+These limitations explain why observational studies remain important and why methods for causal inference from observational data are necessary.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Limitations of RCTs
+
+- Ethical constraints
+- High cost
+- Generalizability concerns
+- Compliance issues
+- Feasibility constraints
+
+::: {.fragment}
+This is why we need observational study methods!
+:::
+:::
+
+## Summary
+
+::: {.content-visible when-format="html"}
+Randomized experiments provide the strongest foundation for causal inference by ensuring exchangeability through random treatment assignment. The causal effect can be estimated by a simple comparison of outcomes between randomized groups. However, practical and ethical constraints limit the applicability of randomization, necessitating methods for causal inference from observational data, which we will explore in subsequent chapters.
+:::
+
+::: {.content-visible when-format="revealjs"}
+### Key Takeaways
+
+- Randomization eliminates confounding
+- Simple analysis: difference in means
+- ITT preserves validity
+- Limitations drive need for observational methods
+
+### Next: Observational Studies
+:::

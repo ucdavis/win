@@ -1,0 +1,22 @@
+---
+title: "What If? - Lecture Notes"
+---
+
+# Welcome {.unnumbered}
+
+This is a Quarto book project based on the textbook "What If?" by Miguel Hernán and James Robins.
+
+The notes are available in two formats:
+
+- **HTML Book**: Navigate using the sidebar for a traditional book reading experience
+- **RevealJS Slides**: Each chapter also generates a presentation format with `-slides.html` suffix
+
+## About this project
+
+These lecture notes follow the structure and content from [What If? by Hernán MA, Robins JM](https://miguelhernan.org/whatifbook).
+
+## Navigation
+
+Use the sidebar to navigate between chapters. Each chapter is available as:
+- A traditional HTML page (click the chapter name)
+- RevealJS slides (add `-slides.html` to the chapter URL)
