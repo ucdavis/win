@@ -109,7 +109,7 @@ jobs:
             
             # Display key installed packages from DESCRIPTION
             cat("Key installed packages:\n")
-            key_packages <- c("MASS", "GGally", "MCMCpack", "coda", "ggplot2", 
+            key_packages <- c("MASS", "coda", "ggplot2",
                             "dplyr", "tidyr", "knitr", "rmarkdown", "spelling")
             for (pkg in key_packages) {
               if (requireNamespace(pkg, quietly = TRUE)) {
