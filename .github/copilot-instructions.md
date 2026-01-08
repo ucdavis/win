@@ -212,6 +212,7 @@ spelling::spell_check_files("README.md")
 - Include explanatory text before code chunks
 - Add comments within complex code blocks
 - Reference the "What If?" textbook (Hernán MA, Robins JM) when applicable
+- **Use single space between sentences**: Use only one space after periods between sentences, not two spaces
 - **Use bullet points for lists**: When presenting lists of items, tools, formats, or steps, use bullet points rather than comma-separated lists for better readability and clarity
 - **Include original textbook page numbers in section headers**: When creating chapter content based on the "What If?" textbook, include the corresponding page numbers from the original text in section headers to help readers cross-reference with the source material
   - Format: `## Section Title (pp. XX-YY)` for page ranges or `## Section Title (p. XX)` for single pages
@@ -303,32 +304,75 @@ This allows the same source file to generate three outputs:
 
 ### Format-Specific Content
 
-Use conditional visibility to create different content for HTML, RevealJS, and PDF:
+**IMPORTANT**: Minimize use of `.content-visible` divs. Most content should be shared between formats.
+
+**Preferred approach**: Use speaker notes for additional context:
 
 ```markdown
 ## Section Title
 
+Core content that appears in both HTML and RevealJS formats.
+This should be concise enough for slides but informative enough for the website.
+
+::: {.notes}
+Additional detailed explanations that would clutter slides.
+These appear as speaker notes in RevealJS and as regular text in HTML/PDF.
+:::
+```
+
+**Only use `.content-visible` when absolutely necessary** (rarely needed):
+
+```markdown
 ::: {.content-visible when-format="html"}
-Detailed explanations and comprehensive content for website format.
-Multiple paragraphs, in-depth examples, full mathematical derivations.
-:::
-
-::: {.content-visible when-format="revealjs"}
-### Concise Points
-
-- Bullet point summaries
-- Key concepts only
-- Slide-optimized presentation
-
-::: {.fragment}
-Progressive reveal elements
-:::
+Content that truly only makes sense in HTML format
 :::
 
 ::: {.content-visible when-format="pdf"}
-Print-optimized content with references and links as notes.
+Content specific to PDF format (e.g., print-specific formatting)
 :::
 ```
+
+### Speaker Notes for RevealJS
+
+Use `.notes` divs to add detailed explanations that supplement slides without cluttering them:
+
+```markdown
+## Key Concept
+
+Brief explanation suitable for slides.
+
+::: {.notes}
+Longer explanation with examples, context, and details.
+This text appears in speaker view during presentations
+and as regular text in HTML/PDF formats.
+:::
+```
+
+See [Quarto RevealJS Speaker Notes documentation](https://quarto.org/docs/presentations/revealjs/#speaker-notes) for more details.
+
+### Citations and References
+
+Use Quarto's built-in citation system rather than manual citations:
+
+1. Create a `references.bib` file in the project root
+2. Add bibliography to `_quarto.yml`:
+   ```yaml
+   bibliography: references.bib
+   csl: https://www.zotero.org/styles/apa  # or other style
+   ```
+3. Use citation syntax in documents:
+   ```markdown
+   As shown in @hernan2020causal [Chapter 1]...
+   ```
+4. Add a references section at the end of documents:
+   ```markdown
+   ## References
+   
+   ::: {#refs}
+   :::
+   ```
+
+See [Quarto Citations documentation](https://quarto.org/docs/authoring/citations.html) for more details.
 
 ### Code Chunks
 

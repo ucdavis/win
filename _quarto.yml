@@ -1,6 +1,8 @@
 profile:
   default: website
 
+bibliography: references.bib
+
 editor_options:
   chunk_output_type: console
 
