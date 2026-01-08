@@ -45,6 +45,8 @@ website:
             href: chapters/09-measurement-bias.qmd
           - text: "Chapter 10: Random Variability"
             href: chapters/10-random-variability.qmd
+          - text: "Chapter 11: Why Model?"
+            href: chapters/11-why-model.qmd
 
 format:
   html:
