@@ -1,4 +1,4 @@
-# GitHub Copilot Setup Steps for hoff-bayesian-statistics
+# GitHub Copilot Setup Steps for win
 #
 # This workflow configures the GitHub Copilot coding agent's environment
 # by preinstalling R, Quarto, TinyTeX, and all required dependencies.
