@@ -158,7 +158,12 @@
 <section class="slide level2">
 
 <p>In previous chapters, we focused on estimating average causal effects in a population. But what if the effect of treatment varies across individuals? This chapter introduces <strong>effect modification</strong>: the phenomenon where the causal effect of treatment differs across levels of another variable.</p>
-<p>Understanding effect modification is crucial for: - Identifying subgroups that benefit more (or less) from treatment - Targeting interventions to those who need them most - Understanding biological or social mechanisms</p>
+<p>Understanding effect modification is crucial for:</p>
+<ul>
+<li>Identifying subgroups that benefit more (or less) from treatment</li>
+<li>Targeting interventions to those who need them most</li>
+<li>Understanding biological or social mechanisms</li>
+</ul>
 <aside class="notes">
 <p>This chapter is based on <span class="citation" data-cites="hernan2020causal">Hernán and Robins (<a href="#/references" role="doc-biblioref" onclick="">2020, chap. 4</a>, pp.&nbsp;37-46)</span>.</p>
 <style type="text/css">
@@ -186,10 +191,19 @@
 </section>
 <section id="example-effect-modification-by-sex" class="slide level2">
 <h2>Example: Effect Modification by Sex</h2>
-<p>Suppose in Zeus’s family: - Among males: <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{male}] = -0.3\)</span> (benefit from transplant) - Among females: <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{female}] = +0.3\)</span> (harm from transplant)</p>
+<p>Suppose in Zeus’s family:</p>
+<ul>
+<li>Among males: <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{male}] = -0.3\)</span> (benefit from transplant)</li>
+<li>Among females: <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{female}] = +0.3\)</span> (harm from transplant)</li>
+</ul>
 <p>The average effect across the whole family is zero, but there is strong effect modification by sex. The treatment has opposite effects in males and females.</p>
 <aside class="notes">
-<p><strong>Important terminology</strong>: - <span class="math inline">\(V\)</span> is called an <strong>effect modifier</strong> or <strong>modifier</strong> - The causal effect <strong>varies</strong> or is <strong>heterogeneous</strong> across levels of <span class="math inline">\(V\)</span> - Effect modification is a <strong>property of the population</strong>, not of individuals</p>
+<p><strong>Important terminology</strong>:</p>
+<ul>
+<li><span class="math inline">\(V\)</span> is called an <strong>effect modifier</strong> or <strong>modifier</strong></li>
+<li>The causal effect <strong>varies</strong> or is <strong>heterogeneous</strong> across levels of <span class="math inline">\(V\)</span></li>
+<li>Effect modification is a <strong>property of the population</strong>, not of individuals</li>
+</ul>
 <p><strong>Notation</strong>: We write <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | V = v]\)</span> to denote the average causal effect in the subpopulation with <span class="math inline">\(V = v\)</span>. This is a <strong>conditional average treatment effect</strong>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -211,15 +225,36 @@
 <li><strong>Risk ratio scale</strong>: <span class="math inline">\(E[Y^{a=1} | V] / E[Y^{a=0} | V]\)</span></li>
 </ul>
 <div id="exm-scale-dependent" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Scale-Dependent Effect Modification)</strong></span> Suppose: - When <span class="math inline">\(V = 0\)</span>: <span class="math inline">\(E[Y^{a=1}] = 0.2\)</span>, <span class="math inline">\(E[Y^{a=0}] = 0.1\)</span> - When <span class="math inline">\(V = 1\)</span>: <span class="math inline">\(E[Y^{a=1}] = 0.4\)</span>, <span class="math inline">\(E[Y^{a=0}] = 0.2\)</span></p>
-<p><strong>Risk difference</strong>: - When <span class="math inline">\(V = 0\)</span>: <span class="math inline">\(0.2 - 0.1 = 0.1\)</span> - When <span class="math inline">\(V = 1\)</span>: <span class="math inline">\(0.4 - 0.2 = 0.2\)</span></p>
+<p><span class="theorem-title"><strong>Example 1 (Scale-Dependent Effect Modification)</strong></span> Suppose:</p>
+<ul>
+<li>When <span class="math inline">\(V = 0\)</span>: <span class="math inline">\(E[Y^{a=1}] = 0.2\)</span>, <span class="math inline">\(E[Y^{a=0}] = 0.1\)</span></li>
+<li>When <span class="math inline">\(V = 1\)</span>: <span class="math inline">\(E[Y^{a=1}] = 0.4\)</span>, <span class="math inline">\(E[Y^{a=0}] = 0.2\)</span></li>
+</ul>
+<p><strong>Risk difference</strong>:</p>
+<ul>
+<li>When <span class="math inline">\(V = 0\)</span>: <span class="math inline">\(0.2 - 0.1 = 0.1\)</span></li>
+<li>When <span class="math inline">\(V = 1\)</span>: <span class="math inline">\(0.4 - 0.2 = 0.2\)</span></li>
+</ul>
 <p>There is effect modification on the risk difference scale (effect is 0.1 in one group, 0.2 in the other).</p>
-<p><strong>Risk ratio</strong>: - When <span class="math inline">\(V = 0\)</span>: <span class="math inline">\(0.2 / 0.1 = 2.0\)</span> - When <span class="math inline">\(V = 1\)</span>: <span class="math inline">\(0.4 / 0.2 = 2.0\)</span></p>
+<p><strong>Risk ratio</strong>:</p>
+<ul>
+<li>When <span class="math inline">\(V = 0\)</span>: <span class="math inline">\(0.2 / 0.1 = 2.0\)</span></li>
+<li>When <span class="math inline">\(V = 1\)</span>: <span class="math inline">\(0.4 / 0.2 = 2.0\)</span></li>
+</ul>
 <p>There is NO effect modification on the risk ratio scale (effect is 2.0 in both groups).</p>
 </div>
 <aside class="notes">
-<p>This example shows that effect modification is <strong>measure-dependent</strong>. The same data can show: - Effect modification on one scale (risk difference) - No effect modification on another scale (risk ratio)</p>
-<p><strong>Which scale should we use?</strong> - From a <strong>biological/mechanistic</strong> perspective, one scale may be more natural - From a <strong>public health</strong> perspective, risk differences are often most relevant - There is no single “correct” answer—the choice depends on the scientific question</p>
+<p>This example shows that effect modification is <strong>measure-dependent</strong>. The same data can show:</p>
+<ul>
+<li>Effect modification on one scale (risk difference)</li>
+<li>No effect modification on another scale (risk ratio)</li>
+</ul>
+<p><strong>Which scale should we use?</strong></p>
+<ul>
+<li>From a <strong>biological/mechanistic</strong> perspective, one scale may be more natural</li>
+<li>From a <strong>public health</strong> perspective, risk differences are often most relevant</li>
+<li>There is no single “correct” answer—the choice depends on the scientific question</li>
+</ul>
 <p>This highlights that effect modification is not simply a yes/no property, but depends on how we measure effects.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -249,8 +284,18 @@
 <p>If effects differ across strata, <span class="math inline">\(V\)</span> is an effect modifier.</p>
 <div id="exm-stratification" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Stratified Analysis Example)</strong></span> Using data from a randomized trial of heart transplant in Zeus’s family:</p>
-<p><strong>Stratum 1 (Males)</strong>: - Risk in treated: <span class="math inline">\(Pr[Y = 1 | A = 1, V = \text{male}] = 0.40\)</span> - Risk in untreated: <span class="math inline">\(Pr[Y = 1 | A = 0, V = \text{male}] = 0.70\)</span> - Risk difference: <span class="math inline">\(0.40 - 0.70 = -0.30\)</span> (benefit)</p>
-<p><strong>Stratum 2 (Females)</strong>: - Risk in treated: <span class="math inline">\(Pr[Y = 1 | A = 1, V = \text{female}] = 0.65\)</span> - Risk in untreated: <span class="math inline">\(Pr[Y = 1 | A = 0, V = \text{female}] = 0.35\)</span> - Risk difference: <span class="math inline">\(0.65 - 0.35 = +0.30\)</span> (harm)</p>
+<p><strong>Stratum 1 (Males)</strong>:</p>
+<ul>
+<li>Risk in treated: <span class="math inline">\(Pr[Y = 1 | A = 1, V = \text{male}] = 0.40\)</span></li>
+<li>Risk in untreated: <span class="math inline">\(Pr[Y = 1 | A = 0, V = \text{male}] = 0.70\)</span></li>
+<li>Risk difference: <span class="math inline">\(0.40 - 0.70 = -0.30\)</span> (benefit)</li>
+</ul>
+<p><strong>Stratum 2 (Females)</strong>:</p>
+<ul>
+<li>Risk in treated: <span class="math inline">\(Pr[Y = 1 | A = 1, V = \text{female}] = 0.65\)</span></li>
+<li>Risk in untreated: <span class="math inline">\(Pr[Y = 1 | A = 0, V = \text{female}] = 0.35\)</span></li>
+<li>Risk difference: <span class="math inline">\(0.65 - 0.35 = +0.30\)</span> (harm)</li>
+</ul>
 <p>Since <span class="math inline">\(-0.30 \neq +0.30\)</span>, there is effect modification by sex.</p>
 </div>
 <aside class="notes">
@@ -293,19 +338,38 @@
 </section>
 <section id="targeting-interventions" class="slide level2">
 <h2>2. Targeting Interventions</h2>
-<p>When effect modification exists, we can: - Target treatment to subgroups that benefit most - Avoid treating subgroups that experience harm - Allocate limited resources more efficiently</p>
+<p>When effect modification exists, we can:</p>
+<ul>
+<li>Target treatment to subgroups that benefit most</li>
+<li>Avoid treating subgroups that experience harm</li>
+<li>Allocate limited resources more efficiently</li>
+</ul>
 <div id="exm-precision-medicine" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3 (Precision Medicine Example)</strong></span> If genetic testing reveals that a drug benefits patients with genotype AA but harms patients with genotype BB, we should: - Prescribe the drug only to AA patients - Use alternative treatments for BB patients</p>
+<p><span class="theorem-title"><strong>Example 3 (Precision Medicine Example)</strong></span> If genetic testing reveals that a drug benefits patients with genotype AA but harms patients with genotype BB, we should:</p>
+<ul>
+<li>Prescribe the drug only to AA patients</li>
+<li>Use alternative treatments for BB patients</li>
+</ul>
 <p>This is the foundation of <strong>precision medicine</strong> or <strong>personalized medicine</strong>.</p>
 </div>
 </section>
 <section id="understanding-mechanisms" class="slide level2">
 <h2>3. Understanding Mechanisms</h2>
-<p>Effect modification can provide clues about biological or social mechanisms: - If an effect is modified by sex, hormones may play a role - If an effect is modified by age, developmental processes may be involved - If an effect is modified by socioeconomic status, access or adherence may matter</p>
+<p>Effect modification can provide clues about biological or social mechanisms:</p>
+<ul>
+<li>If an effect is modified by sex, hormones may play a role</li>
+<li>If an effect is modified by age, developmental processes may be involved</li>
+<li>If an effect is modified by socioeconomic status, access or adherence may matter</li>
+</ul>
 <aside class="notes">
 <p><strong>Caution</strong>: Effect modification is <strong>descriptive</strong>, not <strong>mechanistic</strong>. Just because <span class="math inline">\(V\)</span> modifies the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> does not necessarily mean <span class="math inline">\(V\)</span> is part of the causal mechanism. There may be other variables correlated with <span class="math inline">\(V\)</span> that are the true modifiers.</p>
 <p><strong>Example</strong>: Suppose the effect of a drug is modified by zip code. This doesn’t mean zip code <em>causes</em> differential effects. Rather, zip code may be a proxy for socioeconomic status, healthcare access, environmental exposures, etc.</p>
-<p>To understand mechanisms, we need: - Subject-matter knowledge - Careful measurement of mechanistic variables - Additional assumptions (sometimes formalized using mediation analysis, covered in later chapters)</p>
+<p>To understand mechanisms, we need:</p>
+<ul>
+<li>Subject-matter knowledge</li>
+<li>Careful measurement of mechanistic variables</li>
+<li>Additional assumptions (sometimes formalized using mediation analysis, covered in later chapters)</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -333,17 +397,39 @@
 <li>A <strong>confounder</strong> is a variable that, if not adjusted for, biases the estimate of the average causal effect</li>
 <li>An <strong>effect modifier</strong> is a variable across which the causal effect differs</li>
 </ul>
-<p>A variable can be: - A confounder only - An effect modifier only<br>
-- Both a confounder and effect modifier - Neither</p>
+<p>A variable can be:</p>
+<ul>
+<li>A confounder only</li>
+<li>An effect modifier only<br>
+</li>
+<li>Both a confounder and effect modifier</li>
+<li>Neither</li>
+</ul>
 </div>
 </section>
 <section id="example-confounder-vs.-modifier" class="slide level2">
 <h2>Example: Confounder vs.&nbsp;Modifier</h2>
-<p><strong>Confounder only</strong>: Age affects both treatment and outcome, but the treatment effect is the same at all ages. - We must adjust for age to get an unbiased marginal effect - But we don’t need to report age-specific effects (they’re all the same)</p>
-<p><strong>Effect modifier only</strong>: In a randomized trial, sex does not confound (randomization handles that), but the treatment effect differs by sex. - No need to adjust for confounding - But we should report sex-specific effects</p>
-<p><strong>Both</strong>: In an observational study of surgery, age affects who gets surgery (confounding) and how well surgery works (effect modification). - We must adjust for age - We should report age-specific effects</p>
+<p><strong>Confounder only</strong>: Age affects both treatment and outcome, but the treatment effect is the same at all ages.</p>
+<ul>
+<li>We must adjust for age to get an unbiased marginal effect</li>
+<li>But we don’t need to report age-specific effects (they’re all the same)</li>
+</ul>
+<p><strong>Effect modifier only</strong>: In a randomized trial, sex does not confound (randomization handles that), but the treatment effect differs by sex.</p>
+<ul>
+<li>No need to adjust for confounding</li>
+<li>But we should report sex-specific effects</li>
+</ul>
+<p><strong>Both</strong>: In an observational study of surgery, age affects who gets surgery (confounding) and how well surgery works (effect modification).</p>
+<ul>
+<li>We must adjust for age</li>
+<li>We should report age-specific effects</li>
+</ul>
 <aside class="notes">
-<p><strong>Key distinction</strong>: - <strong>Confounding is a bias</strong> to be removed through adjustment - <strong>Effect modification is a finding</strong> to be reported and understood</p>
+<p><strong>Key distinction</strong>:</p>
+<ul>
+<li><strong>Confounding is a bias</strong> to be removed through adjustment</li>
+<li><strong>Effect modification is a finding</strong> to be reported and understood</li>
+</ul>
 <p>When a variable is both a confounder and an effect modifier: 1. We must adjust for it to eliminate bias 2. We should present stratum-specific effects (not just an overall adjusted effect)</p>
 <p><strong>Common mistake</strong>: Treating an effect modifier as if it were only a confounder, adjusting for it and reporting only an overall effect, thereby obscuring important heterogeneity.</p>
 <style type="text/css">
@@ -378,12 +464,33 @@
 </section>
 <section id="matching-and-effect-modification" class="slide level2">
 <h2>Matching and Effect Modification</h2>
-<p>Like stratification, matching can identify effect modification: - Match separately within subgroups defined by <span class="math inline">\(V\)</span> - Estimate effects within each subgroup - Compare effects across subgroups</p>
+<p>Like stratification, matching can identify effect modification:</p>
+<ul>
+<li>Match separately within subgroups defined by <span class="math inline">\(V\)</span></li>
+<li>Estimate effects within each subgroup</li>
+<li>Compare effects across subgroups</li>
+</ul>
 <aside class="notes">
 <p><strong>Matching vs.&nbsp;Stratification</strong>:</p>
-<p><strong>Similarities</strong>: - Both create comparable treatment and control groups - Both can identify effect modification - Both can eliminate confounding</p>
-<p><strong>Differences</strong>: - <strong>Stratification</strong> uses all data, dividing into non-overlapping strata - <strong>Matching</strong> may discard data (unmatched individuals), creating matched pairs/sets - <strong>Matching</strong> can be more efficient when controls far outnumber treated individuals - <strong>Stratification</strong> is conceptually simpler and more transparent</p>
-<p><strong>Modern approach</strong>: Matching has largely been superseded by more flexible methods like: - Regression adjustment - Inverse probability weighting (Chapter 12) - Propensity score methods (Chapter 15)</p>
+<p><strong>Similarities</strong>:</p>
+<ul>
+<li>Both create comparable treatment and control groups</li>
+<li>Both can identify effect modification</li>
+<li>Both can eliminate confounding</li>
+</ul>
+<p><strong>Differences</strong>:</p>
+<ul>
+<li><strong>Stratification</strong> uses all data, dividing into non-overlapping strata</li>
+<li><strong>Matching</strong> may discard data (unmatched individuals), creating matched pairs/sets</li>
+<li><strong>Matching</strong> can be more efficient when controls far outnumber treated individuals</li>
+<li><strong>Stratification</strong> is conceptually simpler and more transparent</li>
+</ul>
+<p><strong>Modern approach</strong>: Matching has largely been superseded by more flexible methods like:</p>
+<ul>
+<li>Regression adjustment</li>
+<li>Inverse probability weighting (Chapter 12)</li>
+<li>Propensity score methods (Chapter 15)</li>
+</ul>
 <p>However, matching is still useful pedagogically and in certain applications (e.g., case-control studies in epidemiology).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -405,23 +512,56 @@
 <section id="stratification-with-confounding" class="slide level2">
 <h2>Stratification with Confounding</h2>
 <p>If <span class="math inline">\(V\)</span> is both a confounder and effect modifier, simple stratification may not suffice if there are additional confounders <span class="math inline">\(L\)</span>.</p>
-<p><strong>Solution</strong>: Adjust for <span class="math inline">\(L\)</span> within each stratum of <span class="math inline">\(V\)</span>. This can be done via: - <strong>Stratification on both <span class="math inline">\(V\)</span> and <span class="math inline">\(L\)</span></strong>: Creates many narrow strata - <strong>Regression within strata</strong>: Fit separate regression models for each level of <span class="math inline">\(V\)</span> - <strong>Inverse probability weighting within strata</strong>: Weight by propensity score within each <span class="math inline">\(V\)</span> stratum</p>
+<p><strong>Solution</strong>: Adjust for <span class="math inline">\(L\)</span> within each stratum of <span class="math inline">\(V\)</span>. This can be done via:</p>
+<ul>
+<li><strong>Stratification on both <span class="math inline">\(V\)</span> and <span class="math inline">\(L\)</span></strong>: Creates many narrow strata</li>
+<li><strong>Regression within strata</strong>: Fit separate regression models for each level of <span class="math inline">\(V\)</span></li>
+<li><strong>Inverse probability weighting within strata</strong>: Weight by propensity score within each <span class="math inline">\(V\)</span> stratum</li>
+</ul>
 <div id="exm-stratification-with-confounding" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5 (Stratification with Additional Confounders)</strong></span> To estimate the effect of exercise on heart disease, modified by age, while adjusting for sex and smoking:</p>
-<p><strong>Approach 1</strong>: Stratify by age, sex, and smoking - Too many strata (e.g., 3 age groups × 2 sexes × 2 smoking status = 12 strata) - Sample sizes become small</p>
-<p><strong>Approach 2</strong>: Stratify by age, then adjust for sex and smoking within each age stratum - Fit regression model within young, middle-aged, and elderly separately - Each model controls for sex and smoking - Compare effects across age groups</p>
+<p><strong>Approach 1</strong>: Stratify by age, sex, and smoking</p>
+<ul>
+<li>Too many strata (e.g., 3 age groups × 2 sexes × 2 smoking status = 12 strata)</li>
+<li>Sample sizes become small</li>
+</ul>
+<p><strong>Approach 2</strong>: Stratify by age, then adjust for sex and smoking within each age stratum</p>
+<ul>
+<li>Fit regression model within young, middle-aged, and elderly separately</li>
+<li>Each model controls for sex and smoking</li>
+<li>Compare effects across age groups</li>
+</ul>
 </div>
 </section>
 <section id="regression-models-for-effect-modification" class="slide level2">
 <h2>Regression Models for Effect Modification</h2>
 <p>Regression models provide a flexible framework for handling effect modification:</p>
 <p><strong>Model with effect modification</strong>: <span class="math display">\[E[Y | A, V, L] = \beta_0 + \beta_1 A + \beta_2 V + \beta_3 A \times V + \beta_4^T L\]</span></p>
-<p>The <strong>interaction term</strong> <span class="math inline">\(\beta_3 A \times V\)</span> captures effect modification: - If <span class="math inline">\(\beta_3 = 0\)</span>: No effect modification by <span class="math inline">\(V\)</span> - If <span class="math inline">\(\beta_3 \neq 0\)</span>: Effect of <span class="math inline">\(A\)</span> differs by <span class="math inline">\(V\)</span></p>
+<p>The <strong>interaction term</strong> <span class="math inline">\(\beta_3 A \times V\)</span> captures effect modification:</p>
+<ul>
+<li>If <span class="math inline">\(\beta_3 = 0\)</span>: No effect modification by <span class="math inline">\(V\)</span></li>
+<li>If <span class="math inline">\(\beta_3 \neq 0\)</span>: Effect of <span class="math inline">\(A\)</span> differs by <span class="math inline">\(V\)</span></li>
+</ul>
 <aside class="notes">
 <p><strong>Important distinctions</strong>:</p>
-<p><strong>Statistical interaction</strong> (in regression models): - Refers to product terms like <span class="math inline">\(A \times V\)</span> in a model - Is model-dependent and scale-dependent - Does not have an inherent causal interpretation</p>
-<p><strong>Effect modification</strong> (in causal inference): - Refers to heterogeneity of causal effects across subgroups - Is defined in terms of potential outcomes - Has a clear causal interpretation</p>
-<p>These concepts are related but not identical: - Effect modification on the risk difference scale corresponds to interaction in a linear model - Effect modification on the risk ratio scale corresponds to interaction in a log-linear model - Absence of statistical interaction does NOT guarantee absence of effect modification (it depends on the model and scale)</p>
+<p><strong>Statistical interaction</strong> (in regression models):</p>
+<ul>
+<li>Refers to product terms like <span class="math inline">\(A \times V\)</span> in a model</li>
+<li>Is model-dependent and scale-dependent</li>
+<li>Does not have an inherent causal interpretation</li>
+</ul>
+<p><strong>Effect modification</strong> (in causal inference):</p>
+<ul>
+<li>Refers to heterogeneity of causal effects across subgroups</li>
+<li>Is defined in terms of potential outcomes</li>
+<li>Has a clear causal interpretation</li>
+</ul>
+<p>These concepts are related but not identical:</p>
+<ul>
+<li>Effect modification on the risk difference scale corresponds to interaction in a linear model</li>
+<li>Effect modification on the risk ratio scale corresponds to interaction in a log-linear model</li>
+<li>Absence of statistical interaction does NOT guarantee absence of effect modification (it depends on the model and scale)</li>
+</ul>
 <p><strong>Best practice</strong>: Report stratum-specific effects directly rather than relying solely on interaction terms. This makes the findings more transparent and interpretable.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {

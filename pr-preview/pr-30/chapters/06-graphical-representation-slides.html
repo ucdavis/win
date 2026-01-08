@@ -176,7 +176,11 @@
 <section>
 <section id="causal-diagrams-pp.-59-61" class="title-slide slide level1 center" data-number="1">
 <h1><span class="header-section-number">1</span> 6.1 Causal Diagrams (pp.&nbsp;59-61)</h1>
-<p>A <strong>causal diagram</strong> is a graph where: - <strong>Nodes</strong> (vertices) represent variables - <strong>Directed edges</strong> (arrows) represent direct causal effects</p>
+<p>A <strong>causal diagram</strong> is a graph where:</p>
+<ul>
+<li><strong>Nodes</strong> (vertices) represent variables</li>
+<li><strong>Directed edges</strong> (arrows) represent direct causal effects</li>
+</ul>
 <div id="def-dag" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Directed Acyclic Graph (DAG))</strong></span> A <strong>directed acyclic graph</strong> is a causal diagram where: 1. All edges are directed (have arrowheads indicating the direction of causation) 2. There are no cycles (you cannot start at a node, follow the arrows, and return to that node)</p>
 </div>
@@ -186,11 +190,26 @@
 <p>Consider a simple causal diagram:</p>
 <pre><code>L → A → Y
 L → Y</code></pre>
-<p>This diagram represents: - <span class="math inline">\(L\)</span> causes <span class="math inline">\(A\)</span> (arrow from <span class="math inline">\(L\)</span> to <span class="math inline">\(A\)</span>) - <span class="math inline">\(L\)</span> causes <span class="math inline">\(Y\)</span> (arrow from <span class="math inline">\(L\)</span> to <span class="math inline">\(Y\)</span>) - <span class="math inline">\(A\)</span> causes <span class="math inline">\(Y\)</span> (arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>)</p>
-<p><strong>Key terms</strong>: - <span class="math inline">\(L\)</span> is a <strong>parent</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> (direct cause) - <span class="math inline">\(A\)</span> is a <strong>child</strong> of <span class="math inline">\(L\)</span> (direct effect) - <span class="math inline">\(L\)</span> is an <strong>ancestor</strong> of <span class="math inline">\(Y\)</span> (can reach <span class="math inline">\(Y\)</span> by following arrows) - <span class="math inline">\(Y\)</span> is a <strong>descendant</strong> of <span class="math inline">\(L\)</span> (can be reached from <span class="math inline">\(L\)</span> by following arrows)</p>
+<p>This diagram represents:</p>
+<ul>
+<li><span class="math inline">\(L\)</span> causes <span class="math inline">\(A\)</span> (arrow from <span class="math inline">\(L\)</span> to <span class="math inline">\(A\)</span>)</li>
+<li><span class="math inline">\(L\)</span> causes <span class="math inline">\(Y\)</span> (arrow from <span class="math inline">\(L\)</span> to <span class="math inline">\(Y\)</span>)</li>
+<li><span class="math inline">\(A\)</span> causes <span class="math inline">\(Y\)</span> (arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>)</li>
+</ul>
+<p><strong>Key terms</strong>:</p>
+<ul>
+<li><span class="math inline">\(L\)</span> is a <strong>parent</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> (direct cause)</li>
+<li><span class="math inline">\(A\)</span> is a <strong>child</strong> of <span class="math inline">\(L\)</span> (direct effect)</li>
+<li><span class="math inline">\(L\)</span> is an <strong>ancestor</strong> of <span class="math inline">\(Y\)</span> (can reach <span class="math inline">\(Y\)</span> by following arrows)</li>
+<li><span class="math inline">\(Y\)</span> is a <strong>descendant</strong> of <span class="math inline">\(L\)</span> (can be reached from <span class="math inline">\(L\)</span> by following arrows)</li>
+</ul>
 <aside class="notes">
 <p><strong>What does a DAG represent?</strong></p>
-<p>A DAG represents our <strong>qualitative causal assumptions</strong>: - The presence of an arrow <span class="math inline">\(X \rightarrow Y\)</span> means we believe <span class="math inline">\(X\)</span> has a direct causal effect on <span class="math inline">\(Y\)</span> - The absence of an arrow <span class="math inline">\(X \not\rightarrow Y\)</span> means we believe <span class="math inline">\(X\)</span> has no direct causal effect on <span class="math inline">\(Y\)</span> (conditional on other variables in the graph)</p>
+<p>A DAG represents our <strong>qualitative causal assumptions</strong>:</p>
+<ul>
+<li>The presence of an arrow <span class="math inline">\(X \rightarrow Y\)</span> means we believe <span class="math inline">\(X\)</span> has a direct causal effect on <span class="math inline">\(Y\)</span></li>
+<li>The absence of an arrow <span class="math inline">\(X \not\rightarrow Y\)</span> means we believe <span class="math inline">\(X\)</span> has no direct causal effect on <span class="math inline">\(Y\)</span> (conditional on other variables in the graph)</li>
+</ul>
 <p><strong>Important</strong>: A DAG does not tell us the magnitude or sign of effects, only their presence/absence and direction.</p>
 <p><strong>Acyclic assumption</strong>: We assume no feedback loops (e.g., <span class="math inline">\(A\)</span> causes <span class="math inline">\(Y\)</span>, which causes <span class="math inline">\(A\)</span>). This rules out dynamic systems with bidirectional causation. Extensions exist for such settings (e.g., structural equation models with cycles) but are beyond this chapter’s scope.</p>
 <style type="text/css">
@@ -208,13 +227,23 @@ L → Y</code></pre>
 <section id="example-smoking-exercise-and-heart-disease" class="slide level2">
 <h2>Example: Smoking, Exercise, and Heart Disease</h2>
 <div id="exm-simple-dag" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Simple Causal Diagram)</strong></span> Consider the causal relationships between: - <span class="math inline">\(A\)</span>: Smoking - <span class="math inline">\(L\)</span>: Exercise<br>
-- <span class="math inline">\(Y\)</span>: Heart disease</p>
+<p><span class="theorem-title"><strong>Example 1 (Simple Causal Diagram)</strong></span> Consider the causal relationships between:</p>
+<ul>
+<li><span class="math inline">\(A\)</span>: Smoking</li>
+<li><span class="math inline">\(L\)</span>: Exercise<br>
+</li>
+<li><span class="math inline">\(Y\)</span>: Heart disease</li>
+</ul>
 <p>Plausible causal diagram:</p>
 <pre><code>A → Y
 L → Y
 L → A</code></pre>
-<p>Interpretation: - Smoking directly causes heart disease - Exercise directly affects heart disease (protective) - Exercise affects smoking behavior (perhaps exercisers are less likely to smoke)</p>
+<p>Interpretation:</p>
+<ul>
+<li>Smoking directly causes heart disease</li>
+<li>Exercise directly affects heart disease (protective)</li>
+<li>Exercise affects smoking behavior (perhaps exercisers are less likely to smoke)</li>
+</ul>
 </div>
 </section></section>
 <section>
@@ -226,10 +255,24 @@ L → A</code></pre>
 <h2>Independence from DAGs</h2>
 <p>From a DAG, we can determine which variables are marginally independent (unconditionally).</p>
 <div id="exm-marginal-independence" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2 (Marginal Independence)</strong></span> <strong>Diagram 1</strong>: <span class="math inline">\(A \rightarrow Y\)</span> - <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> (associated)</p>
-<p><strong>Diagram 2</strong>: <span class="math inline">\(A \quad Y\)</span> (no arrow) - <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong></p>
-<p><strong>Diagram 3</strong>: <span class="math inline">\(L \rightarrow A \rightarrow Y\)</span> (chain) - <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> - <span class="math inline">\(L\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> (through the path <span class="math inline">\(L \rightarrow A \rightarrow Y\)</span>)</p>
-<p><strong>Diagram 4</strong>: <span class="math inline">\(A \rightarrow Y \leftarrow L\)</span> (fork) - <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span> are <strong>independent</strong> (no common cause, no direct connection) - Both <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span> are <strong>dependent</strong> with <span class="math inline">\(Y\)</span></p>
+<p><span class="theorem-title"><strong>Example 2 (Marginal Independence)</strong></span> <strong>Diagram 1</strong>: <span class="math inline">\(A \rightarrow Y\)</span></p>
+<ul>
+<li><span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> (associated)</li>
+</ul>
+<p><strong>Diagram 2</strong>: <span class="math inline">\(A \quad Y\)</span> (no arrow)</p>
+<ul>
+<li><span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong></li>
+</ul>
+<p><strong>Diagram 3</strong>: <span class="math inline">\(L \rightarrow A \rightarrow Y\)</span> (chain)</p>
+<ul>
+<li><span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong></li>
+<li><span class="math inline">\(L\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> (through the path <span class="math inline">\(L \rightarrow A \rightarrow Y\)</span>)</li>
+</ul>
+<p><strong>Diagram 4</strong>: <span class="math inline">\(A \rightarrow Y \leftarrow L\)</span> (fork)</p>
+<ul>
+<li><span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span> are <strong>independent</strong> (no common cause, no direct connection)</li>
+<li>Both <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span> are <strong>dependent</strong> with <span class="math inline">\(Y\)</span></li>
+</ul>
 </div>
 <aside class="notes">
 <p><strong>Key principle</strong>: In a DAG, two variables are marginally associated if and only if there exists a path (sequence of arrows, ignoring direction) connecting them, UNLESS the path is blocked.</p>
@@ -280,7 +323,12 @@ L → A</code></pre>
 </ul></li>
 </ul>
 <div id="exm-collider-bias" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3 (Collider Bias Example)</strong></span> Suppose: - <span class="math inline">\(A\)</span>: Natural athletic ability - <span class="math inline">\(E\)</span>: Training effort - <span class="math inline">\(Y\)</span>: Professional athlete (yes/no)</p>
+<p><span class="theorem-title"><strong>Example 3 (Collider Bias Example)</strong></span> Suppose:</p>
+<ul>
+<li><span class="math inline">\(A\)</span>: Natural athletic ability</li>
+<li><span class="math inline">\(E\)</span>: Training effort</li>
+<li><span class="math inline">\(Y\)</span>: Professional athlete (yes/no)</li>
+</ul>
 <p>Diagram: <span class="math inline">\(A \rightarrow Y \leftarrow E\)</span></p>
 <p><strong>Marginal</strong>: Among the general population, natural ability and training effort are independent (some people train hard, some don’t; some are naturally gifted, some aren’t; these are unrelated).</p>
 <p><strong>Conditional on <span class="math inline">\(Y=1\)</span> (among professional athletes)</strong>: Natural ability and training effort are <strong>negatively</strong> associated!</p>
@@ -316,7 +364,11 @@ L → A</code></pre>
 <section id="positivity-in-dags" class="slide level2">
 <h2>Positivity in DAGs</h2>
 <p>The <strong>positivity assumption</strong> requires that all levels of treatment occur at all levels of confounders: <span class="math display">\[\Pr[A = a | L = l] &gt; 0 \quad \text{for all } a, l\]</span></p>
-<p>In a DAG, positivity violations can occur when: - Structural determinism: Certain values of <span class="math inline">\(L\)</span> make <span class="math inline">\(A\)</span> deterministic (e.g., if <span class="math inline">\(L\)</span> completely determines <span class="math inline">\(A\)</span>) - Random violations: By chance, no individuals in the sample have certain <span class="math inline">\((A, L)\)</span> combinations</p>
+<p>In a DAG, positivity violations can occur when:</p>
+<ul>
+<li>Structural determinism: Certain values of <span class="math inline">\(L\)</span> make <span class="math inline">\(A\)</span> deterministic (e.g., if <span class="math inline">\(L\)</span> completely determines <span class="math inline">\(A\)</span>)</li>
+<li>Random violations: By chance, no individuals in the sample have certain <span class="math inline">\((A, L)\)</span> combinations</li>
+</ul>
 <aside class="notes">
 <p><strong>DAGs and positivity</strong>: The DAG itself doesn’t tell us whether positivity holds—that depends on the actual data. However, DAGs can help identify situations where positivity is likely to be violated (e.g., when many arrows point into the treatment, suggesting treatment is highly determined by covariates).</p>
 <style type="text/css">
@@ -397,10 +449,16 @@ L → Y</code></pre>
 <p><span class="theorem-title"><strong>Example 4 (Backdoor Criterion Example)</strong></span> <strong>Diagram</strong>:</p>
 <pre><code>U → L → A → Y
       L → Y</code></pre>
-<p><strong>Backdoor paths from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></strong>: - <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span></p>
+<p><strong>Backdoor paths from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></strong>:</p>
+<ul>
+<li><span class="math inline">\(A \leftarrow L \rightarrow Y\)</span></li>
+</ul>
 <p><strong>Does <span class="math inline">\(L\)</span> satisfy the backdoor criterion?</strong> 1. <span class="math inline">\(L\)</span> is not a descendant of <span class="math inline">\(A\)</span> ✓ 2. <span class="math inline">\(L\)</span> blocks the backdoor path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> ✓</p>
 <p>Yes! Adjusting for <span class="math inline">\(L\)</span> is sufficient to identify the causal effect.</p>
-<p><strong>Does <span class="math inline">\(U\)</span> satisfy the backdoor criterion?</strong> - No.&nbsp;<span class="math inline">\(U\)</span> is not on the path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span>, so it doesn’t block the backdoor path.</p>
+<p><strong>Does <span class="math inline">\(U\)</span> satisfy the backdoor criterion?</strong></p>
+<ul>
+<li>No.&nbsp;<span class="math inline">\(U\)</span> is not on the path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span>, so it doesn’t block the backdoor path.</li>
+</ul>
 </div>
 <aside class="notes">
 <p><strong>Multiple backdoor paths</strong>: In more complex diagrams, there may be many backdoor paths. The adjustment set must block <strong>all</strong> of them.</p>
@@ -428,7 +486,11 @@ L → Y</code></pre>
 </section>
 <section id="measurement-bias" class="slide level2">
 <h2>Measurement Bias</h2>
-<p><strong>Measurement bias</strong> can be represented in DAGs by including nodes for both: - True (unmeasured) variables - Measured (error-prone) variables</p>
+<p><strong>Measurement bias</strong> can be represented in DAGs by including nodes for both:</p>
+<ul>
+<li>True (unmeasured) variables</li>
+<li>Measured (error-prone) variables</li>
+</ul>
 <p><strong>Example</strong>:</p>
 <pre><code>A_true → Y
 A_measured ← A_true</code></pre>
@@ -451,7 +513,11 @@ A → Y
 <p>Standard DAGs do not have explicit notation for effect modification or interaction. The diagram:</p>
 <pre><code>V → Y
 A → Y</code></pre>
-<p>is compatible with: - No effect modification (effect of <span class="math inline">\(A\)</span> is the same for all <span class="math inline">\(V\)</span>) - Effect modification (effect of <span class="math inline">\(A\)</span> differs by <span class="math inline">\(V\)</span>)</p>
+<p>is compatible with:</p>
+<ul>
+<li>No effect modification (effect of <span class="math inline">\(A\)</span> is the same for all <span class="math inline">\(V\)</span>)</li>
+<li>Effect modification (effect of <span class="math inline">\(A\)</span> differs by <span class="math inline">\(V\)</span>)</li>
+</ul>
 <p><strong>Why?</strong> DAGs represent <strong>qualitative</strong> causal structure (presence/absence of effects), not <strong>quantitative</strong> features (magnitude or heterogeneity).</p>
 <p><strong>Extensions</strong>: Some frameworks (e.g., Single World Intervention Graphs, SWIGs) can represent effect modification more explicitly, but these are advanced topics beyond the scope of this chapter.</p>
 <style type="text/css">
@@ -468,7 +534,13 @@ A → Y</code></pre>
 </section>
 <section id="confounding-vs.-effect-modification" class="slide level2">
 <h2>Confounding vs.&nbsp;Effect Modification</h2>
-<p>A variable <span class="math inline">\(V\)</span> can be: - A <strong>confounder</strong>: Opens a backdoor path (<span class="math inline">\(V \rightarrow A\)</span>, <span class="math inline">\(V \rightarrow Y\)</span>) - An <strong>effect modifier</strong>: The effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> varies by <span class="math inline">\(V\)</span> - Both - Neither</p>
+<p>A variable <span class="math inline">\(V\)</span> can be:</p>
+<ul>
+<li>A <strong>confounder</strong>: Opens a backdoor path (<span class="math inline">\(V \rightarrow A\)</span>, <span class="math inline">\(V \rightarrow Y\)</span>)</li>
+<li>An <strong>effect modifier</strong>: The effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> varies by <span class="math inline">\(V\)</span></li>
+<li>Both</li>
+<li>Neither</li>
+</ul>
 <div id="exm-confounder-modifier-dag" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5 (Confounder and Modifier in DAGs)</strong></span> <strong>Scenario 1</strong>: <span class="math inline">\(V\)</span> is a confounder only</p>
 <pre><code>V → A → Y
@@ -516,10 +588,26 @@ V → Y
 <li><strong>Adjust for that set</strong> using stratification, regression, or weighting</li>
 <li><strong>Avoid adjusting</strong> for colliders, mediators, or other variables that induce bias</li>
 </ol>
-<p><strong>Software</strong>: - R package <code>dagitty</code>: Draw DAGs, find adjustment sets, test implications - R package <code>ggdag</code>: Visualize DAGs - Web app: dagitty.net</p>
-<p><strong>Limitations of DAGs</strong>: - Require strong qualitative assumptions about causal structure - Cannot represent unmeasured confounding (unless explicitly included as a node) - Cannot represent dynamic feedback (cycles) - Do not encode effect modification or quantitative magnitudes</p>
+<p><strong>Software</strong>:</p>
+<ul>
+<li>R package <code>dagitty</code>: Draw DAGs, find adjustment sets, test implications</li>
+<li>R package <code>ggdag</code>: Visualize DAGs</li>
+<li>Web app: dagitty.net</li>
+</ul>
+<p><strong>Limitations of DAGs</strong>:</p>
+<ul>
+<li>Require strong qualitative assumptions about causal structure</li>
+<li>Cannot represent unmeasured confounding (unless explicitly included as a node)</li>
+<li>Cannot represent dynamic feedback (cycles)</li>
+<li>Do not encode effect modification or quantitative magnitudes</li>
+</ul>
 <p>Despite these limitations, DAGs are invaluable for making causal assumptions explicit and selecting appropriate adjustment strategies.</p>
-<p><strong>Looking ahead</strong>: - <strong>Chapter 7</strong>: Detailed treatment of confounding - <strong>Chapter 8</strong>: Selection bias - <strong>Chapters 11-15</strong>: Methods for adjusting for confounding (IP weighting, g-formula, propensity scores)</p>
+<p><strong>Looking ahead</strong>:</p>
+<ul>
+<li><strong>Chapter 7</strong>: Detailed treatment of confounding</li>
+<li><strong>Chapter 8</strong>: Selection bias</li>
+<li><strong>Chapters 11-15</strong>: Methods for adjusting for confounding (IP weighting, g-formula, propensity scores)</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

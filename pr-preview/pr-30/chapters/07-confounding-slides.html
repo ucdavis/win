@@ -258,7 +258,11 @@ L → Y</code></pre>
 <p><strong>Why confounding creates bias</strong>:</p>
 <p>Without confounding: <span class="math display">\[E[Y | A = 1] - E[Y | A = 0] = E[Y^{a=1}] - E[Y^{a=0}]\]</span> (association equals causation)</p>
 <p>With confounding: <span class="math display">\[E[Y | A = 1] - E[Y | A = 0] \neq E[Y^{a=1}] - E[Y^{a=0}]\]</span> (association does not equal causation)</p>
-<p>The observed association includes both: - The causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> - The confounding bias due to the common cause <span class="math inline">\(L\)</span></p>
+<p>The observed association includes both:</p>
+<ul>
+<li>The causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span></li>
+<li>The confounding bias due to the common cause <span class="math inline">\(L\)</span></li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -273,10 +277,25 @@ L → Y</code></pre>
 </section>
 <section id="common-confounding-scenarios" class="slide level2">
 <h2>Common Confounding Scenarios</h2>
-<p><strong>Example 1: Healthy worker bias</strong> - Healthier individuals are more likely to be employed (employed → more likely to be exposed at work) - Healthier individuals have better outcomes - Comparing employed vs.&nbsp;unemployed introduces confounding by health status</p>
-<p><strong>Example 2: Confounding by indication</strong> - Sicker patients receive more aggressive treatment - Sicker patients have worse outcomes - Treatment appears harmful when in fact it may be beneficial</p>
+<p><strong>Example 1: Healthy worker bias</strong></p>
+<ul>
+<li>Healthier individuals are more likely to be employed (employed → more likely to be exposed at work)</li>
+<li>Healthier individuals have better outcomes</li>
+<li>Comparing employed vs.&nbsp;unemployed introduces confounding by health status</li>
+</ul>
+<p><strong>Example 2: Confounding by indication</strong></p>
+<ul>
+<li>Sicker patients receive more aggressive treatment</li>
+<li>Sicker patients have worse outcomes</li>
+<li>Treatment appears harmful when in fact it may be beneficial</li>
+</ul>
 <aside class="notes">
-<p><strong>Confounding can go in either direction</strong>: - <strong>Positive confounding</strong>: Makes treatment appear more beneficial (or more harmful) than it truly is - <strong>Negative confounding</strong>: Makes treatment appear less beneficial (or less harmful) than it truly is - <strong>Zero confounding</strong>: The magnitude depends on the strength and direction of the <span class="math inline">\(L \rightarrow A\)</span> and <span class="math inline">\(L \rightarrow Y\)</span> relationships</p>
+<p><strong>Confounding can go in either direction</strong>:</p>
+<ul>
+<li><strong>Positive confounding</strong>: Makes treatment appear more beneficial (or more harmful) than it truly is</li>
+<li><strong>Negative confounding</strong>: Makes treatment appear less beneficial (or less harmful) than it truly is</li>
+<li><strong>Zero confounding</strong>: The magnitude depends on the strength and direction of the <span class="math inline">\(L \rightarrow A\)</span> and <span class="math inline">\(L \rightarrow Y\)</span> relationships</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -302,9 +321,19 @@ L → Y</code></pre>
 <p>The treated and untreated differ with respect to their potential outcomes.</p>
 <div id="exm-confounding-exchangeability" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Confounding and Exchangeability)</strong></span> Suppose exercise (<span class="math inline">\(A\)</span>) affects heart disease (<span class="math inline">\(Y\)</span>), and both are affected by age (<span class="math inline">\(L\)</span>):</p>
-<p><strong>Without confounding</strong>: - Young and old people equally likely to exercise - <span class="math inline">\(E[Y^{a=1} | A = 1] = E[Y^{a=1} | A = 0]\)</span> (exchangeable)</p>
-<p><strong>With confounding</strong>: - Younger people more likely to exercise<br>
-- Younger people have lower baseline risk - <span class="math inline">\(E[Y^{a=1} | A = 1] \neq E[Y^{a=1} | A = 0]\)</span> (not exchangeable) - Those who exercise would have had better outcomes even without exercising</p>
+<p><strong>Without confounding</strong>:</p>
+<ul>
+<li>Young and old people equally likely to exercise</li>
+<li><span class="math inline">\(E[Y^{a=1} | A = 1] = E[Y^{a=1} | A = 0]\)</span> (exchangeable)</li>
+</ul>
+<p><strong>With confounding</strong>:</p>
+<ul>
+<li>Younger people more likely to exercise<br>
+</li>
+<li>Younger people have lower baseline risk</li>
+<li><span class="math inline">\(E[Y^{a=1} | A = 1] \neq E[Y^{a=1} | A = 0]\)</span> (not exchangeable)</li>
+<li>Those who exercise would have had better outcomes even without exercising</li>
+</ul>
 </div>
 </section>
 <section id="conditional-exchangeability" class="slide level2">
@@ -335,7 +364,11 @@ L → Y</code></pre>
 </section>
 <section id="backdoor-paths-and-confounding" class="slide level2 scrollable">
 <h2>Backdoor Paths and Confounding</h2>
-<p>A <strong>backdoor path</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>: - Starts with an arrow into <span class="math inline">\(A\)</span> (i.e., <span class="math inline">\(\cdot \rightarrow A\)</span>) - Connects <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> through any sequence of arrows</p>
+<p>A <strong>backdoor path</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>:</p>
+<ul>
+<li>Starts with an arrow into <span class="math inline">\(A\)</span> (i.e., <span class="math inline">\(\cdot \rightarrow A\)</span>)</li>
+<li>Connects <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> through any sequence of arrows</li>
+</ul>
 <p><strong>Confounding exists if backdoor paths are open (unblocked)</strong>.</p>
 <div id="exm-backdoor-confounding" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Identifying Confounders with the Backdoor Criterion)</strong></span> <strong>Diagram 1</strong>:</p>
@@ -383,7 +416,10 @@ L → Y</code></pre>
 </section>
 <section id="dag-based-definition" class="slide level2 scrollable">
 <h2>DAG-Based Definition</h2>
-<p>From the DAG perspective, <span class="math inline">\(L\)</span> is a confounder if: - <span class="math inline">\(L\)</span> opens a backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></p>
+<p>From the DAG perspective, <span class="math inline">\(L\)</span> is a confounder if:</p>
+<ul>
+<li><span class="math inline">\(L\)</span> opens a backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></li>
+</ul>
 <aside class="notes">
 <p><strong>Differences</strong>:</p>
 <p>The traditional definition is based on <strong>associations</strong> (statistical relationships). The DAG definition is based on <strong>causal structure</strong> (graphical relationships).</p>
@@ -434,9 +470,24 @@ L → Y</code></pre>
 <p><strong>Example SWIG</strong>: For the causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> with confounder <span class="math inline">\(L\)</span>:</p>
 <pre><code>L → A_a → Y_a
 L → Y_a</code></pre>
-<p>SWIGs make explicit: - Which variables are set by intervention - Which variables remain as observed - Which counterfactual outcome we’re interested in</p>
-<p><strong>Advantages</strong>: - Clearer representation of counterfactuals - Explicit about the intervention - Useful for complex scenarios (time-varying treatments, mediation)</p>
-<p><strong>Disadvantages</strong>: - More complex notation - Require more assumptions to be specified - Not yet as widely used as standard DAGs</p>
+<p>SWIGs make explicit:</p>
+<ul>
+<li>Which variables are set by intervention</li>
+<li>Which variables remain as observed</li>
+<li>Which counterfactual outcome we’re interested in</li>
+</ul>
+<p><strong>Advantages</strong>:</p>
+<ul>
+<li>Clearer representation of counterfactuals</li>
+<li>Explicit about the intervention</li>
+<li>Useful for complex scenarios (time-varying treatments, mediation)</li>
+</ul>
+<p><strong>Disadvantages</strong>:</p>
+<ul>
+<li>More complex notation</li>
+<li>Require more assumptions to be specified</li>
+<li>Not yet as widely used as standard DAGs</li>
+</ul>
 <p>For most purposes in this book, standard DAGs suffice. SWIGs are mentioned for completeness and for readers interested in advanced topics.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -465,20 +516,51 @@ L → Y_a</code></pre>
 </ol>
 <div id="exm-adjustment-methods" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3 (Comparing Adjustment Methods)</strong></span> <strong>Data</strong>: Effect of smoking (<span class="math inline">\(A\)</span>) on lung cancer (<span class="math inline">\(Y\)</span>), adjusting for age (<span class="math inline">\(L\)</span>)</p>
-<p><strong>Stratification</strong>: - Estimate effect separately for age = 40, 50, 60, 70 - Combine using weighted average</p>
+<p><strong>Stratification</strong>:</p>
+<ul>
+<li>Estimate effect separately for age = 40, 50, 60, 70</li>
+<li>Combine using weighted average</li>
+</ul>
 <p><strong>Regression</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">glm</span>(Y <span class="sc">~</span> A <span class="sc">+</span> L, <span class="at">family =</span> <span class="fu">binomial</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>IP weighting</strong> (Chapter 12):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>weight <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">predict</span>(<span class="fu">glm</span>(A <span class="sc">~</span> L, <span class="at">family =</span> <span class="fu">binomial</span>()), <span class="at">type =</span> <span class="st">"response"</span>)</span>
 <span id="cb7-2"><a></a><span class="fu">glm</span>(Y <span class="sc">~</span> A, <span class="at">weights =</span> weight, <span class="at">family =</span> <span class="fu">binomial</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Matching</strong>: - For each smoker, find non-smoker of same age - Compare outcomes</p>
+<p><strong>Matching</strong>:</p>
+<ul>
+<li>For each smoker, find non-smoker of same age</li>
+<li>Compare outcomes</li>
+</ul>
 </div>
 <aside class="notes">
 <p><strong>Choosing an adjustment method</strong>:</p>
-<p><strong>Stratification</strong>: - ✓ Transparent, easy to understand - ✓ Allows checking for effect modification - ✗ Limited to discrete confounders - ✗ Requires large sample sizes for fine strata</p>
-<p><strong>Regression</strong>: - ✓ Handles continuous confounders - ✓ Efficient (uses all data) - ✗ Relies on model assumptions - ✗ Can obscure effect modification</p>
-<p><strong>IP weighting</strong>: - ✓ Flexible, can handle complex confounding - ✓ Estimates marginal (population-average) effects - ✗ Can be unstable with extreme weights - ✗ More complex to implement</p>
-<p><strong>Matching</strong>: - ✓ Intuitive, creates comparable groups - ✗ Discards unmatched data - ✗ Largely superseded by other methods</p>
+<p><strong>Stratification</strong>:</p>
+<ul>
+<li>✓ Transparent, easy to understand</li>
+<li>✓ Allows checking for effect modification</li>
+<li>✗ Limited to discrete confounders</li>
+<li>✗ Requires large sample sizes for fine strata</li>
+</ul>
+<p><strong>Regression</strong>:</p>
+<ul>
+<li>✓ Handles continuous confounders</li>
+<li>✓ Efficient (uses all data)</li>
+<li>✗ Relies on model assumptions</li>
+<li>✗ Can obscure effect modification</li>
+</ul>
+<p><strong>IP weighting</strong>:</p>
+<ul>
+<li>✓ Flexible, can handle complex confounding</li>
+<li>✓ Estimates marginal (population-average) effects</li>
+<li>✗ Can be unstable with extreme weights</li>
+<li>✗ More complex to implement</li>
+</ul>
+<p><strong>Matching</strong>:</p>
+<ul>
+<li>✓ Intuitive, creates comparable groups</li>
+<li>✗ Discards unmatched data</li>
+<li>✗ Largely superseded by other methods</li>
+</ul>
 <p><strong>Modern recommendation</strong>: Use IP weighting or doubly robust methods (combine regression and weighting) for flexibility and robustness.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -526,9 +608,20 @@ L → Y_a</code></pre>
 <li><p><strong>Be transparent</strong>: Report the DAG, adjustment set, and method clearly</p></li>
 </ol>
 <p><strong>Limitations</strong>:</p>
-<p>Even with perfect adjustment for measured confounders, bias can remain if: - Important confounders are unmeasured (Chapter 19 covers sensitivity analysis) - Confounders are measured with error (Chapter 9) - Adjustment methods are applied incorrectly - Positivity is violated</p>
+<p>Even with perfect adjustment for measured confounders, bias can remain if:</p>
+<ul>
+<li>Important confounders are unmeasured (Chapter 19 covers sensitivity analysis)</li>
+<li>Confounders are measured with error (Chapter 9)</li>
+<li>Adjustment methods are applied incorrectly</li>
+<li>Positivity is violated</li>
+</ul>
 <p>Confounding control is necessary but not sufficient for valid causal inference.</p>
-<p><strong>Looking ahead</strong>: - <strong>Chapter 8</strong>: Selection bias - <strong>Chapter 9</strong>: Measurement bias - <strong>Chapters 12-15</strong>: Advanced methods for confounding adjustment</p>
+<p><strong>Looking ahead</strong>:</p>
+<ul>
+<li><strong>Chapter 8</strong>: Selection bias</li>
+<li><strong>Chapter 9</strong>: Measurement bias</li>
+<li><strong>Chapters 12-15</strong>: Advanced methods for confounding adjustment</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

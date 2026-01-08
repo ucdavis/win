@@ -277,8 +277,14 @@
 </ol>
 <aside class="notes">
 <p><strong>Critical limitation</strong>: Conditional exchangeability is an <strong>untestable assumption</strong>. We can never verify from data alone that we have measured and adjusted for all confounders.</p>
-<p>This is why subject-matter knowledge is essential in causal inference. We must use: - Prior research - Biological mechanisms<br>
-- Causal diagrams (introduced in Chapter 6) - Expert opinion</p>
+<p>This is why subject-matter knowledge is essential in causal inference. We must use:</p>
+<ul>
+<li>Prior research</li>
+<li>Biological mechanisms<br>
+</li>
+<li>Causal diagrams (introduced in Chapter 6)</li>
+<li>Expert opinion</li>
+</ul>
 <p>to identify the set of confounders <span class="math inline">\(L\)</span> that, if measured and adjusted for, would render the treated and untreated exchangeable.</p>
 <p>If there exist <strong>unmeasured confounders</strong>—variables that affect both treatment and outcome but are not in <span class="math inline">\(L\)</span>—then conditional exchangeability fails, and our causal effect estimates will be biased.</p>
 <style type="text/css">
@@ -318,7 +324,12 @@
 <li><strong>Random violations</strong>: By chance, no individuals with certain covariate values received treatment in our sample</li>
 <li><strong>Practical violations</strong>: Treatment is theoretically possible but extremely rare for certain subgroups</li>
 </ol>
-<p>When positivity is violated, we must either: - Restrict our causal question to the subpopulation where positivity holds - Make additional modeling assumptions (with their own limitations) - Accept that we cannot answer the original causal question with the available data</p>
+<p>When positivity is violated, we must either:</p>
+<ul>
+<li>Restrict our causal question to the subpopulation where positivity holds</li>
+<li>Make additional modeling assumptions (with their own limitations)</li>
+<li>Accept that we cannot answer the original causal question with the available data</li>
+</ul>
 <p>In practice, <strong>near-violations</strong> of positivity (where <span class="math inline">\(Pr[A = a | L]\)</span> is very close to 0 or 1) can also cause problems, leading to unstable estimates with large variance.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -346,7 +357,13 @@
 <h2>Well-Defined Interventions</h2>
 <p>For consistency to hold, the treatment must be <strong>well-defined</strong>. This means we must be able to precisely specify what it means to receive treatment level <span class="math inline">\(a\)</span>.</p>
 <div id="exm-ill-defined-treatment" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3 (Ill-Defined Treatment Example)</strong></span> Consider “exercise” as a treatment. What does <span class="math inline">\(A = 1\)</span> (receives exercise) mean? - Running 3 miles? - Swimming for 30 minutes? - Walking 10,000 steps? - Weight training?</p>
+<p><span class="theorem-title"><strong>Example 3 (Ill-Defined Treatment Example)</strong></span> Consider “exercise” as a treatment. What does <span class="math inline">\(A = 1\)</span> (receives exercise) mean?</p>
+<ul>
+<li>Running 3 miles?</li>
+<li>Swimming for 30 minutes?</li>
+<li>Walking 10,000 steps?</li>
+<li>Weight training?</li>
+</ul>
 <p>If different individuals in the <span class="math inline">\(A = 1\)</span> group received different forms of exercise, then <span class="math inline">\(Y^{a=1}\)</span> is not well-defined. The potential outcome under “exercise” depends on which specific form of exercise.</p>
 </div>
 <aside class="notes">
@@ -386,8 +403,14 @@
 <p>When interference exists, the full counterfactual notation must specify everyone’s treatment:</p>
 <p><span class="math display">\[Y_i^{\mathbf{a}} = Y_i^{a_1, a_2, \ldots, a_n}\]</span></p>
 <p>where <span class="math inline">\(\mathbf{a}\)</span> is a vector of everyone’s treatment assignments.</p>
-<p>Interference is common in: - Infectious disease studies (herd immunity) - Social network studies (peer effects)<br>
-- Environmental exposures (shared exposures) - Cluster randomized trials</p>
+<p>Interference is common in:</p>
+<ul>
+<li>Infectious disease studies (herd immunity)</li>
+<li>Social network studies (peer effects)<br>
+</li>
+<li>Environmental exposures (shared exposures)</li>
+<li>Cluster randomized trials</li>
+</ul>
 <p>Special methods are needed to handle interference, which is beyond the scope of the standard framework introduced in this chapter. For now, we assume no interference.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -405,7 +428,11 @@
 <h2>Temporal Consistency</h2>
 <p>Consistency also requires that the <strong>timing</strong> of treatment and outcome measurement is well-defined.</p>
 <aside class="notes">
-<p>If we ask “What is the effect of treatment on the outcome?”, we must specify: - When is treatment received? - When is the outcome measured?</p>
+<p>If we ask “What is the effect of treatment on the outcome?”, we must specify:</p>
+<ul>
+<li>When is treatment received?</li>
+<li>When is the outcome measured?</li>
+</ul>
 <p>For example, the effect of exercise on weight at 6 months may differ from the effect on weight at 1 year. We need to be precise about the follow-up time.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -467,8 +494,21 @@
 <h2>Example: Target Trial for Statins and Cardiovascular Disease</h2>
 <div id="exm-target-trial" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5 (Target Trial Example)</strong></span> <strong>Research question</strong>: Does taking statins reduce the risk of cardiovascular disease (CVD)?</p>
-<p><strong>Target trial specification</strong>: - <strong>Eligibility</strong>: Adults aged 40-75 with LDL cholesterol &gt; 190 mg/dL, no history of CVD - <strong>Treatment</strong>: Daily statin (yes/no) - <strong>Assignment</strong>: Random assignment to statin or no statin - <strong>Outcome</strong>: CVD event within 5 years - <strong>Estimand</strong>: Risk difference <span class="math inline">\(Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]\)</span></p>
-<p><strong>Observational study emulation</strong>: - Identify individuals meeting eligibility criteria in electronic health records - Compare those who initiated statins vs.&nbsp;those who did not - Adjust for baseline confounders <span class="math inline">\(L\)</span> (age, sex, blood pressure, smoking, etc.) - Follow individuals for 5 years, censoring if they move or die from non-CVD causes</p>
+<p><strong>Target trial specification</strong>:</p>
+<ul>
+<li><strong>Eligibility</strong>: Adults aged 40-75 with LDL cholesterol &gt; 190 mg/dL, no history of CVD</li>
+<li><strong>Treatment</strong>: Daily statin (yes/no)</li>
+<li><strong>Assignment</strong>: Random assignment to statin or no statin</li>
+<li><strong>Outcome</strong>: CVD event within 5 years</li>
+<li><strong>Estimand</strong>: Risk difference <span class="math inline">\(Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]\)</span></li>
+</ul>
+<p><strong>Observational study emulation</strong>:</p>
+<ul>
+<li>Identify individuals meeting eligibility criteria in electronic health records</li>
+<li>Compare those who initiated statins vs.&nbsp;those who did not</li>
+<li>Adjust for baseline confounders <span class="math inline">\(L\)</span> (age, sex, blood pressure, smoking, etc.)</li>
+<li>Follow individuals for 5 years, censoring if they move or die from non-CVD causes</li>
+</ul>
 </div>
 <aside class="notes">
 <p>In this example, the key challenges are:</p>
