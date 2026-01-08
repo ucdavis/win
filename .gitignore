@@ -24,3 +24,7 @@
 site_libs
 
 **/*.quarto_ipynb
+
+# Temporary files from book downloads and extractions
+*.pdf
+chapter1_*.txt
