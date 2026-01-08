@@ -215,6 +215,7 @@ spelling::spell_check_files("README.md")
 - **Use theorem variations to structure content**: Use Quarto's theorem environments (`#def-`, `#thm-`, `#exm-`, `#exr-`, etc.) to organize definitions, theorems, examples, and exercises for better clarity and cross-referencing (see "Theorems and Proofs" section)
 - **Use single space between sentences**: Use only one space after periods between sentences, not two spaces
 - **Use bullet points for lists**: When presenting lists of items, tools, formats, or steps, use bullet points rather than comma-separated lists for better readability and clarity
+- **Always leave a blank line before bullet point lists**: In Quarto/Markdown, always insert a blank line before starting a bullet point list to ensure proper formatting. Without the blank line, the list may not render correctly.
 - **Include original textbook page numbers in section headers**: When creating chapter content based on the "What If?" textbook, include the corresponding page numbers from the original text in section headers to help readers cross-reference with the source material
   - Format: `## Section Title (pp. XX-YY)` for page ranges or `## Section Title (p. XX)` for single pages
   - Example: `## Randomization (pp. 11-15)` or `## Consistency Assumption (p. 8)`
