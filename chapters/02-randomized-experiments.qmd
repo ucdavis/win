@@ -138,8 +138,8 @@ Table 2.2 shows a possible outcome from this stratified randomization.
 | Artemis | 0 | 0 | 1 | Hebe | 0 | 0 | 1 |
 | Kronos | 1 | 0 | 1 | Ares | 1 | 1 | 1 |
 | Hades | 1 | 0 | 0 | Hephaestus | 1 | 1 | 1 |
-| Poseidon | 1 | 1 | 0 | Polyphemus | 1 | 1 | 1 |
-| Zeus | 1 | 1 | 1 | Hermes | 1 | 1 | 0 |
+| Poseidon | 1 | 0 | 1 | Polyphemus | 1 | 1 | 1 |
+| Zeus | 1 | 1 | 1 | Hermes | 1 | 0 | 0 |
 | Apollo | 1 | 0 | 1 | Dionysus | 1 | 1 | 0 |
 
 :::
@@ -232,12 +232,12 @@ Using Table 2.2, let's compute the standardized causal risk difference.
 *Among women ($L = 0$):*
 
 - $Pr[Y = 1|A = 1, L = 0] = 3/5 = 0.6$ (3 of 5 treated women died)
-- $Pr[Y = 1|A = 0, L = 0] = 1/5 = 0.2$ (1 of 5 untreated women died)
+- $Pr[Y = 1|A = 0, L = 0] = 2/5 = 0.4$ (2 of 5 untreated women died)
 
 *Among men ($L = 1$):*
 
 - $Pr[Y = 1|A = 1, L = 1] = 4/5 = 0.8$ (4 of 5 treated men died)
-- $Pr[Y = 1|A = 0, L = 1] = 2/5 = 0.4$ (2 of 5 untreated men died)
+- $Pr[Y = 1|A = 0, L = 1] = 3/5 = 0.6$ (3 of 5 untreated men died)
 
 **Step 2**: Compute population distribution of $L$
 
@@ -248,14 +248,14 @@ Using Table 2.2, let's compute the standardized causal risk difference.
 
 \begin{align}
 E[Y^{a=1}] &= 0.6 \times 0.5 + 0.8 \times 0.5 = 0.7 \\
-E[Y^{a=0}] &= 0.2 \times 0.5 + 0.4 \times 0.5 = 0.3
+E[Y^{a=0}] &= 0.4 \times 0.5 + 0.6 \times 0.5 = 0.5
 \end{align}
 
 **Step 4**: Compute causal effect
 
-$$E[Y^{a=1}] - E[Y^{a=0}] = 0.7 - 0.3 = 0.4$$
+$$E[Y^{a=1}] - E[Y^{a=0}] = 0.7 - 0.5 = 0.2$$
 
-The standardized causal risk difference is 0.4. This differs from the crude (unstandardized) associational difference, which is $(7/10) - (3/10) = 0.4$ in this particular example.
+The standardized causal risk difference is 0.2. In this particular example, this equals the crude (unstandardized) associational difference: $(7/10) - (5/10) = 0.2$.
 
 ::: {.notes}
 In general, the crude association $Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]$ does **not** equal the standardized causal effect when conditional randomization is used.
@@ -342,35 +342,25 @@ Since all probabilities equal 0.5, all weights equal $1/0.5 = 2$.
 **Step 3**: Compute weighted means
 
 *Treated group ($A = 1$):*
-- Sum of weighted outcomes: $(0 \times 2) + (0 \times 2) + (1 \times 2) + (1 \times 2) + (0 \times 2) + (1 \times 2) + (1 \times 2) + (1 \times 2) + (0 \times 2) + (0 \times 2) = 14$
-- Sum of weights: $10 \times 2 = 20$
-- Weighted mean: $14/20 = 0.7$
+
+Based on Table 2.2, there are 10 treated individuals, of whom 7 died (Y=1). The weighted mean is:
+
+$$\frac{\sum_{i:A_i=1} W_i Y_i}{\sum_{i:A_i=1} W_i} = \frac{7 \times 2}{10 \times 2} = \frac{14}{20} = 0.7$$
 
 *Untreated group ($A = 0$):*
-- Sum of weighted outcomes: $(0 \times 2) + (0 \times 2) + (1 \times 2) + (0 \times 2) + (1 \times 2) + (1 \times 2) + (0 \times 2) + (1 \times 2) + (0 \times 2) + (1 \times 2) = 12$
-- Sum of weights: $10 \times 2 = 20$
-- Weighted mean: $12/20 = 0.6$
 
-Wait, this doesn't match. Let me recount from Table 2.2.
+Based on Table 2.2, there are 10 untreated individuals, of whom 5 died (Y=1). The weighted mean is:
 
-Actually, looking at Table 2.2 more carefully:
-
-*Treated ($A = 1$):* Hestia (Y=0), Hera (Y=0), Athena (Y=1), Aphrodite (Y=1), Persephone (Y=1), Poseidon (Y=0), Zeus (Y=1), Ares (Y=1), Hephaestus (Y=1), Polyphemus (Y=1), Hermes (Y=0), Dionysus (Y=0)
-
-Count: 12 treated, 7 with Y=1
-
-*Untreated ($A = 0$):* Rheia (Y=0), Demeter (Y=0), Artemis (Y=1), Leto (Y=0), Hebe (Y=1), Kronos (Y=1), Hades (Y=0), Apollo (Y=1)
-
-Count: 8 untreated, 4 with Y=1
+$$\frac{\sum_{i:A_i=0} W_i Y_i}{\sum_{i:A_i=0} W_i} = \frac{5 \times 2}{10 \times 2} = \frac{10}{20} = 0.5$$
 
 **Step 4**: Compute IPW estimate
 
-- Weighted mean in treated: $7/10 = 0.7$ (since all weights are equal in this balanced design)
-- Weighted mean in untreated: $3/10 = 0.3$
-- IPW estimate: $0.7 - 0.3 = 0.4$
+- Weighted mean in treated: $0.7$
+- Weighted mean in untreated: $0.5$
+- IPW estimate: $0.7 - 0.5 = 0.2$
 
 ::: {.notes}
-In this example, IPW and standardization give the same answer (0.4) because the design is balanced. With equal treatment probabilities within strata and equal numbers in each stratum, the two methods are equivalent.
+In this example, IPW and standardization give the same answer (0.2) because the design is balanced. With equal treatment probabilities within strata and equal numbers in each stratum, the two methods are equivalent.
 
 In general, standardization and IPW can give different estimates when:
 1. Treatment probabilities vary across strata
@@ -385,9 +375,9 @@ Both methods are consistent (converge to the true causal effect) under the same 
 | Feature | Standardization | IPW |
 |---------|----------------|-----|
 | **Idea** | Weight stratum-specific outcomes by population distribution | Create pseudo-population with marginal randomization |
-| **Formula** | $E[Y^a] = \sum_l E[Y\|A=a,L=l] Pr[L=l]$ | $E[Y^a] = E[Y \cdot I(A=a) / Pr[A=a\|L]]$ |
-| **Weights** | Stratum probabilities $Pr[L=l]$ | Inverse treatment probabilities $1/Pr[A\|L]$ |
-| **Model** | Outcome model $E[Y\|A,L]$ | Treatment model $Pr[A\|L]$ |
+| **Formula** | $E[Y^a] = \sum_l E[Y \vert A=a,L=l] Pr[L=l]$ | $E[Y^a] = E[Y \cdot I(A=a) / Pr[A=a \vert L]]$ |
+| **Weights** | Stratum probabilities $Pr[L=l]$ | Inverse treatment probabilities $1/Pr[A \vert L]$ |
+| **Model** | Outcome model $E[Y \vert A,L]$ | Treatment model $Pr[A \vert L]$ |
 | **Extensions** | G-computation, parametric g-formula | Marginal structural models |
 
 ::: {.notes}
