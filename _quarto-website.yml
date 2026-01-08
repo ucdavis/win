@@ -31,6 +31,8 @@ website:
             href: chapters/02-randomized-experiments.qmd
           - text: "Chapter 3: Observational Studies"
             href: chapters/03-observational-studies.qmd
+          - text: "Chapter 4: Effect Modification"
+            href: chapters/04-effect-modification.qmd
 
 format:
   html:
