@@ -24,6 +24,8 @@ This chapter is based on @hernan2020causal [Chapter 4, pp. 37-46].
 
 ## 4.1 Heterogeneity of Treatment Effects (pp. 37-39)
 
+---
+
 Consider again Zeus's family from Chapter 1. Suppose we estimate that heart transplant has no average causal effect on mortality (the average treatment effect is zero). Does this mean the treatment has no effect on anyone?
 
 Not necessarily. The average treatment effect can be zero even when there are large individual effects, as long as beneficial effects for some individuals are balanced by harmful effects for others.
@@ -104,6 +106,8 @@ This highlights that effect modification is not simply a yes/no property, but de
 
 ## 4.2 Stratification to Identify Effect Modification (pp. 39-41)
 
+---
+
 The standard approach to identify effect modification is **stratification**: estimate the treatment effect separately within levels (strata) of the modifier variable $V$.
 
 ### Stratified Analysis
@@ -155,6 +159,8 @@ Since $-0.30 \neq +0.30$, there is effect modification by sex.
 
 ## 4.3 Why Care About Effect Modification (pp. 41-42)
 
+---
+
 Why is identifying effect modification important?
 
 ### 1. Improving Precision of Effect Estimates
@@ -201,6 +207,8 @@ To understand mechanisms, we need:
 :::
 
 ## 4.4 Stratification as a Form of Adjustment (pp. 42-43)
+
+---
 
 Stratification serves two related but distinct purposes:
 
@@ -254,6 +262,8 @@ When a variable is both a confounder and an effect modifier:
 :::
 
 ## 4.5 Matching as Another Form of Adjustment (pp. 43-45)
+
+---
 
 In addition to stratification, **matching** is another method for adjustment that can also reveal effect modification.
 
@@ -310,6 +320,8 @@ However, matching is still useful pedagogically and in certain applications (e.g
 :::
 
 ## 4.6 Effect Modification and Adjustment Methods (pp. 45-46)
+
+---
 
 When both confounding and effect modification are present, we need methods that can:
 1. Adjust for confounders
@@ -380,6 +392,8 @@ These concepts are related but not identical:
 
 ## Summary
 
+---
+
 This chapter introduced **effect modification**: the phenomenon where causal effects differ across levels of another variable.
 
 **Key concepts**:
@@ -418,6 +432,8 @@ This chapter introduced **effect modification**: the phenomenon where causal eff
 :::
 
 ## References
+
+---
 
 ::: {#refs}
 :::

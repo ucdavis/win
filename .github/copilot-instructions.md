@@ -322,6 +322,30 @@ These appear as speaker notes in RevealJS and as regular text in HTML/PDF.
 :::
 ```
 
+### Slide Breaks in RevealJS
+
+**CRITICAL**: To prevent long title slides with content in RevealJS presentations, always add a slide break (`---`) immediately after section headings.
+
+**Pattern to follow**:
+
+```markdown
+## Section Title (pp. XX-YY)
+
+---
+
+Content starts here on a new slide.
+```
+
+**Why this matters**:
+- Without the slide break, content appears on the same slide as the section title
+- This creates cluttered, hard-to-read title slides
+- The slide break ensures the title appears alone on one slide, content on subsequent slides
+
+**Apply this pattern**:
+- After every `##` heading (section heading)
+- After `###` headings when they introduce substantial content
+- Not necessary after headings that are immediately followed by another heading
+
 **Only use `.content-visible` when absolutely necessary** (rarely needed):
 
 ```markdown

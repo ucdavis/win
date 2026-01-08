@@ -18,6 +18,8 @@ This chapter is based on @hernan2020causal [Chapter 2, pp. 13-24].
 
 ## 2.1 Randomization (pp. 13-16)
 
+---
+
 Suppose we conduct a randomized experiment using Zeus's family as our study population. To determine who receives a heart transplant, Zeus flips a (fair) coin for each of the 20 individuals. If heads, the individual receives a heart transplant ($A = 1$); if tails, they do not ($A = 0$). 
 
 Table 2.1 shows the observed data from this randomized experiment.
@@ -118,6 +120,8 @@ Chapter 10 discusses statistical inference (confidence intervals, p-values) to q
 
 ## 2.2 Conditional Randomization (pp. 16-18)
 
+---
+
 Not all randomized experiments use simple randomization with equal treatment probabilities. Often, randomization is **conditional** on measured covariates.
 
 ### Stratified Randomization
@@ -193,6 +197,8 @@ Common forms include:
 - **Matched-pair randomization**: Match individuals on covariates, then randomize within pairs
 
 ## 2.3 Standardization (pp. 18-21)
+
+---
 
 When exchangeability is conditional rather than marginal, we cannot simply compare outcomes between treatment groups. We must account for the stratification variable $L$.
 
@@ -274,6 +280,8 @@ Similarly, $E[Y^{a=0}]$ answers: "What would the mean outcome be if everyone in 
 The difference $E[Y^{a=1}] - E[Y^{a=0}]$ is the **average causal effect** in the population.
 
 ## 2.4 Inverse Probability Weighting (pp. 21-24)
+
+---
 
 Standardization is not the only method to adjust for conditional randomization. An alternative approach is **inverse probability weighting** (IPW).
 
@@ -410,6 +418,8 @@ Randomized experiments guarantee positivity if the randomization probabilities a
 
 ## Summary
 
+---
+
 This chapter introduced fundamental concepts using randomized experiments:
 
 1. **Randomization** ensures exchangeability $Y^a \perp\!\!\!\perp A$, allowing causal effects to be identified from associational contrasts
@@ -425,6 +435,8 @@ This chapter introduced fundamental concepts using randomized experiments:
 In randomized experiments, these assumptions are met by design. In observational studies (Chapters 3-7), these assumptions are less plausible and require careful justification.
 
 ## Fine Point
+
+---
 
 ### 2.1 The intention-to-treat effect
 
@@ -443,6 +455,8 @@ In randomized experiments, the sharp null allows for **exact inference** using p
 Under the average null (but not the sharp null), standard large-sample inference (normal approximation, t-tests) is typically used.
 
 ## Technical Point
+
+---
 
 ### 2.1 Identification and exchangeability
 
@@ -474,6 +488,8 @@ E[Y^a] &= E[E[Y^a|L]] \quad \text{(law of total expectation)} \\
 The key step is the third equality, which uses the fact that $E[I(A=a)/Pr[A=a|L]] = 1$.
 
 ## References
+
+---
 
 ::: {#refs}
 :::

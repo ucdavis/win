@@ -24,6 +24,8 @@ This chapter is based on @hernan2020causal [Chapter 5, pp. 47-58].
 
 ## 5.1 Interaction Requires a Joint Intervention (pp. 47-49)
 
+---
+
 To define interaction, we need to consider the **joint effect** of two treatments, which requires imagining interventions on both treatments simultaneously.
 
 ### Notation for Two Treatments
@@ -136,6 +138,8 @@ To avoid confusion, always interpret the interaction contrast in the context of 
 
 ## 5.2 Identifying Interaction (pp. 49-51)
 
+---
+
 To identify interaction from observed data, we need the three identifiability conditions introduced in Chapter 3:
 
 ### Identifiability Conditions for Interaction
@@ -186,6 +190,8 @@ Estimating interaction requires sufficient sample size in all four treatment gro
 :::
 
 ## 5.3 Counterfactual Response Types and Interaction (pp. 51-53)
+
+---
 
 Another way to understand interaction is through **counterfactual response types**—classifications of individuals based on their pattern of potential outcomes.
 
@@ -250,6 +256,8 @@ The response type framework provides a mechanistic interpretation of interaction
 
 ## 5.4 Sufficient Causes (pp. 53-55)
 
+---
+
 An alternative framework for thinking about interaction is the **sufficient cause model**, developed by Kenneth Rothman.
 
 ::: {#def-sufficient-cause}
@@ -291,6 +299,8 @@ An individual will develop lung cancer if they complete any one (or more) of the
 :::
 
 ## 5.5 Sufficient Cause Interaction (pp. 55-57)
+
+---
 
 Within the sufficient cause framework, we can define a specific type of interaction:
 
@@ -346,6 +356,8 @@ This is **pure synergism**: neither treatment alone has an effect, but the combi
 
 ## 5.6 Counterfactuals or Sufficient-Component Causes? (pp. 57-58)
 
+---
+
 Should we use the counterfactual (potential outcomes) framework or the sufficient cause framework to study interaction?
 
 ### Advantages of the Counterfactual Framework
@@ -382,6 +394,8 @@ Should we use the counterfactual (potential outcomes) framework or the sufficien
 :::
 
 ## Summary
+
+---
 
 This chapter introduced **interaction** between two treatments.
 
@@ -422,6 +436,8 @@ This chapter introduced **interaction** between two treatments.
 :::
 
 ## References
+
+---
 
 ::: {#refs}
 :::

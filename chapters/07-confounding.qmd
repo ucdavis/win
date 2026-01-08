@@ -18,6 +18,8 @@ This chapter is based on @hernan2020causal [Chapter 7, pp. 77-92].
 
 ## 7.1 The Structure of Confounding (pp. 77-80)
 
+---
+
 Confounding occurs when a common cause of treatment and outcome creates a non-causal association between them.
 
 ::: {#def-confounding-structure}
@@ -79,6 +81,8 @@ The observed association includes both:
 
 ## 7.2 Confounding and Exchangeability (pp. 80-82)
 
+---
+
 Confounding is equivalent to lack of (conditional) exchangeability.
 
 ### No Confounding = Exchangeability
@@ -131,6 +135,8 @@ If these requirements are met, we can estimate causal effects from observational
 :::
 
 ## 7.3 Confounding and the Backdoor Criterion (pp. 82-85)
+
+---
 
 The backdoor criterion (Chapter 6) provides a graphical method for identifying confounding.
 
@@ -189,6 +195,8 @@ L → Y
 
 ## 7.4 Confounding and Confounders (pp. 85-87)
 
+---
+
 The traditional definition of "confounder" in epidemiology differs slightly from the causal DAG perspective.
 
 ### Traditional Confounder Definition
@@ -224,6 +232,8 @@ The DAG definition is based on **causal structure** (graphical relationships).
 :::
 
 ## 7.5 Single-World Intervention Graphs (pp. 87-89)
+
+---
 
 Single-World Intervention Graphs (SWIGs) are an extension of DAGs that explicitly represent interventions and counterfactual outcomes.
 
@@ -267,6 +277,8 @@ For most purposes in this book, standard DAGs suffice. SWIGs are mentioned for c
 :::
 
 ## 7.6 Confounding Adjustment (pp. 89-92)
+
+---
 
 Once confounders are identified, several methods can adjust for them.
 
@@ -342,6 +354,8 @@ glm(Y ~ A, weights = weight, family = binomial())
 
 ## Summary
 
+---
+
 This chapter provided a detailed examination of **confounding**.
 
 **Key concepts**:
@@ -400,6 +414,8 @@ Confounding control is necessary but not sufficient for valid causal inference.
 :::
 
 ## References
+
+---
 
 ::: {#refs}
 :::

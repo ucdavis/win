@@ -20,6 +20,8 @@ This chapter is based on @hernan2020causal [Chapter 6, pp. 59-76].
 
 ## 6.1 Causal Diagrams (pp. 59-61)
 
+---
+
 A **causal diagram** is a graph where:
 
 - **Nodes** (vertices) represent variables
@@ -96,6 +98,8 @@ Interpretation:
 
 ## 6.2 Causal Diagrams and Marginal Independence (pp. 61-64)
 
+---
+
 Causal diagrams encode information about statistical independence relationships.
 
 ### Independence from DAGs
@@ -133,6 +137,8 @@ From a DAG, we can determine which variables are marginally independent (uncondi
 :::
 
 ## 6.3 Causal Diagrams and Conditional Independence (pp. 64-68)
+
+---
 
 Conditioning on (stratifying by) a variable can change independence relationships.
 
@@ -194,6 +200,8 @@ This is **collider stratification bias**.
 
 ## 6.4 Positivity and Consistency in Causal Diagrams (pp. 68-69)
 
+---
+
 Causal diagrams help us understand the identifiability assumptions introduced in Chapter 3.
 
 ### Positivity in DAGs
@@ -228,6 +236,8 @@ In DAGs, consistency requires:
 :::
 
 ## 6.5 A Structural Classification of Bias (pp. 69-73)
+
+---
 
 Causal diagrams allow us to classify different types of bias based on graph structure.
 
@@ -336,6 +346,8 @@ If we use $A_{\text{measured}}$ instead of $A_{\text{true}}$, the estimated effe
 
 ## 6.6 The Structure of Effect Modification (pp. 73-76)
 
+---
+
 Effect modification can also be represented in causal diagrams.
 
 ### Effect Modification in DAGs
@@ -406,6 +418,8 @@ We must adjust for $V$ (confounding) AND report stratum-specific effects (modifi
 
 ## Summary
 
+---
+
 This chapter introduced **causal diagrams** (DAGs) as tools for representing and reasoning about causal relationships.
 
 **Key concepts**:
@@ -459,6 +473,8 @@ Despite these limitations, DAGs are invaluable for making causal assumptions exp
 :::
 
 ## References
+
+---
 
 ::: {#refs}
 :::
