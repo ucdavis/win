@@ -81,7 +81,7 @@
     "href": "chapters/06-graphical-representation.html#references",
     "title": "Chapter 6: Graphical Representation of Causal Effects",
     "section": "8 References",
-    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
+    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
   },
   {
     "objectID": "chapters/06-graphical-representation-slides.html#basic-dag-notation",
@@ -228,7 +228,7 @@
     "href": "chapters/04-effect-modification.html#references",
     "title": "Chapter 4: Effect Modification",
     "section": "8 References",
-    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
+    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
   },
   {
     "objectID": "chapters/04-effect-modification-slides.html#example-effect-modification-by-sex",
@@ -368,7 +368,7 @@
     "href": "chapters/02-randomized-experiments.html#references",
     "title": "Chapter 2: Randomized Experiments",
     "section": "8 References",
-    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
+    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
   },
   {
     "objectID": "chapters/02-randomized-experiments-slides.html#exchangeability",
@@ -627,7 +627,7 @@
     "href": "chapters/01-introduction.html#references",
     "title": "Chapter 1: A Definition of Causal Effect",
     "section": "7 References",
-    "text": "7 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
+    "text": "7 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
   },
   {
     "objectID": "chapters/03-observational-studies-slides.html#why-identifiability-matters",
@@ -753,7 +753,7 @@
     "href": "chapters/03-observational-studies.html#references",
     "title": "Chapter 3: Observational Studies",
     "section": "8 References",
-    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
+    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
   },
   {
     "objectID": "chapters/05-interaction-slides.html#notation-for-two-treatments",
@@ -893,7 +893,7 @@
     "href": "chapters/05-interaction.html#references",
     "title": "Chapter 5: Interaction",
     "section": "8 References",
-    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
+    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
   },
   {
     "objectID": "chapters/07-confounding-slides.html#common-confounding-scenarios",
@@ -1012,6 +1012,6 @@
     "href": "chapters/07-confounding.html#references",
     "title": "Chapter 7: Confounding",
     "section": "8 References",
-    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
+    "text": "8 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
   }
 ]
