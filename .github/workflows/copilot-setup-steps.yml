@@ -131,7 +131,10 @@ jobs:
           # Verify renv is active
           echo ""
           echo "=== renv Status ==="
-          Rscript -e 'renv_active <- file.exists("renv.lock") && dir.exists("renv"); cat("renv active:", renv_active, "\n")'
+          Rscript -e '
+            renv_active <- file.exists("renv.lock") && dir.exists("renv")
+            cat("renv active:", renv_active, "\n")
+          '
           Rscript -e 'cat("renv library path:", .libPaths()[1], "\n")'
           
           echo ""
