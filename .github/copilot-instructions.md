@@ -212,6 +212,7 @@ spelling::spell_check_files("README.md")
 - Include explanatory text before code chunks
 - Add comments within complex code blocks
 - Reference the "What If?" textbook (Hernán MA, Robins JM) when applicable
+- **Use theorem variations to structure content**: Use Quarto's theorem environments (`#def-`, `#thm-`, `#exm-`, `#exr-`, etc.) to organize definitions, theorems, examples, and exercises for better clarity and cross-referencing (see "Theorems and Proofs" section)
 - **Use single space between sentences**: Use only one space after periods between sentences, not two spaces
 - **Use bullet points for lists**: When presenting lists of items, tools, formats, or steps, use bullet points rather than comma-separated lists for better readability and clarity
 - **Include original textbook page numbers in section headers**: When creating chapter content based on the "What If?" textbook, include the corresponding page numbers from the original text in section headers to help readers cross-reference with the source material
@@ -403,6 +404,119 @@ ATE &= E[Y^1] - E[Y^0] \\
     &= E[Y \mid A=1] - E[Y \mid A=0] \quad \text{(under randomization)}
 \end{align}
 ```
+
+### Theorems and Proofs
+
+Quarto supports structured theorem-like environments that are useful for organizing mathematical and conceptual content in lecture notes. Use these to clearly delineate definitions, theorems, examples, exercises, and other structured content.
+
+**Available theorem variations:**
+
+| Label Prefix | Printed Name | Use Case |
+|--------------|--------------|----------|
+| `#thm-` | Theorem | Formal mathematical theorems or key theoretical results |
+| `#lem-` | Lemma | Supporting results used to prove theorems |
+| `#cor-` | Corollary | Results that follow directly from theorems |
+| `#prp-` | Proposition | Mathematical statements or claims |
+| `#cnj-` | Conjecture | Unproven statements or hypotheses |
+| `#def-` | Definition | Formal definitions of terms and concepts |
+| `#exm-` | Example | Illustrative examples |
+| `#exr-` | Exercise | Practice problems for readers |
+| `#sol-` | Solution | Solutions to exercises |
+| `#rem-` | Remark | Additional comments or observations |
+| `#alg-` | Algorithm | Algorithmic procedures |
+
+**Basic syntax:**
+
+Create a div with the appropriate label prefix and include a title as the first heading:
+
+```markdown
+::: {#def-ate}
+## Average Treatment Effect
+
+The **average treatment effect** (ATE) is defined as:
+
+$$E[Y^{a=1}] - E[Y^{a=0}]$$
+
+where $Y^a$ denotes the potential outcome under treatment level $a$.
+:::
+
+See @def-ate for the formal definition.
+```
+
+**Proof environment:**
+
+Proofs are not numbered and cannot be cross-referenced. Use the `.proof` class:
+
+```markdown
+::: {.proof}
+By the law of total expectation and conditional exchangeability.
+:::
+```
+
+Optionally include a heading to specify what is being proved:
+
+```markdown
+::: {.proof}
+## Proof of Theorem 1
+
+Step 1: Assume randomization...
+:::
+```
+
+**Cross-referencing theorems:**
+
+Reference theorem-like environments using `@` syntax:
+
+```markdown
+As shown in @def-exchangeability, we require the treatment to be independent
+of potential outcomes. This assumption (@def-exchangeability) is satisfied
+in randomized experiments (@thm-randomization).
+```
+
+**When to use theorem variations:**
+
+- **Definitions** (`#def-`): Define all key causal inference concepts (e.g., exchangeability, consistency, positivity, confounding)
+- **Theorems** (`#thm-`): State formal results (e.g., "Under randomization, association equals causation")
+- **Examples** (`#exm-`): Illustrate concepts with concrete examples (e.g., Zeus's family data)
+- **Exercises** (`#exr-`) and **Solutions** (`#sol-`): End-of-chapter problems
+- **Remarks** (`#rem-`): Highlight important insights or common misconceptions
+- **Propositions** (`#prp-`): State intermediate results
+
+**Formatting notes:**
+
+- In LaTeX/PDF output, these use the `amsthm` package for professional typesetting
+- In HTML output, theorems are styled with appropriate CSS
+- In RevealJS output, theorems work but may need adjustment for slide presentation
+- All theorem types are automatically numbered (except proofs)
+- Numbering is continuous across the document
+
+**Example usage in causal inference:**
+
+```markdown
+::: {#def-consistency}
+## Consistency
+
+The **consistency assumption** states that the potential outcome under treatment 
+level $a$ equals the observed outcome for individuals who actually received 
+treatment level $a$:
+
+$$Y = Y^A$$
+:::
+
+::: {#exm-consistency}
+## Consistency in Zeus's Family
+
+If Zeus receives a heart transplant ($A=1$), then his observed outcome $Y$ 
+equals $Y^{a=1}$. We never observe $Y^{a=0}$ for Zeus.
+:::
+
+::: {#rem-consistency}
+Consistency can be violated if treatment is not well-defined or if there are 
+multiple versions of treatment.
+:::
+```
+
+See [Quarto Theorems and Proofs documentation](https://quarto.org/docs/authoring/cross-references.html#theorems-and-proofs) for complete details.
 
 ## CI/CD Workflows
 
