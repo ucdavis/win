@@ -7,7 +7,7 @@
 # For detailed setup instructions, see .github/copilot-instructions.md
 #
 # This workflow aligns with the setup requirements documented in .github/copilot-instructions.md:
-# - R version >= 4.5.0 (as specified in DESCRIPTION, prefer latest release)
+# - R version >= 4.5.2 (prefer latest release, DESCRIPTION minimum is 4.5.0)
 # - Quarto CLI for rendering the website
 # - TinyTeX for PDF output
 # - All package dependencies managed via renv
@@ -66,7 +66,7 @@ jobs:
         uses: r-lib/actions/setup-pandoc@v2
       
       # Set up R using the standard GitHub Actions setup
-      # R version >= 4.5.0 required (see DESCRIPTION and .github/copilot-instructions.md)
+      # R version >= 4.5.2 required (prefer latest release, see .github/copilot-instructions.md)
       # Using 'release' to get the latest R version
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -97,14 +97,14 @@ jobs:
           Rscript -e '
             cat("R version:", R.version.string, "\n\n")
             
-            # Check R version meets minimum requirement (>= 4.5.0)
+            # Check R version meets minimum requirement (>= 4.5.2)
             r_version <- paste(R.version$major, R.version$minor, sep = ".")
-            cat("Checking R version >= 4.5.0... ")
-            if (getRversion() >= "4.5.0") {
+            cat("Checking R version >= 4.5.2... ")
+            if (getRversion() >= "4.5.2") {
               cat("PASSED (", r_version, ")\n\n", sep = "")
             } else {
               cat("FAILED (", r_version, ")\n\n", sep = "")
-              stop("R version must be >= 4.5.0")
+              stop("R version must be >= 4.5.2")
             }
             
             # Display key installed packages from DESCRIPTION
@@ -131,7 +131,11 @@ jobs:
           # Verify renv is active
           echo ""
           echo "=== renv Status ==="
-          Rscript -e 'cat("renv active:", renv:::renv_project_initialized(getwd()), "\n")'
+          Rscript -e '
+            library(renv)
+            renv_active <- !is.null(project())
+            cat("renv active:", renv_active, "\n")
+          '
           Rscript -e 'cat("renv library path:", .libPaths()[1], "\n")'
           
           echo ""
