@@ -37,6 +37,8 @@ website:
             href: chapters/05-interaction.qmd
           - text: "Chapter 6: Graphical Representation"
             href: chapters/06-graphical-representation.qmd
+          - text: "Chapter 7: Confounding"
+            href: chapters/07-confounding.qmd
 
 format:
   html:
