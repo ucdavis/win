@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chapter 6: Graphical Representation of Causal Effects – What If? - Lecture Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-68c8bffd90dad8f2b55c52d7b6410dc0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68c8bffd90dad8f2b55c52d7b6410dc0.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-68c8bffd90dad8f2b55c52d7b6410dc0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-26500bfc55c7891837a911d6d50a6255.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-0358071c7a347cfe579aff309456bf3c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-26500bfc55c7891837a911d6d50a6255.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">What If? - Lecture Notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-chapters" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Chapters</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-chapters">    
+        <li>
+    <a class="dropdown-item" href="../chapters/01-introduction.html">
+ <span class="dropdown-text">Chapter 1: Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/02-randomized-experiments.html">
+ <span class="dropdown-text">Chapter 2: Randomized Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/03-observational-studies.html">
+ <span class="dropdown-text">Chapter 3: Observational Studies</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/04-effect-modification.html">
+ <span class="dropdown-text">Chapter 4: Effect Modification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/05-interaction.html">
+ <span class="dropdown-text">Chapter 5: Interaction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/06-graphical-representation.html">
+ <span class="dropdown-text">Chapter 6: Graphical Representation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/07-confounding.html">
+ <span class="dropdown-text">Chapter 7: Confounding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#causal-diagrams-pp.-59-61" id="toc-causal-diagrams-pp.-59-61" class="nav-link active" data-scroll-target="#causal-diagrams-pp.-59-61"><span class="header-section-number">1</span> 6.1 Causal Diagrams (pp.&nbsp;59-61)</a>
+  <ul class="collapse">
+  <li><a href="#basic-dag-notation" id="toc-basic-dag-notation" class="nav-link" data-scroll-target="#basic-dag-notation"><span class="header-section-number">1.1</span> Basic DAG Notation</a></li>
+  <li><a href="#example-smoking-exercise-and-heart-disease" id="toc-example-smoking-exercise-and-heart-disease" class="nav-link" data-scroll-target="#example-smoking-exercise-and-heart-disease"><span class="header-section-number">1.2</span> Example: Smoking, Exercise, and Heart Disease</a></li>
+  </ul></li>
+  <li><a href="#causal-diagrams-and-marginal-independence-pp.-61-64" id="toc-causal-diagrams-and-marginal-independence-pp.-61-64" class="nav-link" data-scroll-target="#causal-diagrams-and-marginal-independence-pp.-61-64"><span class="header-section-number">2</span> 6.2 Causal Diagrams and Marginal Independence (pp.&nbsp;61-64)</a>
+  <ul class="collapse">
+  <li><a href="#independence-from-dags" id="toc-independence-from-dags" class="nav-link" data-scroll-target="#independence-from-dags"><span class="header-section-number">2.1</span> Independence from DAGs</a></li>
+  </ul></li>
+  <li><a href="#causal-diagrams-and-conditional-independence-pp.-64-68" id="toc-causal-diagrams-and-conditional-independence-pp.-64-68" class="nav-link" data-scroll-target="#causal-diagrams-and-conditional-independence-pp.-64-68"><span class="header-section-number">3</span> 6.3 Causal Diagrams and Conditional Independence (pp.&nbsp;64-68)</a>
+  <ul class="collapse">
+  <li><a href="#three-basic-structures" id="toc-three-basic-structures" class="nav-link" data-scroll-target="#three-basic-structures"><span class="header-section-number">3.1</span> Three Basic Structures</a></li>
+  </ul></li>
+  <li><a href="#positivity-and-consistency-in-causal-diagrams-pp.-68-69" id="toc-positivity-and-consistency-in-causal-diagrams-pp.-68-69" class="nav-link" data-scroll-target="#positivity-and-consistency-in-causal-diagrams-pp.-68-69"><span class="header-section-number">4</span> 6.4 Positivity and Consistency in Causal Diagrams (pp.&nbsp;68-69)</a>
+  <ul class="collapse">
+  <li><a href="#positivity-in-dags" id="toc-positivity-in-dags" class="nav-link" data-scroll-target="#positivity-in-dags"><span class="header-section-number">4.1</span> Positivity in DAGs</a></li>
+  <li><a href="#consistency-in-dags" id="toc-consistency-in-dags" class="nav-link" data-scroll-target="#consistency-in-dags"><span class="header-section-number">4.2</span> Consistency in DAGs</a></li>
+  </ul></li>
+  <li><a href="#a-structural-classification-of-bias-pp.-69-73" id="toc-a-structural-classification-of-bias-pp.-69-73" class="nav-link" data-scroll-target="#a-structural-classification-of-bias-pp.-69-73"><span class="header-section-number">5</span> 6.5 A Structural Classification of Bias (pp.&nbsp;69-73)</a>
+  <ul class="collapse">
+  <li><a href="#confounding" id="toc-confounding" class="nav-link" data-scroll-target="#confounding"><span class="header-section-number">5.1</span> Confounding</a></li>
+  <li><a href="#the-backdoor-criterion" id="toc-the-backdoor-criterion" class="nav-link" data-scroll-target="#the-backdoor-criterion"><span class="header-section-number">5.2</span> The Backdoor Criterion</a></li>
+  <li><a href="#selection-bias" id="toc-selection-bias" class="nav-link" data-scroll-target="#selection-bias"><span class="header-section-number">5.3</span> Selection Bias</a></li>
+  <li><a href="#measurement-bias" id="toc-measurement-bias" class="nav-link" data-scroll-target="#measurement-bias"><span class="header-section-number">5.4</span> Measurement Bias</a></li>
+  </ul></li>
+  <li><a href="#the-structure-of-effect-modification-pp.-73-76" id="toc-the-structure-of-effect-modification-pp.-73-76" class="nav-link" data-scroll-target="#the-structure-of-effect-modification-pp.-73-76"><span class="header-section-number">6</span> 6.6 The Structure of Effect Modification (pp.&nbsp;73-76)</a>
+  <ul class="collapse">
+  <li><a href="#effect-modification-in-dags" id="toc-effect-modification-in-dags" class="nav-link" data-scroll-target="#effect-modification-in-dags"><span class="header-section-number">6.1</span> Effect Modification in DAGs</a></li>
+  <li><a href="#confounding-vs.-effect-modification" id="toc-confounding-vs.-effect-modification" class="nav-link" data-scroll-target="#confounding-vs.-effect-modification"><span class="header-section-number">6.2</span> Confounding vs.&nbsp;Effect Modification</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7</span> Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">8</span> References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ucdavis/win/edit/main/chapters/06-graphical-representation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ucdavis/win/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/ucdavis/win/blob/main/chapters/06-graphical-representation.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="06-graphical-representation-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="06-graphical-representation-handout.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="06-graphical-representation.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Chapter 6: Graphical Representation of Causal Effects</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Last modified: 2026-01-08 18:50:37 (UTC)</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>So far, we have represented causal relationships using mathematical notation and counterfactual outcomes. This chapter introduces <strong>causal diagrams</strong>—visual tools for representing causal assumptions and determining which variables need to be adjusted for when estimating causal effects.</p>
+<p>Causal diagrams are <strong>directed acyclic graphs (DAGs)</strong> that encode our knowledge about the causal structure of the problem. They provide an intuitive way to identify confounding, avoid selection bias, and select appropriate adjustment sets.</p>
+<div class="notes">
+<p>This chapter is based on <span class="citation" data-cites="hernan2020causal">Hernán and Robins (<a href="#ref-hernan2020causal" role="doc-biblioref">2020, chap. 6</a>, pp.&nbsp;59-76)</span>.</p>
+</div>
+<section id="causal-diagrams-pp.-59-61" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="causal-diagrams-pp.-59-61"><span class="header-section-number">1</span> 6.1 Causal Diagrams (pp.&nbsp;59-61)</h2>
+<p>A <strong>causal diagram</strong> is a graph where: - <strong>Nodes</strong> (vertices) represent variables - <strong>Directed edges</strong> (arrows) represent direct causal effects</p>
+<div id="def-dag" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Directed Acyclic Graph (DAG))</strong></span> A <strong>directed acyclic graph</strong> is a causal diagram where: 1. All edges are directed (have arrowheads indicating the direction of causation) 2. There are no cycles (you cannot start at a node, follow the arrows, and return to that node)</p>
+</div>
+<section id="basic-dag-notation" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="basic-dag-notation"><span class="header-section-number">1.1</span> Basic DAG Notation</h3>
+<p>Consider a simple causal diagram:</p>
+<pre><code>L → A → Y
+L → Y</code></pre>
+<p>This diagram represents: - <span class="math inline">\(L\)</span> causes <span class="math inline">\(A\)</span> (arrow from <span class="math inline">\(L\)</span> to <span class="math inline">\(A\)</span>) - <span class="math inline">\(L\)</span> causes <span class="math inline">\(Y\)</span> (arrow from <span class="math inline">\(L\)</span> to <span class="math inline">\(Y\)</span>) - <span class="math inline">\(A\)</span> causes <span class="math inline">\(Y\)</span> (arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>)</p>
+<p><strong>Key terms</strong>: - <span class="math inline">\(L\)</span> is a <strong>parent</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> (direct cause) - <span class="math inline">\(A\)</span> is a <strong>child</strong> of <span class="math inline">\(L\)</span> (direct effect) - <span class="math inline">\(L\)</span> is an <strong>ancestor</strong> of <span class="math inline">\(Y\)</span> (can reach <span class="math inline">\(Y\)</span> by following arrows) - <span class="math inline">\(Y\)</span> is a <strong>descendant</strong> of <span class="math inline">\(L\)</span> (can be reached from <span class="math inline">\(L\)</span> by following arrows)</p>
+<div class="notes">
+<p><strong>What does a DAG represent?</strong></p>
+<p>A DAG represents our <strong>qualitative causal assumptions</strong>: - The presence of an arrow <span class="math inline">\(X \rightarrow Y\)</span> means we believe <span class="math inline">\(X\)</span> has a direct causal effect on <span class="math inline">\(Y\)</span> - The absence of an arrow <span class="math inline">\(X \not\rightarrow Y\)</span> means we believe <span class="math inline">\(X\)</span> has no direct causal effect on <span class="math inline">\(Y\)</span> (conditional on other variables in the graph)</p>
+<p><strong>Important</strong>: A DAG does not tell us the magnitude or sign of effects, only their presence/absence and direction.</p>
+<p><strong>Acyclic assumption</strong>: We assume no feedback loops (e.g., <span class="math inline">\(A\)</span> causes <span class="math inline">\(Y\)</span>, which causes <span class="math inline">\(A\)</span>). This rules out dynamic systems with bidirectional causation. Extensions exist for such settings (e.g., structural equation models with cycles) but are beyond this chapter’s scope.</p>
+</div>
+</section>
+<section id="example-smoking-exercise-and-heart-disease" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="example-smoking-exercise-and-heart-disease"><span class="header-section-number">1.2</span> Example: Smoking, Exercise, and Heart Disease</h3>
+<div id="exm-simple-dag" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Simple Causal Diagram)</strong></span> Consider the causal relationships between: - <span class="math inline">\(A\)</span>: Smoking - <span class="math inline">\(L\)</span>: Exercise<br>
+- <span class="math inline">\(Y\)</span>: Heart disease</p>
+<p>Plausible causal diagram:</p>
+<pre><code>A → Y
+L → Y
+L → A</code></pre>
+<p>Interpretation: - Smoking directly causes heart disease - Exercise directly affects heart disease (protective) - Exercise affects smoking behavior (perhaps exercisers are less likely to smoke)</p>
+</div>
+</section>
+</section>
+<section id="causal-diagrams-and-marginal-independence-pp.-61-64" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="causal-diagrams-and-marginal-independence-pp.-61-64"><span class="header-section-number">2</span> 6.2 Causal Diagrams and Marginal Independence (pp.&nbsp;61-64)</h2>
+<p>Causal diagrams encode information about statistical independence relationships.</p>
+<section id="independence-from-dags" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="independence-from-dags"><span class="header-section-number">2.1</span> Independence from DAGs</h3>
+<p>From a DAG, we can determine which variables are marginally independent (unconditionally).</p>
+<div id="exm-marginal-independence" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (Marginal Independence)</strong></span> <strong>Diagram 1</strong>: <span class="math inline">\(A \rightarrow Y\)</span> - <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> (associated)</p>
+<p><strong>Diagram 2</strong>: <span class="math inline">\(A \quad Y\)</span> (no arrow) - <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong></p>
+<p><strong>Diagram 3</strong>: <span class="math inline">\(L \rightarrow A \rightarrow Y\)</span> (chain) - <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> - <span class="math inline">\(L\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> (through the path <span class="math inline">\(L \rightarrow A \rightarrow Y\)</span>)</p>
+<p><strong>Diagram 4</strong>: <span class="math inline">\(A \rightarrow Y \leftarrow L\)</span> (fork) - <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span> are <strong>independent</strong> (no common cause, no direct connection) - Both <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span> are <strong>dependent</strong> with <span class="math inline">\(Y\)</span></p>
+</div>
+<div class="notes">
+<p><strong>Key principle</strong>: In a DAG, two variables are marginally associated if and only if there exists a path (sequence of arrows, ignoring direction) connecting them, UNLESS the path is blocked.</p>
+<p><strong>Blocking</strong>: A path is blocked if it contains a <strong>collider</strong>—a variable where two arrowheads meet (e.g., <span class="math inline">\(A \rightarrow C \leftarrow B\)</span>). Paths through colliders are naturally blocked.</p>
+<p><strong>Later sections</strong> will formalize this with <strong>d-separation</strong>.</p>
+</div>
+</section>
+</section>
+<section id="causal-diagrams-and-conditional-independence-pp.-64-68" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="causal-diagrams-and-conditional-independence-pp.-64-68"><span class="header-section-number">3</span> 6.3 Causal Diagrams and Conditional Independence (pp.&nbsp;64-68)</h2>
+<p>Conditioning on (stratifying by) a variable can change independence relationships.</p>
+<section id="three-basic-structures" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="three-basic-structures"><span class="header-section-number">3.1</span> Three Basic Structures</h3>
+<p>There are three fundamental structures in causal diagrams:</p>
+<section id="chain-x-rightarrow-z-rightarrow-y" class="level4">
+<h4 class="anchored" data-anchor-id="chain-x-rightarrow-z-rightarrow-y">1. Chain: <span class="math inline">\(X \rightarrow Z \rightarrow Y\)</span></h4>
+<ul>
+<li><strong>Marginal</strong>: <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> (path <span class="math inline">\(X \rightarrow Z \rightarrow Y\)</span>)</li>
+<li><strong>Conditional on <span class="math inline">\(Z\)</span></strong>: <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong>
+<ul>
+<li>Knowing <span class="math inline">\(Z\)</span> blocks the path from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="fork-x-leftarrow-z-rightarrow-y" class="level4">
+<h4 class="anchored" data-anchor-id="fork-x-leftarrow-z-rightarrow-y">2. Fork: <span class="math inline">\(X \leftarrow Z \rightarrow Y\)</span></h4>
+<ul>
+<li><strong>Marginal</strong>: <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> (common cause <span class="math inline">\(Z\)</span>)</li>
+<li><strong>Conditional on <span class="math inline">\(Z\)</span></strong>: <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong>
+<ul>
+<li>Controlling for the common cause blocks the association</li>
+</ul></li>
+</ul>
+</section>
+<section id="collider-x-rightarrow-z-leftarrow-y" class="level4">
+<h4 class="anchored" data-anchor-id="collider-x-rightarrow-z-leftarrow-y">3. Collider: <span class="math inline">\(X \rightarrow Z \leftarrow Y\)</span></h4>
+<ul>
+<li><strong>Marginal</strong>: <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> (no connecting path)</li>
+<li><strong>Conditional on <span class="math inline">\(Z\)</span></strong>: <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong>!
+<ul>
+<li>Conditioning on a collider creates association (<strong>collider bias</strong>)</li>
+</ul></li>
+</ul>
+<div id="exm-collider-bias" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3 (Collider Bias Example)</strong></span> Suppose: - <span class="math inline">\(A\)</span>: Natural athletic ability - <span class="math inline">\(E\)</span>: Training effort - <span class="math inline">\(Y\)</span>: Professional athlete (yes/no)</p>
+<p>Diagram: <span class="math inline">\(A \rightarrow Y \leftarrow E\)</span></p>
+<p><strong>Marginal</strong>: Among the general population, natural ability and training effort are independent (some people train hard, some don’t; some are naturally gifted, some aren’t; these are unrelated).</p>
+<p><strong>Conditional on <span class="math inline">\(Y=1\)</span> (among professional athletes)</strong>: Natural ability and training effort are <strong>negatively</strong> associated!</p>
+<p>Why? Among those who made it to the pros, if someone has low natural ability, they must have compensated with high training effort. Conversely, high natural ability allows one to reach the pros with less effort.</p>
+<p>This is <strong>collider stratification bias</strong>.</p>
+</div>
+<div class="notes">
+<p><strong>Collider bias is subtle and dangerous</strong>:</p>
+<ol type="1">
+<li><p><strong>Intuition</strong>: Conditioning on a collider induces a spurious association between its causes, even when those causes are truly independent</p></li>
+<li><p><strong>Selection bias</strong>: When the collider is related to study selection, we get selection bias (Chapter 8)</p></li>
+<li><p><strong>Measurement</strong>: Even conditioning on a descendant of a collider can induce bias (though weaker)</p></li>
+</ol>
+<p><strong>Practical implication</strong>: Do NOT adjust for variables that are purely effects of both treatment and outcome. This will induce bias, not remove it.</p>
+<p><strong>Example</strong>: In studying the effect of exercise on weight loss, do NOT adjust for “membership in a weight loss support group” if that’s an effect of both exercise and weight. Doing so would induce collider bias.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="positivity-and-consistency-in-causal-diagrams-pp.-68-69" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="positivity-and-consistency-in-causal-diagrams-pp.-68-69"><span class="header-section-number">4</span> 6.4 Positivity and Consistency in Causal Diagrams (pp.&nbsp;68-69)</h2>
+<p>Causal diagrams help us understand the identifiability assumptions introduced in Chapter 3.</p>
+<section id="positivity-in-dags" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="positivity-in-dags"><span class="header-section-number">4.1</span> Positivity in DAGs</h3>
+<p>The <strong>positivity assumption</strong> requires that all levels of treatment occur at all levels of confounders: <span class="math display">\[\Pr[A = a | L = l] &gt; 0 \quad \text{for all } a, l\]</span></p>
+<p>In a DAG, positivity violations can occur when: - Structural determinism: Certain values of <span class="math inline">\(L\)</span> make <span class="math inline">\(A\)</span> deterministic (e.g., if <span class="math inline">\(L\)</span> completely determines <span class="math inline">\(A\)</span>) - Random violations: By chance, no individuals in the sample have certain <span class="math inline">\((A, L)\)</span> combinations</p>
+<div class="notes">
+<p><strong>DAGs and positivity</strong>: The DAG itself doesn’t tell us whether positivity holds—that depends on the actual data. However, DAGs can help identify situations where positivity is likely to be violated (e.g., when many arrows point into the treatment, suggesting treatment is highly determined by covariates).</p>
+</div>
+</section>
+<section id="consistency-in-dags" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="consistency-in-dags"><span class="header-section-number">4.2</span> Consistency in DAGs</h3>
+<p>The <strong>consistency assumption</strong> requires well-defined interventions: <span class="math display">\[Y = Y^A\]</span></p>
+<p>In DAGs, consistency requires: 1. <strong>No treatment variation</strong>: All individuals receiving <span class="math inline">\(A=a\)</span> receive exactly the same version of treatment 2. <strong>No interference</strong>: One individual’s treatment doesn’t affect another’s outcome</p>
+<div class="notes">
+<p><strong>DAGs and consistency</strong>:</p>
+<p><strong>Treatment variation</strong>: The node <span class="math inline">\(A\)</span> in the DAG must represent a single, well-defined intervention. If “treatment” actually consists of multiple versions (e.g., different exercise types), the DAG should have separate nodes for each.</p>
+<p><strong>Interference</strong>: Standard DAGs assume no interference. When interference exists, we need extended graphical frameworks or explicit modeling of dependencies between individuals.</p>
+</div>
+</section>
+</section>
+<section id="a-structural-classification-of-bias-pp.-69-73" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="a-structural-classification-of-bias-pp.-69-73"><span class="header-section-number">5</span> 6.5 A Structural Classification of Bias (pp.&nbsp;69-73)</h2>
+<p>Causal diagrams allow us to classify different types of bias based on graph structure.</p>
+<section id="confounding" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="confounding"><span class="header-section-number">5.1</span> Confounding</h3>
+<div id="def-dag-confounding" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Confounding (DAG Definition))</strong></span> <strong>Confounding</strong> occurs when there exists a <strong>backdoor path</strong> from treatment <span class="math inline">\(A\)</span> to outcome <span class="math inline">\(Y\)</span>:</p>
+<p>A backdoor path is a path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> that: 1. Starts with an arrow pointing <em>into</em> <span class="math inline">\(A\)</span> (i.e., <span class="math inline">\(\cdot \rightarrow A\)</span>) 2. Does not pass through any descendants of <span class="math inline">\(A\)</span></p>
+</div>
+<p><strong>Example</strong>:</p>
+<pre><code>L → A → Y
+L → Y</code></pre>
+<p>The path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> is a backdoor path (it starts with an arrow into <span class="math inline">\(A\)</span>). Therefore, <span class="math inline">\(L\)</span> is a confounder.</p>
+<div class="notes">
+<p><strong>Why “backdoor”?</strong></p>
+<p>The term “backdoor path” refers to paths that go into the back of <span class="math inline">\(A\)</span> (against the arrow). These paths allow non-causal association to flow from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> via common causes.</p>
+<p><strong>Contrast with causal paths</strong>: Causal paths follow arrows in the forward direction (<span class="math inline">\(A \rightarrow \cdots \rightarrow Y\)</span>).</p>
+<p><strong>Confounding = open backdoor paths</strong>: If backdoor paths are open (not blocked), the association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> reflects both causal and non-causal (confounded) pathways.</p>
+</div>
+</section>
+<section id="the-backdoor-criterion" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="the-backdoor-criterion"><span class="header-section-number">5.2</span> The Backdoor Criterion</h3>
+<div id="def-backdoor-criterion" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Backdoor Criterion)</strong></span> A set of variables <span class="math inline">\(L\)</span> satisfies the <strong>backdoor criterion</strong> for the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if:</p>
+<ol type="1">
+<li>No variable in <span class="math inline">\(L\)</span> is a descendant of <span class="math inline">\(A\)</span></li>
+<li><span class="math inline">\(L\)</span> blocks all backdoor paths from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></li>
+</ol>
+<p>If <span class="math inline">\(L\)</span> satisfies the backdoor criterion, adjusting for <span class="math inline">\(L\)</span> eliminates confounding.</p>
+</div>
+<div id="exm-backdoor" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4 (Backdoor Criterion Example)</strong></span> <strong>Diagram</strong>:</p>
+<pre><code>U → L → A → Y
+      L → Y</code></pre>
+<p><strong>Backdoor paths from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></strong>: - <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span></p>
+<p><strong>Does <span class="math inline">\(L\)</span> satisfy the backdoor criterion?</strong> 1. <span class="math inline">\(L\)</span> is not a descendant of <span class="math inline">\(A\)</span> ✓ 2. <span class="math inline">\(L\)</span> blocks the backdoor path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> ✓</p>
+<p>Yes! Adjusting for <span class="math inline">\(L\)</span> is sufficient to identify the causal effect.</p>
+<p><strong>Does <span class="math inline">\(U\)</span> satisfy the backdoor criterion?</strong> - No.&nbsp;<span class="math inline">\(U\)</span> is not on the path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span>, so it doesn’t block the backdoor path.</p>
+</div>
+<div class="notes">
+<p><strong>Multiple backdoor paths</strong>: In more complex diagrams, there may be many backdoor paths. The adjustment set must block <strong>all</strong> of them.</p>
+<p><strong>Minimal adjustment sets</strong>: Often, multiple sets of variables satisfy the backdoor criterion. The smallest such set is called a <strong>minimal sufficient adjustment set</strong>. Software like <code>dagitty</code> can find these automatically.</p>
+<p><strong>Over-adjustment</strong>: Including unnecessary variables in <span class="math inline">\(L\)</span> (e.g., mediators, colliders) can introduce bias even if they’re not needed for confounding control.</p>
+</div>
+</section>
+<section id="selection-bias" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="selection-bias"><span class="header-section-number">5.3</span> Selection Bias</h3>
+<p><strong>Selection bias</strong> occurs when we condition on a collider (or its descendant) that lies on a path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>.</p>
+<p><strong>Example</strong>:</p>
+<pre><code>A → S ← Y</code></pre>
+<p>If we restrict analysis to individuals with <span class="math inline">\(S = 1\)</span>, we induce spurious association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> (collider bias).</p>
+<p>This will be covered in detail in Chapter 8.</p>
+</section>
+<section id="measurement-bias" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="measurement-bias"><span class="header-section-number">5.4</span> Measurement Bias</h3>
+<p><strong>Measurement bias</strong> can be represented in DAGs by including nodes for both: - True (unmeasured) variables - Measured (error-prone) variables</p>
+<p><strong>Example</strong>:</p>
+<pre><code>A_true → Y
+A_measured ← A_true</code></pre>
+<p>If we use <span class="math inline">\(A_{\text{measured}}\)</span> instead of <span class="math inline">\(A_{\text{true}}\)</span>, the estimated effect will be biased (Chapter 9).</p>
+</section>
+</section>
+<section id="the-structure-of-effect-modification-pp.-73-76" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="the-structure-of-effect-modification-pp.-73-76"><span class="header-section-number">6</span> 6.6 The Structure of Effect Modification (pp.&nbsp;73-76)</h2>
+<p>Effect modification can also be represented in causal diagrams.</p>
+<section id="effect-modification-in-dags" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="effect-modification-in-dags"><span class="header-section-number">6.1</span> Effect Modification in DAGs</h3>
+<p>Effect modification by <span class="math inline">\(V\)</span> means the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> differs across levels of <span class="math inline">\(V\)</span>. This can be represented by:</p>
+<pre><code>V → Y
+A → Y
+(with the understanding that the A→Y effect depends on V)</code></pre>
+<p>Some authors include an arrow <span class="math inline">\(V \rightarrow A \cdot Y\)</span> to explicitly denote interaction, but this is not standard DAG notation.</p>
+<div class="notes">
+<p><strong>DAGs and effect modification</strong>:</p>
+<p>Standard DAGs do not have explicit notation for effect modification or interaction. The diagram:</p>
+<pre><code>V → Y
+A → Y</code></pre>
+<p>is compatible with: - No effect modification (effect of <span class="math inline">\(A\)</span> is the same for all <span class="math inline">\(V\)</span>) - Effect modification (effect of <span class="math inline">\(A\)</span> differs by <span class="math inline">\(V\)</span>)</p>
+<p><strong>Why?</strong> DAGs represent <strong>qualitative</strong> causal structure (presence/absence of effects), not <strong>quantitative</strong> features (magnitude or heterogeneity).</p>
+<p><strong>Extensions</strong>: Some frameworks (e.g., Single World Intervention Graphs, SWIGs) can represent effect modification more explicitly, but these are advanced topics beyond the scope of this chapter.</p>
+</div>
+</section>
+<section id="confounding-vs.-effect-modification" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="confounding-vs.-effect-modification"><span class="header-section-number">6.2</span> Confounding vs.&nbsp;Effect Modification</h3>
+<p>A variable <span class="math inline">\(V\)</span> can be: - A <strong>confounder</strong>: Opens a backdoor path (<span class="math inline">\(V \rightarrow A\)</span>, <span class="math inline">\(V \rightarrow Y\)</span>) - An <strong>effect modifier</strong>: The effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> varies by <span class="math inline">\(V\)</span> - Both - Neither</p>
+<div id="exm-confounder-modifier-dag" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5 (Confounder and Modifier in DAGs)</strong></span> <strong>Scenario 1</strong>: <span class="math inline">\(V\)</span> is a confounder only</p>
+<pre><code>V → A → Y
+V → Y</code></pre>
+<p><span class="math inline">\(V\)</span> opens the backdoor path <span class="math inline">\(A \leftarrow V \rightarrow Y\)</span> (confounding). We must adjust for <span class="math inline">\(V\)</span>.</p>
+<p><strong>Scenario 2</strong>: <span class="math inline">\(V\)</span> is a modifier only (in a randomized trial)</p>
+<pre><code>V → Y
+A → Y
+(A randomized, so no V → A arrow)</code></pre>
+<p><span class="math inline">\(V\)</span> modifies the effect of <span class="math inline">\(A\)</span>, but does not confound (no backdoor path). We should report stratum-specific effects but don’t need to adjust for <span class="math inline">\(V\)</span> to eliminate bias.</p>
+<p><strong>Scenario 3</strong>: <span class="math inline">\(V\)</span> is both</p>
+<pre><code>V → A → Y
+V → Y
+(and the A→Y effect varies by V)</code></pre>
+<p>We must adjust for <span class="math inline">\(V\)</span> (confounding) AND report stratum-specific effects (modification).</p>
+</div>
+</section>
+</section>
+<section id="summary" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="summary"><span class="header-section-number">7</span> Summary</h2>
+<p>This chapter introduced <strong>causal diagrams</strong> (DAGs) as tools for representing and reasoning about causal relationships.</p>
+<p><strong>Key concepts</strong>:</p>
+<ol type="1">
+<li><p><strong>DAGs</strong>: Directed acyclic graphs with nodes (variables) and directed edges (causal effects)</p></li>
+<li><p><strong>Three basic structures</strong>:</p>
+<ul>
+<li><strong>Chain</strong> (<span class="math inline">\(X \rightarrow Z \rightarrow Y\)</span>): Conditioning on <span class="math inline">\(Z\)</span> blocks the path</li>
+<li><strong>Fork</strong> (<span class="math inline">\(X \leftarrow Z \rightarrow Y\)</span>): Conditioning on <span class="math inline">\(Z\)</span> blocks the path</li>
+<li><strong>Collider</strong> (<span class="math inline">\(X \rightarrow Z \leftarrow Y\)</span>): Conditioning on <span class="math inline">\(Z\)</span> opens the path!</li>
+</ul></li>
+<li><p><strong>Collider bias</strong>: Conditioning on a common effect of two variables induces spurious association</p></li>
+<li><p><strong>Backdoor paths</strong>: Non-causal paths from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> that begin with an arrow into <span class="math inline">\(A\)</span></p></li>
+<li><p><strong>Backdoor criterion</strong>: A set <span class="math inline">\(L\)</span> satisfies the backdoor criterion if:</p>
+<ul>
+<li>No member of <span class="math inline">\(L\)</span> is a descendant of <span class="math inline">\(A\)</span></li>
+<li><span class="math inline">\(L\)</span> blocks all backdoor paths from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></li>
+</ul></li>
+<li><p><strong>Adjustment</strong>: If <span class="math inline">\(L\)</span> satisfies the backdoor criterion, adjusting for <span class="math inline">\(L\)</span> eliminates confounding</p></li>
+</ol>
+<div class="notes">
+<p><strong>Practical use of DAGs</strong>:</p>
+<ol type="1">
+<li><strong>Draw a DAG</strong> based on subject-matter knowledge before analyzing data</li>
+<li><strong>Identify backdoor paths</strong> from treatment to outcome</li>
+<li><strong>Find an adjustment set</strong> that satisfies the backdoor criterion</li>
+<li><strong>Adjust for that set</strong> using stratification, regression, or weighting</li>
+<li><strong>Avoid adjusting</strong> for colliders, mediators, or other variables that induce bias</li>
+</ol>
+<p><strong>Software</strong>: - R package <code>dagitty</code>: Draw DAGs, find adjustment sets, test implications - R package <code>ggdag</code>: Visualize DAGs - Web app: dagitty.net</p>
+<p><strong>Limitations of DAGs</strong>: - Require strong qualitative assumptions about causal structure - Cannot represent unmeasured confounding (unless explicitly included as a node) - Cannot represent dynamic feedback (cycles) - Do not encode effect modification or quantitative magnitudes</p>
+<p>Despite these limitations, DAGs are invaluable for making causal assumptions explicit and selecting appropriate adjustment strategies.</p>
+<p><strong>Looking ahead</strong>: - <strong>Chapter 7</strong>: Detailed treatment of confounding - <strong>Chapter 8</strong>: Selection bias - <strong>Chapters 11-15</strong>: Methods for adjusting for confounding (IP weighting, g-formula, propensity scores)</p>
+</div>
+</section>
+<section id="references" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="references"><span class="header-section-number">8</span> References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-hernan2020causal" class="csl-entry" role="listitem">
+Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>. Boca Raton: Chapman &amp; Hall/CRC.
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ucdavis\.github\.io\/win\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Chapter 6: Graphical Representation of Causal Effects"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html: default</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">  revealjs:</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: 06-graphical-representation-slides.html</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf:</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: 06-graphical-representation-handout.pdf</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">  docx:</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: 06-graphical-representation.docx</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>So far, we have represented causal relationships using mathematical notation and counterfactual outcomes. This chapter introduces **causal diagrams**—visual tools for representing causal assumptions and determining which variables need to be adjusted for when estimating causal effects.</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>Causal diagrams are **directed acyclic graphs (DAGs)** that encode our knowledge about the causal structure of the problem. They provide an intuitive way to identify confounding, avoid selection bias, and select appropriate adjustment sets.</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>This chapter is based on @hernan2020causal <span class="co">[</span><span class="ot">Chapter 6, pp. 59-76</span><span class="co">]</span>.</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6.1 Causal Diagrams (pp. 59-61)</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>A **causal diagram** is a graph where:</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Nodes** (vertices) represent variables</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Directed edges** (arrows) represent direct causal effects</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>::: {#def-dag}</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Directed Acyclic Graph (DAG)</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>A **directed acyclic graph** is a causal diagram where:</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>All edges are directed (have arrowheads indicating the direction of causation)</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>There are no cycles (you cannot start at a node, follow the arrows, and return to that node)</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Basic DAG Notation</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>Consider a simple causal diagram:</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="in">L → A → Y</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="in">L → Y</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>This diagram represents:</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$L$ causes $A$ (arrow from $L$ to $A$)</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$L$ causes $Y$ (arrow from $L$ to $Y$)</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A$ causes $Y$ (arrow from $A$ to $Y$)</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>**Key terms**:</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$L$ is a **parent** of $A$ and $Y$ (direct cause)</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A$ is a **child** of $L$ (direct effect)</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$L$ is an **ancestor** of $Y$ (can reach $Y$ by following arrows)</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y$ is a **descendant** of $L$ (can be reached from $L$ by following arrows)</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>**What does a DAG represent?**</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>A DAG represents our **qualitative causal assumptions**:</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The presence of an arrow $X \rightarrow Y$ means we believe $X$ has a direct causal effect on $Y$</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The absence of an arrow $X \not\rightarrow Y$ means we believe $X$ has no direct causal effect on $Y$ (conditional on other variables in the graph)</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>**Important**: A DAG does not tell us the magnitude or sign of effects, only their presence/absence and direction.</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>**Acyclic assumption**: We assume no feedback loops (e.g., $A$ causes $Y$, which causes $A$). This rules out dynamic systems with bidirectional causation. Extensions exist for such settings (e.g., structural equation models with cycles) but are beyond this chapter's scope.</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Smoking, Exercise, and Heart Disease</span></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>::: {#exm-simple-dag}</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simple Causal Diagram</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>Consider the causal relationships between:</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A$: Smoking</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$L$: Exercise  </span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y$: Heart disease</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>Plausible causal diagram:</span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="in">A → Y</span></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="in">L → Y</span></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="in">L → A</span></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>Interpretation:</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Smoking directly causes heart disease</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exercise directly affects heart disease (protective)</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exercise affects smoking behavior (perhaps exercisers are less likely to smoke)</span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6.2 Causal Diagrams and Marginal Independence (pp. 61-64)</span></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>Causal diagrams encode information about statistical independence relationships.</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a><span class="fu">### Independence from DAGs</span></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>From a DAG, we can determine which variables are marginally independent (unconditionally).</span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>::: {#exm-marginal-independence}</span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal Independence</span></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>**Diagram 1**: $A \rightarrow Y$</span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A$ and $Y$ are **dependent** (associated)</span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>**Diagram 2**: $A \quad Y$ (no arrow)</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A$ and $Y$ are **independent** </span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>**Diagram 3**: $L \rightarrow A \rightarrow Y$ (chain)</span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A$ and $Y$ are **dependent**</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$L$ and $Y$ are **dependent** (through the path $L \rightarrow A \rightarrow Y$)</span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>**Diagram 4**: $A \rightarrow Y \leftarrow L$ (fork)</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A$ and $L$ are **independent** (no common cause, no direct connection)</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Both $A$ and $L$ are **dependent** with $Y$</span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>**Key principle**: In a DAG, two variables are marginally associated if and only if there exists a path (sequence of arrows, ignoring direction) connecting them, UNLESS the path is blocked.</span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>**Blocking**: A path is blocked if it contains a **collider**—a variable where two arrowheads meet (e.g., $A \rightarrow C \leftarrow B$). Paths through colliders are naturally blocked.</span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>**Later sections** will formalize this with **d-separation**.</span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6.3 Causal Diagrams and Conditional Independence (pp. 64-68)</span></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>Conditioning on (stratifying by) a variable can change independence relationships.</span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a><span class="fu">### Three Basic Structures</span></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>There are three fundamental structures in causal diagrams:</span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1. Chain: $X \rightarrow Z \rightarrow Y$</span></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Marginal**: $X$ and $Y$ are **dependent** (path $X \rightarrow Z \rightarrow Y$)</span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Conditional on $Z$**: $X$ and $Y$ are **independent**</span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Knowing $Z$ blocks the path from $X$ to $Y$</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 2. Fork: $X \leftarrow Z \rightarrow Y$</span></span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Marginal**: $X$ and $Y$ are **dependent** (common cause $Z$)</span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Conditional on $Z$**: $X$ and $Y$ are **independent**</span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Controlling for the common cause blocks the association</span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 3. Collider: $X \rightarrow Z \leftarrow Y$</span></span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Marginal**: $X$ and $Y$ are **independent** (no connecting path)</span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Conditional on $Z$**: $X$ and $Y$ are **dependent**!</span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Conditioning on a collider creates association (**collider bias**)</span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>::: {#exm-collider-bias}</span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a><span class="fu">## Collider Bias Example</span></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>Suppose:</span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A$: Natural athletic ability</span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$E$: Training effort</span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y$: Professional athlete (yes/no)</span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>Diagram: $A \rightarrow Y \leftarrow E$</span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>**Marginal**: Among the general population, natural ability and training effort are independent (some people train hard, some don't; some are naturally gifted, some aren't; these are unrelated).</span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a>**Conditional on $Y=1$ (among professional athletes)**: Natural ability and training effort are **negatively** associated!</span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>Why? Among those who made it to the pros, if someone has low natural ability, they must have compensated with high training effort. Conversely, high natural ability allows one to reach the pros with less effort.</span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>This is **collider stratification bias**.</span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>**Collider bias is subtle and dangerous**:</span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Intuition**: Conditioning on a collider induces a spurious association between its causes, even when those causes are truly independent</span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Selection bias**: When the collider is related to study selection, we get selection bias (Chapter 8)</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Measurement**: Even conditioning on a descendant of a collider can induce bias (though weaker)</span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>**Practical implication**: Do NOT adjust for variables that are purely effects of both treatment and outcome. This will induce bias, not remove it.</span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>**Example**: In studying the effect of exercise on weight loss, do NOT adjust for "membership in a weight loss support group" if that's an effect of both exercise and weight. Doing so would induce collider bias.</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6.4 Positivity and Consistency in Causal Diagrams (pp. 68-69)</span></span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a>Causal diagrams help us understand the identifiability assumptions introduced in Chapter 3.</span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### Positivity in DAGs</span></span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>The **positivity assumption** requires that all levels of treatment occur at all levels of confounders:</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a>$$\Pr<span class="co">[</span><span class="ot">A = a | L = l</span><span class="co">]</span> &gt; 0 \quad \text{for all } a, l$$</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>In a DAG, positivity violations can occur when:</span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Structural determinism: Certain values of $L$ make $A$ deterministic (e.g., if $L$ completely determines $A$)</span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Random violations: By chance, no individuals in the sample have certain $(A, L)$ combinations</span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>**DAGs and positivity**: The DAG itself doesn't tell us whether positivity holds—that depends on the actual data. However, DAGs can help identify situations where positivity is likely to be violated (e.g., when many arrows point into the treatment, suggesting treatment is highly determined by covariates).</span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Consistency in DAGs</span></span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a>The **consistency assumption** requires well-defined interventions:</span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>$$Y = Y^A$$</span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>In DAGs, consistency requires:</span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**No treatment variation**: All individuals receiving $A=a$ receive exactly the same version of treatment</span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**No interference**: One individual's treatment doesn't affect another's outcome</span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>**DAGs and consistency**:</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>**Treatment variation**: The node $A$ in the DAG must represent a single, well-defined intervention. If "treatment" actually consists of multiple versions (e.g., different exercise types), the DAG should have separate nodes for each.</span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>**Interference**: Standard DAGs assume no interference. When interference exists, we need extended graphical frameworks or explicit modeling of dependencies between individuals.</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6.5 A Structural Classification of Bias (pp. 69-73)</span></span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a>Causal diagrams allow us to classify different types of bias based on graph structure.</span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="fu">### Confounding</span></span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a>::: {#def-dag-confounding}</span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a><span class="fu">## Confounding (DAG Definition)</span></span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>**Confounding** occurs when there exists a **backdoor path** from treatment $A$ to outcome $Y$:</span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>A backdoor path is a path from $A$ to $Y$ that:</span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Starts with an arrow pointing *into* $A$ (i.e., $\cdot \rightarrow A$)</span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Does not pass through any descendants of $A$</span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a>**Example**: </span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a><span class="in">L → A → Y</span></span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a><span class="in">L → Y</span></span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a>The path $A \leftarrow L \rightarrow Y$ is a backdoor path (it starts with an arrow into $A$). Therefore, $L$ is a confounder.</span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a>**Why "backdoor"?**</span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a>The term "backdoor path" refers to paths that go into the back of $A$ (against the arrow). These paths allow non-causal association to flow from $A$ to $Y$ via common causes.</span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a>**Contrast with causal paths**: Causal paths follow arrows in the forward direction ($A \rightarrow \cdots \rightarrow Y$).</span>
+<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a>**Confounding = open backdoor paths**: If backdoor paths are open (not blocked), the association between $A$ and $Y$ reflects both causal and non-causal (confounded) pathways.</span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Backdoor Criterion</span></span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>::: {#def-backdoor-criterion}</span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## Backdoor Criterion</span></span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>A set of variables $L$ satisfies the **backdoor criterion** for the effect of $A$ on $Y$ if:</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>No variable in $L$ is a descendant of $A$</span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>$L$ blocks all backdoor paths from $A$ to $Y$</span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a>If $L$ satisfies the backdoor criterion, adjusting for $L$ eliminates confounding.</span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>::: {#exm-backdoor}</span>
+<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Backdoor Criterion Example</span></span>
+<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a>**Diagram**:</span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a><span class="in">U → L → A → Y</span></span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a><span class="in">      L → Y</span></span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a>**Backdoor paths from $A$ to $Y$**:</span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A \leftarrow L \rightarrow Y$</span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-277"><a href="#cb12-277" aria-hidden="true" tabindex="-1"></a>**Does $L$ satisfy the backdoor criterion?**</span>
+<span id="cb12-278"><a href="#cb12-278" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>$L$ is not a descendant of $A$ ✓</span>
+<span id="cb12-279"><a href="#cb12-279" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>$L$ blocks the backdoor path $A \leftarrow L \rightarrow Y$ ✓</span>
+<span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a>Yes! Adjusting for $L$ is sufficient to identify the causal effect.</span>
+<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a>**Does $U$ satisfy the backdoor criterion?**</span>
+<span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No. $U$ is not on the path $A \leftarrow L \rightarrow Y$, so it doesn't block the backdoor path.</span>
+<span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-287"><a href="#cb12-287" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a>**Multiple backdoor paths**: In more complex diagrams, there may be many backdoor paths. The adjustment set must block **all** of them.</span>
+<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a>**Minimal adjustment sets**: Often, multiple sets of variables satisfy the backdoor criterion. The smallest such set is called a **minimal sufficient adjustment set**. Software like <span class="in">`dagitty`</span> can find these automatically.</span>
+<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a>**Over-adjustment**: Including unnecessary variables in $L$ (e.g., mediators, colliders) can introduce bias even if they're not needed for confounding control.</span>
+<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-294"><a href="#cb12-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-295"><a href="#cb12-295" aria-hidden="true" tabindex="-1"></a><span class="fu">### Selection Bias</span></span>
+<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a>**Selection bias** occurs when we condition on a collider (or its descendant) that lies on a path from $A$ to $Y$.</span>
+<span id="cb12-298"><a href="#cb12-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a>**Example**:</span>
+<span id="cb12-300"><a href="#cb12-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a><span class="in">A → S ← Y</span></span>
+<span id="cb12-302"><a href="#cb12-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-303"><a href="#cb12-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a>If we restrict analysis to individuals with $S = 1$, we induce spurious association between $A$ and $Y$ (collider bias).</span>
+<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a>This will be covered in detail in Chapter 8.</span>
+<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a><span class="fu">### Measurement Bias</span></span>
+<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-310"><a href="#cb12-310" aria-hidden="true" tabindex="-1"></a>**Measurement bias** can be represented in DAGs by including nodes for both:</span>
+<span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>True (unmeasured) variables</span>
+<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Measured (error-prone) variables</span>
+<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a>**Example**:</span>
+<span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a><span class="in">A_true → Y</span></span>
+<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a><span class="in">A_measured ← A_true</span></span>
+<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-320"><a href="#cb12-320" aria-hidden="true" tabindex="-1"></a>If we use $A_{\text{measured}}$ instead of $A_{\text{true}}$, the estimated effect will be biased (Chapter 9).</span>
+<span id="cb12-321"><a href="#cb12-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-322"><a href="#cb12-322" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6.6 The Structure of Effect Modification (pp. 73-76)</span></span>
+<span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a>Effect modification can also be represented in causal diagrams.</span>
+<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a><span class="fu">### Effect Modification in DAGs</span></span>
+<span id="cb12-327"><a href="#cb12-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-328"><a href="#cb12-328" aria-hidden="true" tabindex="-1"></a>Effect modification by $V$ means the effect of $A$ on $Y$ differs across levels of $V$. This can be represented by:</span>
+<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a><span class="in">V → Y</span></span>
+<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a><span class="in">A → Y</span></span>
+<span id="cb12-333"><a href="#cb12-333" aria-hidden="true" tabindex="-1"></a><span class="in">(with the understanding that the A→Y effect depends on V)</span></span>
+<span id="cb12-334"><a href="#cb12-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-335"><a href="#cb12-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-336"><a href="#cb12-336" aria-hidden="true" tabindex="-1"></a>Some authors include an arrow $V \rightarrow A \cdot Y$ to explicitly denote interaction, but this is not standard DAG notation.</span>
+<span id="cb12-337"><a href="#cb12-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-338"><a href="#cb12-338" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-339"><a href="#cb12-339" aria-hidden="true" tabindex="-1"></a>**DAGs and effect modification**:</span>
+<span id="cb12-340"><a href="#cb12-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-341"><a href="#cb12-341" aria-hidden="true" tabindex="-1"></a>Standard DAGs do not have explicit notation for effect modification or interaction. The diagram:</span>
+<span id="cb12-342"><a href="#cb12-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a><span class="in">V → Y</span></span>
+<span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a><span class="in">A → Y</span></span>
+<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a>is compatible with:</span>
+<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No effect modification (effect of $A$ is the same for all $V$)</span>
+<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Effect modification (effect of $A$ differs by $V$)</span>
+<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a>**Why?** DAGs represent **qualitative** causal structure (presence/absence of effects), not **quantitative** features (magnitude or heterogeneity).</span>
+<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a>**Extensions**: Some frameworks (e.g., Single World Intervention Graphs, SWIGs) can represent effect modification more explicitly, but these are advanced topics beyond the scope of this chapter.</span>
+<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a><span class="fu">### Confounding vs. Effect Modification</span></span>
+<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a>A variable $V$ can be:</span>
+<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **confounder**: Opens a backdoor path ($V \rightarrow A$, $V \rightarrow Y$)</span>
+<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>An **effect modifier**: The effect of $A$ on $Y$ varies by $V$</span>
+<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Both</span>
+<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Neither</span>
+<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a>::: {#exm-confounder-modifier-dag}</span>
+<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a><span class="fu">## Confounder and Modifier in DAGs</span></span>
+<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a>**Scenario 1**: $V$ is a confounder only</span>
+<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-368"><a href="#cb12-368" aria-hidden="true" tabindex="-1"></a><span class="in">V → A → Y</span></span>
+<span id="cb12-369"><a href="#cb12-369" aria-hidden="true" tabindex="-1"></a><span class="in">V → Y</span></span>
+<span id="cb12-370"><a href="#cb12-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-371"><a href="#cb12-371" aria-hidden="true" tabindex="-1"></a>$V$ opens the backdoor path $A \leftarrow V \rightarrow Y$ (confounding). We must adjust for $V$.</span>
+<span id="cb12-372"><a href="#cb12-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-373"><a href="#cb12-373" aria-hidden="true" tabindex="-1"></a>**Scenario 2**: $V$ is a modifier only (in a randomized trial)</span>
+<span id="cb12-374"><a href="#cb12-374" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-375"><a href="#cb12-375" aria-hidden="true" tabindex="-1"></a><span class="in">V → Y</span></span>
+<span id="cb12-376"><a href="#cb12-376" aria-hidden="true" tabindex="-1"></a><span class="in">A → Y</span></span>
+<span id="cb12-377"><a href="#cb12-377" aria-hidden="true" tabindex="-1"></a><span class="in">(A randomized, so no V → A arrow)</span></span>
+<span id="cb12-378"><a href="#cb12-378" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-379"><a href="#cb12-379" aria-hidden="true" tabindex="-1"></a>$V$ modifies the effect of $A$, but does not confound (no backdoor path). We should report stratum-specific effects but don't need to adjust for $V$ to eliminate bias.</span>
+<span id="cb12-380"><a href="#cb12-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-381"><a href="#cb12-381" aria-hidden="true" tabindex="-1"></a>**Scenario 3**: $V$ is both</span>
+<span id="cb12-382"><a href="#cb12-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-383"><a href="#cb12-383" aria-hidden="true" tabindex="-1"></a><span class="in">V → A → Y</span></span>
+<span id="cb12-384"><a href="#cb12-384" aria-hidden="true" tabindex="-1"></a><span class="in">V → Y</span></span>
+<span id="cb12-385"><a href="#cb12-385" aria-hidden="true" tabindex="-1"></a><span class="in">(and the A→Y effect varies by V)</span></span>
+<span id="cb12-386"><a href="#cb12-386" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-387"><a href="#cb12-387" aria-hidden="true" tabindex="-1"></a>We must adjust for $V$ (confounding) AND report stratum-specific effects (modification).</span>
+<span id="cb12-388"><a href="#cb12-388" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-389"><a href="#cb12-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-390"><a href="#cb12-390" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb12-391"><a href="#cb12-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-392"><a href="#cb12-392" aria-hidden="true" tabindex="-1"></a>This chapter introduced **causal diagrams** (DAGs) as tools for representing and reasoning about causal relationships.</span>
+<span id="cb12-393"><a href="#cb12-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-394"><a href="#cb12-394" aria-hidden="true" tabindex="-1"></a>**Key concepts**:</span>
+<span id="cb12-395"><a href="#cb12-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-396"><a href="#cb12-396" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**DAGs**: Directed acyclic graphs with nodes (variables) and directed edges (causal effects)</span>
+<span id="cb12-397"><a href="#cb12-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-398"><a href="#cb12-398" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Three basic structures**:</span>
+<span id="cb12-399"><a href="#cb12-399" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Chain** ($X \rightarrow Z \rightarrow Y$): Conditioning on $Z$ blocks the path</span>
+<span id="cb12-400"><a href="#cb12-400" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Fork** ($X \leftarrow Z \rightarrow Y$): Conditioning on $Z$ blocks the path</span>
+<span id="cb12-401"><a href="#cb12-401" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Collider** ($X \rightarrow Z \leftarrow Y$): Conditioning on $Z$ opens the path!</span>
+<span id="cb12-402"><a href="#cb12-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-403"><a href="#cb12-403" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Collider bias**: Conditioning on a common effect of two variables induces spurious association</span>
+<span id="cb12-404"><a href="#cb12-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-405"><a href="#cb12-405" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Backdoor paths**: Non-causal paths from $A$ to $Y$ that begin with an arrow into $A$</span>
+<span id="cb12-406"><a href="#cb12-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-407"><a href="#cb12-407" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Backdoor criterion**: A set $L$ satisfies the backdoor criterion if:</span>
+<span id="cb12-408"><a href="#cb12-408" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>No member of $L$ is a descendant of $A$</span>
+<span id="cb12-409"><a href="#cb12-409" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>$L$ blocks all backdoor paths from $A$ to $Y$</span>
+<span id="cb12-410"><a href="#cb12-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-411"><a href="#cb12-411" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Adjustment**: If $L$ satisfies the backdoor criterion, adjusting for $L$ eliminates confounding</span>
+<span id="cb12-412"><a href="#cb12-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-413"><a href="#cb12-413" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb12-414"><a href="#cb12-414" aria-hidden="true" tabindex="-1"></a>**Practical use of DAGs**:</span>
+<span id="cb12-415"><a href="#cb12-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-416"><a href="#cb12-416" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Draw a DAG** based on subject-matter knowledge before analyzing data</span>
+<span id="cb12-417"><a href="#cb12-417" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Identify backdoor paths** from treatment to outcome</span>
+<span id="cb12-418"><a href="#cb12-418" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Find an adjustment set** that satisfies the backdoor criterion</span>
+<span id="cb12-419"><a href="#cb12-419" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Adjust for that set** using stratification, regression, or weighting</span>
+<span id="cb12-420"><a href="#cb12-420" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Avoid adjusting** for colliders, mediators, or other variables that induce bias</span>
+<span id="cb12-421"><a href="#cb12-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-422"><a href="#cb12-422" aria-hidden="true" tabindex="-1"></a>**Software**:</span>
+<span id="cb12-423"><a href="#cb12-423" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>R package <span class="in">`dagitty`</span>: Draw DAGs, find adjustment sets, test implications</span>
+<span id="cb12-424"><a href="#cb12-424" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>R package <span class="in">`ggdag`</span>: Visualize DAGs</span>
+<span id="cb12-425"><a href="#cb12-425" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Web app: dagitty.net</span>
+<span id="cb12-426"><a href="#cb12-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-427"><a href="#cb12-427" aria-hidden="true" tabindex="-1"></a>**Limitations of DAGs**:</span>
+<span id="cb12-428"><a href="#cb12-428" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Require strong qualitative assumptions about causal structure</span>
+<span id="cb12-429"><a href="#cb12-429" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cannot represent unmeasured confounding (unless explicitly included as a node)</span>
+<span id="cb12-430"><a href="#cb12-430" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cannot represent dynamic feedback (cycles)</span>
+<span id="cb12-431"><a href="#cb12-431" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Do not encode effect modification or quantitative magnitudes</span>
+<span id="cb12-432"><a href="#cb12-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-433"><a href="#cb12-433" aria-hidden="true" tabindex="-1"></a>Despite these limitations, DAGs are invaluable for making causal assumptions explicit and selecting appropriate adjustment strategies.</span>
+<span id="cb12-434"><a href="#cb12-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-435"><a href="#cb12-435" aria-hidden="true" tabindex="-1"></a>**Looking ahead**:</span>
+<span id="cb12-436"><a href="#cb12-436" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Chapter 7**: Detailed treatment of confounding</span>
+<span id="cb12-437"><a href="#cb12-437" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Chapter 8**: Selection bias</span>
+<span id="cb12-438"><a href="#cb12-438" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Chapters 11-15**: Methods for adjusting for confounding (IP weighting, g-formula, propensity scores)</span>
+<span id="cb12-439"><a href="#cb12-439" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-440"><a href="#cb12-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-441"><a href="#cb12-441" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb12-442"><a href="#cb12-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-443"><a href="#cb12-443" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb12-444"><a href="#cb12-444" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Based on <a href="https://miguelhernan.org/whatifbook">What If?</a> by Hernán MA, Robins JM</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ucdavis/win/edit/main/chapters/06-graphical-representation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ucdavis/win/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/ucdavis/win/blob/main/chapters/06-graphical-representation.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
