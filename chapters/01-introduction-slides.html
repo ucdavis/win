@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.26">
 
-  <title>What If? - Lecture Notes – Chapter 1: Introduction</title>
+  <title>What If? - Lecture Notes – Chapter 1: A Definition of Causal Effect</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -27,7 +27,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0fde88a82f0356838740f155f1088782.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -129,100 +149,518 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Chapter 1: Introduction</h1>
+  <h1 class="title">Chapter 1: A Definition of Causal Effect</h1>
 
 <div class="quarto-title-authors">
 </div>
 
 </section>
-<section id="overview" class="title-slide slide level1 center" data-number="1">
-<h1><span class="header-section-number">1</span> Overview</h1>
-<p>This chapter introduces the fundamental concepts of causal inference. The content is presented in a book format optimized for reading and reference.</p>
-<p>Introduction to Causal Inference</p>
-</section>
+<section class="slide level2">
 
-<section>
-<section id="what-is-causal-inference" class="title-slide slide level1 center" data-number="2">
-<h1><span class="header-section-number">2</span> What is Causal Inference?</h1>
-<p>Causal inference is the process of drawing conclusions about causal connections based on the conditions of the occurrence of an effect.</p>
-<p>In observational studies, unlike randomized experiments, we cannot directly observe the counterfactual outcomes. This fundamental problem of causal inference requires us to make certain assumptions and use appropriate methods.</p>
+<p>As a human being, you are already familiar with causal inference’s fundamental concepts. Through sheer existence, you know what a causal effect is, understand the difference between association and causation, and you have used this knowledge consistently throughout your life. Had you not, you’d be dead. Without basic causal concepts, you would not have survived long enough to read this chapter, let alone learn to read. As a toddler, you would have jumped right into the swimming pool after seeing those who did were later able to reach the jam jar. As a teenager, you would have skied down the most dangerous slopes after seeing those who did won the next ski race. As a parent, you would have refused to give antibiotics to your sick child after observing that those children who took their medicines were not at the park the next day.</p>
+<p>Since you already understand the definition of causal effect and the difference between association and causation, do not expect to gain deep conceptual insights from this chapter. Rather, the purpose of this chapter is to introduce mathematical notation that formalizes the causal intuition that you already possess. Make sure that you can match your causal intuition with the mathematical notation introduced here. This notation is necessary to precisely define causal concepts, and will be used throughout the book.</p>
+<aside class="notes">
+<p>This content is based on <span class="citation" data-cites="hernan2020causal">Hernán and Robins (<a href="#/references" role="doc-biblioref" onclick="">2020, chap. 1</a>, pp.&nbsp;3-12)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="key-questions" class="slide level2">
-<h2>Key Questions</h2>
+<section>
+<section id="individual-causal-effects-pp.-3-4" class="title-slide slide level1 center" data-number="1">
+<h1><span class="header-section-number">1</span> 1.1 Individual Causal Effects (pp.&nbsp;3-4)</h1>
+<p>We use a hypothetical example to introduce causal effects. Consider Zeus’s extended family as our population of interest. Suppose all 20 family members have a life-threatening disease and we want to study the causal effect of heart transplant (treatment <span class="math inline">\(A\)</span>) on death (outcome <span class="math inline">\(Y\)</span>) within 5 years.</p>
+<p>We represent treatment and outcome as binary variables:</p>
 <ul>
-<li>What would have happened if…?</li>
-<li>How do we estimate causal effects?</li>
-<li>What assumptions are needed?</li>
+<li>Let <span class="math inline">\(A = 1\)</span> if the individual receives a heart transplant, <span class="math inline">\(A = 0\)</span> if not</li>
+<li>Let <span class="math inline">\(Y = 1\)</span> if the individual dies within 5 years, <span class="math inline">\(Y = 0\)</span> if survives</li>
 </ul>
+<p>To define a causal effect, we need to compare two <strong>counterfactual outcomes</strong> (also called <strong>potential outcomes</strong>) for each individual:</p>
+<ul>
+<li><span class="math inline">\(Y^{a=1}\)</span>: The outcome if the individual receives treatment (<span class="math inline">\(a = 1\)</span>)</li>
+<li><span class="math inline">\(Y^{a=0}\)</span>: The outcome if the individual does not receive treatment (<span class="math inline">\(a = 0\)</span>)</li>
+</ul>
+<p>An <strong>individual causal effect</strong> exists when <span class="math inline">\(Y^{a=1} \neq Y^{a=0}\)</span> for an individual. For example, if Zeus would die if transplanted (<span class="math inline">\(Y^{a=1} = 1\)</span>) but survive if not transplanted (<span class="math inline">\(Y^{a=0} = 0\)</span>), then heart transplant has a causal effect on Zeus’s outcome.</p>
+<aside class="notes">
+<p>These counterfactual outcomes represent what <em>would</em> happen under each treatment condition. The notation <span class="math inline">\(Y^a\)</span> denotes the counterfactual outcome under treatment level <span class="math inline">\(a\)</span>. This framework was formally developed in the statistical literature and is fundamental to causal inference.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-fundamental-problem" class="slide level2">
+<h2>The Fundamental Problem</h2>
+<p>The fundamental problem of causal inference is that we can only observe one of the two counterfactual outcomes for each individual. If Zeus receives a heart transplant, we observe <span class="math inline">\(Y^{a=1}\)</span> but not <span class="math inline">\(Y^{a=0}\)</span>. The unobserved counterfactual outcome remains unknown.</p>
+<p>Formally, for each individual, the observed outcome <span class="math inline">\(Y\)</span> equals the counterfactual outcome <span class="math inline">\(Y^a\)</span> corresponding to the treatment actually received: <span class="math inline">\(Y = Y^A\)</span>. This equality is called <strong>consistency</strong>.</p>
+<aside class="notes">
+<p>Because of this missing data problem, individual causal effects cannot generally be identified (i.e., computed from observed data). We can never simultaneously observe both <span class="math inline">\(Y^{a=1}\)</span> and <span class="math inline">\(Y^{a=0}\)</span> for the same individual. This is why causal inference is fundamentally a missing data problem.</p>
+<p>However, we can define and sometimes estimate <strong>average causal effects</strong> in populations, which is the focus of the next section.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
-<section id="fundamental-problem" class="title-slide slide level1 center" data-number="3">
-<h1><span class="header-section-number">3</span> Fundamental Problem</h1>
-<p>The fundamental problem of causal inference is that for any given individual, we can observe only one potential outcome - the one corresponding to the actual treatment received. We cannot observe what would have happened under a different treatment.</p>
-</section>
-<section id="the-counterfactual" class="slide level2">
-<h2>The Counterfactual</h2>
+<section id="average-causal-effects-pp.-4-7" class="title-slide slide level1 center" data-number="2">
+<h1><span class="header-section-number">2</span> 1.2 Average Causal Effects (pp.&nbsp;4-7)</h1>
+<p>Since individual causal effects cannot be identified, we focus on <strong>average causal effects</strong> in a population. Table 1.1 shows the counterfactual outcomes for all 20 members of Zeus’s family.</p>
+<p><strong>Table 1.1</strong>: Counterfactual 5-year mortality outcomes for Zeus’s family</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th><span class="math inline">\(Y^{a=0}\)</span></th>
+<th><span class="math inline">\(Y^{a=1}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rheia</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Kronos</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Demeter</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Hades</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Hestia</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Poseidon</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Hera</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Zeus</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Artemis</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Apollo</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Leto</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Ares</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Athena</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Hephaestus</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Aphrodite</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Polyphemus</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Persephone</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Hermes</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Hebe</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Dionysus</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>From Table 1.1, we can compute:</p>
 <ul>
-<li>We observe what <strong>did</strong> happen</li>
-<li>We cannot observe what <strong>would have</strong> happened</li>
-<li>This is the fundamental problem</li>
+<li>Risk if all treated: <span class="math inline">\(Pr[Y^{a=1} = 1] = 10/20 = 0.5\)</span></li>
+<li>Risk if all untreated: <span class="math inline">\(Pr[Y^{a=0} = 1] = 10/20 = 0.5\)</span></li>
 </ul>
+</section>
+<section id="definition-of-average-causal-effect" class="slide level2">
+<h2>Definition of Average Causal Effect</h2>
+<p>An <strong>average causal effect</strong> of treatment <span class="math inline">\(A\)</span> on outcome <span class="math inline">\(Y\)</span> is present if:</p>
+<p><span class="math display">\[Pr[Y^{a=1} = 1] \neq Pr[Y^{a=0} = 1]\]</span></p>
+<p>or equivalently (using expected values):</p>
+<p><span class="math display">\[E[Y^{a=1}] \neq E[Y^{a=0}]\]</span></p>
+<p>In our population, treatment does <em>not</em> have an average causal effect because both risks equal 0.5. The <strong>null hypothesis of no average causal effect</strong> holds. However, this does not mean there are no individual effects.</p>
+<aside class="notes">
+<p>Even though the average causal effect is null, 12 individuals in Table 1.1 have individual causal effects. Six were harmed by treatment (<span class="math inline">\(Y^{a=1} - Y^{a=0} = 1\)</span>), including Zeus, and six were helped (<span class="math inline">\(Y^{a=1} - Y^{a=0} = -1\)</span>). The harmful and beneficial effects cancel out in the average.</p>
+<p>The average causal effect <span class="math inline">\(E[Y^{a=1}] - E[Y^{a=0}]\)</span> always equals the average of individual causal effects <span class="math inline">\(E[Y^{a=1} - Y^{a=0}]\)</span>, because a difference of averages equals the average of the differences.</p>
+<p>When there is no causal effect for <em>any</em> individual (i.e., <span class="math inline">\(Y^{a=1} = Y^{a=0}\)</span> for all individuals), we say the <strong>sharp causal null hypothesis</strong> is true. The sharp null implies the null hypothesis of no average effect.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
-<section id="notation-and-framework" class="title-slide slide level1 center" data-number="4">
-<h1><span class="header-section-number">4</span> Notation and Framework</h1>
-<p>Let’s define our notation:</p>
-<ul>
-<li><span class="math inline">\(Y\)</span>: outcome variable</li>
-<li><span class="math inline">\(A\)</span>: treatment variable<br>
-</li>
-<li><span class="math inline">\(Y^{a}\)</span>: potential outcome under treatment <span class="math inline">\(a\)</span></li>
-</ul>
-<p>The potential outcome <span class="math inline">\(Y^{a}\)</span> represents the outcome that would be observed if, possibly contrary to fact, the individual received treatment level <span class="math inline">\(a\)</span>. This counterfactual framework, formalized by Neyman and Rubin, is central to modern causal inference.</p>
+<section id="measures-of-causal-effect-pp.-7" class="title-slide slide level1 center" data-number="3">
+<h1><span class="header-section-number">3</span> 1.3 Measures of Causal Effect (pp.&nbsp;7)</h1>
+<p>When a causal effect exists, we can quantify its magnitude using different <strong>effect measures</strong>. The three most common for binary outcomes are:</p>
 </section>
-<section id="average-causal-effect" class="slide level2">
-<h2>Average Causal Effect</h2>
-<p><span class="math display">\[E[Y^{a=1}] - E[Y^{a=0}]\]</span></p>
-<p>The difference in expected outcomes under treatment vs.&nbsp;control</p>
+<section id="causal-risk-difference" class="slide level2">
+<h2>Causal Risk Difference</h2>
+<p><span class="math display">\[Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]\]</span></p>
+<p>This additive measure equals zero under the null hypothesis. It measures the absolute difference in risk.</p>
+</section>
+<section id="causal-risk-ratio" class="slide level2">
+<h2>Causal Risk Ratio</h2>
+<p><span class="math display">\[\frac{Pr[Y^{a=1} = 1]}{Pr[Y^{a=0} = 1]}\]</span></p>
+<p>This multiplicative measure equals one under the null hypothesis. It measures how many times treatment increases (or decreases) the risk.</p>
+</section>
+<section id="causal-odds-ratio" class="slide level2">
+<h2>Causal Odds Ratio</h2>
+<p><span class="math display">\[\frac{Pr[Y^{a=1} = 1] / Pr[Y^{a=1} = 0]}{Pr[Y^{a=0} = 1] / Pr[Y^{a=0} = 0]}\]</span></p>
+<p>This also equals one under the null hypothesis.</p>
+<aside class="notes">
+<p>Different effect measures serve different purposes. For example, suppose 3 in a million would develop the outcome if treated, and 1 in a million if untreated:</p>
+<ul>
+<li>Causal risk ratio = 3 (treatment triples the risk)</li>
+<li>Causal risk difference = 0.000002 (2 additional cases per million treated)</li>
+</ul>
+<p>The risk ratio is useful for understanding relative risk, while the risk difference is useful for understanding the absolute number of cases attributable to treatment.</p>
+<p>The causal risk difference is the average of individual causal effects <span class="math inline">\(Y^{a=1} - Y^{a=0}\)</span> on the difference scale. However, the causal risk ratio is <em>not</em> the average of individual causal effects <span class="math inline">\(Y^{a=1}/Y^{a=0}\)</span> on the ratio scale—it is a measure of causal effect in the population but not an average of individual effects.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
-<section id="assumptions" class="title-slide slide level1 center scrollable" data-number="5">
-<h1><span class="header-section-number">5</span> Assumptions</h1>
-<p>To identify causal effects from observational data, we typically need several key assumptions:</p>
+<section id="random-variability-pp.-7-9" class="title-slide slide level1 center" data-number="4">
+<h1><span class="header-section-number">4</span> 1.4 Random Variability (pp.&nbsp;7-9)</h1>
+<p>In practice, we do not observe the counterfactual outcomes in Table 1.1. We only observe data from a sample of individuals. This introduces <strong>random variability</strong>.</p>
+</section>
+<section id="sample-vs.-superpopulation" class="slide level2 scrollable">
+<h2>Sample vs.&nbsp;Superpopulation</h2>
+<p>We can view our study population in two ways:</p>
 <ol type="1">
-<li><strong>Consistency</strong>: The potential outcome <span class="math inline">\(Y^a\)</span> equals the observed outcome <span class="math inline">\(Y\)</span> when treatment equals <span class="math inline">\(a\)</span></li>
-<li><strong>Exchangeability</strong>: Treatment assignment is independent of potential outcomes (no unmeasured confounding)</li>
-<li><strong>Positivity</strong>: Every individual has a non-zero probability of receiving each treatment level</li>
+<li><strong>Fixed population</strong>: The 20 individuals are the entire population of interest</li>
+<li><strong>Random sample</strong>: The 20 individuals are a random sample from a larger “superpopulation”</li>
 </ol>
-<p>These assumptions, sometimes called “identifiability conditions,” allow us to link the observed data distribution to causal quantities of interest.</p>
+<p>Under the superpopulation perspective, even if the true average causal effect is zero, our sample estimate might not be exactly zero due to <strong>sampling variability</strong>.</p>
+<aside class="notes">
+<p>For example, suppose we randomly sample 20 individuals from a superpopulation where <span class="math inline">\(E[Y^{a=1}] = E[Y^{a=0}] = 0.5\)</span> (true null effect). We might observe <span class="math inline">\(\hat{E}[Y^{a=1}] = 0.55\)</span> and <span class="math inline">\(\hat{E}[Y^{a=0}] = 0.45\)</span> in our sample just by chance.</p>
+<p><strong>Statistical inference</strong> helps us determine whether an observed association is due to a true causal effect or random variability. We use:</p>
+<ul>
+<li><strong>Confidence intervals</strong>: Range of plausible values for the causal effect</li>
+<li><strong>Hypothesis tests</strong>: Probability of observing our data if the null is true</li>
+<li><strong>P-values</strong>: Strength of evidence against the null hypothesis</li>
+</ul>
+<p>Until Chapter 10, we assume our population is extremely large to avoid statistical complications and focus on causal inference concepts.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="key-assumptions" class="slide level2 scrollable">
-<h2>Key Assumptions</h2>
+<section id="two-types-of-error" class="slide level2 scrollable">
+<h2>Two Types of Error</h2>
+<p>It’s critical to distinguish:</p>
 <ol type="1">
-<li>Consistency</li>
-<li>Exchangeability<br>
-</li>
-<li>Positivity</li>
+<li><strong>Random error</strong>: Due to sampling variability; reduced by larger sample sizes</li>
+<li><strong>Systematic error (bias)</strong>: Due to flaws in study design; NOT reduced by larger samples</li>
 </ol>
-<div class="fragment">
-<p>Without these, causal identification is not possible from observational data</p>
-</div>
+<p>With a very large sample, random error becomes negligible, and systematic error dominates. This is why proper study design and appropriate methods are essential for causal inference.</p>
 </section></section>
 <section>
-<section id="summary" class="title-slide slide level1 center" data-number="6">
+<section id="causation-versus-association-pp.-9-12" class="title-slide slide level1 center" data-number="5">
+<h1><span class="header-section-number">5</span> 1.5 Causation versus Association (pp.&nbsp;9-12)</h1>
+<p>A key distinction in causal inference is between <strong>causation</strong> and <strong>association</strong>.</p>
+</section>
+<section id="association-measures" class="slide level2">
+<h2>Association Measures</h2>
+<p>Unlike causal effects (defined by counterfactuals), <strong>associations</strong> are defined using observed data. Table 1.2 shows the observed treatment and outcomes for Zeus’s family.</p>
+<p><strong>Table 1.2</strong>: Observed treatment and outcome for Zeus’s family</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th><span class="math inline">\(A\)</span></th>
+<th><span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rheia</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Kronos</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Demeter</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Hades</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Hestia</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Poseidon</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Hera</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Zeus</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Artemis</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Apollo</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Leto</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Ares</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Athena</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Hephaestus</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Aphrodite</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Polyphemus</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Persephone</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Hermes</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Hebe</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Dionysus</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>In reality, we observe only one outcome per person—the one corresponding to their actual treatment. In Table 1.2, 13 individuals received transplants (A = 1) and 7 did not (A = 0). Among the 13 treated, 7 died (Y = 1). Among the 7 untreated, 3 died (Y = 1).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<p>The <strong>associational risk</strong> in the treated: <span class="math inline">\(Pr[Y = 1|A = 1] = 7/13\)</span></p>
+<p>The <strong>associational risk</strong> in the untreated: <span class="math inline">\(Pr[Y = 1|A = 0] = 3/7\)</span></p>
+</section>
+<section id="definitions-of-association" class="slide level2">
+<h2>Definitions of Association</h2>
+<p>Treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> are <strong>independent</strong> (not associated) when:</p>
+<p><span class="math display">\[Pr[Y = 1|A = 1] = Pr[Y = 1|A = 0]\]</span></p>
+<p>or equivalently: <span class="math inline">\(E[Y|A = 1] = E[Y|A = 0]\)</span></p>
+<p>This is denoted <span class="math inline">\(Y \perp\!\!\!\perp A\)</span>.</p>
+<p>When this equality does not hold, <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> or <strong>dependent</strong>. Association measures include:</p>
+<ul>
+<li><strong>Associational risk difference</strong>: <span class="math inline">\(Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]\)</span></li>
+<li><strong>Associational risk ratio</strong>: <span class="math inline">\(Pr[Y = 1|A = 1] / Pr[Y = 1|A = 0]\)</span><br>
+</li>
+<li><strong>Associational odds ratio</strong>: <span class="math inline">\(\frac{Pr[Y = 1|A = 1]/Pr[Y = 0|A = 1]}{Pr[Y = 1|A = 0]/Pr[Y = 0|A = 0]}\)</span></li>
+</ul>
+</section>
+<section id="causation-vs.-association" class="slide level2">
+<h2>Causation vs.&nbsp;Association</h2>
+<p>In our example:</p>
+<ul>
+<li><strong>No causal effect</strong>: <span class="math inline">\(Pr[Y^{a=1} = 1] = Pr[Y^{a=0} = 1] = 0.5\)</span></li>
+<li><strong>Association present</strong>: <span class="math inline">\(Pr[Y = 1|A = 1] = 0.54 \neq 0.43 = Pr[Y = 1|A = 0]\)</span></li>
+</ul>
+<aside class="notes">
+<p>This demonstrates the fundamental principle: <strong>Association is not causation</strong>.</p>
+<p>The distinction is:</p>
+<ul>
+<li><strong>Causation</strong>: Compares the <em>same</em> population under different treatment values
+<ul>
+<li>“What if everyone had been treated?” vs.&nbsp;“What if everyone had been untreated?”</li>
+<li>Uses counterfactual risks: <span class="math inline">\(Pr[Y^{a=1} = 1]\)</span> vs.&nbsp;<span class="math inline">\(Pr[Y^{a=0} = 1]\)</span></li>
+</ul></li>
+<li><strong>Association</strong>: Compares <em>different subsets</em> of the population
+<ul>
+<li>“What is the risk in those who were treated?” vs.&nbsp;“What is the risk in those who were untreated?”</li>
+<li>Uses conditional risks: <span class="math inline">\(Pr[Y = 1|A = 1]\)</span> vs.&nbsp;<span class="math inline">\(Pr[Y = 1|A = 0]\)</span></li>
+</ul></li>
+</ul>
+<p>In our example, there’s an association because those who received transplants were sicker on average than those who didn’t. This discrepancy between causation and association is called <strong>confounding</strong> (discussed in Chapter 7).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-challenge-of-causal-inference" class="slide level2">
+<h2>The Challenge of Causal Inference</h2>
+<p>Causal inference requires data like Table 1.1 (all counterfactual outcomes), but we only have data like Table 1.2 (observed outcomes). The question is: Under which conditions can real-world data be used for causal inference?</p>
+<p>Chapter 2 provides one answer: conduct a randomized experiment.</p>
+</section></section>
+<section id="summary" class="title-slide slide level1 center scrollable" data-number="6">
 <h1><span class="header-section-number">6</span> Summary</h1>
-<p>This chapter has introduced the basic framework for causal inference. We’ve defined potential outcomes, discussed the fundamental problem of causal inference, and outlined the key assumptions needed for causal identification. In subsequent chapters, we’ll explore methods for estimating causal effects under various scenarios and assumptions.</p>
+<p>This chapter introduced fundamental concepts:</p>
+<ol type="1">
+<li><p><strong>Individual causal effects</strong>: Defined as <span class="math inline">\(Y^{a=1} \neq Y^{a=0}\)</span>, but cannot be identified due to the fundamental problem (missing counterfactuals)</p></li>
+<li><p><strong>Average causal effects</strong>: Defined as <span class="math inline">\(E[Y^{a=1}] \neq E[Y^{a=0}]\)</span>, can sometimes be identified from data</p></li>
+<li><p><strong>Effect measures</strong>: Include risk difference (additive), risk ratio (multiplicative), and odds ratio</p></li>
+<li><p><strong>Random variability</strong>: Distinguishes sampling variability (reduced by larger n) from systematic bias (not reduced by larger n)</p></li>
+<li><p><strong>Causation vs.&nbsp;association</strong>: Causation compares counterfactual risks in the same population; association compares observed risks in different subsets</p></li>
+</ol>
+<p>The key insight: Association does not imply causation. The challenge is to use observed associations to make valid causal inferences.</p>
 </section>
-<section id="next-steps" class="slide level2">
-<h2>Next Steps</h2>
-<ul>
-<li>Chapter 2: Randomized Experiments</li>
-<li>Chapter 3: Observational Studies</li>
-<li>Chapter 4: Confounding and Bias</li>
-</ul>
+
+<section id="references" class="title-slide slide level1 smaller scrollable" data-number="7">
+<h1><span class="header-section-number">7</span> References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-hernan2020causal" class="csl-entry" role="listitem">
+Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>. Boca Raton: Chapman &amp; Hall/CRC.
+</div>
+</div>
 
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

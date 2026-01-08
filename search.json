@@ -23,86 +23,135 @@
   {
     "objectID": "chapters/01-introduction.html",
     "href": "chapters/01-introduction.html",
-    "title": "Chapter 1: Introduction",
+    "title": "Chapter 1: A Definition of Causal Effect",
     "section": "",
-    "text": "This chapter introduces the fundamental concepts of causal inference. The content is presented in a book format optimized for reading and reference."
+    "text": "As a human being, you are already familiar with causal inference’s fundamental concepts. Through sheer existence, you know what a causal effect is, understand the difference between association and causation, and you have used this knowledge consistently throughout your life. Had you not, you’d be dead. Without basic causal concepts, you would not have survived long enough to read this chapter, let alone learn to read. As a toddler, you would have jumped right into the swimming pool after seeing those who did were later able to reach the jam jar. As a teenager, you would have skied down the most dangerous slopes after seeing those who did won the next ski race. As a parent, you would have refused to give antibiotics to your sick child after observing that those children who took their medicines were not at the park the next day.\nSince you already understand the definition of causal effect and the difference between association and causation, do not expect to gain deep conceptual insights from this chapter. Rather, the purpose of this chapter is to introduce mathematical notation that formalizes the causal intuition that you already possess. Make sure that you can match your causal intuition with the mathematical notation introduced here. This notation is necessary to precisely define causal concepts, and will be used throughout the book."
   },
   {
-    "objectID": "chapters/01-introduction.html#overview",
-    "href": "chapters/01-introduction.html#overview",
-    "title": "Chapter 1: Introduction",
-    "section": "",
-    "text": "This chapter introduces the fundamental concepts of causal inference. The content is presented in a book format optimized for reading and reference."
+    "objectID": "chapters/01-introduction.html#individual-causal-effects-pp.-3-4",
+    "href": "chapters/01-introduction.html#individual-causal-effects-pp.-3-4",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "1 1.1 Individual Causal Effects (pp. 3-4)",
+    "text": "1 1.1 Individual Causal Effects (pp. 3-4)\nWe use a hypothetical example to introduce causal effects. Consider Zeus’s extended family as our population of interest. Suppose all 20 family members have a life-threatening disease and we want to study the causal effect of heart transplant (treatment \\(A\\)) on death (outcome \\(Y\\)) within 5 years.\nWe represent treatment and outcome as binary variables:\n\nLet \\(A = 1\\) if the individual receives a heart transplant, \\(A = 0\\) if not\nLet \\(Y = 1\\) if the individual dies within 5 years, \\(Y = 0\\) if survives\n\nTo define a causal effect, we need to compare two counterfactual outcomes (also called potential outcomes) for each individual:\n\n\\(Y^{a=1}\\): The outcome if the individual receives treatment (\\(a = 1\\))\n\\(Y^{a=0}\\): The outcome if the individual does not receive treatment (\\(a = 0\\))\n\nAn individual causal effect exists when \\(Y^{a=1} \\neq Y^{a=0}\\) for an individual. For example, if Zeus would die if transplanted (\\(Y^{a=1} = 1\\)) but survive if not transplanted (\\(Y^{a=0} = 0\\)), then heart transplant has a causal effect on Zeus’s outcome.\n\nThese counterfactual outcomes represent what would happen under each treatment condition. The notation \\(Y^a\\) denotes the counterfactual outcome under treatment level \\(a\\). This framework was formally developed in the statistical literature and is fundamental to causal inference.\n\n\n1.1 The Fundamental Problem\nThe fundamental problem of causal inference is that we can only observe one of the two counterfactual outcomes for each individual. If Zeus receives a heart transplant, we observe \\(Y^{a=1}\\) but not \\(Y^{a=0}\\). The unobserved counterfactual outcome remains unknown.\nFormally, for each individual, the observed outcome \\(Y\\) equals the counterfactual outcome \\(Y^a\\) corresponding to the treatment actually received: \\(Y = Y^A\\). This equality is called consistency.\n\nBecause of this missing data problem, individual causal effects cannot generally be identified (i.e., computed from observed data). We can never simultaneously observe both \\(Y^{a=1}\\) and \\(Y^{a=0}\\) for the same individual. This is why causal inference is fundamentally a missing data problem.\nHowever, we can define and sometimes estimate average causal effects in populations, which is the focus of the next section."
   },
   {
-    "objectID": "chapters/01-introduction.html#what-is-causal-inference",
-    "href": "chapters/01-introduction.html#what-is-causal-inference",
-    "title": "Chapter 1: Introduction",
-    "section": "2 What is Causal Inference?",
-    "text": "2 What is Causal Inference?\nCausal inference is the process of drawing conclusions about causal connections based on the conditions of the occurrence of an effect.\nIn observational studies, unlike randomized experiments, we cannot directly observe the counterfactual outcomes. This fundamental problem of causal inference requires us to make certain assumptions and use appropriate methods."
+    "objectID": "chapters/01-introduction.html#average-causal-effects-pp.-4-7",
+    "href": "chapters/01-introduction.html#average-causal-effects-pp.-4-7",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "2 1.2 Average Causal Effects (pp. 4-7)",
+    "text": "2 1.2 Average Causal Effects (pp. 4-7)\nSince individual causal effects cannot be identified, we focus on average causal effects in a population. Table 1.1 shows the counterfactual outcomes for all 20 members of Zeus’s family.\nTable 1.1: Counterfactual 5-year mortality outcomes for Zeus’s family\n\n\n\nName\n\\(Y^{a=0}\\)\n\\(Y^{a=1}\\)\n\n\n\n\nRheia\n0\n1\n\n\nKronos\n1\n0\n\n\nDemeter\n0\n0\n\n\nHades\n0\n0\n\n\nHestia\n0\n0\n\n\nPoseidon\n1\n0\n\n\nHera\n0\n0\n\n\nZeus\n0\n1\n\n\nArtemis\n1\n1\n\n\nApollo\n1\n0\n\n\nLeto\n0\n1\n\n\nAres\n1\n1\n\n\nAthena\n1\n1\n\n\nHephaestus\n0\n1\n\n\nAphrodite\n0\n1\n\n\nPolyphemus\n0\n1\n\n\nPersephone\n1\n1\n\n\nHermes\n1\n0\n\n\nHebe\n1\n0\n\n\nDionysus\n1\n0\n\n\n\nFrom Table 1.1, we can compute:\n\nRisk if all treated: \\(Pr[Y^{a=1} = 1] = 10/20 = 0.5\\)\nRisk if all untreated: \\(Pr[Y^{a=0} = 1] = 10/20 = 0.5\\)\n\n\n2.1 Definition of Average Causal Effect\nAn average causal effect of treatment \\(A\\) on outcome \\(Y\\) is present if:\n\\[Pr[Y^{a=1} = 1] \\neq Pr[Y^{a=0} = 1]\\]\nor equivalently (using expected values):\n\\[E[Y^{a=1}] \\neq E[Y^{a=0}]\\]\nIn our population, treatment does not have an average causal effect because both risks equal 0.5. The null hypothesis of no average causal effect holds. However, this does not mean there are no individual effects.\n\nEven though the average causal effect is null, 12 individuals in Table 1.1 have individual causal effects. Six were harmed by treatment (\\(Y^{a=1} - Y^{a=0} = 1\\)), including Zeus, and six were helped (\\(Y^{a=1} - Y^{a=0} = -1\\)). The harmful and beneficial effects cancel out in the average.\nThe average causal effect \\(E[Y^{a=1}] - E[Y^{a=0}]\\) always equals the average of individual causal effects \\(E[Y^{a=1} - Y^{a=0}]\\), because a difference of averages equals the average of the differences.\nWhen there is no causal effect for any individual (i.e., \\(Y^{a=1} = Y^{a=0}\\) for all individuals), we say the sharp causal null hypothesis is true. The sharp null implies the null hypothesis of no average effect."
   },
   {
-    "objectID": "chapters/01-introduction.html#fundamental-problem",
-    "href": "chapters/01-introduction.html#fundamental-problem",
-    "title": "Chapter 1: Introduction",
-    "section": "3 Fundamental Problem",
-    "text": "3 Fundamental Problem\nThe fundamental problem of causal inference is that for any given individual, we can observe only one potential outcome - the one corresponding to the actual treatment received. We cannot observe what would have happened under a different treatment."
+    "objectID": "chapters/01-introduction.html#measures-of-causal-effect-pp.-7",
+    "href": "chapters/01-introduction.html#measures-of-causal-effect-pp.-7",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "3 1.3 Measures of Causal Effect (pp. 7)",
+    "text": "3 1.3 Measures of Causal Effect (pp. 7)\nWhen a causal effect exists, we can quantify its magnitude using different effect measures. The three most common for binary outcomes are:\n\n3.1 Causal Risk Difference\n\\[Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]\\]\nThis additive measure equals zero under the null hypothesis. It measures the absolute difference in risk.\n\n\n3.2 Causal Risk Ratio\n\\[\\frac{Pr[Y^{a=1} = 1]}{Pr[Y^{a=0} = 1]}\\]\nThis multiplicative measure equals one under the null hypothesis. It measures how many times treatment increases (or decreases) the risk.\n\n\n3.3 Causal Odds Ratio\n\\[\\frac{Pr[Y^{a=1} = 1] / Pr[Y^{a=1} = 0]}{Pr[Y^{a=0} = 1] / Pr[Y^{a=0} = 0]}\\]\nThis also equals one under the null hypothesis.\n\nDifferent effect measures serve different purposes. For example, suppose 3 in a million would develop the outcome if treated, and 1 in a million if untreated:\n\nCausal risk ratio = 3 (treatment triples the risk)\nCausal risk difference = 0.000002 (2 additional cases per million treated)\n\nThe risk ratio is useful for understanding relative risk, while the risk difference is useful for understanding the absolute number of cases attributable to treatment.\nThe causal risk difference is the average of individual causal effects \\(Y^{a=1} - Y^{a=0}\\) on the difference scale. However, the causal risk ratio is not the average of individual causal effects \\(Y^{a=1}/Y^{a=0}\\) on the ratio scale—it is a measure of causal effect in the population but not an average of individual effects."
   },
   {
-    "objectID": "chapters/01-introduction.html#notation-and-framework",
-    "href": "chapters/01-introduction.html#notation-and-framework",
-    "title": "Chapter 1: Introduction",
-    "section": "4 Notation and Framework",
-    "text": "4 Notation and Framework\nLet’s define our notation:\n\n\\(Y\\): outcome variable\n\\(A\\): treatment variable\n\n\\(Y^{a}\\): potential outcome under treatment \\(a\\)\n\nThe potential outcome \\(Y^{a}\\) represents the outcome that would be observed if, possibly contrary to fact, the individual received treatment level \\(a\\). This counterfactual framework, formalized by Neyman and Rubin, is central to modern causal inference."
+    "objectID": "chapters/01-introduction.html#random-variability-pp.-7-9",
+    "href": "chapters/01-introduction.html#random-variability-pp.-7-9",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "4 1.4 Random Variability (pp. 7-9)",
+    "text": "4 1.4 Random Variability (pp. 7-9)\nIn practice, we do not observe the counterfactual outcomes in Table 1.1. We only observe data from a sample of individuals. This introduces random variability.\n\n4.1 Sample vs. Superpopulation\nWe can view our study population in two ways:\n\nFixed population: The 20 individuals are the entire population of interest\nRandom sample: The 20 individuals are a random sample from a larger “superpopulation”\n\nUnder the superpopulation perspective, even if the true average causal effect is zero, our sample estimate might not be exactly zero due to sampling variability.\n\nFor example, suppose we randomly sample 20 individuals from a superpopulation where \\(E[Y^{a=1}] = E[Y^{a=0}] = 0.5\\) (true null effect). We might observe \\(\\hat{E}[Y^{a=1}] = 0.55\\) and \\(\\hat{E}[Y^{a=0}] = 0.45\\) in our sample just by chance.\nStatistical inference helps us determine whether an observed association is due to a true causal effect or random variability. We use:\n\nConfidence intervals: Range of plausible values for the causal effect\nHypothesis tests: Probability of observing our data if the null is true\nP-values: Strength of evidence against the null hypothesis\n\nUntil Chapter 10, we assume our population is extremely large to avoid statistical complications and focus on causal inference concepts.\n\n\n\n4.2 Two Types of Error\nIt’s critical to distinguish:\n\nRandom error: Due to sampling variability; reduced by larger sample sizes\nSystematic error (bias): Due to flaws in study design; NOT reduced by larger samples\n\nWith a very large sample, random error becomes negligible, and systematic error dominates. This is why proper study design and appropriate methods are essential for causal inference."
   },
   {
-    "objectID": "chapters/01-introduction.html#assumptions",
-    "href": "chapters/01-introduction.html#assumptions",
-    "title": "Chapter 1: Introduction",
-    "section": "5 Assumptions",
-    "text": "5 Assumptions\nTo identify causal effects from observational data, we typically need several key assumptions:\n\nConsistency: The potential outcome \\(Y^a\\) equals the observed outcome \\(Y\\) when treatment equals \\(a\\)\nExchangeability: Treatment assignment is independent of potential outcomes (no unmeasured confounding)\nPositivity: Every individual has a non-zero probability of receiving each treatment level\n\nThese assumptions, sometimes called “identifiability conditions,” allow us to link the observed data distribution to causal quantities of interest."
+    "objectID": "chapters/01-introduction.html#causation-versus-association-pp.-9-12",
+    "href": "chapters/01-introduction.html#causation-versus-association-pp.-9-12",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "5 1.5 Causation versus Association (pp. 9-12)",
+    "text": "5 1.5 Causation versus Association (pp. 9-12)\nA key distinction in causal inference is between causation and association.\n\n5.1 Association Measures\nUnlike causal effects (defined by counterfactuals), associations are defined using observed data. Table 1.2 shows the observed treatment and outcomes for Zeus’s family.\nTable 1.2: Observed treatment and outcome for Zeus’s family\n\n\n\nName\n\\(A\\)\n\\(Y\\)\n\n\n\n\nRheia\n0\n0\n\n\nKronos\n0\n1\n\n\nDemeter\n0\n0\n\n\nHades\n0\n0\n\n\nHestia\n1\n0\n\n\nPoseidon\n1\n0\n\n\nHera\n1\n0\n\n\nZeus\n1\n1\n\n\nArtemis\n0\n1\n\n\nApollo\n0\n1\n\n\nLeto\n0\n0\n\n\nAres\n1\n1\n\n\nAthena\n1\n1\n\n\nHephaestus\n1\n1\n\n\nAphrodite\n1\n1\n\n\nPolyphemus\n1\n1\n\n\nPersephone\n1\n1\n\n\nHermes\n1\n0\n\n\nHebe\n1\n0\n\n\nDionysus\n1\n0\n\n\n\n\nIn reality, we observe only one outcome per person—the one corresponding to their actual treatment. In Table 1.2, 13 individuals received transplants (A = 1) and 7 did not (A = 0). Among the 13 treated, 7 died (Y = 1). Among the 7 untreated, 3 died (Y = 1).\n\nThe associational risk in the treated: \\(Pr[Y = 1|A = 1] = 7/13\\)\nThe associational risk in the untreated: \\(Pr[Y = 1|A = 0] = 3/7\\)\n\n\n5.2 Definitions of Association\nTreatment \\(A\\) and outcome \\(Y\\) are independent (not associated) when:\n\\[Pr[Y = 1|A = 1] = Pr[Y = 1|A = 0]\\]\nor equivalently: \\(E[Y|A = 1] = E[Y|A = 0]\\)\nThis is denoted \\(Y \\perp\\!\\!\\!\\perp A\\).\nWhen this equality does not hold, \\(A\\) and \\(Y\\) are associated or dependent. Association measures include:\n\nAssociational risk difference: \\(Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]\\)\nAssociational risk ratio: \\(Pr[Y = 1|A = 1] / Pr[Y = 1|A = 0]\\)\n\nAssociational odds ratio: \\(\\frac{Pr[Y = 1|A = 1]/Pr[Y = 0|A = 1]}{Pr[Y = 1|A = 0]/Pr[Y = 0|A = 0]}\\)\n\n\n\n5.3 Causation vs. Association\nIn our example:\n\nNo causal effect: \\(Pr[Y^{a=1} = 1] = Pr[Y^{a=0} = 1] = 0.5\\)\nAssociation present: \\(Pr[Y = 1|A = 1] = 0.54 \\neq 0.43 = Pr[Y = 1|A = 0]\\)\n\n\nThis demonstrates the fundamental principle: Association is not causation.\nThe distinction is:\n\nCausation: Compares the same population under different treatment values\n\n“What if everyone had been treated?” vs. “What if everyone had been untreated?”\nUses counterfactual risks: \\(Pr[Y^{a=1} = 1]\\) vs. \\(Pr[Y^{a=0} = 1]\\)\n\nAssociation: Compares different subsets of the population\n\n“What is the risk in those who were treated?” vs. “What is the risk in those who were untreated?”\nUses conditional risks: \\(Pr[Y = 1|A = 1]\\) vs. \\(Pr[Y = 1|A = 0]\\)\n\n\nIn our example, there’s an association because those who received transplants were sicker on average than those who didn’t. This discrepancy between causation and association is called confounding (discussed in Chapter 7).\n\n\n\n5.4 The Challenge of Causal Inference\nCausal inference requires data like Table 1.1 (all counterfactual outcomes), but we only have data like Table 1.2 (observed outcomes). The question is: Under which conditions can real-world data be used for causal inference?\nChapter 2 provides one answer: conduct a randomized experiment."
   },
   {
     "objectID": "chapters/01-introduction.html#summary",
     "href": "chapters/01-introduction.html#summary",
-    "title": "Chapter 1: Introduction",
+    "title": "Chapter 1: A Definition of Causal Effect",
     "section": "6 Summary",
-    "text": "6 Summary\nThis chapter has introduced the basic framework for causal inference. We’ve defined potential outcomes, discussed the fundamental problem of causal inference, and outlined the key assumptions needed for causal identification. In subsequent chapters, we’ll explore methods for estimating causal effects under various scenarios and assumptions."
+    "text": "6 Summary\nThis chapter introduced fundamental concepts:\n\nIndividual causal effects: Defined as \\(Y^{a=1} \\neq Y^{a=0}\\), but cannot be identified due to the fundamental problem (missing counterfactuals)\nAverage causal effects: Defined as \\(E[Y^{a=1}] \\neq E[Y^{a=0}]\\), can sometimes be identified from data\nEffect measures: Include risk difference (additive), risk ratio (multiplicative), and odds ratio\nRandom variability: Distinguishes sampling variability (reduced by larger n) from systematic bias (not reduced by larger n)\nCausation vs. association: Causation compares counterfactual risks in the same population; association compares observed risks in different subsets\n\nThe key insight: Association does not imply causation. The challenge is to use observed associations to make valid causal inferences."
   },
   {
-    "objectID": "chapters/01-introduction-slides.html#key-questions",
-    "href": "chapters/01-introduction-slides.html#key-questions",
-    "title": "Chapter 1: Introduction",
-    "section": "Key Questions",
-    "text": "Key Questions\n\nWhat would have happened if…?\nHow do we estimate causal effects?\nWhat assumptions are needed?"
+    "objectID": "chapters/01-introduction.html#references",
+    "href": "chapters/01-introduction.html#references",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "7 References",
+    "text": "7 References\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC."
   },
   {
-    "objectID": "chapters/01-introduction-slides.html#the-counterfactual",
-    "href": "chapters/01-introduction-slides.html#the-counterfactual",
-    "title": "Chapter 1: Introduction",
-    "section": "The Counterfactual",
-    "text": "The Counterfactual\n\nWe observe what did happen\nWe cannot observe what would have happened\nThis is the fundamental problem"
+    "objectID": "chapters/01-introduction-slides.html#the-fundamental-problem",
+    "href": "chapters/01-introduction-slides.html#the-fundamental-problem",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "The Fundamental Problem",
+    "text": "The Fundamental Problem\nThe fundamental problem of causal inference is that we can only observe one of the two counterfactual outcomes for each individual. If Zeus receives a heart transplant, we observe \\(Y^{a=1}\\) but not \\(Y^{a=0}\\). The unobserved counterfactual outcome remains unknown.\nFormally, for each individual, the observed outcome \\(Y\\) equals the counterfactual outcome \\(Y^a\\) corresponding to the treatment actually received: \\(Y = Y^A\\). This equality is called consistency.\n\nBecause of this missing data problem, individual causal effects cannot generally be identified (i.e., computed from observed data). We can never simultaneously observe both \\(Y^{a=1}\\) and \\(Y^{a=0}\\) for the same individual. This is why causal inference is fundamentally a missing data problem.\nHowever, we can define and sometimes estimate average causal effects in populations, which is the focus of the next section."
   },
   {
-    "objectID": "chapters/01-introduction-slides.html#average-causal-effect",
-    "href": "chapters/01-introduction-slides.html#average-causal-effect",
-    "title": "Chapter 1: Introduction",
-    "section": "Average Causal Effect",
-    "text": "Average Causal Effect\n\\[E[Y^{a=1}] - E[Y^{a=0}]\\]\nThe difference in expected outcomes under treatment vs. control"
+    "objectID": "chapters/01-introduction-slides.html#definition-of-average-causal-effect",
+    "href": "chapters/01-introduction-slides.html#definition-of-average-causal-effect",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Definition of Average Causal Effect",
+    "text": "Definition of Average Causal Effect\nAn average causal effect of treatment \\(A\\) on outcome \\(Y\\) is present if:\n\\[Pr[Y^{a=1} = 1] \\neq Pr[Y^{a=0} = 1]\\]\nor equivalently (using expected values):\n\\[E[Y^{a=1}] \\neq E[Y^{a=0}]\\]\nIn our population, treatment does not have an average causal effect because both risks equal 0.5. The null hypothesis of no average causal effect holds. However, this does not mean there are no individual effects.\n\nEven though the average causal effect is null, 12 individuals in Table 1.1 have individual causal effects. Six were harmed by treatment (\\(Y^{a=1} - Y^{a=0} = 1\\)), including Zeus, and six were helped (\\(Y^{a=1} - Y^{a=0} = -1\\)). The harmful and beneficial effects cancel out in the average.\nThe average causal effect \\(E[Y^{a=1}] - E[Y^{a=0}]\\) always equals the average of individual causal effects \\(E[Y^{a=1} - Y^{a=0}]\\), because a difference of averages equals the average of the differences.\nWhen there is no causal effect for any individual (i.e., \\(Y^{a=1} = Y^{a=0}\\) for all individuals), we say the sharp causal null hypothesis is true. The sharp null implies the null hypothesis of no average effect."
   },
   {
-    "objectID": "chapters/01-introduction-slides.html#key-assumptions",
-    "href": "chapters/01-introduction-slides.html#key-assumptions",
-    "title": "Chapter 1: Introduction",
-    "section": "Key Assumptions",
-    "text": "Key Assumptions\n\nConsistency\nExchangeability\n\nPositivity\n\n\nWithout these, causal identification is not possible from observational data"
+    "objectID": "chapters/01-introduction-slides.html#causal-risk-difference",
+    "href": "chapters/01-introduction-slides.html#causal-risk-difference",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Causal Risk Difference",
+    "text": "Causal Risk Difference\n\\[Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]\\]\nThis additive measure equals zero under the null hypothesis. It measures the absolute difference in risk."
   },
   {
-    "objectID": "chapters/01-introduction-slides.html#next-steps",
-    "href": "chapters/01-introduction-slides.html#next-steps",
-    "title": "Chapter 1: Introduction",
-    "section": "Next Steps",
-    "text": "Next Steps\n\nChapter 2: Randomized Experiments\nChapter 3: Observational Studies\nChapter 4: Confounding and Bias"
+    "objectID": "chapters/01-introduction-slides.html#causal-risk-ratio",
+    "href": "chapters/01-introduction-slides.html#causal-risk-ratio",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Causal Risk Ratio",
+    "text": "Causal Risk Ratio\n\\[\\frac{Pr[Y^{a=1} = 1]}{Pr[Y^{a=0} = 1]}\\]\nThis multiplicative measure equals one under the null hypothesis. It measures how many times treatment increases (or decreases) the risk."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#causal-odds-ratio",
+    "href": "chapters/01-introduction-slides.html#causal-odds-ratio",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Causal Odds Ratio",
+    "text": "Causal Odds Ratio\n\\[\\frac{Pr[Y^{a=1} = 1] / Pr[Y^{a=1} = 0]}{Pr[Y^{a=0} = 1] / Pr[Y^{a=0} = 0]}\\]\nThis also equals one under the null hypothesis.\n\nDifferent effect measures serve different purposes. For example, suppose 3 in a million would develop the outcome if treated, and 1 in a million if untreated:\n\nCausal risk ratio = 3 (treatment triples the risk)\nCausal risk difference = 0.000002 (2 additional cases per million treated)\n\nThe risk ratio is useful for understanding relative risk, while the risk difference is useful for understanding the absolute number of cases attributable to treatment.\nThe causal risk difference is the average of individual causal effects \\(Y^{a=1} - Y^{a=0}\\) on the difference scale. However, the causal risk ratio is not the average of individual causal effects \\(Y^{a=1}/Y^{a=0}\\) on the ratio scale—it is a measure of causal effect in the population but not an average of individual effects."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#sample-vs.-superpopulation",
+    "href": "chapters/01-introduction-slides.html#sample-vs.-superpopulation",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Sample vs. Superpopulation",
+    "text": "Sample vs. Superpopulation\nWe can view our study population in two ways:\n\nFixed population: The 20 individuals are the entire population of interest\nRandom sample: The 20 individuals are a random sample from a larger “superpopulation”\n\nUnder the superpopulation perspective, even if the true average causal effect is zero, our sample estimate might not be exactly zero due to sampling variability.\n\nFor example, suppose we randomly sample 20 individuals from a superpopulation where \\(E[Y^{a=1}] = E[Y^{a=0}] = 0.5\\) (true null effect). We might observe \\(\\hat{E}[Y^{a=1}] = 0.55\\) and \\(\\hat{E}[Y^{a=0}] = 0.45\\) in our sample just by chance.\nStatistical inference helps us determine whether an observed association is due to a true causal effect or random variability. We use:\n\nConfidence intervals: Range of plausible values for the causal effect\nHypothesis tests: Probability of observing our data if the null is true\nP-values: Strength of evidence against the null hypothesis\n\nUntil Chapter 10, we assume our population is extremely large to avoid statistical complications and focus on causal inference concepts."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#two-types-of-error",
+    "href": "chapters/01-introduction-slides.html#two-types-of-error",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Two Types of Error",
+    "text": "Two Types of Error\nIt’s critical to distinguish:\n\nRandom error: Due to sampling variability; reduced by larger sample sizes\nSystematic error (bias): Due to flaws in study design; NOT reduced by larger samples\n\nWith a very large sample, random error becomes negligible, and systematic error dominates. This is why proper study design and appropriate methods are essential for causal inference."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#association-measures",
+    "href": "chapters/01-introduction-slides.html#association-measures",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Association Measures",
+    "text": "Association Measures\nUnlike causal effects (defined by counterfactuals), associations are defined using observed data. Table 1.2 shows the observed treatment and outcomes for Zeus’s family.\nTable 1.2: Observed treatment and outcome for Zeus’s family\n\n\n\nName\n\\(A\\)\n\\(Y\\)\n\n\n\n\nRheia\n0\n0\n\n\nKronos\n0\n1\n\n\nDemeter\n0\n0\n\n\nHades\n0\n0\n\n\nHestia\n1\n0\n\n\nPoseidon\n1\n0\n\n\nHera\n1\n0\n\n\nZeus\n1\n1\n\n\nArtemis\n0\n1\n\n\nApollo\n0\n1\n\n\nLeto\n0\n0\n\n\nAres\n1\n1\n\n\nAthena\n1\n1\n\n\nHephaestus\n1\n1\n\n\nAphrodite\n1\n1\n\n\nPolyphemus\n1\n1\n\n\nPersephone\n1\n1\n\n\nHermes\n1\n0\n\n\nHebe\n1\n0\n\n\nDionysus\n1\n0\n\n\n\n\nIn reality, we observe only one outcome per person—the one corresponding to their actual treatment. In Table 1.2, 13 individuals received transplants (A = 1) and 7 did not (A = 0). Among the 13 treated, 7 died (Y = 1). Among the 7 untreated, 3 died (Y = 1).\n\nThe associational risk in the treated: \\(Pr[Y = 1|A = 1] = 7/13\\)\nThe associational risk in the untreated: \\(Pr[Y = 1|A = 0] = 3/7\\)"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#definitions-of-association",
+    "href": "chapters/01-introduction-slides.html#definitions-of-association",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Definitions of Association",
+    "text": "Definitions of Association\nTreatment \\(A\\) and outcome \\(Y\\) are independent (not associated) when:\n\\[Pr[Y = 1|A = 1] = Pr[Y = 1|A = 0]\\]\nor equivalently: \\(E[Y|A = 1] = E[Y|A = 0]\\)\nThis is denoted \\(Y \\perp\\!\\!\\!\\perp A\\).\nWhen this equality does not hold, \\(A\\) and \\(Y\\) are associated or dependent. Association measures include:\n\nAssociational risk difference: \\(Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]\\)\nAssociational risk ratio: \\(Pr[Y = 1|A = 1] / Pr[Y = 1|A = 0]\\)\n\nAssociational odds ratio: \\(\\frac{Pr[Y = 1|A = 1]/Pr[Y = 0|A = 1]}{Pr[Y = 1|A = 0]/Pr[Y = 0|A = 0]}\\)"
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#causation-vs.-association",
+    "href": "chapters/01-introduction-slides.html#causation-vs.-association",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "Causation vs. Association",
+    "text": "Causation vs. Association\nIn our example:\n\nNo causal effect: \\(Pr[Y^{a=1} = 1] = Pr[Y^{a=0} = 1] = 0.5\\)\nAssociation present: \\(Pr[Y = 1|A = 1] = 0.54 \\neq 0.43 = Pr[Y = 1|A = 0]\\)\n\n\nThis demonstrates the fundamental principle: Association is not causation.\nThe distinction is:\n\nCausation: Compares the same population under different treatment values\n\n“What if everyone had been treated?” vs. “What if everyone had been untreated?”\nUses counterfactual risks: \\(Pr[Y^{a=1} = 1]\\) vs. \\(Pr[Y^{a=0} = 1]\\)\n\nAssociation: Compares different subsets of the population\n\n“What is the risk in those who were treated?” vs. “What is the risk in those who were untreated?”\nUses conditional risks: \\(Pr[Y = 1|A = 1]\\) vs. \\(Pr[Y = 1|A = 0]\\)\n\n\nIn our example, there’s an association because those who received transplants were sicker on average than those who didn’t. This discrepancy between causation and association is called confounding (discussed in Chapter 7)."
+  },
+  {
+    "objectID": "chapters/01-introduction-slides.html#the-challenge-of-causal-inference",
+    "href": "chapters/01-introduction-slides.html#the-challenge-of-causal-inference",
+    "title": "Chapter 1: A Definition of Causal Effect",
+    "section": "The Challenge of Causal Inference",
+    "text": "The Challenge of Causal Inference\nCausal inference requires data like Table 1.1 (all counterfactual outcomes), but we only have data like Table 1.2 (observed outcomes). The question is: Under which conditions can real-world data be used for causal inference?\nChapter 2 provides one answer: conduct a randomized experiment."
   },
   {
     "objectID": "chapters/02-randomized-experiments-slides.html#key-benefits",
