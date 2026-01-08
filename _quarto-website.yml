@@ -41,6 +41,8 @@ website:
             href: chapters/07-confounding.qmd
           - text: "Chapter 8: Selection Bias"
             href: chapters/08-selection-bias.qmd
+          - text: "Chapter 9: Measurement Bias"
+            href: chapters/09-measurement-bias.qmd
 
 format:
   html:
