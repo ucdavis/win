@@ -39,6 +39,8 @@ website:
             href: chapters/06-graphical-representation.qmd
           - text: "Chapter 7: Confounding"
             href: chapters/07-confounding.qmd
+          - text: "Chapter 8: Selection Bias"
+            href: chapters/08-selection-bias.qmd
 
 format:
   html:
