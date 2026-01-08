@@ -10,12 +10,12 @@ format:
     output-file: 01-introduction.docx
 ---
 
-## Overview
+As a human being, you are already familiar with causal inference's fundamental concepts. Through sheer existence, you know what a causal effect is, understand the difference between association and causation, and you have used this knowledge consistently throughout your life. Had you not, you'd be dead. Without basic causal concepts, you would not have survived long enough to read this chapter, let alone learn to read. As a toddler, you would have jumped right into the swimming pool after seeing those who did were later able to reach the jam jar. As a teenager, you would have skied down the most dangerous slopes after seeing those who did won the next ski race. As a parent, you would have refused to give antibiotics to your sick child after observing that those children who took their medicines were not at the park the next day.
 
-This chapter defines causal effects using the potential outcomes framework, also known as counterfactual outcomes. We distinguish between individual and average causal effects, introduce different measures of causal effects, discuss the role of random variability, and clarify the critical distinction between causation and association.
+Since you already understand the definition of causal effect and the difference between association and causation, do not expect to gain deep conceptual insights from this chapter. Rather, the purpose of this chapter is to introduce mathematical notation that formalizes the causal intuition that you already possess. Make sure that you can match your causal intuition with the mathematical notation introduced here. This notation is necessary to precisely define causal concepts, and will be used throughout the book.
 
 ::: {.notes}
-The content is based on @hernan2020causal [Chapter 1, pp. 3-12]. This chapter lays the foundation for all subsequent material by precisely defining what we mean by a "causal effect" using counterfactual outcomes.
+This content is based on @hernan2020causal [Chapter 1, pp. 3-12].
 :::
 
 ## 1.1 Individual Causal Effects (pp. 3-4)
@@ -183,14 +183,40 @@ A key distinction in causal inference is between **causation** and **association
 Unlike causal effects (defined by counterfactuals), **associations** are defined using observed data. Table 1.2 shows the observed treatment and outcomes for Zeus's family.
 
 ::: {.content-visible when-format="html"}
-**Table 1.2**: Observed treatment and outcome (hypothetical data)
+**Table 1.2**: Observed treatment and outcome for Zeus's family
 
-In reality, we observe only one outcome per person—the one corresponding to their actual treatment. Suppose 13 individuals received transplants and 7 did not. Among the 13 treated, 7 died. Among the 7 untreated, 3 died.
+| Name | $A$ | $Y$ |
+|------|-----|-----|
+| Rheia | 0 | 0 |
+| Kronos | 0 | 1 |
+| Demeter | 0 | 0 |
+| Hades | 0 | 0 |
+| Hestia | 1 | 0 |
+| Poseidon | 1 | 0 |
+| Hera | 1 | 0 |
+| Zeus | 1 | 1 |
+| Artemis | 0 | 1 |
+| Apollo | 0 | 1 |
+| Leto | 0 | 0 |
+| Ares | 1 | 1 |
+| Athena | 1 | 1 |
+| Hephaestus | 1 | 1 |
+| Aphrodite | 1 | 1 |
+| Polyphemus | 1 | 1 |
+| Persephone | 1 | 1 |
+| Hermes | 1 | 0 |
+| Hebe | 1 | 0 |
+| Dionysus | 1 | 0 |
+
 :::
 
-The **associational risk** in the treated: $Pr[Y = 1|A = 1] = 7/13 \approx 0.54$
+::: {.notes}
+In reality, we observe only one outcome per person—the one corresponding to their actual treatment. In Table 1.2, 13 individuals received transplants (A = 1) and 7 did not (A = 0). Among the 13 treated, 7 died (Y = 1). Among the 7 untreated, 3 died (Y = 1).
+:::
 
-The **associational risk** in the untreated: $Pr[Y = 1|A = 0] = 3/7 \approx 0.43$
+The **associational risk** in the treated: $Pr[Y = 1|A = 1] = 7/13$
+
+The **associational risk** in the untreated: $Pr[Y = 1|A = 0] = 3/7$
 
 ### Definitions of Association
 
