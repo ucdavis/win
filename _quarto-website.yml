@@ -43,6 +43,8 @@ website:
             href: chapters/08-selection-bias.qmd
           - text: "Chapter 9: Measurement Bias"
             href: chapters/09-measurement-bias.qmd
+          - text: "Chapter 10: Random Variability"
+            href: chapters/10-random-variability.qmd
 
 format:
   html:
