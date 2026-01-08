@@ -13,6 +13,7 @@ format:
 In previous chapters, we focused on estimating average causal effects in a population. But what if the effect of treatment varies across individuals? This chapter introduces **effect modification**: the phenomenon where the causal effect of treatment differs across levels of another variable.
 
 Understanding effect modification is crucial for:
+
 - Identifying subgroups that benefit more (or less) from treatment
 - Targeting interventions to those who need them most
 - Understanding biological or social mechanisms
@@ -40,6 +41,7 @@ $$E[Y^{a=1} - Y^{a=0} | V = 1] \neq E[Y^{a=1} - Y^{a=0} | V = 0]$$
 ### Example: Effect Modification by Sex
 
 Suppose in Zeus's family:
+
 - Among males: $E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{male}] = -0.3$ (benefit from transplant)
 - Among females: $E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{female}] = +0.3$ (harm from transplant)
 
@@ -47,6 +49,7 @@ The average effect across the whole family is zero, but there is strong effect m
 
 ::: {.notes}
 **Important terminology**:
+
 - $V$ is called an **effect modifier** or **modifier**
 - The causal effect **varies** or is **heterogeneous** across levels of $V$
 - Effect modification is a **property of the population**, not of individuals
@@ -65,16 +68,19 @@ Whether effect modification exists can depend on the **scale** (measure) used:
 ## Scale-Dependent Effect Modification
 
 Suppose:
+
 - When $V = 0$: $E[Y^{a=1}] = 0.2$, $E[Y^{a=0}] = 0.1$
 - When $V = 1$: $E[Y^{a=1}] = 0.4$, $E[Y^{a=0}] = 0.2$
 
 **Risk difference**:
+
 - When $V = 0$: $0.2 - 0.1 = 0.1$
 - When $V = 1$: $0.4 - 0.2 = 0.2$
 
 There is effect modification on the risk difference scale (effect is 0.1 in one group, 0.2 in the other).
 
 **Risk ratio**:
+
 - When $V = 0$: $0.2 / 0.1 = 2.0$
 - When $V = 1$: $0.4 / 0.2 = 2.0$
 
@@ -83,10 +89,12 @@ There is NO effect modification on the risk ratio scale (effect is 2.0 in both g
 
 ::: {.notes}
 This example shows that effect modification is **measure-dependent**. The same data can show:
+
 - Effect modification on one scale (risk difference)
 - No effect modification on another scale (risk ratio)
 
 **Which scale should we use?**
+
 - From a **biological/mechanistic** perspective, one scale may be more natural
 - From a **public health** perspective, risk differences are often most relevant
 - There is no single "correct" answer—the choice depends on the scientific question
@@ -114,11 +122,13 @@ If effects differ across strata, $V$ is an effect modifier.
 Using data from a randomized trial of heart transplant in Zeus's family:
 
 **Stratum 1 (Males)**:
+
 - Risk in treated: $Pr[Y = 1 | A = 1, V = \text{male}] = 0.40$
 - Risk in untreated: $Pr[Y = 1 | A = 0, V = \text{male}] = 0.70$
 - Risk difference: $0.40 - 0.70 = -0.30$ (benefit)
 
 **Stratum 2 (Females)**:
+
 - Risk in treated: $Pr[Y = 1 | A = 1, V = \text{female}] = 0.65$
 - Risk in untreated: $Pr[Y = 1 | A = 0, V = \text{female}] = 0.35$
 - Risk difference: $0.65 - 0.35 = +0.30$ (harm)
@@ -154,6 +164,7 @@ If treatment effects vary substantially across subgroups, reporting only an aver
 ### 2. Targeting Interventions
 
 When effect modification exists, we can:
+
 - Target treatment to subgroups that benefit most
 - Avoid treating subgroups that experience harm
 - Allocate limited resources more efficiently
@@ -162,6 +173,7 @@ When effect modification exists, we can:
 ## Precision Medicine Example
 
 If genetic testing reveals that a drug benefits patients with genotype AA but harms patients with genotype BB, we should:
+
 - Prescribe the drug only to AA patients
 - Use alternative treatments for BB patients
 
@@ -171,6 +183,7 @@ This is the foundation of **precision medicine** or **personalized medicine**.
 ### 3. Understanding Mechanisms
 
 Effect modification can provide clues about biological or social mechanisms:
+
 - If an effect is modified by sex, hormones may play a role
 - If an effect is modified by age, developmental processes may be involved
 - If an effect is modified by socioeconomic status, access or adherence may matter
@@ -181,6 +194,7 @@ Effect modification can provide clues about biological or social mechanisms:
 **Example**: Suppose the effect of a drug is modified by zip code. This doesn't mean zip code *causes* differential effects. Rather, zip code may be a proxy for socioeconomic status, healthcare access, environmental exposures, etc.
 
 To understand mechanisms, we need:
+
 - Subject-matter knowledge
 - Careful measurement of mechanistic variables
 - Additional assumptions (sometimes formalized using mediation analysis, covered in later chapters)
@@ -202,6 +216,7 @@ These are different scientific questions with different implications.
 - An **effect modifier** is a variable across which the causal effect differs
 
 A variable can be:
+
 - A confounder only
 - An effect modifier only  
 - Both a confounder and effect modifier
@@ -211,19 +226,23 @@ A variable can be:
 ### Example: Confounder vs. Modifier
 
 **Confounder only**: Age affects both treatment and outcome, but the treatment effect is the same at all ages.
+
 - We must adjust for age to get an unbiased marginal effect
 - But we don't need to report age-specific effects (they're all the same)
 
 **Effect modifier only**: In a randomized trial, sex does not confound (randomization handles that), but the treatment effect differs by sex.
+
 - No need to adjust for confounding
 - But we should report sex-specific effects
 
 **Both**: In an observational study of surgery, age affects who gets surgery (confounding) and how well surgery works (effect modification).
+
 - We must adjust for age
 - We should report age-specific effects
 
 ::: {.notes}
 **Key distinction**:
+
 - **Confounding is a bias** to be removed through adjustment
 - **Effect modification is a finding** to be reported and understood
 
@@ -260,6 +279,7 @@ If matching successfully balances confounders, the comparison estimates the caus
 ### Matching and Effect Modification
 
 Like stratification, matching can identify effect modification:
+
 - Match separately within subgroups defined by $V$
 - Estimate effects within each subgroup
 - Compare effects across subgroups
@@ -268,17 +288,20 @@ Like stratification, matching can identify effect modification:
 **Matching vs. Stratification**:
 
 **Similarities**:
+
 - Both create comparable treatment and control groups
 - Both can identify effect modification
 - Both can eliminate confounding
 
 **Differences**:
+
 - **Stratification** uses all data, dividing into non-overlapping strata
 - **Matching** may discard data (unmatched individuals), creating matched pairs/sets
 - **Matching** can be more efficient when controls far outnumber treated individuals
 - **Stratification** is conceptually simpler and more transparent
 
 **Modern approach**: Matching has largely been superseded by more flexible methods like:
+
 - Regression adjustment
 - Inverse probability weighting (Chapter 12)
 - Propensity score methods (Chapter 15)
@@ -297,6 +320,7 @@ When both confounding and effect modification are present, we need methods that 
 If $V$ is both a confounder and effect modifier, simple stratification may not suffice if there are additional confounders $L$.
 
 **Solution**: Adjust for $L$ within each stratum of $V$. This can be done via:
+
 - **Stratification on both $V$ and $L$**: Creates many narrow strata
 - **Regression within strata**: Fit separate regression models for each level of $V$
 - **Inverse probability weighting within strata**: Weight by propensity score within each $V$ stratum
@@ -307,10 +331,12 @@ If $V$ is both a confounder and effect modifier, simple stratification may not s
 To estimate the effect of exercise on heart disease, modified by age, while adjusting for sex and smoking:
 
 **Approach 1**: Stratify by age, sex, and smoking
+
 - Too many strata (e.g., 3 age groups × 2 sexes × 2 smoking status = 12 strata)
 - Sample sizes become small
 
 **Approach 2**: Stratify by age, then adjust for sex and smoking within each age stratum
+
 - Fit regression model within young, middle-aged, and elderly separately
 - Each model controls for sex and smoking
 - Compare effects across age groups
@@ -324,6 +350,7 @@ Regression models provide a flexible framework for handling effect modification:
 $$E[Y | A, V, L] = \beta_0 + \beta_1 A + \beta_2 V + \beta_3 A \times V + \beta_4^T L$$
 
 The **interaction term** $\beta_3 A \times V$ captures effect modification:
+
 - If $\beta_3 = 0$: No effect modification by $V$
 - If $\beta_3 \neq 0$: Effect of $A$ differs by $V$
 
@@ -331,16 +358,19 @@ The **interaction term** $\beta_3 A \times V$ captures effect modification:
 **Important distinctions**:
 
 **Statistical interaction** (in regression models):
+
 - Refers to product terms like $A \times V$ in a model
 - Is model-dependent and scale-dependent
 - Does not have an inherent causal interpretation
 
 **Effect modification** (in causal inference):
+
 - Refers to heterogeneity of causal effects across subgroups
 - Is defined in terms of potential outcomes
 - Has a clear causal interpretation
 
 These concepts are related but not identical:
+
 - Effect modification on the risk difference scale corresponds to interaction in a linear model
 - Effect modification on the risk ratio scale corresponds to interaction in a log-linear model
 - Absence of statistical interaction does NOT guarantee absence of effect modification (it depends on the model and scale)

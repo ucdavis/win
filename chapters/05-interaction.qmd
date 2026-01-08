@@ -13,6 +13,7 @@ format:
 Chapter 4 introduced effect modification: the phenomenon where the effect of treatment $A$ varies across levels of another variable $V$. In this chapter, we extend the concept to **interaction** between two treatments.
 
 Interaction addresses a fundamentally different question: Does the joint effect of two treatments differ from the sum of their individual effects? Understanding interaction is crucial for:
+
 - Evaluating combination therapies
 - Understanding synergistic or antagonistic effects
 - Designing multi-component interventions
@@ -28,6 +29,7 @@ To define interaction, we need to consider the **joint effect** of two treatment
 ### Notation for Two Treatments
 
 Suppose we have two binary treatments:
+
 - $A$: First treatment (e.g., aspirin), with levels 0 or 1
 - $E$: Second treatment (e.g., blood pressure medication), with levels 0 or 1
 
@@ -38,6 +40,7 @@ This creates four possible treatment combinations:
 4. $(A=1, E=1)$: Both treatments
 
 For each individual, we have four counterfactual outcomes:
+
 - $Y^{a=0, e=0}$: Outcome if neither treatment received
 - $Y^{a=1, e=0}$: Outcome if only $A$ received
 - $Y^{a=0, e=1}$: Outcome if only $E$ received
@@ -69,11 +72,13 @@ If $\text{IC} \neq 0$, there is additive interaction.
 
 ::: {.notes}
 **Interpretation of IC**:
+
 - If $\text{IC} > 0$: **Synergism** or **superadditivity** (combined effect exceeds sum of individual effects)
 - If $\text{IC} < 0$: **Antagonism** or **subadditivity** (combined effect is less than sum of individual effects)
 - If $\text{IC} = 0$: **No interaction** or **additivity** (combined effect equals sum of individual effects)
 
 **Important distinction**: 
+
 - **Effect modification** (Chapter 4): Effect of $A$ varies across levels of a baseline variable $V$
 - **Interaction** (Chapter 5): Joint effect of two treatments $A$ and $E$ differs from sum of individual effects
 
@@ -95,14 +100,17 @@ Suppose we study the effect of aspirin and exercise on heart attack risk (with l
 | Both aspirin and exercise: $E[Y^{a=1,e=1}]$ | 0.10 |
 
 **Individual effects**:
+
 - Effect of aspirin (without exercise): $0.25 - 0.30 = -0.05$
 - Effect of exercise (without aspirin): $0.20 - 0.30 = -0.10$
 - Sum of individual effects: $-0.05 + (-0.10) = -0.15$
 
 **Joint effect**:
+
 - $0.10 - 0.30 = -0.20$
 
 **Interaction contrast**:
+
 - $\text{IC} = -0.20 - (-0.15) = -0.05$
 
 There is **negative** additive interaction (antagonism is not the right word here; rather, the combined benefit exceeds the sum). Actually, let me recalculate:
@@ -114,12 +122,14 @@ Since $\text{IC} < 0$, there is negative interaction, but in this case both trea
 
 ::: {.notes}
 **Confusion about signs**: The sign of the interaction contrast depends on the coding of the outcome:
+
 - If higher $Y$ is worse (e.g., risk of disease), negative IC means synergistic benefit
 - If higher $Y$ is better (e.g., recovery), positive IC means synergistic benefit
 
 To avoid confusion, always interpret the interaction contrast in the context of the specific outcome and treatment effects.
 
 **Alternative terminology**:
+
 - **Positive interaction** / **Synergism** / **Superadditivity**: $|\text{Joint effect}| > |\text{Sum of individual effects}|$
 - **Negative interaction** / **Antagonism** / **Subadditivity**: $|\text{Joint effect}| < |\text{Sum of individual effects}|$
 :::
@@ -144,11 +154,13 @@ To identify interaction from observed data, we need the three identifiability co
 **Key point**: We treat $(A, E)$ as a single joint treatment with four levels: $(0,0), (1,0), (0,1), (1,1)$.
 
 **Randomized experiments**:
+
 - If both $A$ and $E$ are randomized independently, exchangeability and positivity typically hold
 - This is a **factorial design**: randomize to all four combinations
 - Allows unbiased estimation of interaction
 
 **Observational studies**:
+
 - Must adjust for confounders of $(A, E)$ relationship with $Y$
 - This may include confounders of $A$, confounders of $E$, and confounders of their joint distribution
 - Positivity requires that all four treatment combinations occur at all levels of confounders
@@ -207,12 +219,14 @@ Interaction on the additive scale corresponds to certain response types being mo
 ## Response Types Example
 
 Suppose we have:
+
 - 30% of population: Prevented only by $A$ 
 - 20% of population: Prevented only by $E$
 - 10% of population: Prevented only by both $A$ and $E$ together
 - 40% of population: Immune (never get disease)
 
 Then:
+
 - $E[Y^{0,0}] = 0.30 + 0.20 + 0.10 = 0.60$
 - $E[Y^{1,0}] = 0.20 + 0.10 = 0.30$ (the 30% prevented by $A$ no longer get disease)
 - $E[Y^{0,1}] = 0.30 + 0.10 = 0.40$ (the 20% prevented by $E$ no longer get disease)
@@ -226,6 +240,7 @@ Despite the synergistic response type existing, there is no interaction on the a
 
 ::: {.notes}
 This example illustrates that:
+
 - Existence of synergistic response types does **not** guarantee additive interaction will be detected
 - Interaction depends on the *prevalence* of different response types
 - Different scales (additive vs. multiplicative) may reveal interaction even when others do not
@@ -290,6 +305,7 @@ In other words, $A$ and $E$ interact if there exists some sufficient cause conta
 ### Sufficient Cause Interaction and Synergism
 
 Sufficient cause interaction corresponds to **synergism**:
+
 - Neither $A$ alone nor $E$ alone completes a sufficient cause
 - But $A$ and $E$ together (plus other unknown components) form a sufficient cause
 - Therefore, the joint effect exceeds the sum of individual effects
@@ -304,6 +320,7 @@ Consider the effect of smoking ($A$) and asbestos exposure ($E$) on lung cancer 
 **Sufficient Cause III**: Asbestos + Unknown factors U₃
 
 If an individual has Unknown factors U₁ but not U₂ or U₃:
+
 - $Y^{a=0,e=0} = 0$ (no sufficient cause completed)
 - $Y^{a=1,e=0} = 0$ (smoking alone doesn't complete a sufficient cause)
 - $Y^{a=0,e=1} = 0$ (asbestos alone doesn't complete a sufficient cause)
@@ -320,6 +337,7 @@ This is **pure synergism**: neither treatment alone has an effect, but the combi
 - **Causal interaction (in potential outcomes framework) is a statistical concept**: It refers to departures from additivity in population-level effect measures
 
 **These concepts are related but not identical**:
+
 - Sufficient cause interaction (synergism) implies positive additive interaction in the population *if* the sufficient cause is common enough
 - However, positive additive interaction can occur even without sufficient cause interaction (e.g., if treatments prevent the outcome via independent pathways but with different magnitudes)
 
@@ -348,11 +366,13 @@ Should we use the counterfactual (potential outcomes) framework or the sufficien
 **Recommendation from Hernán & Robins**: Use the counterfactual framework as the primary approach, but keep sufficient cause intuition in mind for biological interpretation.
 
 **Why prioritize counterfactuals?**
+
 - Sufficient cause model makes strong untestable assumptions (determinism, completeness of sufficient causes)
 - Counterfactual framework is more flexible and connects better to modern statistical methods
 - Most interaction research is in the potential outcomes tradition
 
 **When to use sufficient cause thinking?**
+
 - When seeking mechanistic explanations
 - When biological synergism is the scientific question
 - When teaching interaction to those unfamiliar with potential outcomes
@@ -382,16 +402,19 @@ This chapter introduced **interaction** between two treatments.
 
 ::: {.notes}
 **Distinction from Chapter 4**:
+
 - **Effect modification** (Chapter 4): Effect of treatment $A$ varies by baseline variable $V$
 - **Interaction** (Chapter 5): Joint effect of treatments $A$ and $E$ differs from sum of individual effects
 
 **Looking ahead**:
+
 - **Chapter 6**: Causal diagrams provide graphical tools for understanding when and how to adjust for confounding
 - **Chapter 7**: Detailed treatment of confounding
 - **Chapter 13**: The g-formula provides a flexible method for estimating effects when both confounding and interaction are present
 - **Chapter 14**: G-estimation of structural nested models for treatment effect heterogeneity
 
 **Practical takeaway**:
+
 - When studying combination therapies or multiple exposures, consider whether interaction exists
 - Use factorial designs (randomize both treatments independently) when possible
 - Report joint effects and interaction contrasts, not just main effects

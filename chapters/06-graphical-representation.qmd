@@ -21,6 +21,7 @@ This chapter is based on @hernan2020causal [Chapter 6, pp. 59-76].
 ## 6.1 Causal Diagrams (pp. 59-61)
 
 A **causal diagram** is a graph where:
+
 - **Nodes** (vertices) represent variables
 - **Directed edges** (arrows) represent direct causal effects
 
@@ -42,11 +43,13 @@ L → Y
 ```
 
 This diagram represents:
+
 - $L$ causes $A$ (arrow from $L$ to $A$)
 - $L$ causes $Y$ (arrow from $L$ to $Y$)
 - $A$ causes $Y$ (arrow from $A$ to $Y$)
 
 **Key terms**:
+
 - $L$ is a **parent** of $A$ and $Y$ (direct cause)
 - $A$ is a **child** of $L$ (direct effect)
 - $L$ is an **ancestor** of $Y$ (can reach $Y$ by following arrows)
@@ -56,6 +59,7 @@ This diagram represents:
 **What does a DAG represent?**
 
 A DAG represents our **qualitative causal assumptions**:
+
 - The presence of an arrow $X \rightarrow Y$ means we believe $X$ has a direct causal effect on $Y$
 - The absence of an arrow $X \not\rightarrow Y$ means we believe $X$ has no direct causal effect on $Y$ (conditional on other variables in the graph)
 
@@ -70,6 +74,7 @@ A DAG represents our **qualitative causal assumptions**:
 ## Simple Causal Diagram
 
 Consider the causal relationships between:
+
 - $A$: Smoking
 - $L$: Exercise  
 - $Y$: Heart disease
@@ -83,6 +88,7 @@ L → A
 ```
 
 Interpretation:
+
 - Smoking directly causes heart disease
 - Exercise directly affects heart disease (protective)
 - Exercise affects smoking behavior (perhaps exercisers are less likely to smoke)
@@ -100,16 +106,20 @@ From a DAG, we can determine which variables are marginally independent (uncondi
 ## Marginal Independence
 
 **Diagram 1**: $A \rightarrow Y$
+
 - $A$ and $Y$ are **dependent** (associated)
 
 **Diagram 2**: $A \quad Y$ (no arrow)
+
 - $A$ and $Y$ are **independent** 
 
 **Diagram 3**: $L \rightarrow A \rightarrow Y$ (chain)
+
 - $A$ and $Y$ are **dependent**
 - $L$ and $Y$ are **dependent** (through the path $L \rightarrow A \rightarrow Y$)
 
 **Diagram 4**: $A \rightarrow Y \leftarrow L$ (fork)
+
 - $A$ and $L$ are **independent** (no common cause, no direct connection)
 - Both $A$ and $L$ are **dependent** with $Y$
 :::
@@ -152,6 +162,7 @@ There are three fundamental structures in causal diagrams:
 ## Collider Bias Example
 
 Suppose:
+
 - $A$: Natural athletic ability
 - $E$: Training effort
 - $Y$: Professional athlete (yes/no)
@@ -191,6 +202,7 @@ The **positivity assumption** requires that all levels of treatment occur at all
 $$\Pr[A = a | L = l] > 0 \quad \text{for all } a, l$$
 
 In a DAG, positivity violations can occur when:
+
 - Structural determinism: Certain values of $L$ make $A$ deterministic (e.g., if $L$ completely determines $A$)
 - Random violations: By chance, no individuals in the sample have certain $(A, L)$ combinations
 
@@ -272,6 +284,7 @@ U → L → A → Y
 ```
 
 **Backdoor paths from $A$ to $Y$**:
+
 - $A \leftarrow L \rightarrow Y$
 
 **Does $L$ satisfy the backdoor criterion?**
@@ -281,6 +294,7 @@ U → L → A → Y
 Yes! Adjusting for $L$ is sufficient to identify the causal effect.
 
 **Does $U$ satisfy the backdoor criterion?**
+
 - No. $U$ is not on the path $A \leftarrow L \rightarrow Y$, so it doesn't block the backdoor path.
 :::
 
@@ -308,6 +322,7 @@ This will be covered in detail in Chapter 8.
 ### Measurement Bias
 
 **Measurement bias** can be represented in DAGs by including nodes for both:
+
 - True (unmeasured) variables
 - Measured (error-prone) variables
 
@@ -344,6 +359,7 @@ V → Y
 A → Y
 ```
 is compatible with:
+
 - No effect modification (effect of $A$ is the same for all $V$)
 - Effect modification (effect of $A$ differs by $V$)
 
@@ -355,6 +371,7 @@ is compatible with:
 ### Confounding vs. Effect Modification
 
 A variable $V$ can be:
+
 - A **confounder**: Opens a backdoor path ($V \rightarrow A$, $V \rightarrow Y$)
 - An **effect modifier**: The effect of $A$ on $Y$ varies by $V$
 - Both
@@ -420,11 +437,13 @@ This chapter introduced **causal diagrams** (DAGs) as tools for representing and
 5. **Avoid adjusting** for colliders, mediators, or other variables that induce bias
 
 **Software**:
+
 - R package `dagitty`: Draw DAGs, find adjustment sets, test implications
 - R package `ggdag`: Visualize DAGs
 - Web app: dagitty.net
 
 **Limitations of DAGs**:
+
 - Require strong qualitative assumptions about causal structure
 - Cannot represent unmeasured confounding (unless explicitly included as a node)
 - Cannot represent dynamic feedback (cycles)
@@ -433,6 +452,7 @@ This chapter introduced **causal diagrams** (DAGs) as tools for representing and
 Despite these limitations, DAGs are invaluable for making causal assumptions explicit and selecting appropriate adjustment strategies.
 
 **Looking ahead**:
+
 - **Chapter 7**: Detailed treatment of confounding
 - **Chapter 8**: Selection bias
 - **Chapters 11-15**: Methods for adjusting for confounding (IP weighting, g-formula, propensity scores)

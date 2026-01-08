@@ -114,6 +114,7 @@ In observational studies, we try to achieve conditional exchangeability by:
 **Critical limitation**: Conditional exchangeability is an **untestable assumption**. We can never verify from data alone that we have measured and adjusted for all confounders.
 
 This is why subject-matter knowledge is essential in causal inference. We must use:
+
 - Prior research
 - Biological mechanisms  
 - Causal diagrams (introduced in Chapter 6)
@@ -160,6 +161,7 @@ We cannot estimate $E[Y^{a=1} | \text{Age} = 90]$ from the data because we have 
 3. **Practical violations**: Treatment is theoretically possible but extremely rare for certain subgroups
 
 When positivity is violated, we must either:
+
 - Restrict our causal question to the subpopulation where positivity holds
 - Make additional modeling assumptions (with their own limitations)
 - Accept that we cannot answer the original causal question with the available data
@@ -189,6 +191,7 @@ For consistency to hold, the treatment must be **well-defined**. This means we m
 ## Ill-Defined Treatment Example
 
 Consider "exercise" as a treatment. What does $A = 1$ (receives exercise) mean?
+
 - Running 3 miles?
 - Swimming for 30 minutes?
 - Walking 10,000 steps?
@@ -241,6 +244,7 @@ $$Y_i^{\mathbf{a}} = Y_i^{a_1, a_2, \ldots, a_n}$$
 where $\mathbf{a}$ is a vector of everyone's treatment assignments.
 
 Interference is common in:
+
 - Infectious disease studies (herd immunity)
 - Social network studies (peer effects)  
 - Environmental exposures (shared exposures)
@@ -255,6 +259,7 @@ Consistency also requires that the **timing** of treatment and outcome measureme
 
 ::: {.notes}
 If we ask "What is the effect of treatment on the outcome?", we must specify:
+
 - When is treatment received?
 - When is the outcome measured?
 
@@ -307,6 +312,7 @@ This framework will be revisited throughout the book, particularly in Part III w
 **Research question**: Does taking statins reduce the risk of cardiovascular disease (CVD)?
 
 **Target trial specification**:
+
 - **Eligibility**: Adults aged 40-75 with LDL cholesterol > 190 mg/dL, no history of CVD
 - **Treatment**: Daily statin (yes/no)
 - **Assignment**: Random assignment to statin or no statin
@@ -314,6 +320,7 @@ This framework will be revisited throughout the book, particularly in Part III w
 - **Estimand**: Risk difference $Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]$
 
 **Observational study emulation**:
+
 - Identify individuals meeting eligibility criteria in electronic health records
 - Compare those who initiated statins vs. those who did not
 - Adjust for baseline confounders $L$ (age, sex, blood pressure, smoking, etc.)

@@ -50,6 +50,7 @@ $$E[Y | A = 1] - E[Y | A = 0] \neq E[Y^{a=1}] - E[Y^{a=0}]$$
 (association does not equal causation)
 
 The observed association includes both:
+
 - The causal effect of $A$ on $Y$
 - The confounding bias due to the common cause $L$
 :::
@@ -57,17 +58,20 @@ The observed association includes both:
 ### Common Confounding Scenarios
 
 **Example 1: Healthy worker bias**
+
 - Healthier individuals are more likely to be employed (employed → more likely to be exposed at work)
 - Healthier individuals have better outcomes
 - Comparing employed vs. unemployed introduces confounding by health status
 
 **Example 2: Confounding by indication**
+
 - Sicker patients receive more aggressive treatment
 - Sicker patients have worse outcomes
 - Treatment appears harmful when in fact it may be beneficial
 
 ::: {.notes}
 **Confounding can go in either direction**:
+
 - **Positive confounding**: Makes treatment appear more beneficial (or more harmful) than it truly is
 - **Negative confounding**: Makes treatment appear less beneficial (or less harmful) than it truly is
 - **Zero confounding**: The magnitude depends on the strength and direction of the $L \rightarrow A$ and $L \rightarrow Y$ relationships
@@ -95,10 +99,12 @@ The treated and untreated differ with respect to their potential outcomes.
 Suppose exercise ($A$) affects heart disease ($Y$), and both are affected by age ($L$):
 
 **Without confounding**: 
+
 - Young and old people equally likely to exercise
 - $E[Y^{a=1} | A = 1] = E[Y^{a=1} | A = 0]$ (exchangeable)
 
 **With confounding**:
+
 - Younger people more likely to exercise  
 - Younger people have lower baseline risk
 - $E[Y^{a=1} | A = 1] \neq E[Y^{a=1} | A = 0]$ (not exchangeable)
@@ -131,6 +137,7 @@ The backdoor criterion (Chapter 6) provides a graphical method for identifying c
 ### Backdoor Paths and Confounding
 
 A **backdoor path** from $A$ to $Y$:
+
 - Starts with an arrow into $A$ (i.e., $\cdot \rightarrow A$)
 - Connects $A$ to $Y$ through any sequence of arrows
 
@@ -194,6 +201,7 @@ Traditionally, a variable $L$ is considered a confounder if:
 ### DAG-Based Definition
 
 From the DAG perspective, $L$ is a confounder if:
+
 - $L$ opens a backdoor path from $A$ to $Y$
 
 ::: {.notes}
@@ -238,16 +246,19 @@ L → Y_a
 ```
 
 SWIGs make explicit:
+
 - Which variables are set by intervention
 - Which variables remain as observed
 - Which counterfactual outcome we're interested in
 
 **Advantages**:
+
 - Clearer representation of counterfactuals
 - Explicit about the intervention
 - Useful for complex scenarios (time-varying treatments, mediation)
 
 **Disadvantages**:
+
 - More complex notation
 - Require more assumptions to be specified
 - Not yet as widely used as standard DAGs
@@ -275,6 +286,7 @@ Once confounders are identified, several methods can adjust for them.
 **Data**: Effect of smoking ($A$) on lung cancer ($Y$), adjusting for age ($L$)
 
 **Stratification**:
+
 - Estimate effect separately for age = 40, 50, 60, 70
 - Combine using weighted average
 
@@ -290,6 +302,7 @@ glm(Y ~ A, weights = weight, family = binomial())
 ```
 
 **Matching**:
+
 - For each smoker, find non-smoker of same age
 - Compare outcomes
 :::
@@ -298,24 +311,28 @@ glm(Y ~ A, weights = weight, family = binomial())
 **Choosing an adjustment method**:
 
 **Stratification**:
+
 - ✓ Transparent, easy to understand
 - ✓ Allows checking for effect modification
 - ✗ Limited to discrete confounders
 - ✗ Requires large sample sizes for fine strata
 
 **Regression**:
+
 - ✓ Handles continuous confounders
 - ✓ Efficient (uses all data)
 - ✗ Relies on model assumptions
 - ✗ Can obscure effect modification
 
 **IP weighting**:
+
 - ✓ Flexible, can handle complex confounding
 - ✓ Estimates marginal (population-average) effects
 - ✗ Can be unstable with extreme weights
 - ✗ More complex to implement
 
 **Matching**:
+
 - ✓ Intuitive, creates comparable groups
 - ✗ Discards unmatched data
 - ✗ Largely superseded by other methods
@@ -367,6 +384,7 @@ This chapter provided a detailed examination of **confounding**.
 **Limitations**:
 
 Even with perfect adjustment for measured confounders, bias can remain if:
+
 - Important confounders are unmeasured (Chapter 19 covers sensitivity analysis)
 - Confounders are measured with error (Chapter 9)
 - Adjustment methods are applied incorrectly
@@ -375,6 +393,7 @@ Even with perfect adjustment for measured confounders, bias can remain if:
 Confounding control is necessary but not sufficient for valid causal inference.
 
 **Looking ahead**:
+
 - **Chapter 8**: Selection bias
 - **Chapter 9**: Measurement bias
 - **Chapters 12-15**: Advanced methods for confounding adjustment
