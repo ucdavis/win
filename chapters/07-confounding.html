@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chapter 7: Confounding – What If? - Lecture Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-68c8bffd90dad8f2b55c52d7b6410dc0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68c8bffd90dad8f2b55c52d7b6410dc0.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-68c8bffd90dad8f2b55c52d7b6410dc0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-26500bfc55c7891837a911d6d50a6255.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-0358071c7a347cfe579aff309456bf3c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-26500bfc55c7891837a911d6d50a6255.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">What If? - Lecture Notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-chapters" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Chapters</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-chapters">    
+        <li>
+    <a class="dropdown-item" href="../chapters/01-introduction.html">
+ <span class="dropdown-text">Chapter 1: Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/02-randomized-experiments.html">
+ <span class="dropdown-text">Chapter 2: Randomized Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/03-observational-studies.html">
+ <span class="dropdown-text">Chapter 3: Observational Studies</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/04-effect-modification.html">
+ <span class="dropdown-text">Chapter 4: Effect Modification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/05-interaction.html">
+ <span class="dropdown-text">Chapter 5: Interaction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/06-graphical-representation.html">
+ <span class="dropdown-text">Chapter 6: Graphical Representation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/07-confounding.html">
+ <span class="dropdown-text">Chapter 7: Confounding</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-structure-of-confounding-pp.-77-80" id="toc-the-structure-of-confounding-pp.-77-80" class="nav-link active" data-scroll-target="#the-structure-of-confounding-pp.-77-80"><span class="header-section-number">1</span> 7.1 The Structure of Confounding (pp.&nbsp;77-80)</a>
+  <ul class="collapse">
+  <li><a href="#common-confounding-scenarios" id="toc-common-confounding-scenarios" class="nav-link" data-scroll-target="#common-confounding-scenarios"><span class="header-section-number">1.1</span> Common Confounding Scenarios</a></li>
+  </ul></li>
+  <li><a href="#confounding-and-exchangeability-pp.-80-82" id="toc-confounding-and-exchangeability-pp.-80-82" class="nav-link" data-scroll-target="#confounding-and-exchangeability-pp.-80-82"><span class="header-section-number">2</span> 7.2 Confounding and Exchangeability (pp.&nbsp;80-82)</a>
+  <ul class="collapse">
+  <li><a href="#no-confounding-exchangeability" id="toc-no-confounding-exchangeability" class="nav-link" data-scroll-target="#no-confounding-exchangeability"><span class="header-section-number">2.1</span> No Confounding = Exchangeability</a></li>
+  <li><a href="#conditional-exchangeability" id="toc-conditional-exchangeability" class="nav-link" data-scroll-target="#conditional-exchangeability"><span class="header-section-number">2.2</span> Conditional Exchangeability</a></li>
+  </ul></li>
+  <li><a href="#confounding-and-the-backdoor-criterion-pp.-82-85" id="toc-confounding-and-the-backdoor-criterion-pp.-82-85" class="nav-link" data-scroll-target="#confounding-and-the-backdoor-criterion-pp.-82-85"><span class="header-section-number">3</span> 7.3 Confounding and the Backdoor Criterion (pp.&nbsp;82-85)</a>
+  <ul class="collapse">
+  <li><a href="#backdoor-paths-and-confounding" id="toc-backdoor-paths-and-confounding" class="nav-link" data-scroll-target="#backdoor-paths-and-confounding"><span class="header-section-number">3.1</span> Backdoor Paths and Confounding</a></li>
+  </ul></li>
+  <li><a href="#confounding-and-confounders-pp.-85-87" id="toc-confounding-and-confounders-pp.-85-87" class="nav-link" data-scroll-target="#confounding-and-confounders-pp.-85-87"><span class="header-section-number">4</span> 7.4 Confounding and Confounders (pp.&nbsp;85-87)</a>
+  <ul class="collapse">
+  <li><a href="#traditional-confounder-definition" id="toc-traditional-confounder-definition" class="nav-link" data-scroll-target="#traditional-confounder-definition"><span class="header-section-number">4.1</span> Traditional Confounder Definition</a></li>
+  <li><a href="#dag-based-definition" id="toc-dag-based-definition" class="nav-link" data-scroll-target="#dag-based-definition"><span class="header-section-number">4.2</span> DAG-Based Definition</a></li>
+  </ul></li>
+  <li><a href="#single-world-intervention-graphs-pp.-87-89" id="toc-single-world-intervention-graphs-pp.-87-89" class="nav-link" data-scroll-target="#single-world-intervention-graphs-pp.-87-89"><span class="header-section-number">5</span> 7.5 Single-World Intervention Graphs (pp.&nbsp;87-89)</a>
+  <ul class="collapse">
+  <li><a href="#swigs-vs.-dags" id="toc-swigs-vs.-dags" class="nav-link" data-scroll-target="#swigs-vs.-dags"><span class="header-section-number">5.1</span> SWIGs vs.&nbsp;DAGs</a></li>
+  </ul></li>
+  <li><a href="#confounding-adjustment-pp.-89-92" id="toc-confounding-adjustment-pp.-89-92" class="nav-link" data-scroll-target="#confounding-adjustment-pp.-89-92"><span class="header-section-number">6</span> 7.6 Confounding Adjustment (pp.&nbsp;89-92)</a>
+  <ul class="collapse">
+  <li><a href="#methods-for-confounding-adjustment" id="toc-methods-for-confounding-adjustment" class="nav-link" data-scroll-target="#methods-for-confounding-adjustment"><span class="header-section-number">6.1</span> Methods for Confounding Adjustment</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7</span> Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">8</span> References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ucdavis/win/edit/main/chapters/07-confounding.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ucdavis/win/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/ucdavis/win/blob/main/chapters/07-confounding.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="07-confounding-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="07-confounding-handout.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="07-confounding.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Chapter 7: Confounding</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Last modified: 2026-01-08 19:16:26 (UTC)</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In Chapter 3, we introduced exchangeability as a key identifiability condition. In Chapter 6, we learned to represent causal relationships using DAGs and introduced the backdoor criterion for identifying confounding. This chapter provides a detailed examination of <strong>confounding</strong>—the most common threat to validity in observational studies.</p>
+<div class="notes">
+<p>This chapter is based on <span class="citation" data-cites="hernan2020causal">Hernán and Robins (<a href="#ref-hernan2020causal" role="doc-biblioref">2020, chap. 7</a>, pp.&nbsp;77-92)</span>.</p>
+</div>
+<section id="the-structure-of-confounding-pp.-77-80" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="the-structure-of-confounding-pp.-77-80"><span class="header-section-number">1</span> 7.1 The Structure of Confounding (pp.&nbsp;77-80)</h2>
+<p>Confounding occurs when a common cause of treatment and outcome creates a non-causal association between them.</p>
+<div id="def-confounding-structure" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Confounding Structure)</strong></span> A variable <span class="math inline">\(L\)</span> is a <strong>confounder</strong> of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if:</p>
+<ol type="1">
+<li><span class="math inline">\(L\)</span> causes <span class="math inline">\(A\)</span> (or shares a common cause with <span class="math inline">\(A\)</span>)</li>
+<li><span class="math inline">\(L\)</span> causes <span class="math inline">\(Y\)</span> (or shares a common cause with <span class="math inline">\(Y\)</span>)</li>
+<li><span class="math inline">\(L\)</span> is not affected by <span class="math inline">\(A\)</span> (not a consequence of treatment)</li>
+</ol>
+</div>
+<p><strong>Causal diagram representation</strong>:</p>
+<pre><code>L → A → Y
+L → Y</code></pre>
+<p>The path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> is a <strong>backdoor path</strong> that creates non-causal association.</p>
+<div class="notes">
+<p><strong>Why confounding creates bias</strong>:</p>
+<p>Without confounding: <span class="math display">\[E[Y | A = 1] - E[Y | A = 0] = E[Y^{a=1}] - E[Y^{a=0}]\]</span> (association equals causation)</p>
+<p>With confounding: <span class="math display">\[E[Y | A = 1] - E[Y | A = 0] \neq E[Y^{a=1}] - E[Y^{a=0}]\]</span> (association does not equal causation)</p>
+<p>The observed association includes both:</p>
+<ul>
+<li>The causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span></li>
+<li>The confounding bias due to the common cause <span class="math inline">\(L\)</span></li>
+</ul>
+</div>
+<section id="common-confounding-scenarios" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="common-confounding-scenarios"><span class="header-section-number">1.1</span> Common Confounding Scenarios</h3>
+<p><strong>Example 1: Healthy worker bias</strong></p>
+<ul>
+<li>Healthier individuals are more likely to be employed (employed → more likely to be exposed at work)</li>
+<li>Healthier individuals have better outcomes</li>
+<li>Comparing employed vs.&nbsp;unemployed introduces confounding by health status</li>
+</ul>
+<p><strong>Example 2: Confounding by indication</strong></p>
+<ul>
+<li>Sicker patients receive more aggressive treatment</li>
+<li>Sicker patients have worse outcomes</li>
+<li>Treatment appears harmful when in fact it may be beneficial</li>
+</ul>
+<div class="notes">
+<p><strong>Confounding can go in either direction</strong>:</p>
+<ul>
+<li><strong>Positive confounding</strong>: Makes treatment appear more beneficial (or more harmful) than it truly is</li>
+<li><strong>Negative confounding</strong>: Makes treatment appear less beneficial (or less harmful) than it truly is</li>
+<li><strong>Zero confounding</strong>: The magnitude depends on the strength and direction of the <span class="math inline">\(L \rightarrow A\)</span> and <span class="math inline">\(L \rightarrow Y\)</span> relationships</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="confounding-and-exchangeability-pp.-80-82" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="confounding-and-exchangeability-pp.-80-82"><span class="header-section-number">2</span> 7.2 Confounding and Exchangeability (pp.&nbsp;80-82)</h2>
+<p>Confounding is equivalent to lack of (conditional) exchangeability.</p>
+<section id="no-confounding-exchangeability" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="no-confounding-exchangeability"><span class="header-section-number">2.1</span> No Confounding = Exchangeability</h3>
+<p><strong>No confounding</strong> means: <span class="math display">\[Y^a \perp\!\!\!\perp A \quad \text{for all } a\]</span></p>
+<p>This is <strong>marginal exchangeability</strong>: the counterfactual outcomes are independent of treatment.</p>
+<p><strong>Confounding</strong> means exchangeability does not hold: <span class="math display">\[Y^a \not\perp\!\!\!\perp A\]</span></p>
+<p>The treated and untreated differ with respect to their potential outcomes.</p>
+<div id="exm-confounding-exchangeability" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Confounding and Exchangeability)</strong></span> Suppose exercise (<span class="math inline">\(A\)</span>) affects heart disease (<span class="math inline">\(Y\)</span>), and both are affected by age (<span class="math inline">\(L\)</span>):</p>
+<p><strong>Without confounding</strong>:</p>
+<ul>
+<li>Young and old people equally likely to exercise</li>
+<li><span class="math inline">\(E[Y^{a=1} | A = 1] = E[Y^{a=1} | A = 0]\)</span> (exchangeable)</li>
+</ul>
+<p><strong>With confounding</strong>:</p>
+<ul>
+<li>Younger people more likely to exercise<br>
+</li>
+<li>Younger people have lower baseline risk</li>
+<li><span class="math inline">\(E[Y^{a=1} | A = 1] \neq E[Y^{a=1} | A = 0]\)</span> (not exchangeable)</li>
+<li>Those who exercise would have had better outcomes even without exercising</li>
+</ul>
+</div>
+</section>
+<section id="conditional-exchangeability" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="conditional-exchangeability"><span class="header-section-number">2.2</span> Conditional Exchangeability</h3>
+<p>Even when marginal exchangeability fails, we may achieve <strong>conditional exchangeability</strong> by adjusting for confounders:</p>
+<p><span class="math display">\[Y^a \perp\!\!\!\perp A \mid L \quad \text{for all } a\]</span></p>
+<p>Within levels of <span class="math inline">\(L\)</span>, the treated and untreated are exchangeable.</p>
+<div class="notes">
+<p><strong>Key insight</strong>: Confounding can be eliminated by conditioning on (adjusting for) the confounders.</p>
+<p><strong>Requirements</strong>: 1. We must <strong>identify</strong> all confounders based on subject-matter knowledge 2. We must <strong>measure</strong> them accurately 3. We must <strong>adjust</strong> for them appropriately in analysis</p>
+<p>If these requirements are met, we can estimate causal effects from observational data.</p>
+</div>
+</section>
+</section>
+<section id="confounding-and-the-backdoor-criterion-pp.-82-85" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="confounding-and-the-backdoor-criterion-pp.-82-85"><span class="header-section-number">3</span> 7.3 Confounding and the Backdoor Criterion (pp.&nbsp;82-85)</h2>
+<p>The backdoor criterion (Chapter 6) provides a graphical method for identifying confounding.</p>
+<section id="backdoor-paths-and-confounding" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="backdoor-paths-and-confounding"><span class="header-section-number">3.1</span> Backdoor Paths and Confounding</h3>
+<p>A <strong>backdoor path</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>:</p>
+<ul>
+<li>Starts with an arrow into <span class="math inline">\(A\)</span> (i.e., <span class="math inline">\(\cdot \rightarrow A\)</span>)</li>
+<li>Connects <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> through any sequence of arrows</li>
+</ul>
+<p><strong>Confounding exists if backdoor paths are open (unblocked)</strong>.</p>
+<div id="exm-backdoor-confounding" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (Identifying Confounders with the Backdoor Criterion)</strong></span> <strong>Diagram 1</strong>:</p>
+<pre><code>L → A → Y
+L → Y</code></pre>
+<p><strong>Backdoor path</strong>: <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> <strong>Confounders</strong>: <span class="math inline">\(L\)</span> <strong>Solution</strong>: Adjust for <span class="math inline">\(L\)</span></p>
+<p><strong>Diagram 2</strong>:</p>
+<pre><code>U → L → A → Y
+      L → Y</code></pre>
+<p><strong>Backdoor paths</strong>: <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span>, <span class="math inline">\(A \leftarrow L \leftarrow U \rightarrow Y\)</span> (if U causes Y) <strong>Confounders</strong>: <span class="math inline">\(L\)</span> (and <span class="math inline">\(U\)</span> if it affects <span class="math inline">\(Y\)</span>) <strong>Solution</strong>: Adjust for <span class="math inline">\(L\)</span> (and <span class="math inline">\(U\)</span> if measured)</p>
+<p><strong>Diagram 3</strong>:</p>
+<pre><code>A → M → Y
+L → A
+L → Y</code></pre>
+<p><strong>Backdoor path</strong>: <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> <strong>Confounders</strong>: <span class="math inline">\(L\)</span> <strong>Do NOT adjust for <span class="math inline">\(M\)</span></strong>: <span class="math inline">\(M\)</span> is a mediator (on the causal path), not a confounder</p>
+</div>
+<div class="notes">
+<p><strong>Common mistakes</strong>:</p>
+<ol type="1">
+<li><p><strong>Adjusting for mediators</strong>: Variables on the causal path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> should NOT be adjusted for, as this blocks the causal effect we’re trying to estimate</p></li>
+<li><p><strong>Adjusting for colliders</strong>: Variables caused by both <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> should NOT be adjusted for, as this induces bias</p></li>
+<li><p><strong>Failing to adjust for all confounders</strong>: If even one confounder is unmeasured or unadjusted, bias remains</p></li>
+<li><p><strong>Overadjustment</strong>: Including unnecessary variables (especially descendants of treatment) can introduce bias</p></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="confounding-and-confounders-pp.-85-87" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="confounding-and-confounders-pp.-85-87"><span class="header-section-number">4</span> 7.4 Confounding and Confounders (pp.&nbsp;85-87)</h2>
+<p>The traditional definition of “confounder” in epidemiology differs slightly from the causal DAG perspective.</p>
+<section id="traditional-confounder-definition" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="traditional-confounder-definition"><span class="header-section-number">4.1</span> Traditional Confounder Definition</h3>
+<p>Traditionally, a variable <span class="math inline">\(L\)</span> is considered a confounder if: 1. <span class="math inline">\(L\)</span> is associated with treatment <span class="math inline">\(A\)</span> 2. <span class="math inline">\(L\)</span> is associated with outcome <span class="math inline">\(Y\)</span> (among the untreated) 3. <span class="math inline">\(L\)</span> is not affected by treatment <span class="math inline">\(A\)</span></p>
+</section>
+<section id="dag-based-definition" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="dag-based-definition"><span class="header-section-number">4.2</span> DAG-Based Definition</h3>
+<p>From the DAG perspective, <span class="math inline">\(L\)</span> is a confounder if:</p>
+<ul>
+<li><span class="math inline">\(L\)</span> opens a backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></li>
+</ul>
+<div class="notes">
+<p><strong>Differences</strong>:</p>
+<p>The traditional definition is based on <strong>associations</strong> (statistical relationships). The DAG definition is based on <strong>causal structure</strong> (graphical relationships).</p>
+<p><strong>Why this matters</strong>:</p>
+<ol type="1">
+<li><strong>A variable can be associated with both <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> without being a confounder</strong>
+<ul>
+<li>Example: A collider caused by both <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span></li>
+<li>Adjusting for it would induce bias, not remove it</li>
+</ul></li>
+<li><strong>A variable can be a confounder without being associated with both <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> in the data</strong>
+<ul>
+<li>Example: A confounder whose effects cancel out, leaving no association</li>
+<li>Failing to adjust for it would leave bias</li>
+</ul></li>
+</ol>
+<p><strong>Best practice</strong>: Use DAGs to identify confounders based on causal structure, not associations alone.</p>
+</div>
+</section>
+</section>
+<section id="single-world-intervention-graphs-pp.-87-89" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="single-world-intervention-graphs-pp.-87-89"><span class="header-section-number">5</span> 7.5 Single-World Intervention Graphs (pp.&nbsp;87-89)</h2>
+<p>Single-World Intervention Graphs (SWIGs) are an extension of DAGs that explicitly represent interventions and counterfactual outcomes.</p>
+<section id="swigs-vs.-dags" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="swigs-vs.-dags"><span class="header-section-number">5.1</span> SWIGs vs.&nbsp;DAGs</h3>
+<ul>
+<li><strong>Standard DAGs</strong>: Represent relationships among observed variables</li>
+<li><strong>SWIGs</strong>: Represent relationships among counterfactual variables under specified interventions</li>
+</ul>
+<div class="notes">
+<p><strong>SWIG notation</strong>:</p>
+<ul>
+<li><span class="math inline">\(Y_a\)</span>: Counterfactual outcome under intervention <span class="math inline">\(do(A = a)\)</span></li>
+<li><span class="math inline">\(A_a\)</span>: Treatment value set to <span class="math inline">\(a\)</span> by intervention</li>
+<li>Edges represent causal effects in the counterfactual world where <span class="math inline">\(A = a\)</span></li>
+</ul>
+<p><strong>Example SWIG</strong>: For the causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> with confounder <span class="math inline">\(L\)</span>:</p>
+<pre><code>L → A_a → Y_a
+L → Y_a</code></pre>
+<p>SWIGs make explicit:</p>
+<ul>
+<li>Which variables are set by intervention</li>
+<li>Which variables remain as observed</li>
+<li>Which counterfactual outcome we’re interested in</li>
+</ul>
+<p><strong>Advantages</strong>:</p>
+<ul>
+<li>Clearer representation of counterfactuals</li>
+<li>Explicit about the intervention</li>
+<li>Useful for complex scenarios (time-varying treatments, mediation)</li>
+</ul>
+<p><strong>Disadvantages</strong>:</p>
+<ul>
+<li>More complex notation</li>
+<li>Require more assumptions to be specified</li>
+<li>Not yet as widely used as standard DAGs</li>
+</ul>
+<p>For most purposes in this book, standard DAGs suffice. SWIGs are mentioned for completeness and for readers interested in advanced topics.</p>
+</div>
+</section>
+</section>
+<section id="confounding-adjustment-pp.-89-92" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="confounding-adjustment-pp.-89-92"><span class="header-section-number">6</span> 7.6 Confounding Adjustment (pp.&nbsp;89-92)</h2>
+<p>Once confounders are identified, several methods can adjust for them.</p>
+<section id="methods-for-confounding-adjustment" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="methods-for-confounding-adjustment"><span class="header-section-number">6.1</span> Methods for Confounding Adjustment</h3>
+<ol type="1">
+<li><p><strong>Stratification</strong>: Estimate effects within strata of <span class="math inline">\(L\)</span>, then combine (standardization)</p></li>
+<li><p><strong>Regression adjustment</strong>: Include <span class="math inline">\(L\)</span> as covariates in a regression model</p></li>
+<li><p><strong>Inverse probability weighting</strong>: Weight by <span class="math inline">\(1/Pr[A | L]\)</span> to create a pseudo-population where <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span> are independent (Chapter 12)</p></li>
+<li><p><strong>Matching</strong>: Match treated and untreated individuals on <span class="math inline">\(L\)</span></p></li>
+</ol>
+<div id="exm-adjustment-methods" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3 (Comparing Adjustment Methods)</strong></span> <strong>Data</strong>: Effect of smoking (<span class="math inline">\(A\)</span>) on lung cancer (<span class="math inline">\(Y\)</span>), adjusting for age (<span class="math inline">\(L\)</span>)</p>
+<p><strong>Stratification</strong>:</p>
+<ul>
+<li>Estimate effect separately for age = 40, 50, 60, 70</li>
+<li>Combine using weighted average</li>
+</ul>
+<p><strong>Regression</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(Y <span class="sc">~</span> A <span class="sc">+</span> L, <span class="at">family =</span> <span class="fu">binomial</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>IP weighting</strong> (Chapter 12):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>weight <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">predict</span>(<span class="fu">glm</span>(A <span class="sc">~</span> L, <span class="at">family =</span> <span class="fu">binomial</span>()), <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(Y <span class="sc">~</span> A, <span class="at">weights =</span> weight, <span class="at">family =</span> <span class="fu">binomial</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Matching</strong>:</p>
+<ul>
+<li>For each smoker, find non-smoker of same age</li>
+<li>Compare outcomes</li>
+</ul>
+</div>
+<div class="notes">
+<p><strong>Choosing an adjustment method</strong>:</p>
+<p><strong>Stratification</strong>:</p>
+<ul>
+<li>✓ Transparent, easy to understand</li>
+<li>✓ Allows checking for effect modification</li>
+<li>✗ Limited to discrete confounders</li>
+<li>✗ Requires large sample sizes for fine strata</li>
+</ul>
+<p><strong>Regression</strong>:</p>
+<ul>
+<li>✓ Handles continuous confounders</li>
+<li>✓ Efficient (uses all data)</li>
+<li>✗ Relies on model assumptions</li>
+<li>✗ Can obscure effect modification</li>
+</ul>
+<p><strong>IP weighting</strong>:</p>
+<ul>
+<li>✓ Flexible, can handle complex confounding</li>
+<li>✓ Estimates marginal (population-average) effects</li>
+<li>✗ Can be unstable with extreme weights</li>
+<li>✗ More complex to implement</li>
+</ul>
+<p><strong>Matching</strong>:</p>
+<ul>
+<li>✓ Intuitive, creates comparable groups</li>
+<li>✗ Discards unmatched data</li>
+<li>✗ Largely superseded by other methods</li>
+</ul>
+<p><strong>Modern recommendation</strong>: Use IP weighting or doubly robust methods (combine regression and weighting) for flexibility and robustness.</p>
+</div>
+</section>
+</section>
+<section id="summary" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="summary"><span class="header-section-number">7</span> Summary</h2>
+<p>This chapter provided a detailed examination of <strong>confounding</strong>.</p>
+<p><strong>Key concepts</strong>:</p>
+<ol type="1">
+<li><p><strong>Confounding structure</strong>: Common causes of treatment and outcome create backdoor paths</p></li>
+<li><p><strong>Exchangeability</strong>: Confounding = lack of exchangeability; conditional exchangeability can be achieved by adjusting for confounders</p></li>
+<li><p><strong>Backdoor criterion</strong>: Provides a graphical method to identify which variables to adjust for</p></li>
+<li><p><strong>DAG vs.&nbsp;traditional definitions</strong>: DAG-based confounding identification is preferred over association-based criteria</p></li>
+<li><p><strong>Adjustment methods</strong>: Stratification, regression, IP weighting, and matching can all adjust for confounding</p></li>
+<li><p><strong>Critical assumptions</strong>:</p>
+<ul>
+<li>All confounders must be identified (no unmeasured confounding)</li>
+<li>All confounders must be measured accurately</li>
+<li>Adjustment must be done correctly</li>
+</ul></li>
+</ol>
+<div class="notes">
+<p><strong>Practical guidelines for dealing with confounding</strong>:</p>
+<ol type="1">
+<li><p><strong>Draw a DAG</strong> based on subject-matter knowledge before analyzing data</p></li>
+<li><p><strong>Identify confounders</strong> using the backdoor criterion</p></li>
+<li><p><strong>Measure confounders</strong> as accurately as possible</p></li>
+<li><p><strong>Choose an adjustment method</strong> appropriate for your data and confounders</p></li>
+<li><p><strong>Check assumptions</strong>:</p>
+<ul>
+<li>Positivity: Do all <span class="math inline">\((A, L)\)</span> combinations occur?</li>
+<li>Model fit: Are regression model assumptions met?</li>
+<li>Balance: After adjustment, are confounders balanced?</li>
+</ul></li>
+<li><p><strong>Conduct sensitivity analyses</strong>: How robust are findings to unmeasured confounding?</p></li>
+<li><p><strong>Be transparent</strong>: Report the DAG, adjustment set, and method clearly</p></li>
+</ol>
+<p><strong>Limitations</strong>:</p>
+<p>Even with perfect adjustment for measured confounders, bias can remain if:</p>
+<ul>
+<li>Important confounders are unmeasured (Chapter 19 covers sensitivity analysis)</li>
+<li>Confounders are measured with error (Chapter 9)</li>
+<li>Adjustment methods are applied incorrectly</li>
+<li>Positivity is violated</li>
+</ul>
+<p>Confounding control is necessary but not sufficient for valid causal inference.</p>
+<p><strong>Looking ahead</strong>:</p>
+<ul>
+<li><strong>Chapter 8</strong>: Selection bias</li>
+<li><strong>Chapter 9</strong>: Measurement bias</li>
+<li><strong>Chapters 12-15</strong>: Advanced methods for confounding adjustment</li>
+</ul>
+</div>
+</section>
+<section id="references" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="references"><span class="header-section-number">8</span> References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-hernan2020causal" class="csl-entry" role="listitem">
+Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>. Boca Raton: Chapman &amp; Hall/CRC.
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ucdavis\.github\.io\/win\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Chapter 7: Confounding"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html: default</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">  revealjs:</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: 07-confounding-slides.html</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf:</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: 07-confounding-handout.pdf</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">  docx:</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: 07-confounding.docx</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>In Chapter 3, we introduced exchangeability as a key identifiability condition. In Chapter 6, we learned to represent causal relationships using DAGs and introduced the backdoor criterion for identifying confounding. This chapter provides a detailed examination of **confounding**—the most common threat to validity in observational studies.</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>This chapter is based on @hernan2020causal <span class="co">[</span><span class="ot">Chapter 7, pp. 77-92</span><span class="co">]</span>.</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7.1 The Structure of Confounding (pp. 77-80)</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>Confounding occurs when a common cause of treatment and outcome creates a non-causal association between them.</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>::: {#def-confounding-structure}</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Confounding Structure</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>A variable $L$ is a **confounder** of the effect of $A$ on $Y$ if:</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>$L$ causes $A$ (or shares a common cause with $A$)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>$L$ causes $Y$ (or shares a common cause with $Y$)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>$L$ is not affected by $A$ (not a consequence of treatment)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>**Causal diagram representation**:</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="in">L → A → Y</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="in">L → Y</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>The path $A \leftarrow L \rightarrow Y$ is a **backdoor path** that creates non-causal association.</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>**Why confounding creates bias**:</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>Without confounding:</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y | A = 1</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y | A = 0</span><span class="co">]</span> = E<span class="co">[</span><span class="ot">Y^{a=1}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=0}</span><span class="co">]</span>$$</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>(association equals causation)</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>With confounding:</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y | A = 1</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y | A = 0</span><span class="co">]</span> \neq E<span class="co">[</span><span class="ot">Y^{a=1}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=0}</span><span class="co">]</span>$$</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>(association does not equal causation)</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>The observed association includes both:</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The causal effect of $A$ on $Y$</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The confounding bias due to the common cause $L$</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="fu">### Common Confounding Scenarios</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>**Example 1: Healthy worker bias**</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Healthier individuals are more likely to be employed (employed → more likely to be exposed at work)</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Healthier individuals have better outcomes</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comparing employed vs. unemployed introduces confounding by health status</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>**Example 2: Confounding by indication**</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sicker patients receive more aggressive treatment</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sicker patients have worse outcomes</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Treatment appears harmful when in fact it may be beneficial</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>**Confounding can go in either direction**:</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Positive confounding**: Makes treatment appear more beneficial (or more harmful) than it truly is</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Negative confounding**: Makes treatment appear less beneficial (or less harmful) than it truly is</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Zero confounding**: The magnitude depends on the strength and direction of the $L \rightarrow A$ and $L \rightarrow Y$ relationships</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7.2 Confounding and Exchangeability (pp. 80-82)</span></span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>Confounding is equivalent to lack of (conditional) exchangeability.</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="fu">### No Confounding = Exchangeability</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>**No confounding** means:</span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>$$Y^a \perp<span class="sc">\!\!\!</span>\perp A \quad \text{for all } a$$</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>This is **marginal exchangeability**: the counterfactual outcomes are independent of treatment.</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>**Confounding** means exchangeability does not hold:</span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>$$Y^a \not\perp<span class="sc">\!\!\!</span>\perp A$$</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>The treated and untreated differ with respect to their potential outcomes.</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>::: {#exm-confounding-exchangeability}</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Confounding and Exchangeability</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>Suppose exercise ($A$) affects heart disease ($Y$), and both are affected by age ($L$):</span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>**Without confounding**: </span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Young and old people equally likely to exercise</span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$E<span class="co">[</span><span class="ot">Y^{a=1} | A = 1</span><span class="co">]</span> = E<span class="co">[</span><span class="ot">Y^{a=1} | A = 0</span><span class="co">]</span>$ (exchangeable)</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>**With confounding**:</span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Younger people more likely to exercise  </span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Younger people have lower baseline risk</span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$E<span class="co">[</span><span class="ot">Y^{a=1} | A = 1</span><span class="co">]</span> \neq E<span class="co">[</span><span class="ot">Y^{a=1} | A = 0</span><span class="co">]</span>$ (not exchangeable)</span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Those who exercise would have had better outcomes even without exercising</span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="fu">### Conditional Exchangeability</span></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>Even when marginal exchangeability fails, we may achieve **conditional exchangeability** by adjusting for confounders:</span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>$$Y^a \perp<span class="sc">\!\!\!</span>\perp A \mid L \quad \text{for all } a$$</span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>Within levels of $L$, the treated and untreated are exchangeable.</span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>**Key insight**: Confounding can be eliminated by conditioning on (adjusting for) the confounders.</span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>**Requirements**:</span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>We must **identify** all confounders based on subject-matter knowledge</span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>We must **measure** them accurately</span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>We must **adjust** for them appropriately in analysis</span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>If these requirements are met, we can estimate causal effects from observational data.</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7.3 Confounding and the Backdoor Criterion (pp. 82-85)</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>The backdoor criterion (Chapter 6) provides a graphical method for identifying confounding.</span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="fu">### Backdoor Paths and Confounding</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>A **backdoor path** from $A$ to $Y$:</span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Starts with an arrow into $A$ (i.e., $\cdot \rightarrow A$)</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Connects $A$ to $Y$ through any sequence of arrows</span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a>**Confounding exists if backdoor paths are open (unblocked)**.</span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>::: {#exm-backdoor-confounding}</span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="fu">## Identifying Confounders with the Backdoor Criterion</span></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>**Diagram 1**:</span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="in">L → A → Y</span></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="in">L → Y</span></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>**Backdoor path**: $A \leftarrow L \rightarrow Y$</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>**Confounders**: $L$</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>**Solution**: Adjust for $L$</span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>**Diagram 2**:</span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a><span class="in">U → L → A → Y</span></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="in">      L → Y</span></span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>**Backdoor paths**: $A \leftarrow L \rightarrow Y$, $A \leftarrow L \leftarrow U \rightarrow Y$ (if U causes Y)</span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>**Confounders**: $L$ (and $U$ if it affects $Y$)</span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>**Solution**: Adjust for $L$ (and $U$ if measured)</span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>**Diagram 3**:</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a><span class="in">A → M → Y</span></span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a><span class="in">L → A</span></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a><span class="in">L → Y</span></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>**Backdoor path**: $A \leftarrow L \rightarrow Y$</span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>**Confounders**: $L$</span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>**Do NOT adjust for $M$**: $M$ is a mediator (on the causal path), not a confounder</span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>**Common mistakes**:</span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Adjusting for mediators**: Variables on the causal path from $A$ to $Y$ should NOT be adjusted for, as this blocks the causal effect we're trying to estimate</span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Adjusting for colliders**: Variables caused by both $A$ and $Y$ should NOT be adjusted for, as this induces bias</span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Failing to adjust for all confounders**: If even one confounder is unmeasured or unadjusted, bias remains</span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Overadjustment**: Including unnecessary variables (especially descendants of treatment) can introduce bias</span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7.4 Confounding and Confounders (pp. 85-87)</span></span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>The traditional definition of "confounder" in epidemiology differs slightly from the causal DAG perspective.</span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a><span class="fu">### Traditional Confounder Definition</span></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a>Traditionally, a variable $L$ is considered a confounder if:</span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>$L$ is associated with treatment $A$</span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>$L$ is associated with outcome $Y$ (among the untreated)</span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>$L$ is not affected by treatment $A$</span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### DAG-Based Definition</span></span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>From the DAG perspective, $L$ is a confounder if:</span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$L$ opens a backdoor path from $A$ to $Y$</span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a>**Differences**:</span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>The traditional definition is based on **associations** (statistical relationships).</span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>The DAG definition is based on **causal structure** (graphical relationships).</span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a>**Why this matters**:</span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**A variable can be associated with both $A$ and $Y$ without being a confounder**</span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Example: A collider caused by both $A$ and $Y$</span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Adjusting for it would induce bias, not remove it</span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**A variable can be a confounder without being associated with both $A$ and $Y$ in the data**</span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Example: A confounder whose effects cancel out, leaving no association</span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Failing to adjust for it would leave bias</span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a>**Best practice**: Use DAGs to identify confounders based on causal structure, not associations alone.</span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7.5 Single-World Intervention Graphs (pp. 87-89)</span></span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>Single-World Intervention Graphs (SWIGs) are an extension of DAGs that explicitly represent interventions and counterfactual outcomes.</span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### SWIGs vs. DAGs</span></span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Standard DAGs**: Represent relationships among observed variables</span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**SWIGs**: Represent relationships among counterfactual variables under specified interventions</span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a>**SWIG notation**:</span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y_a$: Counterfactual outcome under intervention $do(A = a)$</span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$A_a$: Treatment value set to $a$ by intervention</span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Edges represent causal effects in the counterfactual world where $A = a$</span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>**Example SWIG**: For the causal effect of $A$ on $Y$ with confounder $L$:</span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a><span class="in">L → A_a → Y_a</span></span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a><span class="in">L → Y_a</span></span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>SWIGs make explicit:</span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Which variables are set by intervention</span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Which variables remain as observed</span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Which counterfactual outcome we're interested in</span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>**Advantages**:</span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Clearer representation of counterfactuals</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Explicit about the intervention</span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Useful for complex scenarios (time-varying treatments, mediation)</span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>**Disadvantages**:</span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>More complex notation</span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Require more assumptions to be specified</span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Not yet as widely used as standard DAGs</span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>For most purposes in this book, standard DAGs suffice. SWIGs are mentioned for completeness and for readers interested in advanced topics.</span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7.6 Confounding Adjustment (pp. 89-92)</span></span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a>Once confounders are identified, several methods can adjust for them.</span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="fu">### Methods for Confounding Adjustment</span></span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Stratification**: Estimate effects within strata of $L$, then combine (standardization)</span>
+<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Regression adjustment**: Include $L$ as covariates in a regression model</span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Inverse probability weighting**: Weight by $1/Pr<span class="co">[</span><span class="ot">A | L</span><span class="co">]</span>$ to create a pseudo-population where $A$ and $L$ are independent (Chapter 12)</span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Matching**: Match treated and untreated individuals on $L$</span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a>::: {#exm-adjustment-methods}</span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing Adjustment Methods</span></span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a>**Data**: Effect of smoking ($A$) on lung cancer ($Y$), adjusting for age ($L$)</span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a>**Stratification**:</span>
+<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Estimate effect separately for age = 40, 50, 60, 70</span>
+<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Combine using weighted average</span>
+<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a>**Regression**:</span>
+<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(Y <span class="sc">~</span> A <span class="sc">+</span> L, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a>**IP weighting** (Chapter 12):</span>
+<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a>weight <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">predict</span>(<span class="fu">glm</span>(A <span class="sc">~</span> L, <span class="at">family =</span> <span class="fu">binomial</span>()), <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(Y <span class="sc">~</span> A, <span class="at">weights =</span> weight, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a>**Matching**:</span>
+<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For each smoker, find non-smoker of same age</span>
+<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare outcomes</span>
+<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>**Choosing an adjustment method**:</span>
+<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>**Stratification**:</span>
+<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✓ Transparent, easy to understand</span>
+<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✓ Allows checking for effect modification</span>
+<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✗ Limited to discrete confounders</span>
+<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✗ Requires large sample sizes for fine strata</span>
+<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a>**Regression**:</span>
+<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✓ Handles continuous confounders</span>
+<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✓ Efficient (uses all data)</span>
+<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✗ Relies on model assumptions</span>
+<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✗ Can obscure effect modification</span>
+<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>**IP weighting**:</span>
+<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✓ Flexible, can handle complex confounding</span>
+<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✓ Estimates marginal (population-average) effects</span>
+<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✗ Can be unstable with extreme weights</span>
+<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✗ More complex to implement</span>
+<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a>**Matching**:</span>
+<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✓ Intuitive, creates comparable groups</span>
+<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✗ Discards unmatched data</span>
+<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✗ Largely superseded by other methods</span>
+<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a>**Modern recommendation**: Use IP weighting or doubly robust methods (combine regression and weighting) for flexibility and robustness.</span>
+<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a>This chapter provided a detailed examination of **confounding**.</span>
+<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a>**Key concepts**:</span>
+<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Confounding structure**: Common causes of treatment and outcome create backdoor paths</span>
+<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Exchangeability**: Confounding = lack of exchangeability; conditional exchangeability can be achieved by adjusting for confounders</span>
+<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Backdoor criterion**: Provides a graphical method to identify which variables to adjust for</span>
+<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**DAG vs. traditional definitions**: DAG-based confounding identification is preferred over association-based criteria</span>
+<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Adjustment methods**: Stratification, regression, IP weighting, and matching can all adjust for confounding</span>
+<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Critical assumptions**: </span>
+<span id="cb8-360"><a href="#cb8-360" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>All confounders must be identified (no unmeasured confounding)</span>
+<span id="cb8-361"><a href="#cb8-361" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>All confounders must be measured accurately</span>
+<span id="cb8-362"><a href="#cb8-362" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Adjustment must be done correctly</span>
+<span id="cb8-363"><a href="#cb8-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-364"><a href="#cb8-364" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
+<span id="cb8-365"><a href="#cb8-365" aria-hidden="true" tabindex="-1"></a>**Practical guidelines for dealing with confounding**:</span>
+<span id="cb8-366"><a href="#cb8-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-367"><a href="#cb8-367" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Draw a DAG** based on subject-matter knowledge before analyzing data</span>
+<span id="cb8-368"><a href="#cb8-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-369"><a href="#cb8-369" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Identify confounders** using the backdoor criterion</span>
+<span id="cb8-370"><a href="#cb8-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-371"><a href="#cb8-371" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Measure confounders** as accurately as possible</span>
+<span id="cb8-372"><a href="#cb8-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-373"><a href="#cb8-373" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Choose an adjustment method** appropriate for your data and confounders</span>
+<span id="cb8-374"><a href="#cb8-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-375"><a href="#cb8-375" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Check assumptions**: </span>
+<span id="cb8-376"><a href="#cb8-376" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Positivity: Do all $(A, L)$ combinations occur?</span>
+<span id="cb8-377"><a href="#cb8-377" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Model fit: Are regression model assumptions met?</span>
+<span id="cb8-378"><a href="#cb8-378" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Balance: After adjustment, are confounders balanced?</span>
+<span id="cb8-379"><a href="#cb8-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Conduct sensitivity analyses**: How robust are findings to unmeasured confounding?</span>
+<span id="cb8-381"><a href="#cb8-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Be transparent**: Report the DAG, adjustment set, and method clearly</span>
+<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a>**Limitations**:</span>
+<span id="cb8-385"><a href="#cb8-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-386"><a href="#cb8-386" aria-hidden="true" tabindex="-1"></a>Even with perfect adjustment for measured confounders, bias can remain if:</span>
+<span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Important confounders are unmeasured (Chapter 19 covers sensitivity analysis)</span>
+<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Confounders are measured with error (Chapter 9)</span>
+<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adjustment methods are applied incorrectly</span>
+<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Positivity is violated</span>
+<span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a>Confounding control is necessary but not sufficient for valid causal inference.</span>
+<span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a>**Looking ahead**:</span>
+<span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-397"><a href="#cb8-397" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Chapter 8**: Selection bias</span>
+<span id="cb8-398"><a href="#cb8-398" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Chapter 9**: Measurement bias</span>
+<span id="cb8-399"><a href="#cb8-399" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Chapters 12-15**: Advanced methods for confounding adjustment</span>
+<span id="cb8-400"><a href="#cb8-400" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-401"><a href="#cb8-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-402"><a href="#cb8-402" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb8-403"><a href="#cb8-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-404"><a href="#cb8-404" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb8-405"><a href="#cb8-405" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Based on <a href="https://miguelhernan.org/whatifbook">What If?</a> by Hernán MA, Robins JM</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ucdavis/win/edit/main/chapters/07-confounding.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ucdavis/win/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/ucdavis/win/blob/main/chapters/07-confounding.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
