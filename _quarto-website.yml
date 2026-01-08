@@ -33,6 +33,8 @@ website:
             href: chapters/03-observational-studies.qmd
           - text: "Chapter 4: Effect Modification"
             href: chapters/04-effect-modification.qmd
+          - text: "Chapter 5: Interaction"
+            href: chapters/05-interaction.qmd
 
 format:
   html:
