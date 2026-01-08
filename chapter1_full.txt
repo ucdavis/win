@@ -1,0 +1,978 @@
+Chapter 1
+A DEFINITION OF CAUSAL EFFECT
+
+As a human being, you are already familiar with causal inference’s fundamental concepts. Through sheer
+existence, you know what a causal effect is, understand the difference between association and causation, and you
+have used this knowledge consistently throughout your life. Had you not, you’d be dead. Without basic causal
+concepts, you would not have survived long enough to read this chapter, let alone learn to read. As a toddler, you
+would have jumped right into the swimming pool after seeing those who did were later able to reach the jam jar.
+As a teenager, you would have skied down the most dangerous slopes after seeing those who did won the next ski
+race. As a parent, you would have refused to give antibiotics to your sick child after observing that those children
+who took their medicines were not at the park the next day.
+Since you already understand the definition of causal effect and the difference between association and causation,
+do not expect to gain deep conceptual insights from this chapter. Rather, the purpose of this chapter is to introduce
+mathematical notation that formalizes the causal intuition that you already possess. Make sure that you can match
+your causal intuition with the mathematical notation introduced here. This notation is necessary to precisely define
+causal concepts, and will be used throughout the book.
+
+1.1 Individual causal effects
+
+Karma is another commonly used
+term for actions that result in outcomes.
+
+Capital letters represent random
+variables. Lower case letters denote
+particular values of a random variable.
+
+Zeus is a patient waiting for a heart transplant. On January 1, he receives a
+new heart. Five days later, he dies. Imagine that we can somehow know—
+perhaps by divine revelation—that had Zeus not received a heart transplant
+on January 1, he would have been alive five days later. Equipped with this
+information most would agree that the transplant caused Zeus’s death. The
+heart transplant intervention had a causal effect on Zeus’s five-day survival.
+Another patient, Hera, also received a heart transplant on January 1. Five
+days later she was alive. Imagine we can somehow know that, had Hera not
+received the heart on January 1, she would still have been alive five days later.
+Hence the transplant did not have a causal effect on Hera’s five-day survival.
+These two vignettes illustrate how humans reason about causal effects: We
+compare (usually only mentally) the outcome when an action A is taken versus
+the outcome when the action A is withheld. If the two outcomes differ, we say
+that the action A has a causal effect, causative or preventive, on the outcome.
+Otherwise, we say that the action A has no causal effect on the outcome.
+Epidemiologists, statisticians, economists, and other social scientists refer to
+the action A as an intervention, an exposure, a policy, or a treatment.
+To make our causal intuition amenable to mathematical and statistical
+analysis we will introduce some notation. Consider a dichotomous treatment
+variable A (1: treated, 0: untreated) and a dichotomous outcome variable Y
+(1: death, 0: survival). In this book we refer to variables such as A and Y
+that may have different values for different individuals as random variables.
+Let Y a=1 (read Y under treatment a = 1) be the outcome variable that would
+have been observed under the treatment value a = 1, and Y a=0 (read Y under
+treatment a = 0) the outcome variable that would have been observed under
+
+4
+
+Sometimes we abbreviate the expression “individual i has outcome
+Y a = 1 ” by writing Yia = 1. Technically, when i refers to a specific
+individual, such as Zeus, Yia is not
+a random variable because we are
+assuming that individual counterfactual outcomes are deterministic
+(see Technical Point 1.2).
+Causal effect for individual i:
+Yia=1 ̸= Yia=0
+
+Consistency:
+if Ai = a, then Yia = YiA = Yi
+
+A definition of causal effect
+the treatment value a = 0. Y a=1 and Y a=0 are also random variables. Zeus
+has Y a=1 = 1 and Y a=0 = 0 because he died when treated but would have
+survived if untreated, while Hera has Y a=1 = 0 and Y a=0 = 0 because she
+survived when treated and would also have survived if untreated.
+We can now provide a formal definition of a causal effect for an individual : The treatment A has a causal effect on an individual’s outcome Y if
+Y a=1 ̸= Y a=0 for the individual. Thus, the treatment has a causal effect on
+Zeus’s outcome because Y a=1 = 1 ̸= 0 = Y a=0 , but not on Hera’s outcome
+because Y a=1 = 0 = Y a=0 . The variables Y a=1 and Y a=0 are referred to
+as potential outcomes or as counterfactual outcomes. Some authors prefer the
+term “potential outcomes” to emphasize that, depending on the treatment that
+is received, either of these two outcomes can be potentially observed. Other
+authors prefer the term “counterfactual outcomes” to emphasize that these
+outcomes represent situations that may not actually occur (that is, counterto-the-fact situations).
+For each individual, one of the counterfactual outcomes—the one that corresponds to the treatment value that the individual did receive—is actually
+factual. For example, because Zeus was actually treated (A = 1), his counterfactual outcome under treatment Y a=1 = 1 is equal to his observed (actual)
+outcome Y = 1. That is, an individual with observed treatment A equal to a,
+has observed outcome Y equal to his counterfactual outcome Y a . This equality
+can be succinctly expressed as Y = Y A where Y A denotes the counterfactual
+Y a evaluated at the value a corresponding to the individual’s observed treatment A. The equality Y = Y A is referred to as consistency.
+Individual causal effects are defined as a contrast of the values of counterfactual outcomes, but only one of those outcomes is observed for each individual—
+the one corresponding to the treatment value actually experienced by the individual. All other counterfactual outcomes remain unobserved. Because of
+missing data, individual effects cannot be identified, i.e., they cannot be expressed as a function of the observed data (see Fine Point 2.1 for a possible
+exception).
+
+1.2 Average causal effects
+We needed three pieces of information to define an individual causal effect:
+an outcome of interest, the actions a = 1 and a = 0 to be compared, and the
+individual whose counterfactual outcomes Y a=0 and Y a=1 are to be compared.
+However, because identifying individual causal effects is generally not possible,
+we now turn our attention to an aggregated causal effect: the average causal
+effect in a population of individuals. To define it, we need three pieces of
+information: an outcome of interest, the actions a = 1 and a = 0 to be
+compared, and a well-defined population of individuals whose outcomes Y a=0
+and Y a=1 are to be compared.
+Take Zeus’s extended family as our population of interest. Table 1.1 shows
+the counterfactual outcomes under both treatment (a = 1) and no treatment
+(a = 0) for all 20 members of our population. Focus on the last column: the
+outcome Y a=1 that would have been observed for each individual if they had
+received the treatment (a heart transplant). Half of the members of the population (10 out of 20) would have died if they had received a heart transplant.
+That is, the proportion of individuals that would have developed the outcome
+had all population individuals received a = 1 is Pr[Y a=1 = 1] = 10/20 = 0.5.
+
+1.2 Average causal effects
+
+5
+
+Fine Point 1.1
+Interference. Our definition of a counterfactual outcome implicitly assumes that an individual’s counterfactual outcome
+under treatment value a does not depend on other individuals’ treatment values. For example, we implicitly assumed
+that Zeus would die if he received a heart transplant, regardless of whether Hera also received a heart transplant. That
+is, Hera’s treatment value did not interfere with Zeus’s outcome. On the other hand, suppose that Hera’s getting
+a new heart upsets Zeus to the extent that he would not survive his own heart transplant, even though he would
+have survived had Hera not been transplanted. In this scenario, Hera’s treatment interferes with Zeus’s outcome.
+Interference between individuals is common in studies that deal with contagious agents or educational programs, in
+which an individual’s outcome is influenced by their social interaction with other population members.
+In the presence of interference, the counterfactual Yia for an individual i is not well defined because an individual’s
+outcome depends on other individuals’ treatment values. When there is interference, “the causal effect of heart transplant
+on Zeus’s outcome” is not well defined. Rather, one needs to refer to “the causal effect of heart transplant on Zeus’s
+outcome when Hera does not get a new heart” or “the causal effect of heart transplant on Zeus’s outcome when Hera
+does get a new heart.” If other relatives and friends’ treatment also interfere with Zeus’s outcome, then one may need
+to refer to the causal effect of heart transplant on Zeus’s outcome when “no relative or friend gets a new heart,” “when
+only Hera gets a new heart,” etc. because the causal effect of treatment on Zeus’s outcome may differ for each particular
+allocation of hearts. The assumption of no interference was labeled “no interaction between units” by Cox (1958), and
+is included in the “stable-unit-treatment-value assumption (SUTVA)” described by Rubin (1980). See Halloran and
+Struchiner (1995), Sobel (2006), Rosenbaum (2007), and Hudgens and Halloran (2009) for a more detailed discussion
+of the role of interference in the definition of causal effects. Unless otherwise specified, we will assume no interference
+throughout this book.
+
+Table 1.1
+Rheia
+Kronos
+Demeter
+Hades
+Hestia
+Poseidon
+Hera
+Zeus
+Artemis
+Apollo
+Leto
+Ares
+Athena
+Hephaestus
+Aphrodite
+Polyphemus
+Persephone
+Hermes
+Hebe
+Dionysus
+
+Y a=0
+0
+1
+0
+0
+0
+1
+0
+0
+1
+1
+0
+1
+1
+0
+0
+0
+1
+1
+1
+1
+
+Y a=1
+1
+0
+0
+0
+0
+0
+0
+1
+1
+0
+1
+1
+1
+1
+1
+1
+1
+0
+0
+0
+
+Similarly, from the other column of Table 1.1, we can conclude that half of
+the members of the population (10 out of 20) would have died if they had not
+received a heart transplant. That is, the proportion of individuals that would
+have
+ developed
+ the outcome had all population individuals received a = 0 is
+Pr Y a=0 = 1 = 10/20 = 0.5. We have computed the counterfactual risk under treatment to be 0.5 by counting the number of deaths (10) and dividing
+them by the total number of individuals (20), which is the same as computing
+the average of the counterfactual outcomes across all individuals in the population. To see the equivalence between risk and average for a dichotomous
+outcome, use the data in Table 1.1 to compute the average of Y a=1 .
+We are now ready to provide a formal definition of the average causal
+effect in the population:
+An average causal effect
+
+ of treatment A on outcome
+Y is present if Pr Y a=1 = 1 ̸= Pr Y a=0 = 1 in the population of interest.
+Under this definition, treatment A does not have an average causal effect on
+outcome
+Y in our population because both the risk of death under
+treatment
+
+
+
+Pr Y a=1 = 1 and the risk of death under no treatment Pr Y a=0 = 1 are
+0.5. It does not matter whether all or none of the individuals receive a heart
+transplant: Half of them would die in either case. When, like here, the average
+causal effect in the population is null, we say that the null hypothesis of no
+average causal effect is true. Because the risk equals the average and because
+the letter E is usually employed to represent the population average or mean
+(also referred to as ‘E’xpectation), we can rewrite the definition of a non-null
+average causal effect in the population as E[Y a=1 ] ̸= E[Y a=0 ] so that the
+definition applies to both dichotomous and nondichotomous outcomes.
+The presence of an “average causal effect of heart transplant A” is defined
+by a contrast that involves the two actions “receiving a heart transplant (a =
+1)” and “not receiving a heart transplant (a = 0).” When more than two
+
+6
+
+A definition of causal effect
+
+Technical Point 1.1
+Causal effects in the population. Let E[Y a ] be the mean counterfactual outcome had all individuals in the population
+received
+treatment level a. For discrete outcomes, the mean or expected value E[Y a ] is defined as the weighted sum
+P
+a
+a
+a
+y
+p
+Y (y) over all possible values y of the random variable Y , where pY a (·) is the probability mass function of Y ,
+y
+a
+a
+i.e., pY a (y) = Pr [Y a = y]. For dichotomous
+outcomes,
+E[Y
+]
+=
+Pr
+[Y
+=
+1].
+For
+continuous
+outcomes,
+the
+expected
+R
+value E[Y a ] is defined as the integral yfY a (y) dy over all possible values y of the random variable Y a , where fY a (·)
+is the probability density function of Y Ra . A common representation of the expected value that applies to both discrete
+and continuous outcomes is E[Y a ] = y dFY a (y), where FY a (·) is the cumulative distribution function (cdf) of the
+′
+random variable Y a . We say that there is a non-null average causal effect in the population if E[Y a ] ̸= E[Y a ] for any
+two values a and a′ .
+The average causal effect, defined by a contrast of means of counterfactual outcomes, is the most commonly used
+population causal effect. However, a population causal effect may also be defined as a contrast of functionals (including
+the median, variance, hazard, or cdf) of counterfactual outcomes. In general, a population causal effect can be defined
+as a contrast of any functional of the marginal distributions of counterfactual outcomes under different actions or
+treatment values. For example the population causal effect on the variance is defined as V ar(Y a=1 ) − V ar(Y a=0 ),
+which is zero for the population in Table 1.1 since the distribution of Y a=1 and Y a=0 are identical—both having 10
+deaths out of 20. In fact, the equality of these distributions imply that for any functional (e.g., mean, variance, median,
+hazard,etc.), the population causal effect on the functional is zero. However, in contrast to the mean, the difference in
+population variances V ar(Y a=1 ) − V ar(Y a=0 ) does not in general equal the variance of the individual causal effects
+V ar(Y a=1 − Y a=0 ). For example, in Table 1.1, since Y a=1 − Y a=0 is not constant (−1 for 6 individuals, 1 for 6
+individuals and 0 for 8 individuals), V ar(Y a=1 − Y a=0 ) > 0 = V ar(Y a=1 ) − V ar(Y a=0 ). We will be able to identify
+(i.e., compute) V ar(Y a=1 ) − V ar(Y a=0 ) from the data collected in a randomized trial, but not V ar(Y a=1 − Y a=0 )
+because we can never simultaneously observe both Y a=1 and Y a=0 for any individual, and thus the covariance of Y a=1
+and Y a=0 is not identified. The above discussion is true not only for the variance but for any nonlinear functional (e.g.,
+median, hazard).
+
+Average causal effect in population:
+E[Y a=1 ] ̸= E[Y a=0 ]
+
+actions are possible (i.e., the treatment is not dichotomous), the particular
+contrast of interest needs to be specified. For example, “the causal effect of
+aspirin” is meaningless unless we specify that the contrast of interest is, say,
+“taking, while alive, 150 mg of aspirin by mouth (or nasogastric tube if need be)
+daily for 5 years” versus “not taking aspirin.” This causal effect is well defined
+even if counterfactual outcomes under other interventions are not well defined
+or do not exist (e.g., “taking, while alive, 500 mg of aspirin by absorption
+through the skin daily for 5 years”).
+Absence of an average causal effect does not imply absence of individual
+effects. Table 1.1 shows that treatment has an individual causal effect on
+12 members (including Zeus) of the population because, for each of these 12
+individuals, the value of their counterfactual outcomes Y a=1 and Y a=0 differ.
+
+Of the 12, 6 were harmed by treatment, including Zeus Y a=1 − Y a=0 = 1 ,
+and 6 were helped Y a=1 − Y a=0 = −1 . This equality is not an accident:
+The average causal effect E[Y a=1 ] − E[Y a=0 ] is always equal to the average
+E[Y a=1 − Y a=0 ] of the individual causal effects Y a=1 − Y a=0 , as a difference
+of averages is equal to the average of the differences. When there is no causal
+effect for any individual in the population, i.e., Y a=1 = Y a=0 for all individuals,
+we say that the sharp causal null hypothesis is true. The sharp causal null
+hypothesis implies the null hypothesis of no average effect.
+As discussed in the next chapters, average causal effects can sometimes be
+identified from data, even if individual causal effects cannot. Hereafter we refer
+to ‘average causal effects’ simply as ‘causal effects’ and the null hypothesis of
+
+1.3 Measures of causal effect
+
+7
+no average effect as the causal null hypothesis. We next describe different
+measures of the magnitude of a causal effect.
+
+1.3 Measures of causal effect
+
+The causal risk difference in the
+population is the average of the individual causal effects Y a=1 −Y a=0
+on the difference scale, i.e., it is
+a measure of the average individual causal effect. By contrast, the
+causal risk ratio in the population
+is not the average of the individual
+causal effects Y a=1 /Y a=0 on the
+ratio scale, i.e., it is a measure of
+causal effect in the population but
+is not the average of any individual
+causal effects.
+
+We have seen that the treatment ‘heart transplant’ A does not have a causal
+effect on the outcome ‘death’ Y in our population of 20 family members of
+Zeus.
+null hypothesis holds because the two counterfactual risks
+ The causal
+
+Pr Y a=1 = 1 and Pr Y a=0 = 1 are equal to 0.5. There are equivalent ways
+of representing
+we could say that the risk
+ the causal null.  For example,
+
+Pr Y a=1 =1 minus the risk Pr Y a=0 = 1 is zero (0.5
+ − 0.5 = 0) or that
+the risk Pr Y a=1 = 1 divided by the risk Pr Y a=0 = 1 is one (0.5/0.5 = 1).
+That is, we can represent the causal null by
+
+
+
+
+(i) Pr Y a=1 = 1 − Pr Y a=0 = 1 = 0
+
+
+Pr Y a=1 = 1
+(ii)
+=1
+Pr [Y a=0 = 1]
+
+
+
+
+Pr Y a=1 = 1 / Pr Y a=1 = 0
+(iii)
+=1
+Pr [Y a=0 = 1] / Pr [Y a=0 = 0]
+where the left-hand side of the equalities (i), (ii), and (iii) is the causal risk
+difference, risk ratio, and odds ratio, respectively.
+Suppose now that another treatment A, cigarette smoking, has a causal
+effect on another outcome Y ,lung cancer,
+ in our population.
+ The causal null
+hypothesis does not hold: Pr Y a=1 = 1 and Pr Y a=0 = 1 are not equal. In
+this setting, the causal risk difference, risk ratio, and odds ratio are not 0, 1,
+and 1, respectively. Rather, these causal parameters quantify the strength of
+the same causal effect on different scales. Because the causal risk difference,
+risk ratio, and odds ratio (and other summaries) measure the causal effect, we
+refer to them as effect measures. See also Fine Point 1.2.
+Each effect measure may be used for different purposes. For example,
+imagine a large population in which 3 in a million individuals would develop the
+outcome if treated, and 1 in a million individuals would develop the outcome if
+untreated. The causal risk ratio is 3, and the causal risk difference is 0.000002.
+The causal risk ratio (multiplicative scale) is used to compute how many times
+treatment, relative to no treatment, increases the disease risk. The causal risk
+difference (additive scale) is used to compute the absolute number of cases of
+the disease attributable to the treatment. The use of either the multiplicative
+or additive scale will depend on the goal of the inference.
+
+1.4 Random variability
+At this point you could complain that our procedure to compute effect measures
+is somewhat implausible. Not only did we ignore the well known fact that the
+immortal Zeus cannot die, but—more to the point—our population in Table
+1.1 had only 20 individuals. The populations of interest are typically much
+larger.
+
+8
+
+A definition of causal effect
+
+Fine Point 1.2
+Number needed to treat. Consider a population of 100 million patients in which 20 million would die within five years
+if treated (a = 1), and 30 million would die within five years if untreated (a = 0). This information can be summarized
+in several equivalent ways:
+
+
+
+
+• the causal risk difference is Pr Y a=1 = 1 − Pr Y a=0 = 1 = 0.2 − 0.3 = −0.1
+• if one treats the 100 million patients, there will be 10 million fewer deaths than if one does not treat those 100
+million patients
+• one needs to treat 100 million patients to save 10 million lives
+• on average, one needs to treat 10 patients to save 1 life
+We refer to the average number of individuals that need to receive treatment a = 1 to reduce the number of cases
+Y = 1 by one as the number needed to treat (NNT). In our example the NNT is equal to 10. For treatments that
+reduce the average number of cases (i.e., the causal risk difference is negative), the NNT is equal to the reciprocal of
+the absolute value of the causal risk difference:
+NNT =
+
+−1
+Pr [Y a=1 = 1] − Pr [Y a=0 = 1]
+
+For treatments that increase the average number of cases (i.e., the causal risk difference is positive), one can symmetrically define the number needed to harm. The NNT was introduced by Laupacis, Sackett, and Roberts (1988). Like
+the causal risk difference, the NNT applies to the population and time interval on which it is based. For a discussion of
+the relative advantages and disadvantages of the NNT as an effect measure, see Grieve (2003).
+
+1st source of random error:
+Sampling variability
+
+An estimator θ̂ of θ is consistent
+if, with probability approaching 1,
+the difference θ̂ −θ approaches zero
+as the sample size increases towards
+infinity.
+
+In our tiny population, we collected information from all the individuals. In
+practice, investigators only collect information on a sample of the population
+of interest. Even if the counterfactual outcomes of all study individuals were
+known, working with samples prevents one from obtaining the exact proportion
+of individuals in the population who had the outcome under
+treatment
+value
+
+
+a, i.e., the probability of death under no treatment Pr Y a=0 = 1 cannot be
+directly computed. One can only estimate this probability.
+Consider the individuals in Table 1.1. We have previously viewed them as
+forming a twenty-person population. Suppose we view them as a random sample from a much larger, near-infinite super-population (e.g., all immortals). We
+denote the proportion of individuals in the sample who would have died if unexc a=0 = 1] = 10/20 = 0.50. The sample proportion Pr[Y
+c a=0 = 1]
+posed as Pr[Y
+does not have to be exactly equal to the proportion of individuals who would
+
+have died if the entire super-population
+had been unexposed, Pr Y a=0 = 1 .
+ a=0
+
+For example, suppose Pr Y
+= 1 = 0.57 in the population but, because
+
+
+c Y a=0 = 1 = 0.5 in our parof random error due to sampling variability, Pr
+c [Y a = 1] to estimate the
+ticular sample. We use the sample proportion Pr
+a
+super-population probability Pr [Y = 1] under treatment value a. The “hat”
+c [Y a = 1] is an estimator of
+over Pr indicates that the sample proportion Pr
+a
+c [Y a = 1]
+the corresponding population quantity Pr [Y = 1]. We say that Pr
+a
+is a consistent estimator of Pr [Y = 1] because the larger the number of inc [Y a = 1] and
+dividuals in the sample, the smaller the difference between Pr
+a
+Pr [Y = 1] is expected to be. This occurs because the error due to sampling
+variability is random and thus obeys the law of large numbers.
+
+1.5 Causation versus association
+
+Caution: the term ‘consistency’
+when applied to estimators has a
+different meaning from that which
+it has when applied to counterfactual outcomes.
+
+2nd source of random error:
+Nondeterministic counterfactuals
+
+9
+Because the super-population probabilities Pr [Y a = 1] cannot be computed,
+c [Y a = 1], one cannot
+only consistently estimated by the sample proportions Pr
+conclude with certainty that there is, or there is not, a causal effect. Rather, a
+statistical procedure must be used
+to evaluate
+the
+
+
+ empirical
+ evidence regarding
+the causal null hypothesis Pr Y a=1 = 1 = Pr Y a=0 = 1 (see Chapter 10 for
+details).
+So far we have only considered sampling variability as a source of random
+error. But there may be another source of random variability: perhaps the
+values of an individual’s counterfactual outcomes are not fixed in advance.
+We have defined the counterfactual outcome Y a as the individual’s outcome
+had he received treatment value a. For example, in our first vignette, Zeus
+would have died if treated and would have survived if untreated. As defined,
+the values of the counterfactual outcomes are fixed or deterministic for each
+individual, i.e., Y a=1 = 1 and Y a=0 = 0 for Zeus. In other words, Zeus has
+a 100% chance of dying if treated and a 0% chance of dying if untreated.
+However, we could imagine another scenario in which Zeus has a 90% chance
+of dying if treated, and a 10% chance of dying if untreated. In this scenario,
+the counterfactual outcomes are stochastic or nondeterministic because Zeus’s
+probabilities of dying under treatment (0.9) and under no treatment (0.1)
+are neither zero nor one. The values of Y a=1 and Y a=0 shown in Table 1.1
+would be possible realizations of “random flips of mortality coins” with these
+probabilities. Further, one would expect that these probabilities vary across
+individuals because not all individuals are equally susceptible to develop the
+outcome. Quantum mechanics, in contrast to classical mechanics, holds that
+outcomes are inherently nondeterministic. That is, if the quantum mechanical
+probability of Zeus dying is 90%, the theory holds that no matter how much
+data we collect about Zeus, the uncertainty about whether Zeus will actually
+develop the outcome if treated is irreducible.
+Thus, in causal inference, random error derives from sampling variability,
+nondeterministic counterfactuals, or both. However, for pedagogic reasons, we
+will continue to largely ignore random error until Chapter 10. Specifically, we
+will assume that counterfactual outcomes are deterministic and that we have
+recorded data on every individual in a very large (perhaps hypothetical) superpopulation. This is equivalent to viewing our population of 20 individuals as a
+population of 20 billion individuals in which 1 billion individuals are identical
+to Zeus, 1 billion individuals are identical to Hera, and so on. Hence, until
+Chapter 10, we will carry out our computations with Olympian certainty.
+Then, in Chapter 10, we will describe how our statistical estimates and
+confidence intervals for causal effects in the super-population are identical irrespective of whether the world is stochastic (quantum) or deterministic (classical) at the level of individuals. In contrast, confidence intervals for the average
+causal effect in the actual study sample will differ depending on whether counterfactuals are deterministic versus stochastic. Fortunately, super-population
+effects are in most cases the causal effects of substantive interest.
+
+1.5 Causation versus association
+Obviously, the data available from actual studies look different from those
+shown in Table 1.1. For example, we would not usually expect to learn Zeus’s
+outcome if treated Y a=1 and also Zeus’s outcome if untreated Y a=0 . In the
+real world, we only get to observe one of those outcomes because Zeus is either
+
+10
+
+A definition of causal effect
+
+Technical Point 1.2
+Nondeterministic counterfactuals. For nondeterministic
+counterfactual outcomes, the mean outcome under treatment
+P
+value a, E[Y a ], equals the weighted sum
+y pY a (y) over all possible values y of the random variable Y a , where the
+y
+
+probability mass function pY a (·) = E [QY a (·)], and QY a (y) is a random probability of having outcome Y = y under
+treatment level a. In the example described in the text, QY a=1 (1) = 0.9 for Zeus. (For continuous outcomes, the
+weighted sum is replaced by an integral.)
+More generally, a nondeterministic definition of counterfactual outcome does not attach some particular value of
+the random variable Y a to each individual, but rather an individual-specific statistical distribution ΘY a (·) of Y a .
+The nondeterministic definition of causal effect is a generalization of the deterministic definition in which ΘY a (·) is
+now a random cdf that may take values between 0 and 1.
+outcome
+R The average
+ counterfactual
+R
+R in the population
+E[Y a ] equals E {E [Ya | ΘY a (·)]}. Therefore, E[Y a ] = E y dΘY a (y) = y d E[ΘY a (y)] = y dFY a (y), where
+FY a (·) = E ΘYia (·) .
+E[Q a=1 (1)]
+If the counterfactual outcomes are binary and nondeterministic, the causal risk ratio in the population E QY (1) is
+[ Y a=0 ]
+equal to the weighted average E [W {QY a=1 (1) /QY a=0 (1)}] of the individual causal effects QY a=1 (1) /QY a=0 (1) on
+Q
+(1)
+the ratio scale, with weights W = E QY a=0 (1) , provided QY a=0 (1) is never equal to 0 (i.e., deterministic) for anyone
+[ Y a=0 ]
+in the population.
+
+Table 1.2
+Rheia
+Kronos
+Demeter
+Hades
+Hestia
+Poseidon
+Hera
+Zeus
+Artemis
+Apollo
+Leto
+Ares
+Athena
+Hephaestus
+Aphrodite
+Polyphemus
+Persephone
+Hermes
+Hebe
+Dionysus
+
+A
+0
+0
+0
+0
+1
+1
+1
+1
+0
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+1
+
+Y
+0
+1
+0
+0
+0
+0
+0
+1
+1
+1
+0
+1
+1
+1
+1
+1
+1
+0
+0
+0
+
+Dawid (1979) introduced the symbol ⊥
+⊥ to denote independence.
+
+treated or untreated. We referred to the observed outcome as Y . Thus, for
+each individual, we know the observed treatment level A and the outcome Y
+as in Table 1.2.
+The data in Table 1.2 can be used to compute the proportion of individuals that developed the outcome Y among those individuals in the population
+that happened to receive treatment value a. For example, in Table 1.2, 7 individuals died (Y = 1) among the 13 individuals that were treated (A = 1).
+Thus the risk of death in the treated, Pr [Y = 1|A = 1], was 7/13. More generally, the conditional probability Pr [Y = 1|A = a] is defined as the proportion
+of individuals that developed the outcome Y among those individuals in the
+population of interest that happened to receive treatment value a.
+When the proportion of individuals who develop the outcome in the treated
+Pr [Y = 1|A = 1] equals the proportion of individuals who develop the outcome
+in the untreated Pr [Y = 1|A = 0], we say that treatment A and outcome Y
+are independent, that A is not associated with Y , or that A does not predict
+Y . Independence is represented by Y ⊥⊥A—or, equivalently, A⊥⊥Y —which is
+read as Y and A are independent. Some equivalent definitions of independence
+are
+(i) Pr [Y = 1|A = 1] − Pr [Y = 1|A = 0] = 0
+(ii)
+
+Pr [Y = 1|A = 1]
+=1
+Pr [Y = 1|A = 0]
+
+(iii)
+
+Pr [Y = 1|A = 1] / Pr [Y = 0|A = 1]
+=1
+Pr [Y = 1|A = 0] / Pr [Y = 0|A = 0]
+
+where the left-hand side of the inequalities (i), (ii), and (iii) is the associational
+risk difference, risk ratio, and odds ratio, respectively.
+We say that treatment A and outcome Y are dependent or associated when
+Pr [Y = 1|A = 1] ̸= Pr [Y = 1|A = 0]. In our population, treatment and outcome are associated because Pr [Y = 1|A = 1] = 7/13 and Pr [Y = 1|A = 0] =
+
+1.5 Causation versus association
+
+For a continuous outcome Y we
+define mean independence between
+treatment and outcome as:
+E[Y |A = 1] = E[Y |A = 0].
+Independence and mean independence are the same concept for dichotomous outcomes.
+
+11
+3/7. The associational risk difference, risk ratio, and odds ratio (and other
+measures) quantify the strength of the association when it exists. They measure the association on different scales, and we refer to them as association
+measures. These measures are also affected by random variability. However,
+until Chapter 10, we will disregard statistical issues by assuming that the population in Table 1.2 is extremely large.
+For dichotomous outcomes, the risk equals the average in the population,
+and we can therefore rewrite the definition of association in the population as
+E [Y |A = 1] ̸= E [Y |A = 0]. For continuous outcomes Y , we will also define
+association as E [Y |A = 1] ̸= E [Y |A = 0]. For binary A, Y and A are not
+associated if and only if they are not statistically correlated.
+In our population of 20 individuals, we found (i ) no causal effect after comparing the risk of death if all 20 individuals had been treated with the risk
+of death if all 20 individuals had been untreated, and (ii ) an association after
+comparing the risk of death in the 13 individuals who happened to be treated
+with the risk of death in the 7 individuals who happened to be untreated.
+Figure 1.1 depicts the causation-association difference. The population (represented by a diamond) is divided into a white area (the treated) and a smaller
+grey area (the untreated).
+
+Figure 1.1
+
+The definition of causation implies a contrast between the whole white
+diamond (all individuals treated) and the whole grey diamond (all individuals untreated), whereas association implies a contrast between the white (the
+treated) and the grey (the untreated) areas of the original diamond. That is,
+inferences about causation are concerned with what if questions in counterfactual worlds, such as “what would be the risk if everybody had been treated?”
+and “what would be the risk if everybody had been untreated?”, whereas inferences about association are concerned with questions in the actual world, such
+as “what is the risk in the treated?” and “what is the risk in the untreated?”
+We can use the notation we have developed thus far to formalize this distinction between causation and association. The risk Pr [Y = 1|A = a] is a
+conditional probability: the risk of Y in the subset of the population that
+meet the condition ‘having actually received treatment value a’ (i.e., A = a).
+In contrast the risk Pr [Y a = 1] is an unconditional—also known as marginal—
+probability, the risk of Y a in the entire population. Therefore, association is
+defined by a different risk in two disjoint subsets of the population determined
+
+12
+
+The difference between association
+and causation is critical. Suppose
+the causal risk ratio of 5-year mortality is 0.5 for aspirin vs. no aspirin, and the corresponding associational risk ratio is 1.5 because
+individuals at high risk of cardiovascular death are preferentially prescribed aspirin. After a physician
+learns these results, she decides to
+withhold aspirin from her patients
+because those treated with aspirin
+have a greater risk of dying compared with the untreated. The doctor will be sued for malpractice.
+
+A definition of causal effect
+by the individuals’ actual treatment value (A = 1 or A = 0), whereas causation is defined by a different risk in the same population under two different
+treatment values (a = 1 or a = 0). Throughout this book we often use the
+redundant expression ‘causal effect’ to avoid confusions with a common use of
+‘effect’ meaning simply association.
+These radically different definitions explain the well-known adage “association is not causation.” In our population, there was association because
+the mortality risk in the treated (7/13) was greater than that in the untreated
+(3/7). However, there was no causation because the risk if everybody had been
+treated (10/20) was the same as the risk if everybody had been untreated. This
+discrepancy between causation and association would not be surprising if those
+who received heart transplants were, on average, sicker than those who did not
+receive a transplant. In Chapter 7 we refer to this discrepancy as confounding.
+Causal inference requires data like the hypothetical data in Table 1.1, but
+all we can ever expect to have is real world data like those in Table 1.2. The
+question is then under which conditions real world data can be used for causal
+inference. The next chapter provides one answer: conduct a randomized experiment.
+
+Chapter 2
+RANDOMIZED EXPERIMENTS
+
+Does your looking up at the sky make other pedestrians look up too? This question has the main components
+of any causal question: we want to know whether an action (your looking up) affects an outcome (other people’s
+looking up) in a specific population (say, residents of Madrid in 2019). Suppose we challenge you to design a
+scientific study to answer this question. “Not much of a challenge,” you say after some thought, “I can stand on
+the sidewalk and flip a coin whenever someone approaches. If heads, I’ll look up; if tails, I’ll look straight ahead.
+I’ll repeat the experiment a few thousand times. If the proportion of pedestrians who looked up within 10 seconds
+after I did is greater than the proportion of pedestrians who looked up when I didn’t, I will conclude that my
+looking up has a causal effect on other people’s looking up. By the way, I may hire an assistant to record what
+people do while I’m looking up.” After conducting this study, you found that 55% of pedestrians looked up when
+you looked up but only 1% looked up when you looked straight ahead.
+Your solution to our challenge was to conduct a randomized experiment. It was an experiment because the
+investigator (you) carried out the action of interest (looking up), and it was randomized because the decision to
+act on any study subject (pedestrian) was made by a random device (coin flipping). Not all experiments are
+randomized. For example, you could have looked up when a man approached and looked straight ahead when
+a woman did. Then the assignment of the action would have followed a deterministic rule (up for man, straight
+for woman) rather than a random mechanism. However, your findings would not have been nearly as convincing
+if you had conducted a nonrandomized experiment. If your action had been determined by the pedestrian’s sex,
+critics could argue that the “looking up” behavior of men and women differs (women may look up less often than
+do men after you look up) and thus your study compared essentially “noncomparable” groups of people. This
+chapter describes why randomization results in convincing causal inferences.
+
+2.1 Randomization
+
+Neyman (1923) applied counterfactual theory to the estimation of
+causal effects via randomized experiments.
+
+In a real world study we will not know both of Zeus’s potential outcomes Y a=1
+under treatment and Y a=0 under no treatment. Rather, we can only know
+his observed outcome Y under the treatment value A that he happened to
+receive. Table 2.1 summarizes the available information for our population
+of 20 individuals. Only one of the two counterfactual outcomes is known for
+each individual: the one corresponding to the treatment level that he actually
+received. The data are missing for the other counterfactual outcomes. As we
+discussed in the previous chapter, this missing data creates a problem because
+it appears that we need the value of both counterfactual outcomes to compute
+effect measures. The data in Table 2.1 are only good to compute association
+measures.
+Randomized experiments, like any other real world study, generate data
+with missing values of the counterfactual outcomes as shown in Table 2.1.
+However, randomization ensures that those missing values occurred by chance.
+As a result, effect measures can be computed —or, more rigorously, consistently
+estimated—in randomized experiments despite the missing data. Let us be
+more precise.
+Suppose that the population represented by a diamond in Figure 1.1 was
+
+14
+
+Randomized experiments
+
+Table 2.1
+Rheia
+Kronos
+Demeter
+Hades
+Hestia
+Poseidon
+Hera
+Zeus
+Artemis
+Apollo
+Leto
+Ares
+Athena
+Hephaestus
+Aphrodite
+Polyphemus
+Persephone
+Hermes
+Hebe
+Dionysus
+
+A
+0
+0
+0
+0
+1
+1
+1
+1
+0
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+1
+
+Y
+0
+1
+0
+0
+0
+0
+0
+1
+1
+1
+0
+1
+1
+1
+1
+1
+1
+0
+0
+0
+
+Y0
+0
+1
+0
+0
+?
+?
+?
+?
+1
+1
+0
+?
+?
+?
+?
+?
+?
+?
+?
+?
+
+Y1
+?
+?
+?
+?
+0
+0
+0
+1
+?
+?
+?
+1
+1
+1
+1
+1
+1
+0
+0
+0
+
+Exchangeability:
+Y a⊥
+⊥A for all a. See also Technical Point 2.1 for other versions of
+exchangeability.
+
+near-infinite, and that we flipped a coin for each individual in such population.
+We assigned the individual to the white group if the coin turned tails, and
+to the grey group if it turned heads. Note this was not a fair coin because
+the probability of heads was less than 50%—fewer people ended up in the
+grey group than in the white group. Next we asked our research assistants to
+administer the treatment of interest (A = 1), to individuals in the white group
+and a placebo (A = 0) to those in the grey group. Five days later, at the end of
+the study, we computed the mortality risks in each group, Pr [Y = 1|A = 1] =
+0.3 and Pr [Y = 1|A = 0] = 0.6. The associational risk ratio was 0.3/0.6 = 0.5
+and the associational risk difference was 0.3 − 0.6 = −0.3. We will assume
+that this was an ideal randomized experiment in all other respects: no loss to
+follow-up, full adherence to the assigned treatment over the duration of the
+study, a single version of treatment, and double blind assignment (see Chapter
+9). Ideal randomized experiments are unrealistic but useful to introduce some
+key concepts for causal inference. Later in this book we consider more realistic
+randomized experiments.
+Now imagine what would have happened if the research assistants had
+misinterpreted our instructions and had treated the grey group rather than
+the white group. Say we learned of the misunderstanding after the study
+finished. How does this reversal of treatment status affect our conclusions?
+Not at all. We would still find that the risk in the treated (now the grey
+group) Pr [Y = 1|A = 1] is 0.3 and the risk in the untreated (now the white
+group) Pr [Y = 1|A = 0] is 0.6. The association measure would not change.
+Because individuals were randomly assigned to white and grey groups, the
+proportion of deaths among the exposed, Pr [Y = 1|A = 1] is expected to be
+the same whether individuals in the white group received the treatment and
+individuals in the grey group received placebo, or vice versa. When group
+membership is randomized, which particular group received the treatment is
+irrelevant for the value of Pr [Y = 1|A = 1]. The same reasoning applies to
+Pr [Y = 1|A = 0], of course. Formally, we say that groups are exchangeable.
+Exchangeability means that the risk of death in the white group would have
+been the same as the risk of death in the grey group had individuals in the white
+group received the treatment given to those in the grey group. That is, the risk
+under the potential treatment value a among the treated, Pr [Y a = 1|A = 1],
+equals the risk under the potential treatment value a among the untreated,
+Pr [Y a = 1|A = 0], for both a = 0 and a = 1. An obvious consequence of these
+(conditional) risks being equal in all subsets defined by treatment status in the
+population is that they must be equal to the (marginal) risk under treatment
+value a in the whole population: Pr [Y a = 1|A = 1] = Pr [Y a = 1|A = 0] =
+Pr [Y a = 1]. Because the counterfactual risk under treatment value a is the
+same in both groups A = 1 and A = 0, we say that the actual treatment A
+does not predict the counterfactual outcome Y a . Equivalently, exchangeability
+means that the counterfactual outcome and the actual treatment are independent, or Y a ⊥
+⊥A, for all values a. Randomization is so highly valued because it
+is expected to produce exchangeability. When the treated and the untreated
+are exchangeable, we sometimes say that treatment is exogenous, and thus
+exogeneity is commonly used as a synonym for exchangeability.
+The previous paragraph argues that, in the presence of exchangeability, the
+counterfactual risk under treatment in the white part of the population would
+equal the counterfactual risk under treatment in the entire population. But the
+risk under treatment in the white group is not counterfactual at all because the
+white group was actually treated! Therefore our ideal randomized experiment
+allows us to compute the counterfactual risk under treatment in the population
+
+
