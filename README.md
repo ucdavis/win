@@ -131,6 +131,19 @@ When working on this repository in RStudio, the project is configured with:
 - UTF-8 encoding
 - 2 spaces for tabs (following tidyverse style)
 
+### GitHub Copilot Instructions
+
+This repository includes comprehensive GitHub Copilot instructions in `.github/copilot-instructions.md` to help Copilot provide better assistance with:
+- Project-specific development setup and workflows
+- Quarto multi-format rendering requirements
+- R package structure and conventions
+- Build, test, and lint commands
+- Common issues and solutions
+
+Copilot will automatically use these instructions when working on this repository.
+
+### Building and Checking the Package
+
 To build and check the package:
 
 ```r
