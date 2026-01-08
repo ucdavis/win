@@ -29,6 +29,8 @@ website:
             href: chapters/01-introduction.qmd
           - text: "Chapter 2: Randomized Experiments"
             href: chapters/02-randomized-experiments.qmd
+          - text: "Chapter 3: Observational Studies"
+            href: chapters/03-observational-studies.qmd
 
 format:
   html:
