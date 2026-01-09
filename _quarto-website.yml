@@ -51,6 +51,8 @@ website:
             href: chapters/12-ip-weighting-marginal-structural-models.qmd
           - text: "Chapter 13: Standardization and the Parametric G-Formula"
             href: chapters/13-standardization-parametric-g-formula.qmd
+          - text: "Chapter 14: G-Estimation of Structural Nested Models"
+            href: chapters/14-g-estimation-structural-nested-models.qmd
 
 format:
   html:
