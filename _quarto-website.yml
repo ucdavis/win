@@ -47,6 +47,10 @@ website:
             href: chapters/10-random-variability.qmd
           - text: "Chapter 11: Why Model?"
             href: chapters/11-why-model.qmd
+          - text: "Chapter 12: IP Weighting and Marginal Structural Models"
+            href: chapters/12-ip-weighting-marginal-structural-models.qmd
+          - text: "Chapter 13: Standardization and the Parametric G-Formula"
+            href: chapters/13-standardization-parametric-g-formula.qmd
 
 format:
   html:
