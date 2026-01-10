@@ -20,6 +20,8 @@ This chapter is based on @hernan2020causal [Chapter 3, pp. 25-36].
 
 ## 3.1 Identifiability Conditions (pp. 25-27)
 
+---
+
 In an observational study, treatment is not randomly assigned by the investigator. Instead, individuals receive treatment based on their characteristics, preferences, physician recommendations, or other factors. As a result, treated and untreated individuals may differ systematically in ways that affect the outcome.
 
 Can we still estimate causal effects from observational data? The answer is yes—but only under certain conditions called **identifiability conditions**.
@@ -61,6 +63,8 @@ The remainder of this chapter explores each condition in detail.
 :::
 
 ## 3.2 Exchangeability (pp. 27-29)
+
+---
 
 The most critical identifiability condition is **exchangeability**. Informally, exchangeability means that the treated and untreated are comparable with respect to their potential outcomes.
 
@@ -127,6 +131,8 @@ If there exist **unmeasured confounders**—variables that affect both treatment
 
 ## 3.3 Positivity (pp. 29-30)
 
+---
+
 The second identifiability condition is **positivity**, also called the experimental treatment assignment assumption.
 
 ::: {#def-positivity}
@@ -170,6 +176,8 @@ In practice, **near-violations** of positivity (where $Pr[A = a | L]$ is very cl
 :::
 
 ## 3.4 Consistency: First, Define the Counterfactual Outcome (pp. 30-32)
+
+---
 
 The third identifiability condition is **consistency**. Unlike exchangeability and positivity, consistency is not about the relationship between treatment and outcome. Instead, it concerns the definition of the counterfactual outcome itself.
 
@@ -215,6 +223,8 @@ This is sometimes called the **Stable Unit Treatment Value Assumption (SUTVA)**.
 :::
 
 ## 3.5 Consistency: Second, Link Counterfactuals to Observed Data (pp. 32-34)
+
+---
 
 The consistency assumption also requires that there is no **interference** between individuals.
 
@@ -267,6 +277,8 @@ For example, the effect of exercise on weight at 6 months may differ from the ef
 :::
 
 ## 3.6 The Target Trial (pp. 34-36)
+
+---
 
 A useful framework for thinking about identifiability conditions in observational studies is the **target trial**.
 
@@ -341,6 +353,8 @@ The target trial framework helps us think systematically about these issues.
 
 ## Summary
 
+---
+
 This chapter introduced the fundamental **identifiability conditions** for causal inference in observational studies:
 
 1. **Exchangeability**: $Y^a \perp\!\!\!\perp A \mid L$ (no unmeasured confounding)
@@ -364,6 +378,8 @@ The three identifiability conditions introduced in this chapter will appear repe
 :::
 
 ## References
+
+---
 
 ::: {#refs}
 :::

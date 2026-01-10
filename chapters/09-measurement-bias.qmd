@@ -1,0 +1,295 @@
+---
+title: "Chapter 9: Measurement Bias"
+format:
+  html: default
+  revealjs:
+    output-file: 09-measurement-bias-slides.html
+  pdf:
+    output-file: 09-measurement-bias-handout.pdf
+  docx:
+    output-file: 09-measurement-bias.docx
+---
+
+Measurement error can introduce bias in causal inference, even in the absence of confounding and selection bias. Unlike confounding (systematic differences in treatment groups) and selection bias (systematic differences in who is included in analysis), measurement bias arises from inaccurate measurement of variables. This chapter explores the structure and consequences of measurement error.
+
+::: {.notes}
+This chapter is based on @hernan2020causal [Chapter 9, pp. 117-130].
+:::
+
+## 9.1 Measurement Error (pp. 117-119)
+
+---
+
+**Measurement error** occurs when the recorded value of a variable differs from its true value.
+
+### Types of Variables Subject to Measurement Error
+
+All variables in a study can be measured with error:
+
+- **Treatment** $A$: Misclassification of treatment status
+- **Outcome** $Y$: Misclassification or mismeasurement of outcomes
+- **Covariates** $L$: Mismeasured confounders or effect modifiers
+
+### Independent vs. Differential Measurement Error
+
+::: {#def-measurement-error-types}
+## Types of Measurement Error
+
+**Independent (nondifferential) measurement error**: The measurement error is independent of other variables.
+
+**Differential measurement error**: The measurement error depends on other variables in the study.
+:::
+
+::: {.notes}
+**Examples**:
+
+**Independent error in treatment**: Treatment misclassification rate is the same regardless of outcome status, covariate values, etc.
+
+**Differential error in treatment**: Patients with disease are more likely to recall past exposures than healthy controls (recall bias).
+:::
+
+## 9.2 The Structure of Measurement Error (pp. 119-121)
+
+---
+
+Measurement error can be represented using causal diagrams by distinguishing between:
+
+- **True variables**: The actual values we care about (denoted $A$, $Y$, $L$)
+- **Measured variables**: The values we observe (denoted $A^*$, $Y^*$, $L^*$)
+
+### Causal DAG with Measurement Error
+
+For a measured treatment $A^*$ that imperfectly captures true treatment $A$:
+
+- There is an arrow from true treatment $A$ to measured treatment $A^*$: $A \rightarrow A^*$
+- Measurement error $U_A$ also affects $A^*$: $U_A \rightarrow A^*$
+
+The measured treatment $A^*$ is a function of both the true treatment $A$ and the measurement error $U_A$.
+
+::: {.notes}
+**Key structural insight**: 
+
+Measurement error creates a mismatch between:
+
+- The **causal question** we want to answer (involving true variables $A$, $Y$, $L$)
+- The **data** we actually have (involving measured variables $A^*$, $Y^*$, $L^*$)
+
+The bias depends on how measurement error is structured in the causal diagram.
+:::
+
+## 9.3 Mismeasured Confounders (pp. 121-124)
+
+---
+
+Mismeasured confounders are particularly problematic because they lead to **residual confounding**.
+
+### Effects of Confounder Mismeasurement
+
+Suppose $L$ is a confounder of the $A$-$Y$ relationship, but we only observe $L^*$, a mismeasured version of $L$.
+
+**Consequence**: Adjusting for $L^*$ instead of $L$ leaves residual confounding.
+
+Even with perfect measurement of treatment $A$ and outcome $Y$, confounding cannot be fully eliminated if confounders are mismeasured.
+
+::: {#exm-mismeasured-confounder}
+## Residual Confounding from Mismeasurement
+
+Study the effect of physical activity $A$ on heart disease $Y$, adjusting for socioeconomic status (SES) $L$.
+
+**Problem**: SES is difficult to measure precisely. We use income $L^*$ as a proxy.
+
+**Result**: Income $L^*$ is associated with true SES $L$ but doesn't perfectly capture it. Adjusting for $L^*$ reduces but doesn't eliminate confounding by $L$.
+
+**Residual confounding**: The backdoor path $A \leftarrow L \rightarrow Y$ is only partially blocked by conditioning on $L^*$.
+:::
+
+::: {.notes}
+**Magnitude of bias**:
+
+The bias from mismeasured confounders depends on:
+
+1. **Strength of confounding**: How strongly $L$ affects both $A$ and $Y$
+2. **Quality of measurement**: How well $L^*$ captures $L$
+3. **Type of measurement error**: Independent vs. differential
+
+**Practical implication**: 
+
+Even well-designed observational studies with careful measurement can suffer from residual confounding due to imperfect measurement of confounders.
+
+This is one reason why unmeasured confounding is such a concern in observational research.
+:::
+
+## 9.4 Intention-to-Treat Effect (pp. 124-127)
+
+---
+
+The **intention-to-treat (ITT)** principle is commonly used in randomized trials to handle non-compliance.
+
+### Non-Compliance in Randomized Trials
+
+**Scenario**: In a randomized trial, some participants don't follow their assigned treatment.
+
+- Assigned to treatment but don't take it
+- Assigned to control but receive treatment
+
+**Two treatment variables**:
+
+1. **Treatment assignment** $Z$: Randomly assigned treatment (randomized, no confounding)
+2. **Treatment received** $A$: Actual treatment taken (not randomized, may be confounded)
+
+### ITT Analysis
+
+An **intention-to-treat analysis** compares outcomes by assigned treatment $Z$, regardless of actual treatment received $A$.
+
+$$\text{ITT effect} = E[Y | Z = 1] - E[Y | Z = 0]$$
+
+::: {.notes}
+**Why use ITT?**
+
+**Advantages**:
+
+- Preserves randomization (no confounding)
+- Estimates the effect of *assignment* policy
+- Simple to implement
+
+**Disadvantages**:
+
+- Estimates the effect of assignment, not the effect of actually taking treatment
+- Underestimates the effect of treatment among those who comply
+- Cannot answer "what if everyone actually took treatment?"
+
+**When to use ITT**: 
+
+When the policy question is about implementing a treatment program (which will have imperfect compliance), rather than the biological effect of the treatment itself.
+:::
+
+### Per-Protocol Analysis
+
+**Per-protocol analysis**: Compare outcomes among those who actually followed their assigned treatment.
+
+**Problem**: Per-protocol analysis can introduce selection bias and confounding.
+
+Those who comply may differ systematically from non-compliers in ways that affect the outcome.
+
+::: {.notes}
+**The fundamental trade-off**:
+
+- **ITT preserves internal validity** (no bias) but estimates a different quantity (effect of assignment)
+- **Per-protocol analysis** targets the desired quantity (effect of treatment) but introduces bias
+
+**Solutions**:
+
+- Instrumental variable methods (Chapter 14)
+- Sensitivity analyses
+- Collecting data on compliance determinants
+:::
+
+## 9.5 Measurement and Treatment (pp. 127-130)
+
+---
+
+Measurement error in treatment creates unique challenges for causal inference.
+
+### Types of Treatment Mismeasurement
+
+**Misclassification**: Binary treatment recorded incorrectly (yes/no exposure miscoded).
+
+**Measurement error**: Continuous treatment measured inaccurately (dose, duration miscoded).
+
+### Effect of Treatment Mismeasurement
+
+When treatment is mismeasured, we're effectively studying the effect of $A^*$ (measured) instead of $A$ (true).
+
+**General result**: Independent measurement error in treatment typically **biases estimates toward the null** (underestimates the true effect).
+
+**Exception**: Differential measurement error can bias in any direction.
+
+::: {#exm-treatment-mismeasurement}
+## Attenuation from Independent Error
+
+Study the effect of dietary sodium intake $A$ on blood pressure $Y$.
+
+**Measurement**: Sodium intake measured via 24-hour dietary recall $A^*$ (subject to recall error).
+
+**Error structure**: Recall errors are approximately independent of blood pressure.
+
+**Result**: The observed association between $A^*$ and $Y$ underestimates the true effect of $A$ on $Y$ (bias toward null).
+:::
+
+::: {.notes}
+**Why independent error attenuates**:
+
+With independent measurement error in treatment:
+
+- Some truly unexposed are classified as exposed
+- Some truly exposed are classified as unexposed
+- This dilutes the contrast between treatment groups
+- The observed effect is weaker than the true effect
+
+**Implication**: 
+
+A null finding in a study with measurement error doesn't necessarily mean no true effect. The true effect could be non-null but attenuated by measurement error.
+:::
+
+## Summary
+
+---
+
+This chapter examined **measurement bias**, a third source of bias in causal inference.
+
+**Key concepts**:
+
+1. **Measurement error**: Discrepancy between true and recorded values
+
+2. **Types of measurement error**:
+   - Independent (nondifferential): Error independent of other variables
+   - Differential: Error depends on other variables
+
+3. **Structure**: Represented by $\text{True variable} \rightarrow \text{Measured variable} \leftarrow \text{Error}$
+
+4. **Mismeasured confounders**: Lead to residual confounding even when adjusting
+
+5. **Treatment mismeasurement**:
+   - Independent error typically attenuates effects toward null
+   - Differential error can bias in any direction
+
+6. **Intention-to-treat**: Addresses non-compliance by analyzing by assignment rather than actual treatment
+
+::: {.notes}
+**Practical implications**:
+
+1. **Study design**:
+   - Invest in high-quality measurement
+   - Validate measurements when possible
+   - Measure key confounders with particular care
+
+2. **Analysis**:
+   - Acknowledge measurement error in interpretation
+   - Conduct sensitivity analyses
+   - Consider correction methods when error structure is known
+
+3. **Reporting**:
+   - Describe measurement procedures clearly
+   - Report validation studies if available
+   - Discuss potential impact of measurement error
+
+**Interaction with other biases**:
+
+Measurement bias, confounding, and selection bias can all occur simultaneously:
+
+- Measurement error in confounders creates residual confounding
+- Measurement error in selection variables affects selection bias
+- Multiple sources of bias compound the challenge of causal inference
+
+**Looking ahead**:
+
+- **Chapter 10**: Introduces the need for parametric models
+- **Chapters 11-16**: Advanced methods that can sometimes address combinations of biases
+:::
+
+## References
+
+---
+
+::: {#refs}
+:::

@@ -39,6 +39,28 @@ website:
             href: chapters/06-graphical-representation.qmd
           - text: "Chapter 7: Confounding"
             href: chapters/07-confounding.qmd
+          - text: "Chapter 8: Selection Bias"
+            href: chapters/08-selection-bias.qmd
+          - text: "Chapter 9: Measurement Bias"
+            href: chapters/09-measurement-bias.qmd
+          - text: "Chapter 10: Random Variability"
+            href: chapters/10-random-variability.qmd
+          - text: "Chapter 11: Why Model?"
+            href: chapters/11-why-model.qmd
+          - text: "Chapter 12: IP Weighting and Marginal Structural Models"
+            href: chapters/12-ip-weighting-marginal-structural-models.qmd
+          - text: "Chapter 13: Standardization and the Parametric G-Formula"
+            href: chapters/13-standardization-parametric-g-formula.qmd
+          - text: "Chapter 14: G-Estimation of Structural Nested Models"
+            href: chapters/14-g-estimation-structural-nested-models.qmd
+          - text: "Chapter 15: Outcome Regression and Propensity Scores"
+            href: chapters/15-outcome-regression-propensity-scores.qmd
+          - text: "Chapter 16: Instrumental Variable Estimation"
+            href: chapters/16-instrumental-variable-estimation.qmd
+          - text: "Chapter 17: Causal Survival Analysis"
+            href: chapters/17-causal-survival-analysis.qmd
+          - text: "Chapter 18: Variable Selection for Causal Inference"
+            href: chapters/18-variable-selection-causal-inference.qmd
 
 format:
   html:
