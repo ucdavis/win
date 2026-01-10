@@ -21,6 +21,391 @@
     "text": "Use the sidebar to navigate between chapters. Each chapter is available as: - A traditional HTML page (click the chapter name) - RevealJS slides (add -slides.html to the chapter URL) - PDF handout (add -handout.pdf to the chapter URL) - DOCX document (replace .html with .docx in the chapter URL)"
   },
   {
+    "objectID": "chapters/17-causal-survival-analysis.html",
+    "href": "chapters/17-causal-survival-analysis.html",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "",
+    "text": "This chapter extends causal inference methods to survival analysis and time-to-event outcomes. We define causal effects for survival data, address challenges posed by censoring and competing events, and show how to estimate causal survival curves using IP weighting and the parametric g-formula."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis.html#hazards-and-risks-pp.-247-250",
+    "href": "chapters/17-causal-survival-analysis.html#hazards-and-risks-pp.-247-250",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "1 17.1 Hazards and Risks (pp. 247-250)",
+    "text": "1 17.1 Hazards and Risks (pp. 247-250)\n\nWe begin by reviewing key concepts from survival analysis.\n\n1.1 Basic Definitions\n\nDefinition 1 (Survival Analysis Terms) Event time \\(T\\): Time from baseline until an event occurs (e.g., death, disease onset)\nCensoring time \\(C\\): Time from baseline until censoring (e.g., loss to follow-up, study end)\nObserved time \\(Y = \\min(T, C)\\): The time we actually observe\nEvent indicator \\(D = I(T \\leq C)\\): 1 if event occurred, 0 if censored\nRisk at time \\(t\\): \\(\\Pr[T \\leq t]\\) (cumulative incidence)\nSurvival at time \\(t\\): \\(S(t) = \\Pr[T &gt; t] = 1 - \\Pr[T \\leq t]\\)\nHazard at time \\(t\\): \\(\\lambda(t) = \\lim_{dt \\to 0} \\frac{\\Pr[t \\leq T &lt; t + dt \\mid T \\geq t]}{dt}\\)\n\n\n\n1.2 Hazard vs Risk\nHazard: Instantaneous rate of event occurrence among those at risk\n\nRanges from 0 to \\(\\infty\\)\nCan increase, decrease, or remain constant over time\nRelated to survival: \\(S(t) = \\exp\\left(-\\int_0^t \\lambda(s) ds\\right)\\)\n\nRisk (cumulative incidence): Probability of event by time \\(t\\)\n\nRanges from 0 to 1\nAlways non-decreasing\nMore interpretable for most purposes\n\n\nRelationship:\n\\[\\text{Risk}(t) = 1 - \\exp\\left(-\\int_0^t \\lambda(s) ds\\right)\\]\nIntuition: The hazard is like a velocity (rate of change), while risk is like a distance traveled (cumulative probability).\nFor causal inference, we typically focus on causal risks rather than causal hazards, though both can be defined."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis.html#from-hazards-to-risks-pp.-250-252",
+    "href": "chapters/17-causal-survival-analysis.html#from-hazards-to-risks-pp.-250-252",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "2 17.2 From Hazards to Risks (pp. 250-252)",
+    "text": "2 17.2 From Hazards to Risks (pp. 250-252)\n\nThe survival function \\(S(t)\\) and cumulative hazard \\(\\Lambda(t)\\) are key quantities.\n\n2.1 Cumulative Hazard\n\\[\\Lambda(t) = \\int_0^t \\lambda(s) ds\\]\nInterpretation: Total accumulated hazard up to time \\(t\\).\n\n\n2.2 Relationships\nSurvival from cumulative hazard:\n\\[S(t) = \\exp(-\\Lambda(t))\\]\nRisk from survival:\n\\[\\Pr[T \\leq t] = 1 - S(t) = 1 - \\exp(-\\Lambda(t))\\]\n\n\n2.3 Kaplan-Meier Estimator\nNonparametric estimator of survival function:\n\\[\\hat{S}(t) = \\prod_{t_i \\leq t} \\left(1 - \\frac{d_i}{n_i}\\right)\\]\nwhere: - \\(t_i\\) are the ordered event times - \\(d_i\\) is the number of events at \\(t_i\\) - \\(n_i\\) is the number at risk just before \\(t_i\\)\nAssumption: Censoring is independent of event time (given covariates).\n\nKaplan-Meier provides a nonparametric estimate of the survival curve without assuming a parametric model for the hazard.\nLimitation: Doesn’t adjust for confounders. For causal inference, we need IP weighting or parametric g-formula."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis.html#why-censoring-matters-pp.-252-255",
+    "href": "chapters/17-causal-survival-analysis.html#why-censoring-matters-pp.-252-255",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "3 17.3 Why Censoring Matters (pp. 252-255)",
+    "text": "3 17.3 Why Censoring Matters (pp. 252-255)\n\nCensoring creates missing data problems in survival analysis.\n\n3.1 Types of Censoring\nAdministrative censoring: Study ends before all events occur\n\nPredictable, often at a fixed time\nRelatively benign if independent of event risk\n\nLoss to follow-up: Participants drop out before event or study end\n\nPotentially problematic\nMay be related to prognosis (informative censoring)\n\nCompeting risks: Individuals experience a different event that precludes the event of interest\n\ne.g., death from other causes when studying heart attack\nRequires special treatment\n\n\n\n3.2 Independent Censoring Assumption\n\nDefinition 2 (Independent Censoring) Censoring is independent if:\n\\[T \\perp\\!\\!\\!\\perp C \\mid L\\]\nwhere \\(T\\) is event time, \\(C\\) is censoring time, \\(L\\) are measured covariates.\nInterpretation: Among individuals with the same covariate values, censoring is unrelated to their (unobserved) event time.\n\nWhen violated: Standard survival methods (Kaplan-Meier, Cox regression) are biased.\nSolution: Use IP weighting for censoring (Section 17.5).\n\nInformative censoring: When censoring is related to prognosis even after adjusting for covariates.\nExample: Patients who feel sicker may be more likely to drop out AND more likely to have events. If we can measure “feeling sick”, we can adjust. If not, we have a problem.\nPractical approach: Measure as many predictors of censoring as possible, then assume independence given those predictors."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis.html#the-hazard-ratio-pp.-255-257",
+    "href": "chapters/17-causal-survival-analysis.html#the-hazard-ratio-pp.-255-257",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "4 17.4 The Hazard Ratio (pp. 255-257)",
+    "text": "4 17.4 The Hazard Ratio (pp. 255-257)\n\nThe hazard ratio is commonly used to quantify treatment effects in survival analysis.\n\n4.1 Definition\n\nDefinition 3 (Hazard Ratio) The hazard ratio comparing treatment \\(a\\) to \\(a'\\) is:\n\\[HR^{a,a'}(t) = \\frac{\\lambda^a(t)}{\\lambda^{a'}(t)}\\]\nwhere \\(\\lambda^a(t)\\) is the hazard function under treatment \\(a\\).\nCox proportional hazards model: Assumes \\(HR^{a,a'}(t) = HR^{a,a'}\\) (constant over time).\n\n\n\n4.2 Interpretation Challenges\nCollapsibility: Unlike risk differences and risk ratios, hazard ratios are non-collapsible.\n\nMarginal HR \\(\\neq\\) average of conditional HRs\nAdjusted HR from Cox model is not a causal marginal effect\nConditional on covariates, HR has complex interpretation\n\nBuilt-in selection bias: Hazards condition on survival to time \\(t\\), creating selection bias when effects are heterogeneous.\n\nWhy hazard ratios are tricky:\n\nNon-collapsibility: Even under no confounding, adjusted HR \\(\\neq\\) unadjusted HR\nSelection bias: By conditioning on \\(T \\geq t\\), we select a subset of the population that changes over time\nNo causal interpretation: The HR from a Cox model is not generally a causal parameter\n\nBetter approach for causal inference: Focus on causal risk differences or causal risk ratios, not hazard ratios."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis.html#ip-weighting-of-survival-curves-pp.-257-260",
+    "href": "chapters/17-causal-survival-analysis.html#ip-weighting-of-survival-curves-pp.-257-260",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "5 17.5 IP Weighting of Survival Curves (pp. 257-260)",
+    "text": "5 17.5 IP Weighting of Survival Curves (pp. 257-260)\n\nWe can use IP weighting to estimate causal survival curves.\n\n5.1 Causal Survival Curve\n\nDefinition 4 (Causal Survival Function) The causal survival function under treatment \\(a\\) is:\n\\[S^a(t) = \\Pr[T^a &gt; t]\\]\nwhere \\(T^a\\) is the potential event time under treatment \\(a\\).\nCausal risk at time \\(t\\): \\(\\Pr[T^a \\leq t] = 1 - S^a(t)\\)\n\n\n\n5.2 IP Weighted Kaplan-Meier\nGoal: Estimate \\(S^a(t)\\) adjusting for confounding.\nMethod: IP weighted Kaplan-Meier estimator\n\nCompute IP weights for treatment: \\(W^A = \\frac{1}{\\Pr[A \\mid L]}\\)\nApply weighted Kaplan-Meier:\n\n\\[\\hat{S}^a(t) = \\prod_{t_i \\leq t} \\left(1 - \\frac{\\sum_{j: A_j = a} W_j^A I(Y_j = t_i, D_j = 1)}{\\sum_{j: A_j = a} W_j^A I(Y_j \\geq t_i)}\\right)\\]\nResult: Estimate of causal survival curve under treatment \\(a\\).\n\n\n5.3 Handling Censoring\nJoint weights for treatment and censoring:\n\\[W^{A,C}_i = \\frac{1}{\\Pr[A_i \\mid L_i]} \\times \\frac{1}{\\Pr[C_i &gt; t \\mid A_i, L_i, \\bar{Y}_i(t)]}\\]\nwhere \\(\\bar{Y}_i(t)\\) represents the history of being at risk up to time \\(t\\).\nStabilized weights can improve stability:\n\\[SW^{A,C} = \\frac{\\Pr[A]}{\\Pr[A \\mid L]} \\times \\frac{\\Pr[C &gt; t \\mid A]}{\\Pr[C &gt; t \\mid A, L, \\bar{Y}(t)]}\\]\n\nTime-dependent weights: Censoring weights can change over time if censoring depends on time-varying covariates or outcome history.\nEstimation:\n\nModel \\(\\Pr[C &gt; t \\mid A, L, \\bar{Y}(t)]\\) using pooled logistic regression\nFor each individual at each time, compute censoring probability\nCreate weights as product of treatment weights and censoring weights\nApply weighted Kaplan-Meier\n\nThis is implemented in various R packages (e.g., ipw, WeightIt)."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis.html#the-parametric-g-formula-for-survival-data-pp.-260-262",
+    "href": "chapters/17-causal-survival-analysis.html#the-parametric-g-formula-for-survival-data-pp.-260-262",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "6 17.6 The Parametric G-Formula for Survival Data (pp. 260-262)",
+    "text": "6 17.6 The Parametric G-Formula for Survival Data (pp. 260-262)\n\nThe parametric g-formula can also be used for survival outcomes.\n\n6.1 Discrete-Time Approach\nModel: Hazard at each time point \\(t\\)\n\\[\\Pr[T = t \\mid T \\geq t, A, L] = \\text{expit}(\\alpha_0(t) + \\alpha_1 A + \\alpha_2^{\\top} L)\\]\nThis can be fit using pooled logistic regression:\n\nCreate one record per person per time period\nInclude time as a predictor (e.g., dummy variables for each \\(t\\))\nFit logistic regression\n\nG-formula algorithm:\n\nFit pooled logistic model for \\(\\Pr[T = t \\mid T \\geq t, A, L]\\)\nFor each individual \\(i\\) and each time \\(t\\):\n\nPredict \\(\\hat{p}_{it}^a = \\Pr[T = t \\mid T \\geq t, A = a, L_i]\\)\n\nCompute survival probabilities:\n\n\\(\\hat{S}_i^a(t) = \\prod_{s=1}^t (1 - \\hat{p}_{is}^a)\\)\n\nAverage over individuals:\n\n\\(\\hat{S}^a(t) = \\frac{1}{n} \\sum_{i=1}^n \\hat{S}_i^a(t)\\)\n\n\n\n\n6.2 Continuous-Time Approach\nFor continuous time, use parametric survival models:\n\nWeibull, exponential, log-normal, etc.\nSpecify hazard function with parameters depending on \\(A, L\\)\nPredict survival curves for each individual under each treatment\nAverage to get causal survival curves\n\n\nPooled logistic regression:\nApproximates the continuous-time hazard when time intervals are small. As intervals \\(\\to 0\\), converges to Cox model.\nAdvantages over IP weighting:\n\nMay be more efficient when outcome model is correct\nEasier to incorporate time-varying covariates\nNatural for discrete-time data\n\nDisadvantages:\n\nRequires correct specification of outcome model\nMore complex with time-varying treatments"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis.html#competing-risks-pp.-262-264",
+    "href": "chapters/17-causal-survival-analysis.html#competing-risks-pp.-262-264",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "7 17.7 Competing Risks (pp. 262-264)",
+    "text": "7 17.7 Competing Risks (pp. 262-264)\n\nCompeting risks occur when multiple types of events can prevent observation of the event of interest.\n\n7.1 Definition\n\nDefinition 5 (Competing Risks) A competing risk is an event that precludes the occurrence of the event of interest.\nExample: When studying heart attack incidence, death from cancer is a competing risk.\nIf someone dies from cancer, they can never have a heart attack (or at least we can’t observe it).\n\n\n\n7.2 Challenges\nCensoring is not independent: Individuals who experience competing events may have different risk of the event of interest.\nStandard survival methods fail: Treating competing events as censoring leads to biased estimates.\n\n\n7.3 Approaches\n1. Cause-specific hazards:\n\nModel hazard for each type of event separately\nUse cause-specific Cox models\nProvides hazard ratios, not easily interpretable as causal effects\n\n2. Subdistribution hazards (Fine-Gray model):\n\nModels cumulative incidence function directly\nIndividuals with competing events remain in risk set\nMore interpretable but still has issues\n\n3. Parametric g-formula:\n\nModel all event types jointly\nSimulate outcomes under each treatment\nCompute cumulative incidence of each event type\nRecommended for causal inference\n\n\nWhy g-formula for competing risks:\nThe g-formula naturally handles competing risks by modeling the joint distribution of all outcomes. Under an intervention to set \\(A = a\\):\n\nPredict which event type each person would experience first\nCompute the proportion experiencing each event type by time \\(t\\)\nThese are the causal cumulative incidence functions\n\nPractical implementation:\n\nUse multinomial logistic regression for multiple event types\nOr separate models for each event type with appropriate risk sets\nSimulate individual trajectories under each treatment\nSummarize to get causal curves"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis.html#summary",
+    "href": "chapters/17-causal-survival-analysis.html#summary",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "8 Summary",
+    "text": "8 Summary\n\nKey concepts:\n\nSurvival analysis: Study of time-to-event outcomes with censoring\nHazard vs risk: Instantaneous rate vs cumulative probability\nCensoring: Missing data problem requiring careful assumptions\nCausal survival curves: \\(S^a(t) = \\Pr[T^a &gt; t]\\) under treatment \\(a\\)\nIP weighted Kaplan-Meier: Adjusts for confounding via weighting\nParametric g-formula: Models hazards, predicts survival curves, averages\nCompeting risks: Multiple event types that preclude each other\n\nMethods for causal survival analysis:\n\n\n\n\n\n\n\n\n\nMethod\nApproach\nAdvantages\nDisadvantages\n\n\n\n\nIP weighted KM\nWeight observations\nNonparametric, robust\nNeeds correct treatment/censoring models\n\n\nParametric g-formula\nModel hazards\nEfficient, handles competing risks\nNeeds correct outcome model\n\n\nCox model\nModel conditional hazard\nFamiliar, flexible\nHR not causally interpretable\n\n\n\nCausal estimands:\n\nCausal risk difference: \\(\\Pr[T^{a=1} \\leq t] - \\Pr[T^{a=0} \\leq t]\\)\nCausal risk ratio: \\(\\frac{\\Pr[T^{a=1} \\leq t]}{\\Pr[T^{a=0} \\leq t]}\\)\nCausal survival ratio: \\(\\frac{S^{a=1}(t)}{S^{a=0}(t)}\\)\n\nNOT generally causal:\n\nHazard ratio from Cox model with covariates (non-collapsible, built-in selection)\n\nAssumptions:\n\nConditional exchangeability: \\(T^a \\perp\\!\\!\\!\\perp A \\mid L\\)\nIndependent censoring: \\(T \\perp\\!\\!\\!\\perp C \\mid A, L\\)\nPositivity: \\(\\Pr[A = a \\mid L] &gt; 0\\) and \\(\\Pr[C &gt; t \\mid A, L] &gt; 0\\)\nCorrect models: Treatment, censoring, and/or outcome models\n\nPractical recommendations:\n\nFocus on risks, not hazards, for causal inference\nAdjust for confounding using IP weighting or g-formula\nHandle censoring via IP weighting or modeling\nUse g-formula for competing risks\nCheck assumptions, especially independent censoring\nReport survival curves, not just summary measures\n\n\nCommon mistakes:\n\nInterpreting adjusted hazard ratios as causal effects\nTreating competing events as independent censoring\nIgnoring time-varying confounding (see Part III)\nUsing methods that assume independent censoring when it’s violated\n\nLooking ahead: Part III extends these ideas to time-varying treatments, where survival analysis becomes even more complex but the g-formula and IP weighting remain powerful tools."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#basic-definitions",
+    "href": "chapters/17-causal-survival-analysis-slides.html#basic-definitions",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Basic Definitions",
+    "text": "Basic Definitions\n\nDefinition 1 (Survival Analysis Terms) Event time \\(T\\): Time from baseline until an event occurs (e.g., death, disease onset)\nCensoring time \\(C\\): Time from baseline until censoring (e.g., loss to follow-up, study end)\nObserved time \\(Y = \\min(T, C)\\): The time we actually observe\nEvent indicator \\(D = I(T \\leq C)\\): 1 if event occurred, 0 if censored\nRisk at time \\(t\\): \\(\\Pr[T \\leq t]\\) (cumulative incidence)\nSurvival at time \\(t\\): \\(S(t) = \\Pr[T &gt; t] = 1 - \\Pr[T \\leq t]\\)\nHazard at time \\(t\\): \\(\\lambda(t) = \\lim_{dt \\to 0} \\frac{\\Pr[t \\leq T &lt; t + dt \\mid T \\geq t]}{dt}\\)"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#hazard-vs-risk",
+    "href": "chapters/17-causal-survival-analysis-slides.html#hazard-vs-risk",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Hazard vs Risk",
+    "text": "Hazard vs Risk\nHazard: Instantaneous rate of event occurrence among those at risk\n\nRanges from 0 to \\(\\infty\\)\nCan increase, decrease, or remain constant over time\nRelated to survival: \\(S(t) = \\exp\\left(-\\int_0^t \\lambda(s) ds\\right)\\)\n\nRisk (cumulative incidence): Probability of event by time \\(t\\)\n\nRanges from 0 to 1\nAlways non-decreasing\nMore interpretable for most purposes\n\n\nRelationship:\n\\[\\text{Risk}(t) = 1 - \\exp\\left(-\\int_0^t \\lambda(s) ds\\right)\\]\nIntuition: The hazard is like a velocity (rate of change), while risk is like a distance traveled (cumulative probability).\nFor causal inference, we typically focus on causal risks rather than causal hazards, though both can be defined."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#cumulative-hazard",
+    "href": "chapters/17-causal-survival-analysis-slides.html#cumulative-hazard",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Cumulative Hazard",
+    "text": "Cumulative Hazard\n\\[\\Lambda(t) = \\int_0^t \\lambda(s) ds\\]\nInterpretation: Total accumulated hazard up to time \\(t\\)."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#relationships",
+    "href": "chapters/17-causal-survival-analysis-slides.html#relationships",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Relationships",
+    "text": "Relationships\nSurvival from cumulative hazard:\n\\[S(t) = \\exp(-\\Lambda(t))\\]\nRisk from survival:\n\\[\\Pr[T \\leq t] = 1 - S(t) = 1 - \\exp(-\\Lambda(t))\\]"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#kaplan-meier-estimator",
+    "href": "chapters/17-causal-survival-analysis-slides.html#kaplan-meier-estimator",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Kaplan-Meier Estimator",
+    "text": "Kaplan-Meier Estimator\nNonparametric estimator of survival function:\n\\[\\hat{S}(t) = \\prod_{t_i \\leq t} \\left(1 - \\frac{d_i}{n_i}\\right)\\]\nwhere: - \\(t_i\\) are the ordered event times - \\(d_i\\) is the number of events at \\(t_i\\) - \\(n_i\\) is the number at risk just before \\(t_i\\)\nAssumption: Censoring is independent of event time (given covariates).\n\nKaplan-Meier provides a nonparametric estimate of the survival curve without assuming a parametric model for the hazard.\nLimitation: Doesn’t adjust for confounders. For causal inference, we need IP weighting or parametric g-formula."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#types-of-censoring",
+    "href": "chapters/17-causal-survival-analysis-slides.html#types-of-censoring",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Types of Censoring",
+    "text": "Types of Censoring\nAdministrative censoring: Study ends before all events occur\n\nPredictable, often at a fixed time\nRelatively benign if independent of event risk\n\nLoss to follow-up: Participants drop out before event or study end\n\nPotentially problematic\nMay be related to prognosis (informative censoring)\n\nCompeting risks: Individuals experience a different event that precludes the event of interest\n\ne.g., death from other causes when studying heart attack\nRequires special treatment"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#independent-censoring-assumption",
+    "href": "chapters/17-causal-survival-analysis-slides.html#independent-censoring-assumption",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Independent Censoring Assumption",
+    "text": "Independent Censoring Assumption\n\nDefinition 2 (Independent Censoring) Censoring is independent if:\n\\[T \\perp\\!\\!\\!\\perp C \\mid L\\]\nwhere \\(T\\) is event time, \\(C\\) is censoring time, \\(L\\) are measured covariates.\nInterpretation: Among individuals with the same covariate values, censoring is unrelated to their (unobserved) event time.\n\nWhen violated: Standard survival methods (Kaplan-Meier, Cox regression) are biased.\nSolution: Use IP weighting for censoring (Section 17.5).\n\nInformative censoring: When censoring is related to prognosis even after adjusting for covariates.\nExample: Patients who feel sicker may be more likely to drop out AND more likely to have events. If we can measure “feeling sick”, we can adjust. If not, we have a problem.\nPractical approach: Measure as many predictors of censoring as possible, then assume independence given those predictors."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#definition",
+    "href": "chapters/17-causal-survival-analysis-slides.html#definition",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Definition",
+    "text": "Definition\n\nDefinition 3 (Hazard Ratio) The hazard ratio comparing treatment \\(a\\) to \\(a'\\) is:\n\\[HR^{a,a'}(t) = \\frac{\\lambda^a(t)}{\\lambda^{a'}(t)}\\]\nwhere \\(\\lambda^a(t)\\) is the hazard function under treatment \\(a\\).\nCox proportional hazards model: Assumes \\(HR^{a,a'}(t) = HR^{a,a'}\\) (constant over time)."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#interpretation-challenges",
+    "href": "chapters/17-causal-survival-analysis-slides.html#interpretation-challenges",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Interpretation Challenges",
+    "text": "Interpretation Challenges\nCollapsibility: Unlike risk differences and risk ratios, hazard ratios are non-collapsible.\n\nMarginal HR \\(\\neq\\) average of conditional HRs\nAdjusted HR from Cox model is not a causal marginal effect\nConditional on covariates, HR has complex interpretation\n\nBuilt-in selection bias: Hazards condition on survival to time \\(t\\), creating selection bias when effects are heterogeneous.\n\nWhy hazard ratios are tricky:\n\nNon-collapsibility: Even under no confounding, adjusted HR \\(\\neq\\) unadjusted HR\nSelection bias: By conditioning on \\(T \\geq t\\), we select a subset of the population that changes over time\nNo causal interpretation: The HR from a Cox model is not generally a causal parameter\n\nBetter approach for causal inference: Focus on causal risk differences or causal risk ratios, not hazard ratios."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#causal-survival-curve",
+    "href": "chapters/17-causal-survival-analysis-slides.html#causal-survival-curve",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Causal Survival Curve",
+    "text": "Causal Survival Curve\n\nDefinition 4 (Causal Survival Function) The causal survival function under treatment \\(a\\) is:\n\\[S^a(t) = \\Pr[T^a &gt; t]\\]\nwhere \\(T^a\\) is the potential event time under treatment \\(a\\).\nCausal risk at time \\(t\\): \\(\\Pr[T^a \\leq t] = 1 - S^a(t)\\)"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#ip-weighted-kaplan-meier",
+    "href": "chapters/17-causal-survival-analysis-slides.html#ip-weighted-kaplan-meier",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "IP Weighted Kaplan-Meier",
+    "text": "IP Weighted Kaplan-Meier\nGoal: Estimate \\(S^a(t)\\) adjusting for confounding.\nMethod: IP weighted Kaplan-Meier estimator\n\nCompute IP weights for treatment: \\(W^A = \\frac{1}{\\Pr[A \\mid L]}\\)\nApply weighted Kaplan-Meier:\n\n\\[\\hat{S}^a(t) = \\prod_{t_i \\leq t} \\left(1 - \\frac{\\sum_{j: A_j = a} W_j^A I(Y_j = t_i, D_j = 1)}{\\sum_{j: A_j = a} W_j^A I(Y_j \\geq t_i)}\\right)\\]\nResult: Estimate of causal survival curve under treatment \\(a\\)."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#handling-censoring",
+    "href": "chapters/17-causal-survival-analysis-slides.html#handling-censoring",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Handling Censoring",
+    "text": "Handling Censoring\nJoint weights for treatment and censoring:\n\\[W^{A,C}_i = \\frac{1}{\\Pr[A_i \\mid L_i]} \\times \\frac{1}{\\Pr[C_i &gt; t \\mid A_i, L_i, \\bar{Y}_i(t)]}\\]\nwhere \\(\\bar{Y}_i(t)\\) represents the history of being at risk up to time \\(t\\).\nStabilized weights can improve stability:\n\\[SW^{A,C} = \\frac{\\Pr[A]}{\\Pr[A \\mid L]} \\times \\frac{\\Pr[C &gt; t \\mid A]}{\\Pr[C &gt; t \\mid A, L, \\bar{Y}(t)]}\\]\n\nTime-dependent weights: Censoring weights can change over time if censoring depends on time-varying covariates or outcome history.\nEstimation:\n\nModel \\(\\Pr[C &gt; t \\mid A, L, \\bar{Y}(t)]\\) using pooled logistic regression\nFor each individual at each time, compute censoring probability\nCreate weights as product of treatment weights and censoring weights\nApply weighted Kaplan-Meier\n\nThis is implemented in various R packages (e.g., ipw, WeightIt)."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#discrete-time-approach",
+    "href": "chapters/17-causal-survival-analysis-slides.html#discrete-time-approach",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Discrete-Time Approach",
+    "text": "Discrete-Time Approach\nModel: Hazard at each time point \\(t\\)\n\\[\\Pr[T = t \\mid T \\geq t, A, L] = \\text{expit}(\\alpha_0(t) + \\alpha_1 A + \\alpha_2^{\\top} L)\\]\nThis can be fit using pooled logistic regression:\n\nCreate one record per person per time period\nInclude time as a predictor (e.g., dummy variables for each \\(t\\))\nFit logistic regression\n\nG-formula algorithm:\n\nFit pooled logistic model for \\(\\Pr[T = t \\mid T \\geq t, A, L]\\)\nFor each individual \\(i\\) and each time \\(t\\):\n\nPredict \\(\\hat{p}_{it}^a = \\Pr[T = t \\mid T \\geq t, A = a, L_i]\\)\n\nCompute survival probabilities:\n\n\\(\\hat{S}_i^a(t) = \\prod_{s=1}^t (1 - \\hat{p}_{is}^a)\\)\n\nAverage over individuals:\n\n\\(\\hat{S}^a(t) = \\frac{1}{n} \\sum_{i=1}^n \\hat{S}_i^a(t)\\)"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#continuous-time-approach",
+    "href": "chapters/17-causal-survival-analysis-slides.html#continuous-time-approach",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Continuous-Time Approach",
+    "text": "Continuous-Time Approach\nFor continuous time, use parametric survival models:\n\nWeibull, exponential, log-normal, etc.\nSpecify hazard function with parameters depending on \\(A, L\\)\nPredict survival curves for each individual under each treatment\nAverage to get causal survival curves\n\n\nPooled logistic regression:\nApproximates the continuous-time hazard when time intervals are small. As intervals \\(\\to 0\\), converges to Cox model.\nAdvantages over IP weighting:\n\nMay be more efficient when outcome model is correct\nEasier to incorporate time-varying covariates\nNatural for discrete-time data\n\nDisadvantages:\n\nRequires correct specification of outcome model\nMore complex with time-varying treatments"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#definition-1",
+    "href": "chapters/17-causal-survival-analysis-slides.html#definition-1",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Definition",
+    "text": "Definition\n\nDefinition 5 (Competing Risks) A competing risk is an event that precludes the occurrence of the event of interest.\nExample: When studying heart attack incidence, death from cancer is a competing risk.\nIf someone dies from cancer, they can never have a heart attack (or at least we can’t observe it)."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#challenges",
+    "href": "chapters/17-causal-survival-analysis-slides.html#challenges",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Challenges",
+    "text": "Challenges\nCensoring is not independent: Individuals who experience competing events may have different risk of the event of interest.\nStandard survival methods fail: Treating competing events as censoring leads to biased estimates."
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#approaches",
+    "href": "chapters/17-causal-survival-analysis-slides.html#approaches",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "Approaches",
+    "text": "Approaches\n1. Cause-specific hazards:\n\nModel hazard for each type of event separately\nUse cause-specific Cox models\nProvides hazard ratios, not easily interpretable as causal effects\n\n2. Subdistribution hazards (Fine-Gray model):\n\nModels cumulative incidence function directly\nIndividuals with competing events remain in risk set\nMore interpretable but still has issues\n\n3. Parametric g-formula:\n\nModel all event types jointly\nSimulate outcomes under each treatment\nCompute cumulative incidence of each event type\nRecommended for causal inference\n\n\nWhy g-formula for competing risks:\nThe g-formula naturally handles competing risks by modeling the joint distribution of all outcomes. Under an intervention to set \\(A = a\\):\n\nPredict which event type each person would experience first\nCompute the proportion experiencing each event type by time \\(t\\)\nThese are the causal cumulative incidence functions\n\nPractical implementation:\n\nUse multinomial logistic regression for multiple event types\nOr separate models for each event type with appropriate risk sets\nSimulate individual trajectories under each treatment\nSummarize to get causal curves"
+  },
+  {
+    "objectID": "chapters/17-causal-survival-analysis-slides.html#references",
+    "href": "chapters/17-causal-survival-analysis-slides.html#references",
+    "title": "Chapter 17: Causal Survival Analysis",
+    "section": "",
+    "text": "Key concepts:\n\nSurvival analysis: Study of time-to-event outcomes with censoring\nHazard vs risk: Instantaneous rate vs cumulative probability\nCensoring: Missing data problem requiring careful assumptions\nCausal survival curves: \\(S^a(t) = \\Pr[T^a &gt; t]\\) under treatment \\(a\\)\nIP weighted Kaplan-Meier: Adjusts for confounding via weighting\nParametric g-formula: Models hazards, predicts survival curves, averages\nCompeting risks: Multiple event types that preclude each other\n\nMethods for causal survival analysis:\n\n\n\n\n\n\n\n\n\nMethod\nApproach\nAdvantages\nDisadvantages\n\n\n\n\nIP weighted KM\nWeight observations\nNonparametric, robust\nNeeds correct treatment/censoring models\n\n\nParametric g-formula\nModel hazards\nEfficient, handles competing risks\nNeeds correct outcome model\n\n\nCox model\nModel conditional hazard\nFamiliar, flexible\nHR not causally interpretable\n\n\n\nCausal estimands:\n\nCausal risk difference: \\(\\Pr[T^{a=1} \\leq t] - \\Pr[T^{a=0} \\leq t]\\)\nCausal risk ratio: \\(\\frac{\\Pr[T^{a=1} \\leq t]}{\\Pr[T^{a=0} \\leq t]}\\)\nCausal survival ratio: \\(\\frac{S^{a=1}(t)}{S^{a=0}(t)}\\)\n\nNOT generally causal:\n\nHazard ratio from Cox model with covariates (non-collapsible, built-in selection)\n\nAssumptions:\n\nConditional exchangeability: \\(T^a \\perp\\!\\!\\!\\perp A \\mid L\\)\nIndependent censoring: \\(T \\perp\\!\\!\\!\\perp C \\mid A, L\\)\nPositivity: \\(\\Pr[A = a \\mid L] &gt; 0\\) and \\(\\Pr[C &gt; t \\mid A, L] &gt; 0\\)\nCorrect models: Treatment, censoring, and/or outcome models\n\nPractical recommendations:\n\nFocus on risks, not hazards, for causal inference\nAdjust for confounding using IP weighting or g-formula\nHandle censoring via IP weighting or modeling\nUse g-formula for competing risks\nCheck assumptions, especially independent censoring\nReport survival curves, not just summary measures\n\n\nCommon mistakes:\n\nInterpreting adjusted hazard ratios as causal effects\nTreating competing events as independent censoring\nIgnoring time-varying confounding (see Part III)\nUsing methods that assume independent censoring when it’s violated\n\nLooking ahead: Part III extends these ideas to time-varying treatments, where survival analysis becomes even more complex but the g-formula and IP weighting remain powerful tools.\n\n\n\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html",
+    "href": "chapters/15-outcome-regression-propensity-scores.html",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "",
+    "text": "This chapter explores outcome regression and propensity scores in greater depth, clarifying their roles in causal inference. We examine when simple regression adjustment is sufficient, when it fails, and how propensity scores can be used for confounding adjustment through matching, stratification, or weighting."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html#outcome-regression-pp.-207-210",
+    "href": "chapters/15-outcome-regression-propensity-scores.html#outcome-regression-pp.-207-210",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "1 15.1 Outcome Regression (pp. 207-210)",
+    "text": "1 15.1 Outcome Regression (pp. 207-210)\n\nOutcome regression estimates causal effects by modeling the outcome as a function of treatment and confounders.\n\n1.1 The Outcome Regression Approach\n\nDefinition 1 (Outcome Regression) Outcome regression for causal inference:\n\nFit a model for \\(E[Y \\mid A, L]\\)\nUse the model to compute standardized means (g-formula)\nEstimate causal effects as contrasts of standardized means\n\nFor simple cases, the treatment coefficient may approximate the causal effect, but this requires strong assumptions.\n\n\n\n1.2 When Does the Treatment Coefficient Equal the Causal Effect?\nModel: \\(E[Y \\mid A, L] = \\beta_0 + \\beta_1 A + \\beta_2^{\\top} L\\)\nQuestion: When does \\(\\beta_1 = E[Y^{a=1}] - E[Y^{a=0}]\\)?\nAnswer: Only under restrictive conditions:\n\nNo confounding: \\(Y^a \\perp\\!\\!\\!\\perp A\\) (conditional exchangeability not needed)\nNo effect modification: The causal effect doesn’t vary with \\(L\\)\nCorrect model specification: Linear model is correct\n\nIf effect modification exists, \\(\\beta_1\\) is a weighted average of conditional effects, not generally equal to the marginal causal effect.\n\nWhy this matters:\nMany researchers fit \\(Y = \\beta_0 + \\beta_1 A + \\beta_2^{\\top} L\\) and interpret \\(\\beta_1\\) as the causal effect. This is valid ONLY if:\n\nNo unmeasured confounding (always required)\nNo effect modification by measured confounders\nCorrect linear model\n\nWhen effect modification exists, use the g-formula to properly standardize, or include \\(A \\times L\\) interactions in the model.\n\n\n\n1.3 Example: NHEFS Study\nSimple model: \\[E[\\text{Weight Change} \\mid A, L] = \\beta_0 + \\beta_1 \\text{Quit} + \\beta_2 \\text{Age} + \\beta_3 \\text{Sex} + \\ldots\\]\nIssues:\n\nAssumes effect of quitting is the same for all individuals\nIf the effect varies by age, sex, or other factors, \\(\\beta_1\\) doesn’t equal the marginal causal effect\nNeed to add interactions or use g-formula\n\nBetter approach: \\[E[Y \\mid A, L] = \\beta_0 + \\beta_1 A + \\beta_2^{\\top} L + \\beta_3^{\\top} (A \\times L)\\]\nThen use g-formula to compute marginal effect."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html#propensity-scores-pp.-210-213",
+    "href": "chapters/15-outcome-regression-propensity-scores.html#propensity-scores-pp.-210-213",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "2 15.2 Propensity Scores (pp. 210-213)",
+    "text": "2 15.2 Propensity Scores (pp. 210-213)\n\nThe propensity score is the probability of receiving treatment given confounders. It plays a central role in observational studies.\n\nDefinition 2 (Propensity Score) The propensity score is:\n\\[e(L) = \\Pr[A = 1 \\mid L]\\]\nFor individual \\(i\\) with covariates \\(L_i\\), the propensity score is \\(e(L_i) = \\Pr[A = 1 \\mid L = L_i]\\).\n\n\n2.1 Balancing Property\nKey theorem: If \\(Y^a \\perp\\!\\!\\!\\perp A \\mid L\\), then:\n\\[Y^a \\perp\\!\\!\\!\\perp A \\mid e(L)\\]\nInterpretation: Conditional on the propensity score, treatment assignment is independent of potential outcomes.\nImplication: We can adjust for confounding by adjusting for the propensity score alone, rather than all components of \\(L\\).\n\nWhy this is useful:\n\nWith many confounders, stratification on \\(L\\) is difficult (curse of dimensionality)\nThe propensity score reduces multidimensional \\(L\\) to a single dimension\nWe can match, stratify, or weight on \\(e(L)\\) instead of on the full vector \\(L\\)\n\nImportant caveat: This works only if:\n\nThe propensity score model is correctly specified\nPositivity holds: \\(0 &lt; e(L) &lt; 1\\) for all \\(L\\) with \\(\\Pr[L] &gt; 0\\)\n\n\n\n\n2.2 Estimating Propensity Scores\nCommon approach: Logistic regression\n\\[\\text{logit} \\Pr[A = 1 \\mid L] = \\alpha_0 + \\alpha_1^{\\top} L\\]\nEstimation:\n\nFit logistic regression with treatment \\(A\\) as outcome, confounders \\(L\\) as predictors\nPredict \\(\\hat{e}(L_i) = \\hat{\\Pr}[A = 1 \\mid L_i]\\) for each individual\nUse \\(\\hat{e}(L_i)\\) for matching, stratification, or weighting\n\nModel selection:\n\nInclude all confounders\nConsider interactions and nonlinear terms\nAssess balance after adjustment (see Section 15.3)"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html#propensity-stratification-and-standardization-pp.-213-216",
+    "href": "chapters/15-outcome-regression-propensity-scores.html#propensity-stratification-and-standardization-pp.-213-216",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "3 15.3 Propensity Stratification and Standardization (pp. 213-216)",
+    "text": "3 15.3 Propensity Stratification and Standardization (pp. 213-216)\n\nPropensity scores can be used to stratify the population and then standardize.\n\n3.1 Propensity Score Stratification\nProcedure:\n\nEstimate propensity score \\(\\hat{e}(L_i)\\) for all individuals\nCreate strata (e.g., quintiles) of the propensity score\nWithin each stratum, compute \\(\\hat{E}[Y \\mid A = a, \\text{stratum } s]\\)\nStandardize across strata:\n\n\\[\\hat{E}[Y^a] = \\sum_{s=1}^S \\hat{E}[Y \\mid A = a, \\text{stratum } s] \\times \\Pr[\\text{stratum } s]\\]\n\n\n3.2 Checking Balance\nAfter stratification, check whether confounders are balanced within strata:\nBalance: Within stratum \\(s\\), the distribution of \\(L\\) should be similar for treated and untreated.\nDiagnostics:\n\nCompare means/proportions of \\(L\\) across treatment groups within strata\nStandardized differences: \\(\\frac{\\bar{L}_{A=1,s} - \\bar{L}_{A=0,s}}{SD_{\\text{pooled}}}\\)\nTarget: Standardized differences &lt; 0.1 (rule of thumb)\n\nIf balance is poor, refine the propensity score model (add interactions, polynomials, etc.).\n\nWhy check balance:\nThe propensity score should create “pseudo-randomization” within strata. If confounders aren’t balanced, either:\n\nThe propensity score model is misspecified\nThere are violations of positivity (some strata have only treated or only untreated)\n\nBalance checking is a diagnostic tool, not a formal test. The goal is to achieve good balance so that confounding is minimized within strata.\n\n\n\n3.3 Example: Quintile Stratification\nSteps:\n\nFit logistic regression for \\(\\Pr[A = 1 \\mid L]\\)\nDivide individuals into 5 groups (quintiles) based on \\(\\hat{e}(L)\\)\nWithin each quintile, compare treated vs untreated outcomes\nStandardize across quintiles using quintile proportions as weights\n\nCommon finding: Most of the confounding is removed by stratifying on propensity score quintiles, though finer stratification may improve balance."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html#propensity-matching-pp.-216-219",
+    "href": "chapters/15-outcome-regression-propensity-scores.html#propensity-matching-pp.-216-219",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "4 15.4 Propensity Matching (pp. 216-219)",
+    "text": "4 15.4 Propensity Matching (pp. 216-219)\n\nPropensity score matching creates pairs (or sets) of treated and untreated individuals with similar propensity scores.\n\n4.1 Matching Algorithms\n1-to-1 nearest neighbor matching:\n\nFor each treated individual, find the untreated individual with the closest propensity score\nForm matched pairs\nCompute the effect as the average within-pair difference\n\nMatching with replacement:\n\nEach untreated individual can be matched to multiple treated individuals\nReduces bias but complicates variance estimation\n\nCaliper matching:\n\nOnly match if propensity scores are within a specified distance (caliper)\nIndividuals without a close match are excluded\nImproves balance but may reduce sample size\n\n\nMatching vs Stratification:\n\nMatching: Creates a matched dataset; analyze as if randomized within pairs\nStratification: Creates strata; standardize across strata\n\nBoth use the propensity score to reduce confounding. Matching may be more intuitive and allows visual inspection of matched pairs.\nLimitations:\n\nDiscards unmatched individuals (efficiency loss)\nComplex variance estimation (pairs are dependent)\nExact matching on propensity score is impossible (continuous variable)\n\n\n\n\n4.2 Assessing Match Quality\nAfter matching, assess balance:\n\nStandardized differences: Compare means of \\(L\\) in matched treated vs untreated\nLove plots: Graphical display of standardized differences before and after matching\nDistribution plots: Compare distributions of confounders in matched samples\n\nTarget: Standardized differences &lt; 0.1 for all confounders\n\n\n4.3 Example: NHEFS Matching\nProcedure:\n\nEstimate propensity score for quitting smoking\nMatch each quitter to a non-quitter with similar propensity score\nIn matched sample, compare weight change between quitters and non-quitters\nEstimate causal effect as mean difference in matched pairs\n\nAdvantages: Intuitive, allows checking balance on all confounders\nDisadvantages: Discards some individuals, may not achieve perfect balance"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html#propensity-models-treatment-models-and-marginal-structural-models-pp.-219-222",
+    "href": "chapters/15-outcome-regression-propensity-scores.html#propensity-models-treatment-models-and-marginal-structural-models-pp.-219-222",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "5 15.5 Propensity Models, Treatment Models, and Marginal Structural Models (pp. 219-222)",
+    "text": "5 15.5 Propensity Models, Treatment Models, and Marginal Structural Models (pp. 219-222)\n\nClarifying terminology: propensity scores, treatment models, and MSMs.\n\n5.1 Definitions\nPropensity score: \\(e(L) = \\Pr[A = 1 \\mid L]\\)\nTreatment model: Any model for \\(\\Pr[A \\mid L]\\) (or \\(f(A \\mid L)\\) for non-binary \\(A\\))\nMarginal structural model (MSM): Model for \\(E[Y^a]\\) or \\(E[Y^a \\mid V]\\)\n\n\n5.2 Relationship\nIP weighting uses the treatment model to create weights:\n\\[W^A = \\frac{1}{\\Pr[A \\mid L]}\\]\nFor binary \\(A\\), this uses the propensity score:\n\\[W^A = \\frac{1}{e(L)} \\text{ if } A = 1, \\quad W^A = \\frac{1}{1 - e(L)} \\text{ if } A = 0\\]\nMSM is then fit using IP weights:\n\\[E[Y^a] = \\beta_0 + \\beta_1 a\\]\n\nDistinction:\n\nPropensity score: A specific quantity, \\(\\Pr[A = 1 \\mid L]\\)\nTreatment model: A statistical model for \\(\\Pr[A \\mid L]\\), which can be used to estimate propensity scores\nMSM: A model for potential outcomes, estimated using IP weights derived from the treatment model\n\nThese are related but distinct concepts. The propensity score can be used for:\n\nIP weighting (via treatment model)\nStratification\nMatching\n\nAll three methods aim to adjust for confounding."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html#propensity-scores-and-outcome-regression-pp.-222-224",
+    "href": "chapters/15-outcome-regression-propensity-scores.html#propensity-scores-and-outcome-regression-pp.-222-224",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "6 15.6 Propensity Scores and Outcome Regression (pp. 222-224)",
+    "text": "6 15.6 Propensity Scores and Outcome Regression (pp. 222-224)\n\nCan we combine propensity scores with outcome regression?\n\n6.1 Doubly Robust Estimation\nIdea: Use both a treatment model and an outcome model.\nEstimator: Fit outcome model within propensity score strata (or matched sets), then standardize.\nDouble robustness: The estimator is consistent if EITHER:\n\nThe propensity score model is correct, OR\nThe outcome model is correct\n\n(But not necessarily both)\n\n\n6.2 Augmented IP Weighting (AIPW)\nAdvanced approach: Combine IP weighting with outcome modeling:\n\\[\\hat{E}[Y^a] = \\frac{1}{n}\\sum_{i=1}^n \\left[\\frac{I(A_i = a) Y_i}{f(a \\mid L_i)} - \\frac{I(A_i = a) - f(a \\mid L_i)}{f(a \\mid L_i)} m(a, L_i)\\right]\\]\nwhere \\(m(a, L) = \\hat{E}[Y \\mid A = a, L]\\) is the outcome model.\nProperties:\n\nDoubly robust: Consistent if either model is correct\nMore efficient than IP weighting alone when outcome model is correct\nLocally efficient (optimal variance) when both models are correct\n\n\nPractical advice:\nDoubly robust methods provide insurance against misspecification of one model. However:\n\nIf both models are wrong, the estimator is generally inconsistent\nModel checking is still important for both models\nThese methods are more complex to implement and require specialized software\n\nMany researchers use simpler approaches (IP weighting OR outcome regression) and conduct sensitivity analyses by trying both methods."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html#propensity-scores-for-continuous-treatments-pp.-224-226",
+    "href": "chapters/15-outcome-regression-propensity-scores.html#propensity-scores-for-continuous-treatments-pp.-224-226",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "7 15.7 Propensity Scores for Continuous Treatments (pp. 224-226)",
+    "text": "7 15.7 Propensity Scores for Continuous Treatments (pp. 224-226)\n\nPropensity scores extend to continuous treatments, though with additional complexity.\n\n7.1 Generalized Propensity Score\nFor continuous treatment \\(A\\), the generalized propensity score is the conditional density:\n\\[f(A \\mid L)\\]\nBalancing property: Under conditional exchangeability,\n\\[Y^a \\perp\\!\\!\\!\\perp A \\mid f(A \\mid L)\\]\n\n\n7.2 Estimation\nCommon approach: Model the conditional distribution of \\(A\\) given \\(L\\).\nExample: Normal model\n\\[A \\mid L \\sim \\text{Normal}(\\mu(L), \\sigma^2)\\]\nwhere \\(\\mu(L) = \\alpha_0 + \\alpha_1^{\\top} L\\)\nGPS: \\(f(A_i \\mid L_i) = \\phi\\left(\\frac{A_i - \\mu(L_i)}{\\sigma}\\right)\\) where \\(\\phi\\) is the standard normal density.\n\n\n7.3 Using the GPS\nIP weighting: Create weights\n\\[W_i = \\frac{f(A_i)}{f(A_i \\mid L_i)}\\]\nwhere \\(f(A_i)\\) is the marginal density of \\(A\\) (unconditional).\nStratification: Stratify on the GPS and standardize within strata.\n\nChallenges with continuous treatments:\n\nDensity estimation: Requires choosing a parametric model for \\(f(A \\mid L)\\)\nPositivity: Need \\(f(A \\mid L) &gt; 0\\) for all observed \\((A, L)\\) combinations\nPractical positivity: Even if positive, very small densities lead to extreme weights\nModel diagnostics: Harder to check balance with continuous treatment\n\nDespite these challenges, GPS methods can be useful for continuous exposures (dose, duration, intensity)."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores.html#summary",
+    "href": "chapters/15-outcome-regression-propensity-scores.html#summary",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "8 Summary",
+    "text": "8 Summary\n\nKey concepts:\n\nOutcome regression: Models \\(E[Y \\mid A, L]\\) to estimate causal effects via g-formula\nPropensity score: \\(e(L) = \\Pr[A = 1 \\mid L]\\), reduces confounding adjustment to a single dimension\nBalancing property: Conditioning on propensity score achieves conditional exchangeability\nPropensity stratification: Create strata by propensity score and standardize\nPropensity matching: Match treated and untreated with similar propensity scores\nDouble robustness: Combining treatment and outcome models for robustness\nContinuous treatments: Generalized propensity score extends to non-binary treatments\n\nMethods comparison:\n\n\n\n\n\n\n\n\n\nMethod\nUses\nAdvantages\nDisadvantages\n\n\n\n\nOutcome regression\n\\(E[Y \\mid A, L]\\)\nNatural, efficient when correct\nRequires correct outcome model\n\n\nIP weighting\n\\(\\Pr[A \\mid L]\\)\nNatural for MSMs, handles time-varying\nCan be unstable, needs correct treatment model\n\n\nPropensity matching\n\\(e(L)\\)\nIntuitive, easy to check balance\nDiscards data, complex inference\n\n\nPropensity stratification\n\\(e(L)\\)\nReduces dimensionality\nRequires choosing # of strata\n\n\nDoubly robust\nBoth models\nRobust to one misspecification\nMore complex, needs both models\n\n\n\nPractical recommendations:\n\nAlways check balance: After propensity score adjustment, assess whether confounders are balanced\nModel carefully: Propensity scores are only as good as the treatment model\nCheck positivity: Extreme propensity scores (near 0 or 1) indicate violations\nUse multiple methods: Try outcome regression, IP weighting, and propensity methods as sensitivity analyses\nConsider double robustness: When feasible, doubly robust methods provide insurance against misspecification\n\n\nHistorical note:\nPropensity scores were popularized by Rosenbaum and Rubin (1983) and have become extremely popular in observational studies. However, they are not a panacea:\n\nThey don’t solve the problem of unmeasured confounding\nThey still require correct model specification\nThey work best when there’s good overlap in propensity scores between treated and untreated\n\nLooking ahead: Chapter 16 introduces instrumental variables, which can help with unmeasured confounding under different assumptions. Part III addresses time-varying treatments where IP weighting and g-formula shine."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#the-outcome-regression-approach",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#the-outcome-regression-approach",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "The Outcome Regression Approach",
+    "text": "The Outcome Regression Approach\n\nDefinition 1 (Outcome Regression) Outcome regression for causal inference:\n\nFit a model for \\(E[Y \\mid A, L]\\)\nUse the model to compute standardized means (g-formula)\nEstimate causal effects as contrasts of standardized means\n\nFor simple cases, the treatment coefficient may approximate the causal effect, but this requires strong assumptions."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#when-does-the-treatment-coefficient-equal-the-causal-effect",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#when-does-the-treatment-coefficient-equal-the-causal-effect",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "When Does the Treatment Coefficient Equal the Causal Effect?",
+    "text": "When Does the Treatment Coefficient Equal the Causal Effect?\nModel: \\(E[Y \\mid A, L] = \\beta_0 + \\beta_1 A + \\beta_2^{\\top} L\\)\nQuestion: When does \\(\\beta_1 = E[Y^{a=1}] - E[Y^{a=0}]\\)?\nAnswer: Only under restrictive conditions:\n\nNo confounding: \\(Y^a \\perp\\!\\!\\!\\perp A\\) (conditional exchangeability not needed)\nNo effect modification: The causal effect doesn’t vary with \\(L\\)\nCorrect model specification: Linear model is correct\n\nIf effect modification exists, \\(\\beta_1\\) is a weighted average of conditional effects, not generally equal to the marginal causal effect.\n\nWhy this matters:\nMany researchers fit \\(Y = \\beta_0 + \\beta_1 A + \\beta_2^{\\top} L\\) and interpret \\(\\beta_1\\) as the causal effect. This is valid ONLY if:\n\nNo unmeasured confounding (always required)\nNo effect modification by measured confounders\nCorrect linear model\n\nWhen effect modification exists, use the g-formula to properly standardize, or include \\(A \\times L\\) interactions in the model."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#example-nhefs-study",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#example-nhefs-study",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Example: NHEFS Study",
+    "text": "Example: NHEFS Study\nSimple model: \\[E[\\text{Weight Change} \\mid A, L] = \\beta_0 + \\beta_1 \\text{Quit} + \\beta_2 \\text{Age} + \\beta_3 \\text{Sex} + \\ldots\\]\nIssues:\n\nAssumes effect of quitting is the same for all individuals\nIf the effect varies by age, sex, or other factors, \\(\\beta_1\\) doesn’t equal the marginal causal effect\nNeed to add interactions or use g-formula\n\nBetter approach: \\[E[Y \\mid A, L] = \\beta_0 + \\beta_1 A + \\beta_2^{\\top} L + \\beta_3^{\\top} (A \\times L)\\]\nThen use g-formula to compute marginal effect."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#balancing-property",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#balancing-property",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Balancing Property",
+    "text": "Balancing Property\nKey theorem: If \\(Y^a \\perp\\!\\!\\!\\perp A \\mid L\\), then:\n\\[Y^a \\perp\\!\\!\\!\\perp A \\mid e(L)\\]\nInterpretation: Conditional on the propensity score, treatment assignment is independent of potential outcomes.\nImplication: We can adjust for confounding by adjusting for the propensity score alone, rather than all components of \\(L\\).\n\nWhy this is useful:\n\nWith many confounders, stratification on \\(L\\) is difficult (curse of dimensionality)\nThe propensity score reduces multidimensional \\(L\\) to a single dimension\nWe can match, stratify, or weight on \\(e(L)\\) instead of on the full vector \\(L\\)\n\nImportant caveat: This works only if:\n\nThe propensity score model is correctly specified\nPositivity holds: \\(0 &lt; e(L) &lt; 1\\) for all \\(L\\) with \\(\\Pr[L] &gt; 0\\)"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#estimating-propensity-scores",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#estimating-propensity-scores",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Estimating Propensity Scores",
+    "text": "Estimating Propensity Scores\nCommon approach: Logistic regression\n\\[\\text{logit} \\Pr[A = 1 \\mid L] = \\alpha_0 + \\alpha_1^{\\top} L\\]\nEstimation:\n\nFit logistic regression with treatment \\(A\\) as outcome, confounders \\(L\\) as predictors\nPredict \\(\\hat{e}(L_i) = \\hat{\\Pr}[A = 1 \\mid L_i]\\) for each individual\nUse \\(\\hat{e}(L_i)\\) for matching, stratification, or weighting\n\nModel selection:\n\nInclude all confounders\nConsider interactions and nonlinear terms\nAssess balance after adjustment (see Section 15.3)"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#propensity-score-stratification",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#propensity-score-stratification",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Propensity Score Stratification",
+    "text": "Propensity Score Stratification\nProcedure:\n\nEstimate propensity score \\(\\hat{e}(L_i)\\) for all individuals\nCreate strata (e.g., quintiles) of the propensity score\nWithin each stratum, compute \\(\\hat{E}[Y \\mid A = a, \\text{stratum } s]\\)\nStandardize across strata:\n\n\\[\\hat{E}[Y^a] = \\sum_{s=1}^S \\hat{E}[Y \\mid A = a, \\text{stratum } s] \\times \\Pr[\\text{stratum } s]\\]"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#checking-balance",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#checking-balance",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Checking Balance",
+    "text": "Checking Balance\nAfter stratification, check whether confounders are balanced within strata:\nBalance: Within stratum \\(s\\), the distribution of \\(L\\) should be similar for treated and untreated.\nDiagnostics:\n\nCompare means/proportions of \\(L\\) across treatment groups within strata\nStandardized differences: \\(\\frac{\\bar{L}_{A=1,s} - \\bar{L}_{A=0,s}}{SD_{\\text{pooled}}}\\)\nTarget: Standardized differences &lt; 0.1 (rule of thumb)\n\nIf balance is poor, refine the propensity score model (add interactions, polynomials, etc.).\n\nWhy check balance:\nThe propensity score should create “pseudo-randomization” within strata. If confounders aren’t balanced, either:\n\nThe propensity score model is misspecified\nThere are violations of positivity (some strata have only treated or only untreated)\n\nBalance checking is a diagnostic tool, not a formal test. The goal is to achieve good balance so that confounding is minimized within strata."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#example-quintile-stratification",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#example-quintile-stratification",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Example: Quintile Stratification",
+    "text": "Example: Quintile Stratification\nSteps:\n\nFit logistic regression for \\(\\Pr[A = 1 \\mid L]\\)\nDivide individuals into 5 groups (quintiles) based on \\(\\hat{e}(L)\\)\nWithin each quintile, compare treated vs untreated outcomes\nStandardize across quintiles using quintile proportions as weights\n\nCommon finding: Most of the confounding is removed by stratifying on propensity score quintiles, though finer stratification may improve balance."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#matching-algorithms",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#matching-algorithms",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Matching Algorithms",
+    "text": "Matching Algorithms\n1-to-1 nearest neighbor matching:\n\nFor each treated individual, find the untreated individual with the closest propensity score\nForm matched pairs\nCompute the effect as the average within-pair difference\n\nMatching with replacement:\n\nEach untreated individual can be matched to multiple treated individuals\nReduces bias but complicates variance estimation\n\nCaliper matching:\n\nOnly match if propensity scores are within a specified distance (caliper)\nIndividuals without a close match are excluded\nImproves balance but may reduce sample size\n\n\nMatching vs Stratification:\n\nMatching: Creates a matched dataset; analyze as if randomized within pairs\nStratification: Creates strata; standardize across strata\n\nBoth use the propensity score to reduce confounding. Matching may be more intuitive and allows visual inspection of matched pairs.\nLimitations:\n\nDiscards unmatched individuals (efficiency loss)\nComplex variance estimation (pairs are dependent)\nExact matching on propensity score is impossible (continuous variable)"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#assessing-match-quality",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#assessing-match-quality",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Assessing Match Quality",
+    "text": "Assessing Match Quality\nAfter matching, assess balance:\n\nStandardized differences: Compare means of \\(L\\) in matched treated vs untreated\nLove plots: Graphical display of standardized differences before and after matching\nDistribution plots: Compare distributions of confounders in matched samples\n\nTarget: Standardized differences &lt; 0.1 for all confounders"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#example-nhefs-matching",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#example-nhefs-matching",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Example: NHEFS Matching",
+    "text": "Example: NHEFS Matching\nProcedure:\n\nEstimate propensity score for quitting smoking\nMatch each quitter to a non-quitter with similar propensity score\nIn matched sample, compare weight change between quitters and non-quitters\nEstimate causal effect as mean difference in matched pairs\n\nAdvantages: Intuitive, allows checking balance on all confounders\nDisadvantages: Discards some individuals, may not achieve perfect balance"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#definitions",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#definitions",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Definitions",
+    "text": "Definitions\nPropensity score: \\(e(L) = \\Pr[A = 1 \\mid L]\\)\nTreatment model: Any model for \\(\\Pr[A \\mid L]\\) (or \\(f(A \\mid L)\\) for non-binary \\(A\\))\nMarginal structural model (MSM): Model for \\(E[Y^a]\\) or \\(E[Y^a \\mid V]\\)"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#relationship",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#relationship",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Relationship",
+    "text": "Relationship\nIP weighting uses the treatment model to create weights:\n\\[W^A = \\frac{1}{\\Pr[A \\mid L]}\\]\nFor binary \\(A\\), this uses the propensity score:\n\\[W^A = \\frac{1}{e(L)} \\text{ if } A = 1, \\quad W^A = \\frac{1}{1 - e(L)} \\text{ if } A = 0\\]\nMSM is then fit using IP weights:\n\\[E[Y^a] = \\beta_0 + \\beta_1 a\\]\n\nDistinction:\n\nPropensity score: A specific quantity, \\(\\Pr[A = 1 \\mid L]\\)\nTreatment model: A statistical model for \\(\\Pr[A \\mid L]\\), which can be used to estimate propensity scores\nMSM: A model for potential outcomes, estimated using IP weights derived from the treatment model\n\nThese are related but distinct concepts. The propensity score can be used for:\n\nIP weighting (via treatment model)\nStratification\nMatching\n\nAll three methods aim to adjust for confounding."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#doubly-robust-estimation",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#doubly-robust-estimation",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Doubly Robust Estimation",
+    "text": "Doubly Robust Estimation\nIdea: Use both a treatment model and an outcome model.\nEstimator: Fit outcome model within propensity score strata (or matched sets), then standardize.\nDouble robustness: The estimator is consistent if EITHER:\n\nThe propensity score model is correct, OR\nThe outcome model is correct\n\n(But not necessarily both)"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#augmented-ip-weighting-aipw",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#augmented-ip-weighting-aipw",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Augmented IP Weighting (AIPW)",
+    "text": "Augmented IP Weighting (AIPW)\nAdvanced approach: Combine IP weighting with outcome modeling:\n\\[\\hat{E}[Y^a] = \\frac{1}{n}\\sum_{i=1}^n \\left[\\frac{I(A_i = a) Y_i}{f(a \\mid L_i)} - \\frac{I(A_i = a) - f(a \\mid L_i)}{f(a \\mid L_i)} m(a, L_i)\\right]\\]\nwhere \\(m(a, L) = \\hat{E}[Y \\mid A = a, L]\\) is the outcome model.\nProperties:\n\nDoubly robust: Consistent if either model is correct\nMore efficient than IP weighting alone when outcome model is correct\nLocally efficient (optimal variance) when both models are correct\n\n\nPractical advice:\nDoubly robust methods provide insurance against misspecification of one model. However:\n\nIf both models are wrong, the estimator is generally inconsistent\nModel checking is still important for both models\nThese methods are more complex to implement and require specialized software\n\nMany researchers use simpler approaches (IP weighting OR outcome regression) and conduct sensitivity analyses by trying both methods."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#generalized-propensity-score",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#generalized-propensity-score",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Generalized Propensity Score",
+    "text": "Generalized Propensity Score\nFor continuous treatment \\(A\\), the generalized propensity score is the conditional density:\n\\[f(A \\mid L)\\]\nBalancing property: Under conditional exchangeability,\n\\[Y^a \\perp\\!\\!\\!\\perp A \\mid f(A \\mid L)\\]"
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#estimation",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#estimation",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Estimation",
+    "text": "Estimation\nCommon approach: Model the conditional distribution of \\(A\\) given \\(L\\).\nExample: Normal model\n\\[A \\mid L \\sim \\text{Normal}(\\mu(L), \\sigma^2)\\]\nwhere \\(\\mu(L) = \\alpha_0 + \\alpha_1^{\\top} L\\)\nGPS: \\(f(A_i \\mid L_i) = \\phi\\left(\\frac{A_i - \\mu(L_i)}{\\sigma}\\right)\\) where \\(\\phi\\) is the standard normal density."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#using-the-gps",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#using-the-gps",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "Using the GPS",
+    "text": "Using the GPS\nIP weighting: Create weights\n\\[W_i = \\frac{f(A_i)}{f(A_i \\mid L_i)}\\]\nwhere \\(f(A_i)\\) is the marginal density of \\(A\\) (unconditional).\nStratification: Stratify on the GPS and standardize within strata.\n\nChallenges with continuous treatments:\n\nDensity estimation: Requires choosing a parametric model for \\(f(A \\mid L)\\)\nPositivity: Need \\(f(A \\mid L) &gt; 0\\) for all observed \\((A, L)\\) combinations\nPractical positivity: Even if positive, very small densities lead to extreme weights\nModel diagnostics: Harder to check balance with continuous treatment\n\nDespite these challenges, GPS methods can be useful for continuous exposures (dose, duration, intensity)."
+  },
+  {
+    "objectID": "chapters/15-outcome-regression-propensity-scores-slides.html#references",
+    "href": "chapters/15-outcome-regression-propensity-scores-slides.html#references",
+    "title": "Chapter 15: Outcome Regression and Propensity Scores",
+    "section": "",
+    "text": "Key concepts:\n\nOutcome regression: Models \\(E[Y \\mid A, L]\\) to estimate causal effects via g-formula\nPropensity score: \\(e(L) = \\Pr[A = 1 \\mid L]\\), reduces confounding adjustment to a single dimension\nBalancing property: Conditioning on propensity score achieves conditional exchangeability\nPropensity stratification: Create strata by propensity score and standardize\nPropensity matching: Match treated and untreated with similar propensity scores\nDouble robustness: Combining treatment and outcome models for robustness\nContinuous treatments: Generalized propensity score extends to non-binary treatments\n\nMethods comparison:\n\n\n\n\n\n\n\n\n\nMethod\nUses\nAdvantages\nDisadvantages\n\n\n\n\nOutcome regression\n\\(E[Y \\mid A, L]\\)\nNatural, efficient when correct\nRequires correct outcome model\n\n\nIP weighting\n\\(\\Pr[A \\mid L]\\)\nNatural for MSMs, handles time-varying\nCan be unstable, needs correct treatment model\n\n\nPropensity matching\n\\(e(L)\\)\nIntuitive, easy to check balance\nDiscards data, complex inference\n\n\nPropensity stratification\n\\(e(L)\\)\nReduces dimensionality\nRequires choosing # of strata\n\n\nDoubly robust\nBoth models\nRobust to one misspecification\nMore complex, needs both models\n\n\n\nPractical recommendations:\n\nAlways check balance: After propensity score adjustment, assess whether confounders are balanced\nModel carefully: Propensity scores are only as good as the treatment model\nCheck positivity: Extreme propensity scores (near 0 or 1) indicate violations\nUse multiple methods: Try outcome regression, IP weighting, and propensity methods as sensitivity analyses\nConsider double robustness: When feasible, doubly robust methods provide insurance against misspecification\n\n\nHistorical note:\nPropensity scores were popularized by Rosenbaum and Rubin (1983) and have become extremely popular in observational studies. However, they are not a panacea:\n\nThey don’t solve the problem of unmeasured confounding\nThey still require correct model specification\nThey work best when there’s good overlap in propensity scores between treated and untreated\n\nLooking ahead: Chapter 16 introduces instrumental variables, which can help with unmeasured confounding under different assumptions. Part III addresses time-varying treatments where IP weighting and g-formula shine.\n\n\n\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
+  },
+  {
     "objectID": "chapters/13-standardization-parametric-g-formula.html",
     "href": "chapters/13-standardization-parametric-g-formula.html",
     "title": "Chapter 13: Standardization and the Parametric G-Formula",
@@ -2238,5 +2623,397 @@
     "title": "Chapter 14: G-Estimation of Structural Nested Models",
     "section": "10 Summary",
     "text": "10 Summary\n\nKey concepts introduced:\n\nStructural nested models: Model the causal effect directly rather than the outcome or treatment mechanism\nRank preservation: Assumption that treatment doesn’t reverse individual rankings\nG-null hypothesis: Under the correct parameters, the pseudo-outcome \\(H(\\psi)\\) equals \\(Y^0\\)\nG-estimation: Find \\(\\psi\\) that makes \\(H(\\psi)\\) independent of \\(A\\) given \\(L\\)\nRobustness: G-estimation is robust to outcome model misspecification (requires effect model to be correct)\nEffect modification: SNMMs naturally model how effects vary with covariates\nCensoring: G-estimation extends to handle missing data via inverse probability weighting\n\nComparison of methods:\n\n\n\n\n\n\n\n\n\nAspect\nIP Weighting\nStandardization\nG-Estimation\n\n\n\n\nModels\nTreatment mechanism\nOutcome mechanism\nCausal effect\n\n\nEstimand\nMarginal effect\nConditional effect\nConditional effect\n\n\nAssumptions\nConditional exchangeability\nConditional exchangeability\n+ Rank preservation\n\n\nRobustness\nTreatment model\nOutcome model\nEffect model\n\n\n\nAdvantages of G-estimation:\n\nModels the quantity of scientific interest (the causal effect) directly\nRobust to certain outcome model misspecifications\nNatural for effect modification\nCan be doubly robust\n\nLimitations:\n\nRequires rank preservation (stronger than exchangeability alone)\nCan be computationally more intensive\nLess familiar to many practitioners\nRequires solving estimating equations (no closed form in general)\n\n\nPractical advice:\n\nUse G-estimation when you have strong subject-matter knowledge about effect modification\nConsider it alongside IP weighting and standardization as a sensitivity analysis\nBe careful about rank preservation assumption - assess plausibility in your context\nFor simple models, G-estimation can be implemented with standard software\nFor complex models, may need specialized software or custom programming\n\nLooking ahead: Chapter 15 discusses outcome regression and propensity scores in more detail, and Chapter 16 introduces instrumental variables, another approach for dealing with unmeasured confounding."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#condition-1-relevance",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#condition-1-relevance",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Condition 1: Relevance",
+    "text": "Condition 1: Relevance\nStatement: \\(Z\\) is associated with \\(A\\)\nMeaning: The instrument must actually affect treatment assignment.\nExample: Randomized encouragement\n\n\\(Z = 1\\) if encouraged to take treatment, \\(Z = 0\\) if not encouraged\nRelevance requires that encouragement increases the probability of treatment\n\nTesting: Relevance can be tested empirically by checking \\(\\Pr[A = 1 \\mid Z = 1] \\neq \\Pr[A = 1 \\mid Z = 0]\\)\n\nWeak instruments: If the association between \\(Z\\) and \\(A\\) is very weak, the IV estimator will have:\n\nLarge variance (imprecise estimates)\nPotential bias even in large samples\n\nCommon rule of thumb: F-statistic &gt; 10 in first-stage regression (for continuous outcomes)."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#condition-2-exchangeability",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#condition-2-exchangeability",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Condition 2: Exchangeability",
+    "text": "Condition 2: Exchangeability\nStatement: \\(Y^{a,z} \\perp\\!\\!\\!\\perp Z\\) (or \\(Y^a \\perp\\!\\!\\!\\perp Z\\) under exclusion)\nMeaning: The instrument is “as good as randomly assigned” with respect to potential outcomes.\nExample: Randomized encouragement\n\nIf encouragement is randomized, exchangeability holds by design\n\\(Z \\perp\\!\\!\\!\\perp U\\) where \\(U\\) are unmeasured confounders\n\nTesting: Exchangeability generally cannot be tested (involves unmeasured confounders)"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#condition-3-exclusion-restriction",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#condition-3-exclusion-restriction",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Condition 3: Exclusion Restriction",
+    "text": "Condition 3: Exclusion Restriction\nStatement: \\(Y^{a,z} = Y^a\\) for all \\(a, z\\)\nMeaning: The instrument affects the outcome ONLY through its effect on treatment.\nExample: Randomized encouragement\n\nEncouragement affects outcome only by changing treatment received\nNOT through psychological effects, information effects, etc.\n\nTesting: Exclusion generally cannot be tested (untestable assumption)\n\nCommon violations:\n\nDirect effects: Instrument affects outcome through pathways other than treatment\nDefiers: Some individuals do the opposite of what the instrument suggests (see Section 16.3)\n\nCritical importance: Exclusion is the most controversial IV assumption. Subject-matter knowledge is essential for justifying it."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#iv-estimand-for-binary-z-and-a",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#iv-estimand-for-binary-z-and-a",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "IV Estimand for Binary \\(Z\\) and \\(A\\)",
+    "text": "IV Estimand for Binary \\(Z\\) and \\(A\\)\nSetting: Binary instrument \\(Z\\), binary treatment \\(A\\), outcome \\(Y\\)\nIV estimand:\n\\[\\frac{E[Y \\mid Z = 1] - E[Y \\mid Z = 0]}{E[A \\mid Z = 1] - E[A \\mid Z = 0]}\\]\nThis is the Wald estimator or ratio estimator.\nInterpretation: The effect of \\(Z\\) on \\(Y\\), divided by the effect of \\(Z\\) on \\(A\\)."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#why-this-works",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#why-this-works",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Why This Works",
+    "text": "Why This Works\nNumerator: \\(E[Y \\mid Z = 1] - E[Y \\mid Z = 0]\\)\n\nBy exchangeability: equals \\(E[Y^{z=1}] - E[Y^{z=0}]\\)\nBy exclusion: equals \\(E[Y^{A^{z=1}}] - E[Y^{A^{z=0}}]\\)\n\nDenominator: \\(E[A \\mid Z = 1] - E[A \\mid Z = 0]\\)\n\nBy exchangeability: equals \\(\\Pr[A^{z=1} = 1] - \\Pr[A^{z=0} = 1]\\)\n\nRatio: Under additional assumptions (see next section), this estimates the average causal effect in a specific subgroup.\n\nIdentification without conditional exchangeability:\nThe key insight: Even if \\(A\\) is confounded (unmeasured \\(U\\) affects both \\(A\\) and \\(Y\\)), we can use \\(Z\\) to identify causal effects because:\n\n\\(Z\\) is randomized (or acts as if randomized)\n\\(Z\\) affects \\(Y\\) only through \\(A\\)\n\nThis allows us to isolate the causal pathway \\(A \\to Y\\) without measuring all confounders."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#example-randomized-encouragement",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#example-randomized-encouragement",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Example: Randomized Encouragement",
+    "text": "Example: Randomized Encouragement\nDesign: Randomize individuals to receive encouragement to exercise (\\(Z\\))\n\nNot everyone encouraged will exercise (\\(A = 1\\))\nSome not encouraged will exercise anyway\n\nIV estimate:\n\\[\\frac{\\text{Mean health in encouraged} - \\text{Mean health in not encouraged}}{\\Pr[\\text{Exercise} \\mid \\text{Encouraged}] - \\Pr[\\text{Exercise} \\mid \\text{Not encouraged}]}\\]\nIf 60% exercise when encouraged vs 30% when not, and mean health differs by 6 points:\n\\[\\frac{6}{0.60 - 0.30} = \\frac{6}{0.30} = 20\\]\nEffect of exercise on health (in a subgroup) is 20 points."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#perfect-compliance",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#perfect-compliance",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Perfect Compliance",
+    "text": "Perfect Compliance\nIf everyone complied with their assigned treatment (\\(A = Z\\)):\n\nIV estimand = average causal effect in the full population\nThis is just a standard randomized experiment"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#imperfect-compliance",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#imperfect-compliance",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Imperfect Compliance",
+    "text": "Imperfect Compliance\nWhen \\(A \\neq Z\\) for some individuals:\n\nIV estimand estimates effect in a subgroup (compliers)\nNot the average effect in the full population"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#compliance-types",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#compliance-types",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Compliance Types",
+    "text": "Compliance Types\n\nDefinition 2 (Principal Strata) Individuals can be classified into principal strata based on potential treatments \\(A^{z=1}\\) and \\(A^{z=0}\\):\n\nCompliers: \\(A^{z=1} = 1, A^{z=0} = 0\\) (take treatment if and only if \\(Z = 1\\))\nAlways-takers: \\(A^{z=1} = 1, A^{z=0} = 1\\) (always take treatment)\nNever-takers: \\(A^{z=1} = 0, A^{z=0} = 0\\) (never take treatment)\nDefiers: \\(A^{z=1} = 0, A^{z=0} = 1\\) (do opposite of instrument)\n\n\nMonotonicity assumption: No defiers exist.\n\nWhy monotonicity:\nIf defiers exist, the IV estimand can be severely biased. With monotonicity:\n\nCompliers: Instrument changes their treatment\nAlways-takers: Get treatment regardless\nNever-takers: Never get treatment regardless\n\nThe IV estimand identifies the causal effect in compliers only (LATE = local average treatment effect)."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#local-average-treatment-effect-late",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#local-average-treatment-effect-late",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Local Average Treatment Effect (LATE)",
+    "text": "Local Average Treatment Effect (LATE)\nUnder IV conditions plus monotonicity:\n\\[\\text{IV estimand} = E[Y^{a=1} - Y^{a=0} \\mid \\text{Complier}]\\]\nThis is the average causal effect in compliers, not in the full population.\nInterpretation: IV tells us the effect of treatment for those who would comply with the instrument.\nLimitation: We don’t know who the compliers are (unobservable principal stratum)."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#sls-algorithm",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#sls-algorithm",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "2SLS Algorithm",
+    "text": "2SLS Algorithm\nStage 1: Regress treatment on instrument (and covariates if present)\n\\[A_i = \\alpha_0 + \\alpha_1 Z_i + \\epsilon_i\\]\nObtain predicted treatment: \\(\\hat{A}_i = \\hat{\\alpha}_0 + \\hat{\\alpha}_1 Z_i\\)\nStage 2: Regress outcome on predicted treatment\n\\[Y_i = \\beta_0 + \\beta_1 \\hat{A}_i + \\eta_i\\]\nThe coefficient \\(\\hat{\\beta}_1\\) is the 2SLS estimate of the causal effect."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#why-this-works-1",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#why-this-works-1",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Why This Works",
+    "text": "Why This Works\nIntuition:\n\nStage 1 extracts the variation in \\(A\\) that is “caused by” \\(Z\\)\n\\(\\hat{A}\\) is the part of \\(A\\) that is free of confounding (because \\(Z\\) is randomized)\nStage 2 estimates the effect of this “clean” variation on \\(Y\\)\n\nMathematical equivalence: For binary \\(Z\\) and \\(A\\), 2SLS equals the Wald estimator.\n\nImportant:\n\nStandard errors from Stage 2 are WRONG (they ignore Stage 1 uncertainty)\nUse specialized IV software or bootstrap for correct standard errors\nR packages: ivreg, AER::ivreg\nStata command: ivregress 2sls"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#including-covariates",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#including-covariates",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Including Covariates",
+    "text": "Including Covariates\nWith measured confounders \\(L\\) that confound \\(A \\to Y\\) but not \\(Z \\to A\\):\nStage 1: \\[A_i = \\alpha_0 + \\alpha_1 Z_i + \\alpha_2^{\\top} L_i + \\epsilon_i\\]\nStage 2: \\[Y_i = \\beta_0 + \\beta_1 \\hat{A}_i + \\beta_2^{\\top} L_i + \\eta_i\\]\nIncluding \\(L\\) can improve efficiency even if not necessary for identification."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#two-scenarios",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#two-scenarios",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Two Scenarios",
+    "text": "Two Scenarios\nScenario 1: Confounders of \\(A \\to Y\\) that don’t affect \\(Z\\)\n\nAdjust by including \\(L\\) in both stages of 2SLS\nImproves efficiency but not necessary for identification\n\nScenario 2: Confounders of \\(Z \\to Y\\)\n\nMore problematic - threatens IV exchangeability assumption\nNeed \\(Y^a \\perp\\!\\!\\!\\perp Z \\mid L\\) (conditional exchangeability of instrument)\nUse conditional IV methods"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#conditional-iv-estimation",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#conditional-iv-estimation",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Conditional IV Estimation",
+    "text": "Conditional IV Estimation\nModified IV conditions:\n\nConditional relevance: \\(Z \\not\\perp\\!\\!\\!\\perp A \\mid L\\)\nConditional exchangeability: \\(Y^a \\perp\\!\\!\\!\\perp Z \\mid L\\)\nExclusion restriction: \\(Y^{a,z} = Y^a\\) (still unconditional)\n\nEstimation: Use 2SLS with \\(L\\) as covariates, then standardize over \\(L\\).\n\nWhen to adjust for \\(L\\):\n\nInclude if \\(L\\) confounds \\(A \\to Y\\) (for efficiency)\nInclude if \\(L\\) confounds \\(Z \\to Y\\) (for identification)\nDon’t include if \\(L\\) is affected by \\(Z\\) (would bias estimates)\n\nSubject-matter knowledge is crucial for deciding which covariates to include."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#comparison",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#comparison",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Comparison",
+    "text": "Comparison\nRegression (e.g., outcome regression or IP weighting):\n\nAssumes no unmeasured confounding: \\(Y^a \\perp\\!\\!\\!\\perp A \\mid L\\)\nIdentifies average causal effect: \\(E[Y^{a=1}] - E[Y^{a=0}]\\)\nEfficient when assumptions hold\n\nIV estimation:\n\nAllows unmeasured confounding of \\(A \\to Y\\)\nAssumes valid instrument with IV conditions\nIdentifies LATE: \\(E[Y^{a=1} - Y^{a=0} \\mid \\text{Complier}]\\)\nLess efficient (larger standard errors)"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#when-estimates-differ",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#when-estimates-differ",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "When Estimates Differ",
+    "text": "When Estimates Differ\nIf IV and regression give different estimates:\n\nUnmeasured confounding: Regression is biased, IV may be valid\nEffect heterogeneity: IV estimates LATE, regression estimates ATE\nIV violations: IV assumptions may be violated\nBoth wrong: Both methods could have issues\n\nInterpretation: Differences suggest either unmeasured confounding or effect heterogeneity (or both).\n\nPractical dilemma:\n\nIf estimates agree: Reassuring (though both could be wrong)\nIf estimates disagree: Difficult to know which to trust\n\nRecommendation:\n\nCarefully assess IV assumptions (especially exclusion)\nConsider who the compliers are and whether LATE is the estimand of interest\nConduct sensitivity analyses\nReport both estimates with clear statements about assumptions"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#challenges-with-survival-outcomes",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#challenges-with-survival-outcomes",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Challenges with Survival Outcomes",
+    "text": "Challenges with Survival Outcomes\nIssue: With time-to-event outcomes, some individuals are censored before the event.\nQuestion: How do we interpret IV estimates when the outcome is survival time?"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#survivor-average-causal-effect-sace",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#survivor-average-causal-effect-sace",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Survivor Average Causal Effect (SACE)",
+    "text": "Survivor Average Causal Effect (SACE)\n\nDefinition 3 (Survivor Average Causal Effect) The survivor average causal effect (SACE) is:\n\\[E[Y^{a=1} - Y^{a=0} \\mid S^{a=1} = 1, S^{a=0} = 1]\\]\nwhere \\(S^a\\) is an indicator for surviving (or remaining uncensored) under treatment \\(a\\).\nThis is the effect in always-survivors - those who would survive under both treatment and control."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#identification",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#identification",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "Identification",
+    "text": "Identification\nSetting: Survival \\(S\\) is affected by treatment \\(A\\), and outcome \\(Y\\) is only observed if \\(S = 1\\).\nIV approach: Under IV conditions plus additional assumptions (monotonicity for survival), IV can identify SACE.\nInterpretation: Effect of treatment on the outcome for those who would survive regardless of treatment.\n\nSACE vs LATE:\n\nLATE: Effect in compliers (those whose treatment is affected by instrument)\nSACE: Effect in always-survivors (those who survive under both treatments)\n\nBoth are principal stratification approaches - effects in specific latent subgroups.\nChallenge: SACE requires strong assumptions:\n\nMonotonicity for survival (treatment doesn’t hurt anyone’s survival)\nExclusion restriction for both survival and outcome\n\nThese are often hard to justify."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation-slides.html#references",
+    "href": "chapters/16-instrumental-variable-estimation-slides.html#references",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "",
+    "text": "Key concepts:\n\nInstrumental variable: A variable \\(Z\\) that affects treatment but not the outcome directly\nIV conditions: Relevance, exchangeability, exclusion restriction\nWald estimator: \\(\\frac{E[Y \\mid Z=1] - E[Y \\mid Z=0]}{E[A \\mid Z=1] - E[A \\mid Z=0]}\\) for binary \\(Z, A\\)\nPrincipal strata: Compliers, always-takers, never-takers, defiers\nLATE: Local average treatment effect in compliers\n2SLS: Two-stage least squares for continuous outcomes\nSACE: Survivor average causal effect for survival outcomes\n\nWhen to use IV methods:\n\nUnmeasured confounding is a concern\nValid instrument is available (strong assumptions)\nLATE is a meaningful estimand (compliers are of interest)\nEfficiency loss is acceptable (IV estimates have larger SEs)\n\nCommon instruments:\n\n\n\n\n\n\n\n\n\nSetting\nInstrument\nTreatment\nOutcome\n\n\n\n\nRandomized encouragement\nEncouragement\nBehavior change\nHealth\n\n\nGeographic variation\nDistance to facility\nHealthcare use\nHealth\n\n\nMendelian randomization\nGenetic variant\nBiomarker\nDisease\n\n\nDraft lottery\nLottery number\nMilitary service\nEarnings\n\n\nPhysician preference\nPhysician tendency\nTreatment choice\nOutcome\n\n\n\nAssumptions to check:\n\nRelevance: Test empirically (\\(Z\\) associated with \\(A\\))\nExchangeability: Justify by design or argue plausibility\nExclusion: Requires subject-matter knowledge (cannot be tested)\nMonotonicity: No defiers (often plausible, sometimes testable)\n\nAdvantages:\n\nAllows causal inference with unmeasured confounding\nUses only treatment variation “caused by” instrument\nProvides a different estimand than regression methods\n\nLimitations:\n\nStrong, untestable assumptions (especially exclusion)\nEstimates LATE, not ATE (interpretation challenge)\nLess efficient than regression (when regression assumptions hold)\nWeak instruments lead to bias and large variance\n\n\nPractical advice:\n\nThink hard about exclusion: Is it plausible the instrument only affects outcome through treatment?\nCheck instrument strength: Weak instruments are worse than no instrument\nUnderstand LATE: Who are the compliers? Is their effect of interest?\nSensitivity analyses: Try different instruments if available\nCompare with regression: Large differences suggest unmeasured confounding or heterogeneity\n\nLooking ahead: Part III extends these methods to time-varying treatments, where IV ideas play a role in dealing with time-varying confounding and selection bias.\n\n\n\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html",
+    "href": "chapters/16-instrumental-variable-estimation.html",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "",
+    "text": "This chapter introduces instrumental variable (IV) estimation, a method for identifying causal effects when there is unmeasured confounding. Unlike the methods in previous chapters, IV estimation does not rely on conditional exchangeability. Instead, it uses a special variable (the instrument) that affects treatment but not the outcome directly."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html#the-three-instrumental-conditions-pp.-227-231",
+    "href": "chapters/16-instrumental-variable-estimation.html#the-three-instrumental-conditions-pp.-227-231",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "1 16.1 The Three Instrumental Conditions (pp. 227-231)",
+    "text": "1 16.1 The Three Instrumental Conditions (pp. 227-231)\n\nAn instrumental variable \\(Z\\) must satisfy three conditions to identify causal effects.\n\nDefinition 1 (Instrumental Variable) A variable \\(Z\\) is an instrumental variable for the effect of \\(A\\) on \\(Y\\) if:\n\nRelevance: \\(Z\\) is associated with \\(A\\)\nExchangeability: \\(Z\\) is independent of unmeasured confounders \\(U\\) (i.e., \\(Y^{a,z} \\perp\\!\\!\\!\\perp Z\\))\nExclusion restriction: \\(Z\\) affects \\(Y\\) only through \\(A\\) (i.e., \\(Y^{a,z} = Y^a\\) for all \\(a, z\\))\n\nWhere \\(Y^{a,z}\\) denotes the potential outcome under treatment \\(A = a\\) and instrument \\(Z = z\\).\n\n\n1.1 Condition 1: Relevance\nStatement: \\(Z\\) is associated with \\(A\\)\nMeaning: The instrument must actually affect treatment assignment.\nExample: Randomized encouragement\n\n\\(Z = 1\\) if encouraged to take treatment, \\(Z = 0\\) if not encouraged\nRelevance requires that encouragement increases the probability of treatment\n\nTesting: Relevance can be tested empirically by checking \\(\\Pr[A = 1 \\mid Z = 1] \\neq \\Pr[A = 1 \\mid Z = 0]\\)\n\nWeak instruments: If the association between \\(Z\\) and \\(A\\) is very weak, the IV estimator will have:\n\nLarge variance (imprecise estimates)\nPotential bias even in large samples\n\nCommon rule of thumb: F-statistic &gt; 10 in first-stage regression (for continuous outcomes).\n\n\n\n1.2 Condition 2: Exchangeability\nStatement: \\(Y^{a,z} \\perp\\!\\!\\!\\perp Z\\) (or \\(Y^a \\perp\\!\\!\\!\\perp Z\\) under exclusion)\nMeaning: The instrument is “as good as randomly assigned” with respect to potential outcomes.\nExample: Randomized encouragement\n\nIf encouragement is randomized, exchangeability holds by design\n\\(Z \\perp\\!\\!\\!\\perp U\\) where \\(U\\) are unmeasured confounders\n\nTesting: Exchangeability generally cannot be tested (involves unmeasured confounders)\n\n\n1.3 Condition 3: Exclusion Restriction\nStatement: \\(Y^{a,z} = Y^a\\) for all \\(a, z\\)\nMeaning: The instrument affects the outcome ONLY through its effect on treatment.\nExample: Randomized encouragement\n\nEncouragement affects outcome only by changing treatment received\nNOT through psychological effects, information effects, etc.\n\nTesting: Exclusion generally cannot be tested (untestable assumption)\n\nCommon violations:\n\nDirect effects: Instrument affects outcome through pathways other than treatment\nDefiers: Some individuals do the opposite of what the instrument suggests (see Section 16.3)\n\nCritical importance: Exclusion is the most controversial IV assumption. Subject-matter knowledge is essential for justifying it."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html#the-usual-iv-estimand-pp.-231-234",
+    "href": "chapters/16-instrumental-variable-estimation.html#the-usual-iv-estimand-pp.-231-234",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "2 16.2 The Usual IV Estimand (pp. 231-234)",
+    "text": "2 16.2 The Usual IV Estimand (pp. 231-234)\n\nUnder the three IV conditions, we can identify a causal effect.\n\n2.1 IV Estimand for Binary \\(Z\\) and \\(A\\)\nSetting: Binary instrument \\(Z\\), binary treatment \\(A\\), outcome \\(Y\\)\nIV estimand:\n\\[\\frac{E[Y \\mid Z = 1] - E[Y \\mid Z = 0]}{E[A \\mid Z = 1] - E[A \\mid Z = 0]}\\]\nThis is the Wald estimator or ratio estimator.\nInterpretation: The effect of \\(Z\\) on \\(Y\\), divided by the effect of \\(Z\\) on \\(A\\).\n\n\n2.2 Why This Works\nNumerator: \\(E[Y \\mid Z = 1] - E[Y \\mid Z = 0]\\)\n\nBy exchangeability: equals \\(E[Y^{z=1}] - E[Y^{z=0}]\\)\nBy exclusion: equals \\(E[Y^{A^{z=1}}] - E[Y^{A^{z=0}}]\\)\n\nDenominator: \\(E[A \\mid Z = 1] - E[A \\mid Z = 0]\\)\n\nBy exchangeability: equals \\(\\Pr[A^{z=1} = 1] - \\Pr[A^{z=0} = 1]\\)\n\nRatio: Under additional assumptions (see next section), this estimates the average causal effect in a specific subgroup.\n\nIdentification without conditional exchangeability:\nThe key insight: Even if \\(A\\) is confounded (unmeasured \\(U\\) affects both \\(A\\) and \\(Y\\)), we can use \\(Z\\) to identify causal effects because:\n\n\\(Z\\) is randomized (or acts as if randomized)\n\\(Z\\) affects \\(Y\\) only through \\(A\\)\n\nThis allows us to isolate the causal pathway \\(A \\to Y\\) without measuring all confounders.\n\n\n\n2.3 Example: Randomized Encouragement\nDesign: Randomize individuals to receive encouragement to exercise (\\(Z\\))\n\nNot everyone encouraged will exercise (\\(A = 1\\))\nSome not encouraged will exercise anyway\n\nIV estimate:\n\\[\\frac{\\text{Mean health in encouraged} - \\text{Mean health in not encouraged}}{\\Pr[\\text{Exercise} \\mid \\text{Encouraged}] - \\Pr[\\text{Exercise} \\mid \\text{Not encouraged}]}\\]\nIf 60% exercise when encouraged vs 30% when not, and mean health differs by 6 points:\n\\[\\frac{6}{0.60 - 0.30} = \\frac{6}{0.30} = 20\\]\nEffect of exercise on health (in a subgroup) is 20 points."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html#instrumental-variable-estimation-versus-randomized-experiments-pp.-234-237",
+    "href": "chapters/16-instrumental-variable-estimation.html#instrumental-variable-estimation-versus-randomized-experiments-pp.-234-237",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "3 16.3 Instrumental Variable Estimation versus Randomized Experiments (pp. 234-237)",
+    "text": "3 16.3 Instrumental Variable Estimation versus Randomized Experiments (pp. 234-237)\n\nIV estimation is like an imperfect randomized experiment.\n\n3.1 Perfect Compliance\nIf everyone complied with their assigned treatment (\\(A = Z\\)):\n\nIV estimand = average causal effect in the full population\nThis is just a standard randomized experiment\n\n\n\n3.2 Imperfect Compliance\nWhen \\(A \\neq Z\\) for some individuals:\n\nIV estimand estimates effect in a subgroup (compliers)\nNot the average effect in the full population\n\n\n\n3.3 Compliance Types\n\nDefinition 2 (Principal Strata) Individuals can be classified into principal strata based on potential treatments \\(A^{z=1}\\) and \\(A^{z=0}\\):\n\nCompliers: \\(A^{z=1} = 1, A^{z=0} = 0\\) (take treatment if and only if \\(Z = 1\\))\nAlways-takers: \\(A^{z=1} = 1, A^{z=0} = 1\\) (always take treatment)\nNever-takers: \\(A^{z=1} = 0, A^{z=0} = 0\\) (never take treatment)\nDefiers: \\(A^{z=1} = 0, A^{z=0} = 1\\) (do opposite of instrument)\n\n\nMonotonicity assumption: No defiers exist.\n\nWhy monotonicity:\nIf defiers exist, the IV estimand can be severely biased. With monotonicity:\n\nCompliers: Instrument changes their treatment\nAlways-takers: Get treatment regardless\nNever-takers: Never get treatment regardless\n\nThe IV estimand identifies the causal effect in compliers only (LATE = local average treatment effect).\n\n\n\n3.4 Local Average Treatment Effect (LATE)\nUnder IV conditions plus monotonicity:\n\\[\\text{IV estimand} = E[Y^{a=1} - Y^{a=0} \\mid \\text{Complier}]\\]\nThis is the average causal effect in compliers, not in the full population.\nInterpretation: IV tells us the effect of treatment for those who would comply with the instrument.\nLimitation: We don’t know who the compliers are (unobservable principal stratum)."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html#two-stage-least-squares-estimation-pp.-237-240",
+    "href": "chapters/16-instrumental-variable-estimation.html#two-stage-least-squares-estimation-pp.-237-240",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "4 16.4 Two-Stage Least Squares Estimation (pp. 237-240)",
+    "text": "4 16.4 Two-Stage Least Squares Estimation (pp. 237-240)\n\nTwo-stage least squares (2SLS) is the most common IV method for continuous outcomes.\n\n4.1 2SLS Algorithm\nStage 1: Regress treatment on instrument (and covariates if present)\n\\[A_i = \\alpha_0 + \\alpha_1 Z_i + \\epsilon_i\\]\nObtain predicted treatment: \\(\\hat{A}_i = \\hat{\\alpha}_0 + \\hat{\\alpha}_1 Z_i\\)\nStage 2: Regress outcome on predicted treatment\n\\[Y_i = \\beta_0 + \\beta_1 \\hat{A}_i + \\eta_i\\]\nThe coefficient \\(\\hat{\\beta}_1\\) is the 2SLS estimate of the causal effect.\n\n\n4.2 Why This Works\nIntuition:\n\nStage 1 extracts the variation in \\(A\\) that is “caused by” \\(Z\\)\n\\(\\hat{A}\\) is the part of \\(A\\) that is free of confounding (because \\(Z\\) is randomized)\nStage 2 estimates the effect of this “clean” variation on \\(Y\\)\n\nMathematical equivalence: For binary \\(Z\\) and \\(A\\), 2SLS equals the Wald estimator.\n\nImportant:\n\nStandard errors from Stage 2 are WRONG (they ignore Stage 1 uncertainty)\nUse specialized IV software or bootstrap for correct standard errors\nR packages: ivreg, AER::ivreg\nStata command: ivregress 2sls\n\n\n\n\n4.3 Including Covariates\nWith measured confounders \\(L\\) that confound \\(A \\to Y\\) but not \\(Z \\to A\\):\nStage 1: \\[A_i = \\alpha_0 + \\alpha_1 Z_i + \\alpha_2^{\\top} L_i + \\epsilon_i\\]\nStage 2: \\[Y_i = \\beta_0 + \\beta_1 \\hat{A}_i + \\beta_2^{\\top} L_i + \\eta_i\\]\nIncluding \\(L\\) can improve efficiency even if not necessary for identification."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html#instrumental-variable-estimation-with-measured-confounders-pp.-240-242",
+    "href": "chapters/16-instrumental-variable-estimation.html#instrumental-variable-estimation-with-measured-confounders-pp.-240-242",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "5 16.5 Instrumental Variable Estimation with Measured Confounders (pp. 240-242)",
+    "text": "5 16.5 Instrumental Variable Estimation with Measured Confounders (pp. 240-242)\n\nIV estimation can be combined with adjustment for measured confounders.\n\n5.1 Two Scenarios\nScenario 1: Confounders of \\(A \\to Y\\) that don’t affect \\(Z\\)\n\nAdjust by including \\(L\\) in both stages of 2SLS\nImproves efficiency but not necessary for identification\n\nScenario 2: Confounders of \\(Z \\to Y\\)\n\nMore problematic - threatens IV exchangeability assumption\nNeed \\(Y^a \\perp\\!\\!\\!\\perp Z \\mid L\\) (conditional exchangeability of instrument)\nUse conditional IV methods\n\n\n\n5.2 Conditional IV Estimation\nModified IV conditions:\n\nConditional relevance: \\(Z \\not\\perp\\!\\!\\!\\perp A \\mid L\\)\nConditional exchangeability: \\(Y^a \\perp\\!\\!\\!\\perp Z \\mid L\\)\nExclusion restriction: \\(Y^{a,z} = Y^a\\) (still unconditional)\n\nEstimation: Use 2SLS with \\(L\\) as covariates, then standardize over \\(L\\).\n\nWhen to adjust for \\(L\\):\n\nInclude if \\(L\\) confounds \\(A \\to Y\\) (for efficiency)\nInclude if \\(L\\) confounds \\(Z \\to Y\\) (for identification)\nDon’t include if \\(L\\) is affected by \\(Z\\) (would bias estimates)\n\nSubject-matter knowledge is crucial for deciding which covariates to include."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html#instrumental-variable-estimation-versus-regression-pp.-242-244",
+    "href": "chapters/16-instrumental-variable-estimation.html#instrumental-variable-estimation-versus-regression-pp.-242-244",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "6 16.6 Instrumental Variable Estimation versus Regression (pp. 242-244)",
+    "text": "6 16.6 Instrumental Variable Estimation versus Regression (pp. 242-244)\n\nHow do IV estimates compare to regression-based estimates?\n\n6.1 Comparison\nRegression (e.g., outcome regression or IP weighting):\n\nAssumes no unmeasured confounding: \\(Y^a \\perp\\!\\!\\!\\perp A \\mid L\\)\nIdentifies average causal effect: \\(E[Y^{a=1}] - E[Y^{a=0}]\\)\nEfficient when assumptions hold\n\nIV estimation:\n\nAllows unmeasured confounding of \\(A \\to Y\\)\nAssumes valid instrument with IV conditions\nIdentifies LATE: \\(E[Y^{a=1} - Y^{a=0} \\mid \\text{Complier}]\\)\nLess efficient (larger standard errors)\n\n\n\n6.2 When Estimates Differ\nIf IV and regression give different estimates:\n\nUnmeasured confounding: Regression is biased, IV may be valid\nEffect heterogeneity: IV estimates LATE, regression estimates ATE\nIV violations: IV assumptions may be violated\nBoth wrong: Both methods could have issues\n\nInterpretation: Differences suggest either unmeasured confounding or effect heterogeneity (or both).\n\nPractical dilemma:\n\nIf estimates agree: Reassuring (though both could be wrong)\nIf estimates disagree: Difficult to know which to trust\n\nRecommendation:\n\nCarefully assess IV assumptions (especially exclusion)\nConsider who the compliers are and whether LATE is the estimand of interest\nConduct sensitivity analyses\nReport both estimates with clear statements about assumptions"
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html#the-survivor-average-causal-effect-pp.-244-246",
+    "href": "chapters/16-instrumental-variable-estimation.html#the-survivor-average-causal-effect-pp.-244-246",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "7 16.7 The Survivor Average Causal Effect (pp. 244-246)",
+    "text": "7 16.7 The Survivor Average Causal Effect (pp. 244-246)\n\nIV methods can be extended to handle survival outcomes and time-to-event data.\n\n7.1 Challenges with Survival Outcomes\nIssue: With time-to-event outcomes, some individuals are censored before the event.\nQuestion: How do we interpret IV estimates when the outcome is survival time?\n\n\n7.2 Survivor Average Causal Effect (SACE)\n\nDefinition 3 (Survivor Average Causal Effect) The survivor average causal effect (SACE) is:\n\\[E[Y^{a=1} - Y^{a=0} \\mid S^{a=1} = 1, S^{a=0} = 1]\\]\nwhere \\(S^a\\) is an indicator for surviving (or remaining uncensored) under treatment \\(a\\).\nThis is the effect in always-survivors - those who would survive under both treatment and control.\n\n\n\n7.3 Identification\nSetting: Survival \\(S\\) is affected by treatment \\(A\\), and outcome \\(Y\\) is only observed if \\(S = 1\\).\nIV approach: Under IV conditions plus additional assumptions (monotonicity for survival), IV can identify SACE.\nInterpretation: Effect of treatment on the outcome for those who would survive regardless of treatment.\n\nSACE vs LATE:\n\nLATE: Effect in compliers (those whose treatment is affected by instrument)\nSACE: Effect in always-survivors (those who survive under both treatments)\n\nBoth are principal stratification approaches - effects in specific latent subgroups.\nChallenge: SACE requires strong assumptions:\n\nMonotonicity for survival (treatment doesn’t hurt anyone’s survival)\nExclusion restriction for both survival and outcome\n\nThese are often hard to justify."
+  },
+  {
+    "objectID": "chapters/16-instrumental-variable-estimation.html#summary",
+    "href": "chapters/16-instrumental-variable-estimation.html#summary",
+    "title": "Chapter 16: Instrumental Variable Estimation",
+    "section": "8 Summary",
+    "text": "8 Summary\n\nKey concepts:\n\nInstrumental variable: A variable \\(Z\\) that affects treatment but not the outcome directly\nIV conditions: Relevance, exchangeability, exclusion restriction\nWald estimator: \\(\\frac{E[Y \\mid Z=1] - E[Y \\mid Z=0]}{E[A \\mid Z=1] - E[A \\mid Z=0]}\\) for binary \\(Z, A\\)\nPrincipal strata: Compliers, always-takers, never-takers, defiers\nLATE: Local average treatment effect in compliers\n2SLS: Two-stage least squares for continuous outcomes\nSACE: Survivor average causal effect for survival outcomes\n\nWhen to use IV methods:\n\nUnmeasured confounding is a concern\nValid instrument is available (strong assumptions)\nLATE is a meaningful estimand (compliers are of interest)\nEfficiency loss is acceptable (IV estimates have larger SEs)\n\nCommon instruments:\n\n\n\n\n\n\n\n\n\nSetting\nInstrument\nTreatment\nOutcome\n\n\n\n\nRandomized encouragement\nEncouragement\nBehavior change\nHealth\n\n\nGeographic variation\nDistance to facility\nHealthcare use\nHealth\n\n\nMendelian randomization\nGenetic variant\nBiomarker\nDisease\n\n\nDraft lottery\nLottery number\nMilitary service\nEarnings\n\n\nPhysician preference\nPhysician tendency\nTreatment choice\nOutcome\n\n\n\nAssumptions to check:\n\nRelevance: Test empirically (\\(Z\\) associated with \\(A\\))\nExchangeability: Justify by design or argue plausibility\nExclusion: Requires subject-matter knowledge (cannot be tested)\nMonotonicity: No defiers (often plausible, sometimes testable)\n\nAdvantages:\n\nAllows causal inference with unmeasured confounding\nUses only treatment variation “caused by” instrument\nProvides a different estimand than regression methods\n\nLimitations:\n\nStrong, untestable assumptions (especially exclusion)\nEstimates LATE, not ATE (interpretation challenge)\nLess efficient than regression (when regression assumptions hold)\nWeak instruments lead to bias and large variance\n\n\nPractical advice:\n\nThink hard about exclusion: Is it plausible the instrument only affects outcome through treatment?\nCheck instrument strength: Weak instruments are worse than no instrument\nUnderstand LATE: Who are the compliers? Is their effect of interest?\nSensitivity analyses: Try different instruments if available\nCompare with regression: Large differences suggest unmeasured confounding or heterogeneity\n\nLooking ahead: Part III extends these methods to time-varying treatments, where IV ideas play a role in dealing with time-varying confounding and selection bias."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#prediction-vs-causal-inference",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#prediction-vs-causal-inference",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Prediction vs Causal Inference",
+    "text": "Prediction vs Causal Inference\nPrediction goal: Minimize prediction error for \\(Y\\) given covariates\n\nInclude any variable that improves prediction\nUse criteria like AIC, BIC, cross-validation\nMore variables (if not overfitting) → better prediction\n\nCausal inference goal: Estimate \\(E[Y^a]\\) or \\(E[Y^{a=1}] - E[Y^{a=0}]\\)\n\nInclude variables that remove confounding\nExclude variables that introduce bias\nMore variables ≠ better causal estimates\n\n\nWhy they differ:\nIn prediction, we want to capture all associations between covariates and outcome. In causal inference, we want to isolate the causal effect of treatment, which means blocking certain associations and preserving others.\nExample: A mediator predicts the outcome well, but adjusting for it removes part of the causal effect we want to estimate."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#stepwise-selection",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#stepwise-selection",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Stepwise Selection",
+    "text": "Stepwise Selection\nTraditional approach: Stepwise regression (forward, backward, or both)\n\nAdd/remove variables based on statistical significance or information criteria\nMaximize \\(R^2\\) or minimize AIC/BIC\n\nProblem for causal inference:\n\nMay exclude important confounders (if weak predictors)\nMay include colliders or mediators (if strong predictors)\nIgnores causal structure\n\nRecommendation: Do not use stepwise selection for causal inference."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#backdoor-paths",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#backdoor-paths",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Backdoor Paths",
+    "text": "Backdoor Paths\nBackdoor path: A path from \\(A\\) to \\(Y\\) that starts with an arrow into \\(A\\)\n\\[A \\leftarrow L \\to Y\\]\nSuch paths create non-causal association between \\(A\\) and \\(Y\\).\nGoal: Block all backdoor paths to eliminate confounding."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#sufficient-adjustment-sets",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#sufficient-adjustment-sets",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Sufficient Adjustment Sets",
+    "text": "Sufficient Adjustment Sets\n\nDefinition 2 (Sufficient Adjustment Set) A set of variables \\(L\\) is sufficient for confounding adjustment if conditioning on \\(L\\) blocks all backdoor paths from \\(A\\) to \\(Y\\).\nEquivalently: \\((Y^a \\perp\\!\\!\\!\\perp A \\mid L)\\) for all \\(a\\) (conditional exchangeability).\n\nMultiple sufficient sets: There may be many sufficient adjustment sets. We want to choose one that:\n\nBlocks all backdoor paths (necessary)\nDoesn’t introduce new bias (important)\nIs measurable and measured\n\n\nDAG-based approach:\n\nDraw a causal DAG representing your subject-matter knowledge\nIdentify all backdoor paths from \\(A\\) to \\(Y\\)\nFind a set \\(L\\) that blocks all backdoor paths\nAdjust for \\(L\\) (and only \\(L\\))\n\nThis is superior to traditional approaches because it’s based on causal structure, not statistical associations."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#variables-to-include",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#variables-to-include",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Variables to Include",
+    "text": "Variables to Include\nConfounders: Variables on backdoor paths\n\n✓ Include to block backdoor paths\nThese are causes of both treatment and outcome (or proxies thereof)\n\nExample DAG: \\[A \\leftarrow L \\to Y\\]\nAdjust for \\(L\\) to block the backdoor path."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#variables-to-exclude",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#variables-to-exclude",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Variables to Exclude",
+    "text": "Variables to Exclude\nMediators: Variables on the causal path from \\(A\\) to \\(Y\\)\n\n✗ Do NOT adjust (would remove part of the causal effect)\n\nExample DAG: \\[A \\to M \\to Y\\]\nIf we adjust for \\(M\\), we block the causal path through \\(M\\).\nDescendants of treatment: Variables affected by \\(A\\)\n\n✗ Usually do NOT adjust (may induce bias)"
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#colliders",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#colliders",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Colliders",
+    "text": "Colliders\n\nDefinition 3 (Collider) A collider on a path is a variable with two arrows pointing into it.\nExample: \\[A \\to C \\leftarrow U \\to Y\\]\n\\(C\\) is a collider on the path \\(A \\to C \\leftarrow U \\to Y\\).\nProperty: This path is blocked by default (without conditioning on \\(C\\)).\nDanger: If we condition on \\(C\\) (or its descendants), we open the path, creating collider bias.\n\nRule: Do NOT adjust for colliders (unless necessary to block other paths).\n\nCollider bias example:\n\n\\(A\\): Athletic ability\n\\(C\\): Being on a sports team (affected by both \\(A\\) and parental encouragement \\(U\\))\n\\(U\\): Parental encouragement (also affects academic performance \\(Y\\))\n\\(Y\\): Academic performance\n\nIf we condition on being on a sports team (\\(C = 1\\)), we induce a negative association between athletic ability and parental encouragement. This can bias estimates of the effect of \\(A\\) on \\(Y\\).\nPractical implication: Including “selection variables” in regression can introduce bias."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#m-bias-butterfly-bias",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#m-bias-butterfly-bias",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "M-bias (Butterfly Bias)",
+    "text": "M-bias (Butterfly Bias)\nDAG structure:\n    U1 → L ← U2\n     ↓         ↓\n     A         Y\nProperties:\n\n\\(L\\) is associated with both \\(A\\) and \\(Y\\) (through \\(U1\\) and \\(U2\\))\n\\(L\\) is a collider on the path \\(A \\leftarrow U1 \\to L \\leftarrow U2 \\to Y\\)\nThis path is blocked by default\nBut if we adjust for \\(L\\), we open this path!\n\nResult: Adjusting for \\(L\\) introduces bias even though \\(L\\) is associated with both \\(A\\) and \\(Y\\).\n\nPractical example:\n\n\\(A\\): Smoking\n\\(Y\\): Lung cancer\n\\(U1\\): Genetic variant affecting smoking propensity\n\\(U2\\): Different genetic variant affecting cancer risk\n\\(L\\): Being in a genetic study (selected based on \\(U1\\) and \\(U2\\))\n\nIn the genetic study sample, adjusting for study participation \\(L\\) induces collider bias.\nLesson: Don’t adjust for a variable just because it’s associated with treatment and outcome. Check the causal structure!"
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#instrumental-variables-revisited",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#instrumental-variables-revisited",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Instrumental Variables Revisited",
+    "text": "Instrumental Variables Revisited\nAn instrumental variable \\(Z\\) satisfies:\nZ → A → Y\nwith no backdoor paths from \\(Z\\) to \\(Y\\).\nShould we adjust for \\(Z\\)?\n\nIf using IV methods: NO (use \\(Z\\) as instrument)\nIf using standard methods and \\(Z\\) is not a confounder: NO (unnecessary, may hurt efficiency)\nIf \\(Z\\) confounds some other relationship of interest: MAYBE"
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#time-varying-confounding",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#time-varying-confounding",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Time-Varying Confounding",
+    "text": "Time-Varying Confounding\nSetting: Treatment varies over time (\\(A_0, A_1, \\ldots\\)), as do confounders (\\(L_0, L_1, \\ldots\\))\nTime-varying confounder: \\(L_1\\) is a confounder for the effect of \\(A_1\\) on \\(Y\\)\nProblem: If \\(A_0\\) affects \\(L_1\\), then:\n\n\\(L_1\\) is a confounder (need to adjust)\n\\(L_1\\) is a mediator (should not adjust in standard regression)"
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#intermediate-confounder",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#intermediate-confounder",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Intermediate Confounder",
+    "text": "Intermediate Confounder\n\nDefinition 4 (Intermediate Confounder (Time-Dependent Confounder Affected by Prior Treatment)) A variable \\(L_1\\) is an intermediate confounder if:\n\n\\(L_1\\) is a confounder for the effect of \\(A_1\\) on \\(Y\\)\n\\(L_1\\) is affected by prior treatment \\(A_0\\)\n\nDAG:\nA_0 → L_1 → Y\n ↓     ↓\n A_1 → Y\n\nStandard regression fails: Cannot correctly adjust for \\(L_1\\) using standard methods.\nSolutions:\n\nG-methods: Parametric g-formula, IP weighting, g-estimation (Part III)\nThese methods properly handle time-varying confounders affected by prior treatment\n\n\nWhy standard regression fails:\nIf we adjust for \\(L_1\\), we block the indirect effect \\(A_0 \\to L_1 \\to Y\\). If we don’t adjust, we have confounding of \\(A_1 \\to Y\\).\nExample: HIV treatment and CD4 count\n\n\\(A_0, A_1\\): Antiretroviral therapy at times 0 and 1\n\\(L_1\\): CD4 count at time 1 (affected by \\(A_0\\), affects treatment choice \\(A_1\\), affects outcome \\(Y\\))\nStandard regression cannot handle this correctly\n\nPart III solution: Marginal structural models with IP weighting or g-formula can properly estimate effects in this setting."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#precision-variables",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#precision-variables",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Precision Variables",
+    "text": "Precision Variables\nDefinition: Variables associated with the outcome but not with treatment (after accounting for confounders).\nExample DAG:\nA → Y ← V\n\\(V\\) is associated with \\(Y\\) but not with \\(A\\) (no arrow from \\(V\\) to \\(A\\) or shared causes).\nEffect of adjustment:\n\nDoes NOT affect bias (no confounding)\nDOES improve precision (reduces residual variance)\n\nRecommendation: Include precision variables to improve efficiency."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#instruments-as-precision-variables",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#instruments-as-precision-variables",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Instruments as Precision Variables?",
+    "text": "Instruments as Precision Variables?\nQuestion: Should we include instrumental variables in outcome models?\nAnswer: Generally NO.\n\nInstruments are associated with \\(A\\) but (by exclusion) not directly with \\(Y\\)\nIncluding them in outcome models doesn’t improve precision\nMay slightly worsen precision due to additional parameters"
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#practical-strategy",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#practical-strategy",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Practical Strategy",
+    "text": "Practical Strategy\n\nFirst priority: Include all variables needed to block backdoor paths (confounders)\nSecond priority: Exclude colliders, mediators, and descendants of treatment\nThird priority: Consider including precision variables if they:\n\nStrongly predict the outcome\nAre not affected by treatment\nDon’t introduce collinearity issues\n\n\n\nBalance precision and bias:\n\nIncluding precision variables: ↑ efficiency, but more complex models\nExcluding precision variables: ↓ efficiency, but simpler models\n\nWith large samples, precision gains may be modest. With small samples, precision improvements can be valuable.\nPractical consideration: In many applications, confounders ARE strong predictors of the outcome, so adjusting for them serves both purposes (removes bias and improves precision)."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#steps-for-using-dags",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#steps-for-using-dags",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Steps for Using DAGs",
+    "text": "Steps for Using DAGs\n\nDraw the DAG:\n\nRepresent your causal assumptions about relationships between variables\nInclude treatment, outcome, all measured covariates, and key unmeasured variables\nDraw arrows representing direct causal effects\n\nIdentify backdoor paths:\n\nFind all paths from \\(A\\) to \\(Y\\) that start with an arrow into \\(A\\)\nThese are sources of confounding\n\nFind sufficient adjustment sets:\n\nIdentify sets of variables that block all backdoor paths\nAvoid inducing collider bias\nUse algorithms (e.g., dagitty R package) if DAG is complex\n\nChoose an adjustment set:\n\nSelect a sufficient set that is measured\nPrefer simpler sets (fewer variables) when multiple options exist\nCheck for practical considerations (measurement error, missing data, etc.)"
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#software-tools",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#software-tools",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "Software Tools",
+    "text": "Software Tools\nR package dagitty:\n\nDefine DAGs\nFind adjustment sets automatically\nCheck conditional independencies implied by the DAG\nVisualize DAGs\n\nExample:\nlibrary(dagitty)\ndag &lt;- dagitty('dag {\n  A -&gt; Y\n  L1 -&gt; A\n  L1 -&gt; Y\n  L2 -&gt; Y\n  U -&gt; A\n  U -&gt; Y\n}')\nadjustmentSets(dag, exposure = \"A\", outcome = \"Y\")\n\nDAGs encode assumptions:\n\nWhat you include in the DAG (and what you exclude) represents your causal knowledge\nDAGs make assumptions explicit and falsifiable\nSubject-matter expertise is crucial for drawing valid DAGs\n\nLimitations:\n\nDAG is only as good as your causal knowledge\nCannot test all assumptions (especially about unmeasured variables)\nMust think carefully about what to include\n\nRecommendation: Draw multiple plausible DAGs, find adjustment sets for each, conduct sensitivity analyses."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference-slides.html#references",
+    "href": "chapters/18-variable-selection-causal-inference-slides.html#references",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "",
+    "text": "Key principles for variable selection in causal inference:\n\nUse causal reasoning, not statistical criteria\nAdjust for confounders (variables on backdoor paths)\nDon’t adjust for mediators (variables on causal paths from treatment)\nDon’t adjust for colliders (unless necessary to block other paths)\nDon’t adjust for descendants of treatment (generally)\nConsider precision variables (if they don’t introduce bias)\nUse causal DAGs to guide selection\n\nVariables to include:\n\n✓ Confounders (on backdoor paths from \\(A\\) to \\(Y\\))\n✓ Precision variables (predict \\(Y\\), not affected by \\(A\\), not colliders)\n✓ Proxies for unmeasured confounders\n\nVariables to exclude:\n\n✗ Mediators (on causal path from \\(A\\) to \\(Y\\))\n✗ Colliders (except if needed to block backdoor paths)\n✗ Descendants of treatment (except special cases)\n✗ Instruments (when using standard methods)\n✗ Variables that induce M-bias\n\nSpecial cases:\n\nIntermediate confounders: Time-varying confounders affected by prior treatment\n\nCannot be handled by standard regression\nRequire g-methods (Part III)\n\n\nTools:\n\nCausal DAGs: Represent causal structure graphically\nBackdoor criterion: Identify sufficient adjustment sets\nSoftware: dagitty, ggdag (R), DAGitty (web interface)\n\nCommon mistakes:\n\nUsing stepwise selection or AIC/BIC for variable selection\nAdjusting for all predictors of the outcome\nAdjusting for mediators\nConditioning on colliders\nIgnoring time-varying confounding\n\nPractical workflow:\n\nDraw a causal DAG based on subject-matter knowledge\nIdentify backdoor paths from treatment to outcome\nFind sufficient adjustment sets using the backdoor criterion\nChoose a set that is measured and practical\nFit causal model adjusting for that set (using appropriate method)\nConduct sensitivity analyses with alternative DAGs/adjustment sets\n\n\nBottom line:\nVariable selection for causal inference requires causal thinking. Statistical significance, prediction accuracy, and \\(R^2\\) are not appropriate criteria. Instead:\n\nThink about causal structure\nUse DAGs to formalize assumptions\nApply the backdoor criterion\nAdjust for the right variables, not just any variables\n\nLooking ahead: Part III extends these ideas to longitudinal settings with time-varying treatments and confounders, where variable selection becomes even more critical and complex.\n\n\n\n\n\nHernán, Miguel A, and James M Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC. https://miguelhernan.org/whatifbook."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html",
+    "href": "chapters/18-variable-selection-causal-inference.html",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "",
+    "text": "This chapter addresses a critical question in causal inference: Which variables should we adjust for? Not all variables that predict the outcome should be included in causal models. Some variables, if adjusted for, can introduce bias rather than remove it. We provide guidance on variable selection using causal diagrams."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html#the-traditional-approach-pp.-265-267",
+    "href": "chapters/18-variable-selection-causal-inference.html#the-traditional-approach-pp.-265-267",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "1 18.1 The Traditional Approach (pp. 265-267)",
+    "text": "1 18.1 The Traditional Approach (pp. 265-267)\n\nTraditional variable selection methods are designed for prediction, not causal inference.\n\n1.1 Prediction vs Causal Inference\nPrediction goal: Minimize prediction error for \\(Y\\) given covariates\n\nInclude any variable that improves prediction\nUse criteria like AIC, BIC, cross-validation\nMore variables (if not overfitting) → better prediction\n\nCausal inference goal: Estimate \\(E[Y^a]\\) or \\(E[Y^{a=1}] - E[Y^{a=0}]\\)\n\nInclude variables that remove confounding\nExclude variables that introduce bias\nMore variables ≠ better causal estimates\n\n\nWhy they differ:\nIn prediction, we want to capture all associations between covariates and outcome. In causal inference, we want to isolate the causal effect of treatment, which means blocking certain associations and preserving others.\nExample: A mediator predicts the outcome well, but adjusting for it removes part of the causal effect we want to estimate.\n\n\n\n1.2 Stepwise Selection\nTraditional approach: Stepwise regression (forward, backward, or both)\n\nAdd/remove variables based on statistical significance or information criteria\nMaximize \\(R^2\\) or minimize AIC/BIC\n\nProblem for causal inference:\n\nMay exclude important confounders (if weak predictors)\nMay include colliders or mediators (if strong predictors)\nIgnores causal structure\n\nRecommendation: Do not use stepwise selection for causal inference."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html#confounding-and-confounders-pp.-267-270",
+    "href": "chapters/18-variable-selection-causal-inference.html#confounding-and-confounders-pp.-267-270",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "2 18.2 Confounding and Confounders (pp. 267-270)",
+    "text": "2 18.2 Confounding and Confounders (pp. 267-270)\n\nWhat exactly is a confounder, and when should we adjust for it?\n\nDefinition 1 (Confounder (Formal Definition)) A variable \\(L\\) is a confounder for the effect of \\(A\\) on \\(Y\\) if:\n\n\\(L\\) is associated with treatment \\(A\\)\n\\(L\\) is a cause of outcome \\(Y\\)\n\\(L\\) is not affected by \\(A\\) (not a descendant of \\(A\\) on a causal DAG)\n\nCausal criterion: \\(L\\) is on a backdoor path from \\(A\\) to \\(Y\\).\n\n\n2.1 Backdoor Paths\nBackdoor path: A path from \\(A\\) to \\(Y\\) that starts with an arrow into \\(A\\)\n\\[A \\leftarrow L \\to Y\\]\nSuch paths create non-causal association between \\(A\\) and \\(Y\\).\nGoal: Block all backdoor paths to eliminate confounding.\n\n\n2.2 Sufficient Adjustment Sets\n\nDefinition 2 (Sufficient Adjustment Set) A set of variables \\(L\\) is sufficient for confounding adjustment if conditioning on \\(L\\) blocks all backdoor paths from \\(A\\) to \\(Y\\).\nEquivalently: \\((Y^a \\perp\\!\\!\\!\\perp A \\mid L)\\) for all \\(a\\) (conditional exchangeability).\n\nMultiple sufficient sets: There may be many sufficient adjustment sets. We want to choose one that:\n\nBlocks all backdoor paths (necessary)\nDoesn’t introduce new bias (important)\nIs measurable and measured\n\n\nDAG-based approach:\n\nDraw a causal DAG representing your subject-matter knowledge\nIdentify all backdoor paths from \\(A\\) to \\(Y\\)\nFind a set \\(L\\) that blocks all backdoor paths\nAdjust for \\(L\\) (and only \\(L\\))\n\nThis is superior to traditional approaches because it’s based on causal structure, not statistical associations."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html#confounding-adjustment-pp.-270-273",
+    "href": "chapters/18-variable-selection-causal-inference.html#confounding-adjustment-pp.-270-273",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "3 18.3 Confounding Adjustment (pp. 270-273)",
+    "text": "3 18.3 Confounding Adjustment (pp. 270-273)\n\nWhen we adjust for a sufficient set, we remove confounding. But be careful about adjusting for too much.\n\n3.1 Variables to Include\nConfounders: Variables on backdoor paths\n\n✓ Include to block backdoor paths\nThese are causes of both treatment and outcome (or proxies thereof)\n\nExample DAG: \\[A \\leftarrow L \\to Y\\]\nAdjust for \\(L\\) to block the backdoor path.\n\n\n3.2 Variables to Exclude\nMediators: Variables on the causal path from \\(A\\) to \\(Y\\)\n\n✗ Do NOT adjust (would remove part of the causal effect)\n\nExample DAG: \\[A \\to M \\to Y\\]\nIf we adjust for \\(M\\), we block the causal path through \\(M\\).\nDescendants of treatment: Variables affected by \\(A\\)\n\n✗ Usually do NOT adjust (may induce bias)\n\n\n\n3.3 Colliders\n\nDefinition 3 (Collider) A collider on a path is a variable with two arrows pointing into it.\nExample: \\[A \\to C \\leftarrow U \\to Y\\]\n\\(C\\) is a collider on the path \\(A \\to C \\leftarrow U \\to Y\\).\nProperty: This path is blocked by default (without conditioning on \\(C\\)).\nDanger: If we condition on \\(C\\) (or its descendants), we open the path, creating collider bias.\n\nRule: Do NOT adjust for colliders (unless necessary to block other paths).\n\nCollider bias example:\n\n\\(A\\): Athletic ability\n\\(C\\): Being on a sports team (affected by both \\(A\\) and parental encouragement \\(U\\))\n\\(U\\): Parental encouragement (also affects academic performance \\(Y\\))\n\\(Y\\): Academic performance\n\nIf we condition on being on a sports team (\\(C = 1\\)), we induce a negative association between athletic ability and parental encouragement. This can bias estimates of the effect of \\(A\\) on \\(Y\\).\nPractical implication: Including “selection variables” in regression can introduce bias."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html#instrumental-variables-and-m-bias-pp.-273-276",
+    "href": "chapters/18-variable-selection-causal-inference.html#instrumental-variables-and-m-bias-pp.-273-276",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "4 18.4 Instrumental Variables and M-bias (pp. 273-276)",
+    "text": "4 18.4 Instrumental Variables and M-bias (pp. 273-276)\n\nSome variables should not be adjusted for even if they’re associated with both treatment and outcome.\n\n4.1 M-bias (Butterfly Bias)\nDAG structure:\n    U1 → L ← U2\n     ↓         ↓\n     A         Y\nProperties:\n\n\\(L\\) is associated with both \\(A\\) and \\(Y\\) (through \\(U1\\) and \\(U2\\))\n\\(L\\) is a collider on the path \\(A \\leftarrow U1 \\to L \\leftarrow U2 \\to Y\\)\nThis path is blocked by default\nBut if we adjust for \\(L\\), we open this path!\n\nResult: Adjusting for \\(L\\) introduces bias even though \\(L\\) is associated with both \\(A\\) and \\(Y\\).\n\nPractical example:\n\n\\(A\\): Smoking\n\\(Y\\): Lung cancer\n\\(U1\\): Genetic variant affecting smoking propensity\n\\(U2\\): Different genetic variant affecting cancer risk\n\\(L\\): Being in a genetic study (selected based on \\(U1\\) and \\(U2\\))\n\nIn the genetic study sample, adjusting for study participation \\(L\\) induces collider bias.\nLesson: Don’t adjust for a variable just because it’s associated with treatment and outcome. Check the causal structure!\n\n\n\n4.2 Instrumental Variables Revisited\nAn instrumental variable \\(Z\\) satisfies:\nZ → A → Y\nwith no backdoor paths from \\(Z\\) to \\(Y\\).\nShould we adjust for \\(Z\\)?\n\nIf using IV methods: NO (use \\(Z\\) as instrument)\nIf using standard methods and \\(Z\\) is not a confounder: NO (unnecessary, may hurt efficiency)\nIf \\(Z\\) confounds some other relationship of interest: MAYBE"
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html#confounders-mediators-and-intermediate-confounders-pp.-276-279",
+    "href": "chapters/18-variable-selection-causal-inference.html#confounders-mediators-and-intermediate-confounders-pp.-276-279",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "5 18.5 Confounders, Mediators, and Intermediate Confounders (pp. 276-279)",
+    "text": "5 18.5 Confounders, Mediators, and Intermediate Confounders (pp. 276-279)\n\nTime-varying treatments create new challenges for variable selection.\n\n5.1 Time-Varying Confounding\nSetting: Treatment varies over time (\\(A_0, A_1, \\ldots\\)), as do confounders (\\(L_0, L_1, \\ldots\\))\nTime-varying confounder: \\(L_1\\) is a confounder for the effect of \\(A_1\\) on \\(Y\\)\nProblem: If \\(A_0\\) affects \\(L_1\\), then:\n\n\\(L_1\\) is a confounder (need to adjust)\n\\(L_1\\) is a mediator (should not adjust in standard regression)\n\n\n\n5.2 Intermediate Confounder\n\nDefinition 4 (Intermediate Confounder (Time-Dependent Confounder Affected by Prior Treatment)) A variable \\(L_1\\) is an intermediate confounder if:\n\n\\(L_1\\) is a confounder for the effect of \\(A_1\\) on \\(Y\\)\n\\(L_1\\) is affected by prior treatment \\(A_0\\)\n\nDAG:\nA_0 → L_1 → Y\n ↓     ↓\n A_1 → Y\n\nStandard regression fails: Cannot correctly adjust for \\(L_1\\) using standard methods.\nSolutions:\n\nG-methods: Parametric g-formula, IP weighting, g-estimation (Part III)\nThese methods properly handle time-varying confounders affected by prior treatment\n\n\nWhy standard regression fails:\nIf we adjust for \\(L_1\\), we block the indirect effect \\(A_0 \\to L_1 \\to Y\\). If we don’t adjust, we have confounding of \\(A_1 \\to Y\\).\nExample: HIV treatment and CD4 count\n\n\\(A_0, A_1\\): Antiretroviral therapy at times 0 and 1\n\\(L_1\\): CD4 count at time 1 (affected by \\(A_0\\), affects treatment choice \\(A_1\\), affects outcome \\(Y\\))\nStandard regression cannot handle this correctly\n\nPart III solution: Marginal structural models with IP weighting or g-formula can properly estimate effects in this setting."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html#selecting-variables-for-precision-pp.-279-281",
+    "href": "chapters/18-variable-selection-causal-inference.html#selecting-variables-for-precision-pp.-279-281",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "6 18.6 Selecting Variables for Precision (pp. 279-281)",
+    "text": "6 18.6 Selecting Variables for Precision (pp. 279-281)\n\nAfter ensuring confounding is addressed, can we include additional variables to improve precision?\n\n6.1 Precision Variables\nDefinition: Variables associated with the outcome but not with treatment (after accounting for confounders).\nExample DAG:\nA → Y ← V\n\\(V\\) is associated with \\(Y\\) but not with \\(A\\) (no arrow from \\(V\\) to \\(A\\) or shared causes).\nEffect of adjustment:\n\nDoes NOT affect bias (no confounding)\nDOES improve precision (reduces residual variance)\n\nRecommendation: Include precision variables to improve efficiency.\n\n\n6.2 Instruments as Precision Variables?\nQuestion: Should we include instrumental variables in outcome models?\nAnswer: Generally NO.\n\nInstruments are associated with \\(A\\) but (by exclusion) not directly with \\(Y\\)\nIncluding them in outcome models doesn’t improve precision\nMay slightly worsen precision due to additional parameters\n\n\n\n6.3 Practical Strategy\n\nFirst priority: Include all variables needed to block backdoor paths (confounders)\nSecond priority: Exclude colliders, mediators, and descendants of treatment\nThird priority: Consider including precision variables if they:\n\nStrongly predict the outcome\nAre not affected by treatment\nDon’t introduce collinearity issues\n\n\n\nBalance precision and bias:\n\nIncluding precision variables: ↑ efficiency, but more complex models\nExcluding precision variables: ↓ efficiency, but simpler models\n\nWith large samples, precision gains may be modest. With small samples, precision improvements can be valuable.\nPractical consideration: In many applications, confounders ARE strong predictors of the outcome, so adjusting for them serves both purposes (removes bias and improves precision)."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html#using-causal-diagrams-pp.-281-282",
+    "href": "chapters/18-variable-selection-causal-inference.html#using-causal-diagrams-pp.-281-282",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "7 18.7 Using Causal Diagrams (pp. 281-282)",
+    "text": "7 18.7 Using Causal Diagrams (pp. 281-282)\n\nCausal DAGs (directed acyclic graphs) are invaluable tools for variable selection.\n\n7.1 Steps for Using DAGs\n\nDraw the DAG:\n\nRepresent your causal assumptions about relationships between variables\nInclude treatment, outcome, all measured covariates, and key unmeasured variables\nDraw arrows representing direct causal effects\n\nIdentify backdoor paths:\n\nFind all paths from \\(A\\) to \\(Y\\) that start with an arrow into \\(A\\)\nThese are sources of confounding\n\nFind sufficient adjustment sets:\n\nIdentify sets of variables that block all backdoor paths\nAvoid inducing collider bias\nUse algorithms (e.g., dagitty R package) if DAG is complex\n\nChoose an adjustment set:\n\nSelect a sufficient set that is measured\nPrefer simpler sets (fewer variables) when multiple options exist\nCheck for practical considerations (measurement error, missing data, etc.)\n\n\n\n\n7.2 Software Tools\nR package dagitty:\n\nDefine DAGs\nFind adjustment sets automatically\nCheck conditional independencies implied by the DAG\nVisualize DAGs\n\nExample:\nlibrary(dagitty)\ndag &lt;- dagitty('dag {\n  A -&gt; Y\n  L1 -&gt; A\n  L1 -&gt; Y\n  L2 -&gt; Y\n  U -&gt; A\n  U -&gt; Y\n}')\nadjustmentSets(dag, exposure = \"A\", outcome = \"Y\")\n\nDAGs encode assumptions:\n\nWhat you include in the DAG (and what you exclude) represents your causal knowledge\nDAGs make assumptions explicit and falsifiable\nSubject-matter expertise is crucial for drawing valid DAGs\n\nLimitations:\n\nDAG is only as good as your causal knowledge\nCannot test all assumptions (especially about unmeasured variables)\nMust think carefully about what to include\n\nRecommendation: Draw multiple plausible DAGs, find adjustment sets for each, conduct sensitivity analyses."
+  },
+  {
+    "objectID": "chapters/18-variable-selection-causal-inference.html#summary",
+    "href": "chapters/18-variable-selection-causal-inference.html#summary",
+    "title": "Chapter 18: Variable Selection for Causal Inference",
+    "section": "8 Summary",
+    "text": "8 Summary\n\nKey principles for variable selection in causal inference:\n\nUse causal reasoning, not statistical criteria\nAdjust for confounders (variables on backdoor paths)\nDon’t adjust for mediators (variables on causal paths from treatment)\nDon’t adjust for colliders (unless necessary to block other paths)\nDon’t adjust for descendants of treatment (generally)\nConsider precision variables (if they don’t introduce bias)\nUse causal DAGs to guide selection\n\nVariables to include:\n\n✓ Confounders (on backdoor paths from \\(A\\) to \\(Y\\))\n✓ Precision variables (predict \\(Y\\), not affected by \\(A\\), not colliders)\n✓ Proxies for unmeasured confounders\n\nVariables to exclude:\n\n✗ Mediators (on causal path from \\(A\\) to \\(Y\\))\n✗ Colliders (except if needed to block backdoor paths)\n✗ Descendants of treatment (except special cases)\n✗ Instruments (when using standard methods)\n✗ Variables that induce M-bias\n\nSpecial cases:\n\nIntermediate confounders: Time-varying confounders affected by prior treatment\n\nCannot be handled by standard regression\nRequire g-methods (Part III)\n\n\nTools:\n\nCausal DAGs: Represent causal structure graphically\nBackdoor criterion: Identify sufficient adjustment sets\nSoftware: dagitty, ggdag (R), DAGitty (web interface)\n\nCommon mistakes:\n\nUsing stepwise selection or AIC/BIC for variable selection\nAdjusting for all predictors of the outcome\nAdjusting for mediators\nConditioning on colliders\nIgnoring time-varying confounding\n\nPractical workflow:\n\nDraw a causal DAG based on subject-matter knowledge\nIdentify backdoor paths from treatment to outcome\nFind sufficient adjustment sets using the backdoor criterion\nChoose a set that is measured and practical\nFit causal model adjusting for that set (using appropriate method)\nConduct sensitivity analyses with alternative DAGs/adjustment sets\n\n\nBottom line:\nVariable selection for causal inference requires causal thinking. Statistical significance, prediction accuracy, and \\(R^2\\) are not appropriate criteria. Instead:\n\nThink about causal structure\nUse DAGs to formalize assumptions\nApply the backdoor criterion\nAdjust for the right variables, not just any variables\n\nLooking ahead: Part III extends these ideas to longitudinal settings with time-varying treatments and confounders, where variable selection becomes even more critical and complex."
   }
 ]
