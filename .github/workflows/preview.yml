@@ -7,6 +7,8 @@ on:
       - reopened
       - synchronize
       - closed
+      - labeled
+      - unlabeled
     paths:
       - 'chapters/**'
       - '_quarto.yml'
@@ -28,6 +30,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history for git diff
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -46,7 +50,53 @@ jobs:
         if: github.event.action != 'closed' # skip the build if the PR has been closed
         uses: quarto-dev/quarto-actions/render@v2
 
+      # Detect which chapters have changed and optionally disable highlighting
+      # based on the 'no-preview-highlights' PR label
+      - name: Detect changed chapters (based on rendered files)
+        if: github.event.action != 'closed'
+        run: python3 .github/scripts/detect-changed-chapters.py
+        env:
+          HTML_DIR: ./_site
+          # Set to 'true' if PR has 'no-preview-highlights' label
+          DISABLE_PREVIEW_HIGHLIGHTS: ${{ contains(github.event.pull_request.labels.*.name, 'no-preview-highlights') }}
+
+      - name: Inject preview metadata
+        if: github.event.action != 'closed' && env.PREVIEW_SHOW_HIGHLIGHTS == 'true'
+        run: python3 .github/scripts/inject-preview-metadata.py
+
+      - name: Re-render with metadata
+        if: github.event.action != 'closed' && env.PREVIEW_SHOW_HIGHLIGHTS == 'true'
+        uses: quarto-dev/quarto-actions/render@v2
+
+      - name: Install python-docx for DOCX comparison
+        if: github.event.action != 'closed' && env.PREVIEW_SHOW_HIGHLIGHTS == 'true'
+        run: pip install python-docx
+
+      - name: Highlight HTML content changes
+        if: github.event.action != 'closed' && env.PREVIEW_SHOW_HIGHLIGHTS == 'true'
+        run: |
+          echo "Changed chapters:"
+          echo "${{ env.PREVIEW_CHANGED_CHAPTERS }}"
+          python3 .github/scripts/highlight-html-changes.py
+        env:
+          HTML_DIR: ./_site
+          PREVIEW_CHANGED_CHAPTERS: ${{ env.PREVIEW_CHANGED_CHAPTERS }}
+
+      - name: Create DOCX with tracked changes
+        if: github.event.action != 'closed'
+        run: python3 .github/scripts/create-docx-tracked-changes.py
+        env:
+          DOCX_DIR: ./_site
+
+      - name: Add home page banner
+        if: github.event.action != 'closed'
+        run: python3 .github/scripts/add-home-banner.py
+        env:
+          HTML_DIR: ./_site
+          PREVIEW_CHANGED_CHAPTERS: ${{ env.PREVIEW_CHANGED_CHAPTERS }}
+
       - name: list files
+        if: github.event.action != 'closed'
         shell: bash
         run: |
           echo "contents of _site:"

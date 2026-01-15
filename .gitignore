@@ -28,3 +28,11 @@ site_libs
 # Temporary files from book downloads and extractions
 *.pdf
 chapter1_*.txt
+
+# PR preview files
+changed-chapters.json
+*-tracked-changes.docx
+
+# Python cache
+__pycache__/
+*.pyc

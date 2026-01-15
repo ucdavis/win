@@ -85,6 +85,8 @@ format:
     df-print: paged
     date: last-modified
     date-format: "[Last modified:] YYYY-MM-DD HH:mm:ss (z)"
+    filters:
+      - _extensions/preview-highlight.lua
   revealjs:
     theme: simple
     slide-number: true
