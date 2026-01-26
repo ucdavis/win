@@ -107,4 +107,4 @@ jobs:
         uses: rossjrw/pr-preview-action@main
         with:
           source-dir: _site/
-          pages-base-url: scaling-robot-wry3qok.pages.github.io
+          pages-base-url: ucdavis.github.io/win
