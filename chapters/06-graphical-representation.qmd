@@ -10,6 +10,14 @@ format:
     output-file: 06-graphical-representation.docx
 ---
 
+```{r}
+#| label: setup
+#| include: false
+library(ggdag)
+library(ggplot2)
+library(patchwork)
+```
+
 So far, we have represented causal relationships using mathematical notation and counterfactual outcomes. This chapter introduces **causal diagrams**—visual tools for representing causal assumptions and determining which variables need to be adjusted for when estimating causal effects.
 
 Causal diagrams are **directed acyclic graphs (DAGs)** that encode our knowledge about the causal structure of the problem. They provide an intuitive way to identify confounding, avoid selection bias, and select appropriate adjustment sets.
@@ -37,11 +45,22 @@ A **directed acyclic graph** is a causal diagram where:
 
 ### Basic DAG Notation
 
-Consider a simple causal diagram:
+Consider a simple causal diagram where $L$ causes both $A$ and $Y$, and $A$ causes $Y$:
 
-```
-L → A → Y
-L → Y
+```{r}
+#| label: fig-basic-dag
+#| fig-cap: "A simple causal DAG: $L$ causes $A$ and $Y$; $A$ causes $Y$."
+#| fig-height: 3
+dagify(
+  Y ~ A + L,
+  A ~ L,
+  coords = list(
+    x = c(L = 0, A = 1, Y = 2),
+    y = c(L = 1, A = 0, Y = 0)
+  )
+) |>
+  ggdag(node_size = 14, text_size = 4) +
+  theme_dag()
 ```
 
 This diagram represents:
@@ -81,12 +100,21 @@ Consider the causal relationships between:
 - $L$: Exercise  
 - $Y$: Heart disease
 
-Plausible causal diagram:
-
-```
-A → Y
-L → Y
-L → A
+```{r}
+#| label: fig-smoking-dag
+#| fig-cap: "Causal DAG: exercise ($L$) causes smoking ($A$) and heart disease ($Y$); smoking causes heart disease."
+#| fig-height: 3
+dagify(
+  Y ~ A + L,
+  A ~ L,
+  labels = c(A = "Smoking", L = "Exercise", Y = "Heart\ndisease"),
+  coords = list(
+    x = c(L = 0, A = 1, Y = 2),
+    y = c(L = 1, A = 0, Y = 0)
+  )
+) |>
+  ggdag(use_labels = "label", node_size = 14, text_size = 3) +
+  theme_dag()
 ```
 
 Interpretation:
@@ -109,23 +137,38 @@ From a DAG, we can determine which variables are marginally independent (uncondi
 ::: {#exm-marginal-independence}
 ## Marginal Independence
 
-**Diagram 1**: $A \rightarrow Y$
+```{r}
+#| label: fig-marginal-independence
+#| fig-cap: "Four DAG structures illustrating marginal (in)dependence."
+#| fig-height: 6
+#| fig-width: 8
+p1 <- dagify(Y ~ A,
+  coords = list(x = c(A = 0, Y = 1), y = c(A = 0, Y = 0))
+) |> ggdag(node_size = 12, text_size = 3.5) +
+  theme_dag() + ggtitle("Diagram 1: A → Y")
 
-- $A$ and $Y$ are **dependent** (associated)
+p2 <- dagify(Y ~ 1, A ~ 1,
+  coords = list(x = c(A = 0, Y = 1), y = c(A = 0, Y = 0))
+) |> ggdag(node_size = 12, text_size = 3.5) +
+  theme_dag() + ggtitle("Diagram 2: A   Y (no arrow)")
 
-**Diagram 2**: $A \quad Y$ (no arrow)
+p3 <- dagify(Y ~ A, A ~ L,
+  coords = list(x = c(L = 0, A = 1, Y = 2), y = c(L = 0, A = 0, Y = 0))
+) |> ggdag(node_size = 12, text_size = 3.5) +
+  theme_dag() + ggtitle("Diagram 3: Chain L → A → Y")
 
-- $A$ and $Y$ are **independent** 
+p4 <- dagify(Y ~ A + L,
+  coords = list(x = c(A = 0, L = 1, Y = 2), y = c(A = 0, L = 1, Y = 0))
+) |> ggdag(node_size = 12, text_size = 3.5) +
+  theme_dag() + ggtitle("Diagram 4: Fork A ← L → Y")
 
-**Diagram 3**: $L \rightarrow A \rightarrow Y$ (chain)
+(p1 + p2) / (p3 + p4)
+```
 
-- $A$ and $Y$ are **dependent**
-- $L$ and $Y$ are **dependent** (through the path $L \rightarrow A \rightarrow Y$)
-
-**Diagram 4**: $A \rightarrow Y \leftarrow L$ (fork)
-
-- $A$ and $L$ are **independent** (no common cause, no direct connection)
-- Both $A$ and $L$ are **dependent** with $Y$
+- **Diagram 1** ($A \rightarrow Y$): $A$ and $Y$ are **dependent** (associated)
+- **Diagram 2** ($A \quad Y$, no arrow): $A$ and $Y$ are **independent**
+- **Diagram 3** ($L \rightarrow A \rightarrow Y$, chain): $A$ and $Y$ are **dependent**; $L$ and $Y$ are **dependent** (through the path $L \rightarrow A \rightarrow Y$)
+- **Diagram 4** ($A \rightarrow Y \leftarrow L$, fork): $A$ and $L$ are **independent** (no common cause, no direct connection); both $A$ and $L$ are **dependent** with $Y$
 :::
 
 ::: {.notes}
@@ -145,6 +188,29 @@ Conditioning on (stratifying by) a variable can change independence relationship
 ### Three Basic Structures
 
 There are three fundamental structures in causal diagrams:
+
+```{r}
+#| label: fig-three-structures
+#| fig-cap: "The three fundamental DAG structures: chain, fork, and collider."
+#| fig-height: 3
+#| fig-width: 9
+p_chain <- dagify(Y ~ Z, Z ~ X,
+  coords = list(x = c(X = 0, Z = 1, Y = 2), y = c(X = 0, Z = 0, Y = 0))
+) |> ggdag(node_size = 12, text_size = 3.5) +
+  theme_dag() + ggtitle("Chain: X → Z → Y")
+
+p_fork <- dagify(X ~ Z, Y ~ Z,
+  coords = list(x = c(X = 0, Z = 1, Y = 2), y = c(X = 0, Z = 1, Y = 0))
+) |> ggdag(node_size = 12, text_size = 3.5) +
+  theme_dag() + ggtitle("Fork: X ← Z → Y")
+
+p_collider <- dagify(Z ~ X + Y,
+  coords = list(x = c(X = 0, Z = 1, Y = 2), y = c(X = 0, Z = 0, Y = 0))
+) |> ggdag(node_size = 12, text_size = 3.5) +
+  theme_dag() + ggtitle("Collider: X → Z ← Y")
+
+p_chain + p_fork + p_collider
+```
 
 #### 1. Chain: $X \rightarrow Z \rightarrow Y$
 
@@ -173,7 +239,21 @@ Suppose:
 - $E$: Training effort
 - $Y$: Professional athlete (yes/no)
 
-Diagram: $A \rightarrow Y \leftarrow E$
+```{r}
+#| label: fig-collider-bias
+#| fig-cap: "Collider DAG: natural ability ($A$) and training effort ($E$) are independent causes of becoming a professional athlete ($Y$)."
+#| fig-height: 3
+dagify(
+  Y ~ A + E,
+  labels = c(A = "Ability", E = "Effort", Y = "Pro athlete"),
+  coords = list(
+    x = c(A = 0, E = 2, Y = 1),
+    y = c(A = 0, E = 0, Y = -1)
+  )
+) |>
+  ggdag_collider(use_labels = "label", node_size = 14, text_size = 3) +
+  theme_dag()
+```
 
 **Marginal**: Among the general population, natural ability and training effort are independent (some people train hard, some don't; some are naturally gifted, some aren't; these are unrelated).
 
@@ -253,10 +333,22 @@ A backdoor path is a path from $A$ to $Y$ that:
 2. Does not pass through any descendants of $A$
 :::
 
-**Example**: 
-```
-L → A → Y
-L → Y
+```{r}
+#| label: fig-confounding-dag
+#| fig-cap: "Confounding DAG: $L$ is a common cause of $A$ and $Y$, creating a backdoor path $A \\leftarrow L \\rightarrow Y$."
+#| fig-height: 3
+dagify(
+  Y ~ A + L,
+  A ~ L,
+  exposure = "A",
+  outcome = "Y",
+  coords = list(
+    x = c(L = 0, A = 1, Y = 2),
+    y = c(L = 1, A = 0, Y = 0)
+  )
+) |>
+  ggdag_paths(node_size = 14, text_size = 4) +
+  theme_dag()
 ```
 
 The path $A \leftarrow L \rightarrow Y$ is a backdoor path (it starts with an arrow into $A$). Therefore, $L$ is a confounder.
@@ -287,10 +379,23 @@ If $L$ satisfies the backdoor criterion, adjusting for $L$ eliminates confoundin
 ::: {#exm-backdoor}
 ## Backdoor Criterion Example
 
-**Diagram**:
-```
-U → L → A → Y
-      L → Y
+```{r}
+#| label: fig-backdoor-criterion
+#| fig-cap: "Backdoor criterion: $L$ blocks the only backdoor path from $A$ to $Y$. Adjusting for $L$ identifies the causal effect."
+#| fig-height: 3.5
+dagify(
+  Y ~ A + L,
+  A ~ L,
+  L ~ U,
+  exposure = "A",
+  outcome = "Y",
+  coords = list(
+    x = c(U = 0, L = 1, A = 2, Y = 3),
+    y = c(U = 1, L = 1, A = 0, Y = 0)
+  )
+) |>
+  ggdag_adjustment_set(node_size = 14, text_size = 4) +
+  theme_dag()
 ```
 
 **Backdoor paths from $A$ to $Y$**:
@@ -320,9 +425,20 @@ Yes! Adjusting for $L$ is sufficient to identify the causal effect.
 
 **Selection bias** occurs when we condition on a collider (or its descendant) that lies on a path from $A$ to $Y$.
 
-**Example**:
-```
-A → S ← Y
+```{r}
+#| label: fig-selection-bias
+#| fig-cap: "Selection bias: conditioning on $S$ (a collider caused by $A$ and $Y$) induces spurious association between $A$ and $Y$."
+#| fig-height: 3
+dagify(
+  S ~ A + Y,
+  labels = c(A = "A", S = "Selection (S)", Y = "Y"),
+  coords = list(
+    x = c(A = 0, S = 1, Y = 2),
+    y = c(A = 0, S = -1, Y = 0)
+  )
+) |>
+  ggdag_collider(use_labels = "label", node_size = 14, text_size = 3) +
+  theme_dag()
 ```
 
 If we restrict analysis to individuals with $S = 1$, we induce spurious association between $A$ and $Y$ (collider bias).
@@ -336,10 +452,21 @@ This will be covered in detail in Chapter 8.
 - True (unmeasured) variables
 - Measured (error-prone) variables
 
-**Example**:
-```
-A_true → Y
-A_measured ← A_true
+```{r}
+#| label: fig-measurement-bias
+#| fig-cap: "Measurement bias: using $A_{\\text{measured}}$ instead of $A_{\\text{true}}$ introduces bias."
+#| fig-height: 3
+dagify(
+  Y ~ A_true,
+  A_meas ~ A_true,
+  labels = c(A_true = "A (true)", A_meas = "A (measured)", Y = "Y"),
+  coords = list(
+    x = c(A_true = 0, A_meas = 0, Y = 2),
+    y = c(A_true = 0, A_meas = -1, Y = 0)
+  )
+) |>
+  ggdag(use_labels = "label", node_size = 14, text_size = 3) +
+  theme_dag()
 ```
 
 If we use $A_{\text{measured}}$ instead of $A_{\text{true}}$, the estimated effect will be biased (Chapter 9).
@@ -354,10 +481,19 @@ Effect modification can also be represented in causal diagrams.
 
 Effect modification by $V$ means the effect of $A$ on $Y$ differs across levels of $V$. This can be represented by:
 
-```
-V → Y
-A → Y
-(with the understanding that the A→Y effect depends on V)
+```{r}
+#| label: fig-effect-modification
+#| fig-cap: "Effect modification: $V$ and $A$ both affect $Y$. The arrow $A \\to Y$ may differ in magnitude across levels of $V$."
+#| fig-height: 3
+dagify(
+  Y ~ A + V,
+  coords = list(
+    x = c(V = 0, A = 0, Y = 2),
+    y = c(V = 1, A = 0, Y = 0.5)
+  )
+) |>
+  ggdag(node_size = 14, text_size = 4) +
+  theme_dag()
 ```
 
 Some authors include an arrow $V \rightarrow A \cdot Y$ to explicitly denote interaction, but this is not standard DAG notation.
@@ -392,28 +528,54 @@ A variable $V$ can be:
 ::: {#exm-confounder-modifier-dag}
 ## Confounder and Modifier in DAGs
 
-**Scenario 1**: $V$ is a confounder only
-```
-V → A → Y
-V → Y
-```
-$V$ opens the backdoor path $A \leftarrow V \rightarrow Y$ (confounding). We must adjust for $V$.
+```{r}
+#| label: fig-confounder-modifier
+#| fig-cap: "Three scenarios for variable $V$ relative to $A \\to Y$: confounder only (left), modifier only in RCT (center), and both (right)."
+#| fig-height: 3
+#| fig-width: 9
+p_conf <- dagify(
+  Y ~ A + V,
+  A ~ V,
+  exposure = "A",
+  outcome = "Y",
+  coords = list(x = c(V = 0, A = 1, Y = 2), y = c(V = 1, A = 0, Y = 0))
+) |>
+  ggdag_status(node_size = 12, text_size = 3.5) +
+  theme_dag() +
+  ggtitle("Scenario 1: V confounder") +
+  theme(legend.position = "none")
 
-**Scenario 2**: $V$ is a modifier only (in a randomized trial)
-```
-V → Y
-A → Y
-(A randomized, so no V → A arrow)
-```
-$V$ modifies the effect of $A$, but does not confound (no backdoor path). We should report stratum-specific effects but don't need to adjust for $V$ to eliminate bias.
+p_mod <- dagify(
+  Y ~ A + V,
+  exposure = "A",
+  outcome = "Y",
+  coords = list(x = c(V = 0, A = 0, Y = 2), y = c(V = 1, A = 0, Y = 0.5))
+) |>
+  ggdag_status(node_size = 12, text_size = 3.5) +
+  theme_dag() +
+  ggtitle("Scenario 2: V modifier (RCT)") +
+  theme(legend.position = "none")
 
-**Scenario 3**: $V$ is both
+p_both <- dagify(
+  Y ~ A + V,
+  A ~ V,
+  exposure = "A",
+  outcome = "Y",
+  coords = list(x = c(V = 0, A = 1, Y = 2), y = c(V = 1, A = 0, Y = 0))
+) |>
+  ggdag_status(node_size = 12, text_size = 3.5) +
+  theme_dag() +
+  ggtitle("Scenario 3: V both") +
+  theme(legend.position = "none")
+
+p_conf + p_mod + p_both
 ```
-V → A → Y
-V → Y
-(and the A→Y effect varies by V)
-```
-We must adjust for $V$ (confounding) AND report stratum-specific effects (modification).
+
+**Scenario 1**: $V$ is a confounder only ($V \rightarrow A$, $V \rightarrow Y$). $V$ opens the backdoor path $A \leftarrow V \rightarrow Y$ (confounding). We must adjust for $V$.
+
+**Scenario 2**: $V$ is a modifier only (in a randomized trial, no $V \rightarrow A$ arrow). $V$ modifies the effect of $A$, but does not confound (no backdoor path). We should report stratum-specific effects but don't need to adjust for $V$ to eliminate bias.
+
+**Scenario 3**: $V$ is both a confounder and modifier. We must adjust for $V$ (confounding) AND report stratum-specific effects (modification).
 :::
 
 ## Summary
