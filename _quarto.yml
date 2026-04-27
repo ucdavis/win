@@ -1,6 +1,9 @@
 profile:
   default: website
 
+filters:
+  - d-morrison/div-anchors
+
 bibliography: references.bib
 
 editor_options:
