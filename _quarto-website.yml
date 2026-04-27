@@ -20,6 +20,10 @@ website:
   repo-url: https://github.com/ucdavis/win
   repo-actions: [edit, issue, source]
   navbar:
+    right:
+      - icon: github
+        href: https://github.com/ucdavis/win
+        aria-label: GitHub
     left:
       - text: "Home"
         href: index.qmd
