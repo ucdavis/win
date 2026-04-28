@@ -11,6 +11,7 @@ format:
 ---
 
 ```{r}
+#| label: setup
 #| echo: false
 #| message: false
 #| warning: false
