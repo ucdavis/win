@@ -261,6 +261,7 @@ win/
 ├── _site/                      # Generated website output (gitignored)
 ├── _slides/                    # Generated slides output (gitignored)
 ├── _handouts/                  # Generated PDF handouts (gitignored)
+├── _freeze/                    # Quarto freeze cache (gitignored - do NOT commit)
 ├── .quarto/                    # Quarto cache (gitignored)
 ├── index.qmd                   # Website homepage
 ├── _quarto.yml                 # Shared Quarto configuration with default profile
