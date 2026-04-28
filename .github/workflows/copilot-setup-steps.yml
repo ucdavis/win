@@ -59,7 +59,9 @@ jobs:
             libfreetype6-dev \
             libpng-dev \
             libtiff5-dev \
-            libjpeg-dev
+            libjpeg-dev \
+            libnode-dev \
+            libglpk-dev
       
       # Set up pandoc for documentation
       - name: Set up Pandoc

@@ -74,6 +74,12 @@
             "Source": "Repository",
             "Repository": "CRAN"
         },
+        "V8": {
+            "Package": "V8",
+            "Version": "8.2.0",
+            "Source": "Repository",
+            "Repository": "CRAN"
+        },
         "askpass": {
             "Package": "askpass",
             "Version": "1.2.1",
