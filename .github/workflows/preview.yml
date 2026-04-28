@@ -43,6 +43,11 @@ jobs:
           r-version: 'renv'
           use-public-rspm: true
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libnode-dev
+
       - uses: r-lib/actions/setup-renv@v2
         with:
           cache-version: 1
