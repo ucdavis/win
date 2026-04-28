@@ -15,9 +15,13 @@ BugReports: https://github.com/ucdavis/win/issues
 Depends: 
     R (>= 4.6.0)
 Suggests:
+    dagitty,
+    ggdag,
+    ggplot2,
     knitr,
-    rmarkdown,
+    patchwork,
     quarto,
     renv,
+    rmarkdown,
     spelling
 VignetteBuilder: knitr
