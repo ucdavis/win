@@ -3,6 +3,7 @@
 /_slides/
 /_handouts/
 /.quarto/
+/_freeze/
 *_cache/
 *_files/
 .Rproj.user
