@@ -10,466 +10,574 @@ format:
     output-file: 06-graphical-representation.docx
 ---
 
-So far, we have represented causal relationships using mathematical notation and counterfactual outcomes. This chapter introduces **causal diagrams**—visual tools for representing causal assumptions and determining which variables need to be adjusted for when estimating causal effects.
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+library(ggdag)
+library(dagitty)
+library(ggplot2)
+library(patchwork)
+```
 
-Causal diagrams are **directed acyclic graphs (DAGs)** that encode our knowledge about the causal structure of the problem. They provide an intuitive way to identify confounding, avoid selection bias, and select appropriate adjustment sets.
+So far we have used potential outcomes to represent causal effects. In this chapter we use causal diagrams—directed acyclic graphs (DAGs)—to represent causal relations. Causal diagrams encode our qualitative assumptions about the causal structure of the problem and allow us to determine when association equals causation, and which variables need to be adjusted for to eliminate confounding.
 
 ::: {.notes}
-This chapter is based on @hernan2020causal [Chapter 6, pp. 59-76].
+This chapter is based on @hernan2020causal [Chapter 6, pp. 59–76].
 :::
 
-## 6.1 Causal Diagrams (pp. 59-61)
+## 6.1 Causal Diagrams (pp. 59–61)
 
 ---
 
-A **causal diagram** is a graph where:
+A **causal diagram** is a directed acyclic graph (DAG) in which:
 
-- **Nodes** (vertices) represent variables
-- **Directed edges** (arrows) represent direct causal effects
+- Each **node** (vertex) represents a variable
+- Each **directed edge** (arrow) from node $V$ to node $W$ represents a direct causal effect of $V$ on $W$
+- There are **no cycles**: following the arrows, you can never return to a starting node
 
 ::: {#def-dag}
 ## Directed Acyclic Graph (DAG)
 
-A **directed acyclic graph** is a causal diagram where:
-1. All edges are directed (have arrowheads indicating the direction of causation)
-2. There are no cycles (you cannot start at a node, follow the arrows, and return to that node)
+A **directed acyclic graph (DAG)** used as a causal diagram represents a **non-parametric structural equation model (NPSEM)**. For each variable $V_k$ with parents $\mathrm{pa}(V_k)$ in the graph, there is a structural equation:
+
+$$V_k = f_k\bigl(\mathrm{pa}(V_k),\, U_k\bigr)$$
+
+where $U_k$ is an **unmeasured background variable** (exogenous variable) that represents all causes of $V_k$ not otherwise shown in the graph.
 :::
 
-### Basic DAG Notation
+### The Main Example
 
-Consider a simple causal diagram:
+Consider a study of the causal effect of treatment $A$ on outcome $Y$, where $L$ is a measured variable that causes both $A$ and $Y$. The structural equations are:
 
+$$L = f_L(U_L)$$
+$$A = f_A(L,\, U_A)$$
+$$Y = f_Y(L,\, A,\, U_Y)$$
+
+where $U_L$, $U_A$, and $U_Y$ are **mutually independent** unmeasured background variables. The corresponding causal diagram is:
+
+```{r}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 2.5
+#| fig-cap: "Figure 6.1. Causal diagram: L causes both A and Y, and A causes Y."
+dag_main <- dagitty('dag {
+  L [pos="0,0"]
+  A [pos="1,-1"]
+  Y [pos="2,0"]
+  L -> A
+  L -> Y
+  A -> Y
+}')
+ggdag(dag_main, stylized = TRUE) +
+  theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4)
 ```
-L → A → Y
-L → Y
-```
 
-This diagram represents:
+### DAG Terminology
 
-- $L$ causes $A$ (arrow from $L$ to $A$)
-- $L$ causes $Y$ (arrow from $L$ to $Y$)
-- $A$ causes $Y$ (arrow from $A$ to $Y$)
+For a node $W$ in a causal diagram:
 
-**Key terms**:
+- A **parent** of $W$ is any node with a direct arrow into $W$
+- A **child** of $W$ is any node that $W$ has a direct arrow into
+- An **ancestor** of $W$ is any node from which $W$ is reachable by following arrows
+- A **descendant** of $W$ is any node reachable from $W$ by following arrows
+- A **path** between two nodes is any sequence of nodes connected by edges (arrows), regardless of direction
 
-- $L$ is a **parent** of $A$ and $Y$ (direct cause)
-- $A$ is a **child** of $L$ (direct effect)
-- $L$ is an **ancestor** of $Y$ (can reach $Y$ by following arrows)
-- $Y$ is a **descendant** of $L$ (can be reached from $L$ by following arrows)
+In Figure 6.1: $L$ is a parent of $A$ and a parent of $Y$; $A$ is a child of $L$; $Y$ is a descendant of $L$ via two paths ($L \to Y$ directly, and $L \to A \to Y$).
+
+### What DAG Arrows Represent
+
+The **presence** of an arrow $V \to W$ encodes the assumption that $V$ has a direct causal effect on $W$ (i.e., not entirely mediated by other variables explicitly shown in the graph).
+
+The **absence** of an arrow between $V$ and $W$ (with no directed path from $V$ to $W$) encodes the assumption that $V$ has no direct causal effect on $W$, given the other variables in the graph. This is a substantive causal assumption that must be justified by subject-matter knowledge.
 
 ::: {.notes}
-**What does a DAG represent?**
+**What DAGs do and do not represent:**
 
-A DAG represents our **qualitative causal assumptions**:
+- **Do represent**: qualitative causal structure (which variables directly cause which)
+- **Do not represent**: magnitude, direction, or functional form of effects
+- **Do not represent**: effect modification (heterogeneity of effects across subgroups)
 
-- The presence of an arrow $X \rightarrow Y$ means we believe $X$ has a direct causal effect on $Y$
-- The absence of an arrow $X \not\rightarrow Y$ means we believe $X$ has no direct causal effect on $Y$ (conditional on other variables in the graph)
+**Why acyclic?** DAGs do not allow feedback loops (e.g., $A \to Y \to A$). For dynamic settings with feedback, longitudinal DAGs or other frameworks are needed (see Part III of the textbook).
 
-**Important**: A DAG does not tell us the magnitude or sign of effects, only their presence/absence and direction.
-
-**Acyclic assumption**: We assume no feedback loops (e.g., $A$ causes $Y$, which causes $A$). This rules out dynamic systems with bidirectional causation. Extensions exist for such settings (e.g., structural equation models with cycles) but are beyond this chapter's scope.
+**Unmeasured common causes:** In Figure 6.1, we assume $U_L$, $U_A$, $U_Y$ are mutually independent. If they were not independent — for instance, if $U_A$ and $U_Y$ were correlated — we would need to add an unmeasured common cause node connecting $A$ and $Y$, representing unmeasured confounding.
 :::
 
-### Example: Smoking, Exercise, and Heart Disease
-
-::: {#exm-simple-dag}
-## Simple Causal Diagram
-
-Consider the causal relationships between:
-
-- $A$: Smoking
-- $L$: Exercise  
-- $Y$: Heart disease
-
-Plausible causal diagram:
-
-```
-A → Y
-L → Y
-L → A
-```
-
-Interpretation:
-
-- Smoking directly causes heart disease
-- Exercise directly affects heart disease (protective)
-- Exercise affects smoking behavior (perhaps exercisers are less likely to smoke)
-:::
-
-## 6.2 Causal Diagrams and Marginal Independence (pp. 61-64)
+## 6.2 Causal Diagrams and Marginal Independence (pp. 61–64)
 
 ---
 
-Causal diagrams encode information about statistical independence relationships.
+Causal diagrams encode information about which variables are **marginally independent** (independent unconditionally, before conditioning on any variable). We can read this information directly from the graph structure.
 
-### Independence from DAGs
+### Open and Blocked Paths
 
-From a DAG, we can determine which variables are marginally independent (unconditionally).
+A path between two nodes $V$ and $W$ is either **open** or **blocked**:
+
+- A path is **blocked** if it contains a **collider** node — a node where two arrowheads meet on the path: $\cdots \to C \leftarrow \cdots$
+- A path is **open** if it contains no collider (all intermediate nodes are non-colliders)
+
+Two variables are **marginally associated** if and only if there is at least one open path between them.
 
 ::: {#exm-marginal-independence}
-## Marginal Independence
+## Marginal Independence: Key Examples
 
-**Diagram 1**: $A \rightarrow Y$
+**Example 1**: $A \rightarrow Y$
 
-- $A$ and $Y$ are **dependent** (associated)
+- One open path $A \to Y$: $A$ and $Y$ are **associated**
 
-**Diagram 2**: $A \quad Y$ (no arrow)
+**Example 2**: $A \quad Y$ (no path)
 
-- $A$ and $Y$ are **independent** 
+- No path between $A$ and $Y$: they are **independent**
 
-**Diagram 3**: $L \rightarrow A \rightarrow Y$ (chain)
+**Example 3**: $A \leftarrow L \rightarrow Y$ (fork with common cause $L$)
 
-- $A$ and $Y$ are **dependent**
-- $L$ and $Y$ are **dependent** (through the path $L \rightarrow A \rightarrow Y$)
+- One open path $A \leftarrow L \to Y$ (non-collider $L$ not conditioned on)
+- $A$ and $Y$ are **associated** even though $A$ does not cause $Y$
 
-**Diagram 4**: $A \rightarrow Y \leftarrow L$ (fork)
+**Example 4**: $A \rightarrow C \leftarrow Y$ (collider at $C$)
 
-- $A$ and $L$ are **independent** (no common cause, no direct connection)
-- Both $A$ and $L$ are **dependent** with $Y$
+- The only path $A \to C \leftarrow Y$ is **blocked** by the collider $C$
+- $A$ and $Y$ are **independent** marginally
 :::
 
 ::: {.notes}
-**Key principle**: In a DAG, two variables are marginally associated if and only if there exists a path (sequence of arrows, ignoring direction) connecting them, UNLESS the path is blocked.
+**d-separation:**
 
-**Blocking**: A path is blocked if it contains a **collider**—a variable where two arrowheads meet (e.g., $A \rightarrow C \leftarrow B$). Paths through colliders are naturally blocked.
+The formal criterion for reading independence from a DAG is called **d-separation**. Two variables $X$ and $Y$ are *d-separated* by a conditioning set $Z$ if all paths between $X$ and $Y$ are blocked given $Z$. Under the Markov condition (which holds in any NPSEM with mutually independent $U$ variables), d-separation implies conditional independence in the observed data.
 
-**Later sections** will formalize this with **d-separation**.
+**Why colliders block paths marginally:**
+
+In an NPSEM, the collider $C$ has independent causes $A$ and $Y$ (via their $U$ variables). Without any conditioning, $C$ is irrelevant to the association between $A$ and $Y$ — they have no shared cause and do not affect each other directly. The path through $C$ is blocked.
+
+**Markov condition:** In the NPSEM, each variable is independent of its non-descendants given its parents. This property is encoded in the DAG and is what allows us to use d-separation to determine independence.
 :::
 
-## 6.3 Causal Diagrams and Conditional Independence (pp. 64-68)
+## 6.3 Causal Diagrams and Conditional Independence (pp. 64–68)
 
 ---
 
-Conditioning on (stratifying by) a variable can change independence relationships.
+Conditioning on a variable — by stratifying, restricting, or including it in a regression — can change independence relationships. Whether conditioning on a variable opens or blocks a path depends on whether that variable is a **collider** or a **non-collider** on the path.
 
-### Three Basic Structures
+### Three Fundamental Path Structures
 
-There are three fundamental structures in causal diagrams:
+#### 1. Chain: $A \rightarrow B \rightarrow Y$
 
-#### 1. Chain: $X \rightarrow Z \rightarrow Y$
+- **Marginally**: $A$ and $Y$ are **associated** (open path $A \to B \to Y$)
+- **Conditional on $B$**: $A$ and $Y$ are **independent** — conditioning on the intermediate variable $B$ blocks the path
 
-- **Marginal**: $X$ and $Y$ are **dependent** (path $X \rightarrow Z \rightarrow Y$)
-- **Conditional on $Z$**: $X$ and $Y$ are **independent**
-  - Knowing $Z$ blocks the path from $X$ to $Y$
+#### 2. Fork: $A \leftarrow B \rightarrow Y$
 
-#### 2. Fork: $X \leftarrow Z \rightarrow Y$
+- **Marginally**: $A$ and $Y$ are **associated** (open path through common cause $B$)
+- **Conditional on $B$**: $A$ and $Y$ are **independent** — conditioning on the common cause $B$ blocks the non-causal association
 
-- **Marginal**: $X$ and $Y$ are **dependent** (common cause $Z$)
-- **Conditional on $Z$**: $X$ and $Y$ are **independent**
-  - Controlling for the common cause blocks the association
+#### 3. Collider: $A \rightarrow B \leftarrow Y$
 
-#### 3. Collider: $X \rightarrow Z \leftarrow Y$
+- **Marginally**: $A$ and $Y$ are **independent** (path blocked by collider $B$)
+- **Conditional on $B$**: $A$ and $Y$ are **dependent** — conditioning on a collider **opens** the previously blocked path
 
-- **Marginal**: $X$ and $Y$ are **independent** (no connecting path)
-- **Conditional on $Z$**: $X$ and $Y$ are **dependent**!
-  - Conditioning on a collider creates association (**collider bias**)
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 3
+#| fig-cap: "The three fundamental path structures. Left: chain (conditioning on B blocks path). Middle: fork (conditioning on B blocks path). Right: collider (conditioning on B opens path — collider bias)."
+dag_chain <- dagitty('dag {
+  A [pos="0,0"]; B [pos="1,0"]; Y [pos="2,0"]
+  A -> B -> Y
+}')
+dag_fork <- dagitty('dag {
+  A [pos="0,0"]; B [pos="1,1"]; Y [pos="2,0"]
+  B -> A; B -> Y
+}')
+dag_collider <- dagitty('dag {
+  A [pos="0,0"]; B [pos="1,0"]; Y [pos="2,0"]
+  A -> B; Y -> B
+}')
+
+p1 <- ggdag(dag_chain, stylized = TRUE) + theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4) +
+  labs(title = "Chain: A \u2192 B \u2192 Y")
+
+p2 <- ggdag(dag_fork, stylized = TRUE) + theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4) +
+  labs(title = "Fork: A \u2190 B \u2192 Y")
+
+p3 <- ggdag(dag_collider, stylized = TRUE) + theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4) +
+  labs(title = "Collider: A \u2192 B \u2190 Y")
+
+p1 + p2 + p3
+```
+
+### Collider Stratification Bias
+
+Collider stratification bias is a **subtle and important** source of spurious association that arises from conditioning on a common effect of two variables.
 
 ::: {#exm-collider-bias}
-## Collider Bias Example
+## Collider Stratification Bias: Aspirin, Smoking, and Hospitalization
 
-Suppose:
+Consider two variables that are **independent** in the general population:
 
-- $A$: Natural athletic ability
-- $E$: Training effort
-- $Y$: Professional athlete (yes/no)
+- $A$: regular aspirin use
+- $B$: smoking
 
-Diagram: $A \rightarrow Y \leftarrow E$
+Both $A$ and $B$ independently cause hospitalization ($C$):
 
-**Marginal**: Among the general population, natural ability and training effort are independent (some people train hard, some don't; some are naturally gifted, some aren't; these are unrelated).
+$$A \longrightarrow C \longleftarrow B$$
 
-**Conditional on $Y=1$ (among professional athletes)**: Natural ability and training effort are **negatively** associated!
+**In the general population**: aspirin use $A$ and smoking $B$ are independent — knowing someone uses aspirin tells you nothing about whether they smoke.
 
-Why? Among those who made it to the pros, if someone has low natural ability, they must have compensated with high training effort. Conversely, high natural ability allows one to reach the pros with less effort.
+**Among hospitalized patients ($C = 1$)**: aspirin use and smoking become **negatively associated**. If a hospitalized patient does not use aspirin, it is more likely their hospitalization is due to smoking-related disease. If a hospitalized patient does not smoke, their admission is more likely due to a cardiovascular condition related to aspirin use.
 
-This is **collider stratification bias**.
+This spurious negative association between $A$ and $B$ among the hospitalized is **collider stratification bias**: conditioning on hospitalization $C$ opens the previously blocked path $A \to C \leftarrow B$.
 :::
 
 ::: {.notes}
-**Collider bias is subtle and dangerous**:
+**Collider bias is pervasive in epidemiology:**
 
-1. **Intuition**: Conditioning on a collider induces a spurious association between its causes, even when those causes are truly independent
+- **Berkson's bias**: Selecting cases and controls from a hospital creates a collider; diseases that are independent in the general population appear associated among hospitalized patients
+- **Healthy worker effect**: Restricting to employed workers (whose employment is a common effect of health status and occupational exposure) induces a spurious association
+- **Survivorship bias**: Among survivors of some condition, factors affecting survival appear spuriously associated
 
-2. **Selection bias**: When the collider is related to study selection, we get selection bias (Chapter 8)
+**Descendants of colliders:**
 
-3. **Measurement**: Even conditioning on a descendant of a collider can induce bias (though weaker)
+Conditioning on a *descendant* of a collider also partially opens the path, though with weaker bias. Any variable affected by both $A$ and $Y$ (or by a cause of $A$ and a cause of $Y$) is potentially a collider or descendant of one.
 
-**Practical implication**: Do NOT adjust for variables that are purely effects of both treatment and outcome. This will induce bias, not remove it.
-
-**Example**: In studying the effect of exercise on weight loss, do NOT adjust for "membership in a weight loss support group" if that's an effect of both exercise and weight. Doing so would induce collider bias.
+**Key practical principle:** Do NOT adjust for variables that are downstream (descendants) of both treatment and outcome. This applies to selection into studies, loss to follow-up, or other post-treatment variables.
 :::
 
-## 6.4 Positivity and Consistency in Causal Diagrams (pp. 68-69)
+### D-separation Rules (Summary)
+
+The complete rules for determining whether a path is open or blocked after conditioning on a set $Z$:
+
+| Node type on path | $B \notin Z$ (not conditioned on) | $B \in Z$ (conditioned on) |
+|:------------------|:---------------------------------:|:--------------------------:|
+| Non-collider (chain or fork) | **Open** | **Blocked** |
+| Collider | **Blocked** | **Open** |
+
+Two variables are **d-separated** given $Z$ if every path between them is blocked given $Z$. D-separated variables are (conditionally) independent in any distribution generated by the NPSEM.
+
+## 6.4 Positivity and Structural Causal Models (pp. 68–69)
 
 ---
 
-Causal diagrams help us understand the identifiability assumptions introduced in Chapter 3.
+### Non-Parametric Structural Equation Models
 
-### Positivity in DAGs
+Causal diagrams and their associated structural equations constitute **non-parametric structural equation models (NPSEMs)**. The NPSEM framework provides a rigorous basis for defining counterfactual quantities from the observed data structure.
 
-The **positivity assumption** requires that all levels of treatment occur at all levels of confounders:
-$$\Pr[A = a | L = l] > 0 \quad \text{for all } a, l$$
+Given the structural equations $L = f_L(U_L)$, $A = f_A(L, U_A)$, $Y = f_Y(L, A, U_Y)$ with $U_L$, $U_A$, $U_Y$ mutually independent, the counterfactual outcome $Y^a$ is formally defined as:
 
-In a DAG, positivity violations can occur when:
+$$Y^a = f_Y\bigl(L,\, a,\, U_Y\bigr)$$
 
-- Structural determinism: Certain values of $L$ make $A$ deterministic (e.g., if $L$ completely determines $A$)
-- Random violations: By chance, no individuals in the sample have certain $(A, L)$ combinations
+That is, $Y^a$ is the value $Y$ would take if we **intervened** to set $A = a$, leaving all other structural equations (including those for $L$ and the $U$ variables) unchanged. This corresponds to Pearl's **do-operator**: $Y^a \equiv Y \,\mathrm{do}(A=a)$.
 
-::: {.notes}
-**DAGs and positivity**: The DAG itself doesn't tell us whether positivity holds—that depends on the actual data. However, DAGs can help identify situations where positivity is likely to be violated (e.g., when many arrows point into the treatment, suggesting treatment is highly determined by covariates).
-:::
+### Positivity in Structural Causal Models
 
-### Consistency in DAGs
+The **positivity assumption** requires that every individual has a positive probability of receiving each treatment level:
 
-The **consistency assumption** requires well-defined interventions:
-$$Y = Y^A$$
+$$\Pr[A = a \mid L = l] > 0 \quad \text{for all } a \text{ and all } l \text{ with } \Pr[L = l] > 0$$
 
-In DAGs, consistency requires:
-1. **No treatment variation**: All individuals receiving $A=a$ receive exactly the same version of treatment
-2. **No interference**: One individual's treatment doesn't affect another's outcome
+In structural equation terms, positivity requires that the function $f_A(L, U_A)$ is not deterministic — no value of $L$ should completely determine the treatment assignment $A$.
+
+**Structural positivity violations** occur when $L$ deterministically forces $A$ to a particular value. In these strata, the counterfactual $Y^a$ cannot be identified from observational data regardless of sample size.
+
+**Random positivity violations** occur when, by chance, certain $(A, L)$ combinations do not appear in the finite sample, even though they have positive probability in the population.
 
 ::: {.notes}
-**DAGs and consistency**:
+**Why positivity matters for the NPSEM:**
 
-**Treatment variation**: The node $A$ in the DAG must represent a single, well-defined intervention. If "treatment" actually consists of multiple versions (e.g., different exercise types), the DAG should have separate nodes for each.
+When $\Pr[A = a \mid L = l] = 0$ for some $l$, we observe no individuals with treatment $a$ in stratum $L = l$. We cannot therefore identify the counterfactual $Y^a$ in that stratum from observational data. The causal effect is then not identifiable using standard methods (IP weighting, standardization, etc.) — a situation captured formally by the positivity assumption.
 
-**Interference**: Standard DAGs assume no interference. When interference exists, we need extended graphical frameworks or explicit modeling of dependencies between individuals.
+**Consistency revisited:**
+
+In the NPSEM framework, the consistency assumption $Y = Y^A$ follows directly from the structural equations: when $A = a$ is actually assigned, $Y = f_Y(L, A, U_Y) = f_Y(L, a, U_Y) = Y^a$. Consistency violations (e.g., multiple versions of treatment) correspond to a situation where the node $A$ in the DAG actually represents several distinct interventions, each potentially yielding different outcomes.
 :::
 
-## 6.5 A Structural Classification of Bias (pp. 69-73)
+## 6.5 A Structural Classification of Bias (pp. 69–73)
 
 ---
 
-Causal diagrams allow us to classify different types of bias based on graph structure.
+Causal diagrams provide a **structural classification** of the biases that may affect causal estimates. Three main types arise from the structure of the causal diagram.
 
-### Confounding
+### Confounding Bias
+
+**Confounding** is present when there is an open **backdoor path** from treatment $A$ to outcome $Y$.
+
+::: {#def-backdoor-path}
+## Backdoor Path
+
+A **backdoor path** from $A$ to $Y$ is any path that:
+
+1. Starts with an arrow **pointing into** $A$ (i.e., begins $\cdots \to A$)
+2. Ends at $Y$
+
+Such paths represent non-causal flows of association between $A$ and $Y$ induced by common causes.
+:::
 
 ::: {#def-dag-confounding}
-## Confounding (DAG Definition)
+## Confounding (Structural Definition)
 
-**Confounding** occurs when there exists a **backdoor path** from treatment $A$ to outcome $Y$:
+**Confounding** of the effect of $A$ on $Y$ exists when there is at least one open backdoor path from $A$ to $Y$.
 
-A backdoor path is a path from $A$ to $Y$ that:
-1. Starts with an arrow pointing *into* $A$ (i.e., $\cdot \rightarrow A$)
-2. Does not pass through any descendants of $A$
+In the diagram $L \to A$, $L \to Y$, $A \to Y$: the path $A \leftarrow L \to Y$ is a backdoor path. Since $L$ is a non-collider on this path and has not been conditioned on, the path is open. There is therefore confounding.
 :::
 
-**Example**: 
+```{r}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 2.5
+#| fig-cap: "Figure 6.2. Confounding: L opens the backdoor path A ← L → Y. Adjusting for L blocks this path."
+dag_confounding <- dagitty('dag {
+  L [pos="1,1"]
+  A [pos="0,0"]
+  Y [pos="2,0"]
+  L -> A
+  L -> Y
+  A -> Y
+}')
+ggdag(dag_confounding, stylized = TRUE) +
+  theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4)
 ```
-L → A → Y
-L → Y
-```
-
-The path $A \leftarrow L \rightarrow Y$ is a backdoor path (it starts with an arrow into $A$). Therefore, $L$ is a confounder.
-
-::: {.notes}
-**Why "backdoor"?**
-
-The term "backdoor path" refers to paths that go into the back of $A$ (against the arrow). These paths allow non-causal association to flow from $A$ to $Y$ via common causes.
-
-**Contrast with causal paths**: Causal paths follow arrows in the forward direction ($A \rightarrow \cdots \rightarrow Y$).
-
-**Confounding = open backdoor paths**: If backdoor paths are open (not blocked), the association between $A$ and $Y$ reflects both causal and non-causal (confounded) pathways.
-:::
 
 ### The Backdoor Criterion
 
 ::: {#def-backdoor-criterion}
 ## Backdoor Criterion
 
-A set of variables $L$ satisfies the **backdoor criterion** for the effect of $A$ on $Y$ if:
+A set of measured variables $L$ satisfies the **backdoor criterion** for estimating the causal effect of $A$ on $Y$ if:
 
 1. No variable in $L$ is a descendant of $A$
-2. $L$ blocks all backdoor paths from $A$ to $Y$
+2. $L$ blocks every backdoor path from $A$ to $Y$
 
-If $L$ satisfies the backdoor criterion, adjusting for $L$ eliminates confounding.
+When $L$ satisfies the backdoor criterion, adjusting for $L$ (via stratification, standardization, or IP weighting) eliminates confounding and yields an unbiased estimate of the causal effect.
 :::
 
 ::: {#exm-backdoor}
 ## Backdoor Criterion Example
 
-**Diagram**:
-```
-U → L → A → Y
-      L → Y
-```
+**DAG**: $U \to L \to A \to Y$, $L \to Y$
 
-**Backdoor paths from $A$ to $Y$**:
+**Backdoor path from $A$ to $Y$**: $A \leftarrow L \to Y$
 
-- $A \leftarrow L \rightarrow Y$
+**Does $\{L\}$ satisfy the backdoor criterion?**
 
-**Does $L$ satisfy the backdoor criterion?**
 1. $L$ is not a descendant of $A$ ✓
-2. $L$ blocks the backdoor path $A \leftarrow L \rightarrow Y$ ✓
+2. Conditioning on $L$ (a non-collider on $A \leftarrow L \to Y$) blocks this path ✓
 
-Yes! Adjusting for $L$ is sufficient to identify the causal effect.
+Yes — adjusting for $L$ suffices to identify the causal effect, even though $L$ has an unmeasured cause $U$.
 
-**Does $U$ satisfy the backdoor criterion?**
+**Does $\{U\}$ satisfy the backdoor criterion?**
 
-- No. $U$ is not on the path $A \leftarrow L \rightarrow Y$, so it doesn't block the backdoor path.
+No — $U$ is an ancestor of $L$ but is not on the backdoor path $A \leftarrow L \to Y$. Conditioning on $U$ alone does not block the path through $L$.
 :::
 
 ::: {.notes}
-**Multiple backdoor paths**: In more complex diagrams, there may be many backdoor paths. The adjustment set must block **all** of them.
+**Minimal sufficient adjustment sets:**
 
-**Minimal adjustment sets**: Often, multiple sets of variables satisfy the backdoor criterion. The smallest such set is called a **minimal sufficient adjustment set**. Software like `dagitty` can find these automatically.
+Multiple sets may satisfy the backdoor criterion. A **minimal sufficient adjustment set** is one from which no variable can be removed while still satisfying the criterion. The R package `dagitty` enumerates minimal sufficient adjustment sets automatically.
 
-**Over-adjustment**: Including unnecessary variables in $L$ (e.g., mediators, colliders) can introduce bias even if they're not needed for confounding control.
+**Avoiding over-adjustment:**
+
+- Adjusting for a **mediator** (a descendant of $A$ on a causal path to $Y$) blocks part of the causal effect — this is over-adjustment
+- Adjusting for a **collider** introduces collider stratification bias
+- Adjusting for a **descendant of a collider** partially introduces this bias
 :::
 
 ### Selection Bias
 
-**Selection bias** occurs when we condition on a collider (or its descendant) that lies on a path from $A$ to $Y$.
+**Selection bias** arises when the analysis conditions on a variable $C$ that is a collider (or ancestor/descendant of a collider) on a path between $A$ and $Y$.
 
-**Example**:
-```
-A → S ← Y
-```
+**Structural representation:**
 
-If we restrict analysis to individuals with $S = 1$, we induce spurious association between $A$ and $Y$ (collider bias).
+$$A \longrightarrow C \longleftarrow Y$$
 
-This will be covered in detail in Chapter 8.
+Restricting the analysis to individuals with $C = 1$ (e.g., individuals selected into the study) opens the path $A \to C \leftarrow Y$ and induces a spurious association between $A$ and $Y$.
+
+::: {.notes}
+**Connection to collider stratification bias:**
+
+Selection bias is collider stratification bias applied to the selection mechanism. The "collider" is a variable related to study participation, follow-up completion, or analysis inclusion, and both $A$ (or a cause of $A$) and $Y$ (or a cause of $Y$) affect it.
+
+**Common examples:**
+
+- Loss to follow-up affected by both treatment and outcome
+- Case-control studies where hospital admission depends on both exposure and disease
+- Analysis restricted to survivors when survival depends on treatment and outcome
+
+**Chapter 8** covers selection bias in detail with specific examples.
+:::
 
 ### Measurement Bias
 
-**Measurement bias** can be represented in DAGs by including nodes for both:
+**Measurement bias** (information bias) occurs when a variable is measured imperfectly. In the causal diagram, we distinguish:
 
-- True (unmeasured) variables
-- Measured (error-prone) variables
+- $A$: the true (unmeasured or imperfectly measured) treatment
+- $A^*$: the observed (potentially error-prone) measurement of treatment
 
-**Example**:
-```
-A_true → Y
-A_measured ← A_true
-```
+The structural relationship is $A \to A^*$: the true value generates the measurement, with additional unmeasured factors $U_{A^*}$ affecting the measurement.
 
-If we use $A_{\text{measured}}$ instead of $A_{\text{true}}$, the estimated effect will be biased (Chapter 9).
+**Structural representation:**
 
-## 6.6 The Structure of Effect Modification (pp. 73-76)
+$$A \longrightarrow Y \qquad A \longrightarrow A^*$$
+
+Using $A^*$ in place of $A$ produces a biased estimate of the causal effect of $A$ on $Y$.
+
+::: {.notes}
+**Differential vs. non-differential measurement error:**
+
+- **Non-differential** (classical): $A^* = f(A, U_{A^*})$ where $U_{A^*}$ is independent of $Y$ and $L$ — typically attenuates estimates toward the null
+- **Differential**: $A^* = f(A, U_{A^*})$ where $U_{A^*}$ is correlated with $Y$ or its causes — can bias in either direction
+
+**Measurement error in confounders:**
+
+Measuring $L$ imperfectly (using $L^*$ instead of $L$) creates **residual confounding**: after adjusting for $L^*$, the backdoor path $A \leftarrow L \to Y$ is only partially blocked, and confounding bias remains.
+
+**Chapter 9** covers measurement bias in detail.
+:::
+
+## 6.6 The Structure of Effect Modification (pp. 73–76)
 
 ---
 
-Effect modification can also be represented in causal diagrams.
+### Effect Modification in Causal Diagrams
 
-### Effect Modification in DAGs
+**Effect modification** (heterogeneity of treatment effects) occurs when the causal effect of $A$ on $Y$ differs across levels of another variable $V$. Standard DAGs, however, **cannot directly represent effect modification**.
 
-Effect modification by $V$ means the effect of $A$ on $Y$ differs across levels of $V$. This can be represented by:
+A DAG with $V \to Y$ and $A \to Y$ is compatible with:
 
-```
-V → Y
-A → Y
-(with the understanding that the A→Y effect depends on V)
-```
+- **No effect modification**: the $A \to Y$ effect is the same for all values of $V$
+- **Effect modification**: the $A \to Y$ effect varies across levels of $V$
 
-Some authors include an arrow $V \rightarrow A \cdot Y$ to explicitly denote interaction, but this is not standard DAG notation.
+Both cases have identical qualitative structure. The DAG encodes only the *presence* of causal effects (which variables cause which), not their *magnitude* or *heterogeneity*.
 
 ::: {.notes}
-**DAGs and effect modification**:
+**Why DAGs cannot encode effect modification:**
 
-Standard DAGs do not have explicit notation for effect modification or interaction. The diagram:
-```
-V → Y
-A → Y
-```
-is compatible with:
+Effect modification is a quantitative (or distributional) feature of the structural equations. A DAG specifies that $Y = f_Y(L, A, U_Y)$ but makes no claim about whether $f_Y$ involves an $A \times V$ interaction term. Two different NPSEMs — one with and one without effect modification — are represented by the same DAG if they share the same qualitative causal structure.
 
-- No effect modification (effect of $A$ is the same for all $V$)
-- Effect modification (effect of $A$ differs by $V$)
+**Frameworks that can encode effect modification:**
 
-**Why?** DAGs represent **qualitative** causal structure (presence/absence of effects), not **quantitative** features (magnitude or heterogeneity).
-
-**Extensions**: Some frameworks (e.g., Single World Intervention Graphs, SWIGs) can represent effect modification more explicitly, but these are advanced topics beyond the scope of this chapter.
+Extensions of the DAG framework, such as *Single World Intervention Graphs (SWIGs)* (Richardson and Robins, 2014) and annotated DAGs, can explicitly represent counterfactual quantities and some aspects of effect modification, but these are beyond the scope of this chapter.
 :::
 
-### Confounding vs. Effect Modification
+### Confounders, Effect Modifiers, and Both
 
-A variable $V$ can be:
+A variable $V$ can play different roles with respect to the $A \to Y$ effect:
 
-- A **confounder**: Opens a backdoor path ($V \rightarrow A$, $V \rightarrow Y$)
-- An **effect modifier**: The effect of $A$ on $Y$ varies by $V$
-- Both
-- Neither
+- **Confounder**: opens a backdoor path ($V \to A$, $V \to Y$) — must adjust for $V$ to remove bias
+- **Effect modifier**: the $A \to Y$ effect varies by $V$ — should stratify by $V$ to fully characterize effects
+- **Both**: must adjust for $V$ (confounding) and stratify (modification)
+- **Neither**: $V$ is unrelated to the $A \to Y$ causal structure
 
 ::: {#exm-confounder-modifier-dag}
-## Confounder and Modifier in DAGs
+## Confounder and Effect Modifier Roles
 
-**Scenario 1**: $V$ is a confounder only
-```
-V → A → Y
-V → Y
-```
-$V$ opens the backdoor path $A \leftarrow V \rightarrow Y$ (confounding). We must adjust for $V$.
+**Scenario 1: $V$ is a confounder only**
 
-**Scenario 2**: $V$ is a modifier only (in a randomized trial)
-```
-V → Y
-A → Y
-(A randomized, so no V → A arrow)
-```
-$V$ modifies the effect of $A$, but does not confound (no backdoor path). We should report stratum-specific effects but don't need to adjust for $V$ to eliminate bias.
+$$V \to A \to Y, \quad V \to Y$$
 
-**Scenario 3**: $V$ is both
-```
-V → A → Y
-V → Y
-(and the A→Y effect varies by V)
-```
-We must adjust for $V$ (confounding) AND report stratum-specific effects (modification).
+$V$ opens the backdoor path $A \leftarrow V \to Y$. We must adjust for $V$ to remove confounding. Whether the $A \to Y$ effect varies by $V$ is a separate empirical question.
+
+**Scenario 2: $V$ is an effect modifier only (in a randomized trial)**
+
+$$V \to Y, \quad A \to Y, \quad \text{($A$ randomized, no } V \to A \text{ arrow)}$$
+
+No backdoor paths exist (randomization removes $V \to A$). Adjustment for $V$ is not needed to remove bias. However, if the $A \to Y$ effect varies by $V$, we should report stratum-specific estimates.
+
+**Scenario 3: $V$ is both confounder and effect modifier**
+
+$$V \to A \to Y, \quad V \to Y, \quad \text{($A$-$Y$ effect varies by $V$)}$$
+
+We must adjust for $V$ (removes confounding) and report stratum-specific effects (captures modification).
+:::
+
+### Identifying Effect Modification
+
+Because DAGs cannot directly represent effect modification, we must assess it empirically:
+
+1. First, ensure the causal effect is identified within each stratum of $V$ (using the backdoor criterion or other identification strategies)
+2. Estimate stratum-specific causal effects $E[Y^{a=1} - Y^{a=0} \mid V = v]$ for each level $v$
+3. Compare effect estimates across strata: if they differ, effect modification is present
+
+::: {.notes}
+**Effect modification and interaction:**
+
+Chapter 5 defined additive interaction between two treatments $A$ and $E$ using the interaction contrast $\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}]$. Effect modification of the $A \to Y$ effect by $V$ corresponds to the case where $V$ plays the role of $E$, but one where $V$ is not itself a treatment under consideration — it simply describes a subgroup characteristic.
+
+**Scale-dependence:**
+
+Effect modification is scale-dependent (Chapter 4). The $A \to Y$ effect may be modified by $V$ on the risk difference scale but not on the risk ratio scale. The DAG cannot distinguish between these cases; the scale of modification must be specified separately.
 :::
 
 ## Summary
 
 ---
 
-This chapter introduced **causal diagrams** (DAGs) as tools for representing and reasoning about causal relationships.
+This chapter introduced **causal diagrams (DAGs)** as graphical tools for encoding causal assumptions and determining the identifiability of causal effects from observed data.
 
-**Key concepts**:
+**Key concepts:**
 
-1. **DAGs**: Directed acyclic graphs with nodes (variables) and directed edges (causal effects)
+1. **DAGs and NPSEMs**: A DAG represents a non-parametric structural equation model. Each variable $V_k$ satisfies $V_k = f_k(\mathrm{pa}(V_k), U_k)$ with mutually independent background variables $U_k$
 
-2. **Three basic structures**:
-   - **Chain** ($X \rightarrow Z \rightarrow Y$): Conditioning on $Z$ blocks the path
-   - **Fork** ($X \leftarrow Z \rightarrow Y$): Conditioning on $Z$ blocks the path
-   - **Collider** ($X \rightarrow Z \leftarrow Y$): Conditioning on $Z$ opens the path!
+2. **Marginal independence**: Two variables are marginally independent if all paths between them are blocked (d-separated). A collider on a path blocks it marginally.
 
-3. **Collider bias**: Conditioning on a common effect of two variables induces spurious association
+3. **Three fundamental path structures**:
+   - **Chain** ($A \to B \to Y$): Conditioning on $B$ blocks the path
+   - **Fork** ($A \leftarrow B \to Y$): Conditioning on $B$ blocks the path
+   - **Collider** ($A \to B \leftarrow Y$): Conditioning on $B$ **opens** the path — collider stratification bias
 
-4. **Backdoor paths**: Non-causal paths from $A$ to $Y$ that begin with an arrow into $A$
+4. **Positivity and NPSEMs**: The positivity assumption requires that treatment assignment is not deterministic given $L$. Counterfactuals $Y^a$ are formally defined via the structural equations as $Y^a = f_Y(L, a, U_Y)$
 
-5. **Backdoor criterion**: A set $L$ satisfies the backdoor criterion if:
-   - No member of $L$ is a descendant of $A$
-   - $L$ blocks all backdoor paths from $A$ to $Y$
+5. **Structural classification of bias**:
+   - **Confounding**: open backdoor path from $A$ to $Y$ (common cause not conditioned on)
+   - **Selection bias**: conditioning on a collider (common effect) on a path between $A$ and $Y$
+   - **Measurement bias**: using an imperfect measure $A^*$ instead of the true $A$
 
-6. **Adjustment**: If $L$ satisfies the backdoor criterion, adjusting for $L$ eliminates confounding
+6. **Backdoor criterion**: A set $L$ satisfying (i) no descendant of $A$ in $L$, (ii) $L$ blocks all backdoor paths — adjusting for $L$ eliminates confounding
+
+7. **Effect modification**: Standard DAGs encode qualitative structure only; effect modification cannot be read from the DAG and must be assessed empirically
 
 ::: {.notes}
-**Practical use of DAGs**:
+**Practical workflow:**
 
-1. **Draw a DAG** based on subject-matter knowledge before analyzing data
-2. **Identify backdoor paths** from treatment to outcome
-3. **Find an adjustment set** that satisfies the backdoor criterion
-4. **Adjust for that set** using stratification, regression, or weighting
-5. **Avoid adjusting** for colliders, mediators, or other variables that induce bias
+1. Draw a DAG based on subject-matter knowledge before analyzing data
+2. Identify all backdoor paths from $A$ to $Y$
+3. Find a sufficient adjustment set satisfying the backdoor criterion
+4. Adjust for that set (IP weighting, standardization, regression)
+5. Do **not** adjust for colliders, mediators, or descendants of treatment
 
-**Software**:
+**Software:**
 
-- R package `dagitty`: Draw DAGs, find adjustment sets, test implications
-- R package `ggdag`: Visualize DAGs
-- Web app: dagitty.net
+- R package `dagitty`: draw DAGs, enumerate adjustment sets, test d-separation
+- R package `ggdag`: visualize DAGs (used in this chapter)
+- Web interface: [dagitty.net](https://www.dagitty.net)
 
-**Limitations of DAGs**:
+**Limitations of DAGs:**
 
-- Require strong qualitative assumptions about causal structure
-- Cannot represent unmeasured confounding (unless explicitly included as a node)
+- Require qualitative causal assumptions justified by subject-matter knowledge
+- Unmeasured common causes must be added explicitly as $U$ nodes; otherwise assumed absent
 - Cannot represent dynamic feedback (cycles)
-- Do not encode effect modification or quantitative magnitudes
+- Cannot encode effect modification or effect magnitudes
+- Cannot represent interference between individuals
 
-Despite these limitations, DAGs are invaluable for making causal assumptions explicit and selecting appropriate adjustment strategies.
+**Looking ahead:**
 
-**Looking ahead**:
-
-- **Chapter 7**: Detailed treatment of confounding
-- **Chapter 8**: Selection bias
-- **Chapters 11-15**: Methods for adjusting for confounding (IP weighting, g-formula, propensity scores)
+- **Chapter 7**: Detailed treatment of confounding — definition, assessment, and adjustment
+- **Chapter 8**: Selection bias — conditioning on common effects
+- **Chapter 9**: Measurement bias — error in exposures and confounders
+- **Chapters 11–15**: Estimation methods — IP weighting, g-formula, propensity scores
 :::
 
 ## References
