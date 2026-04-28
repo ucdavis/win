@@ -3,6 +3,7 @@ profile:
 
 filters:
   - d-morrison/div-anchors
+  - d-morrison/equation-anchors
 
 bibliography: references.bib
 
