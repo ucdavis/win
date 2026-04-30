@@ -10,423 +10,354 @@ format:
     output-file: 17-causal-survival-analysis.docx
 ---
 
-This chapter extends causal inference methods to **survival analysis** and **time-to-event outcomes**. We define causal effects for survival data, address challenges posed by censoring and competing events, and show how to estimate causal survival curves using IP weighting and the parametric g-formula.
+In previous chapters we have been concerned with causal questions about treatment effects on outcomes occurring at a particular time point. For example, we estimated the effect of smoking cessation on weight gain measured in the year 1982. Many causal questions, however, are concerned with treatment effects on the **time until** the occurrence of an event of interest. For example, we may want to estimate the causal effect of smoking cessation on the time until death, whenever death occurs. This is an example of a **survival analysis**.
+
+The use of the word "survival" does not imply that the event of interest must be death. The term "survival analysis", or the equivalent term "failure time analysis", is applied to any analyses about time to an event, where the event may be death, marriage, incarceration, cancer, flu infection, etc. Survival analyses require some special considerations and techniques because the failure time of many individuals may occur after the study has ended and is therefore unknown. This chapter outlines basic techniques for survival analysis in the simplified setting of time-fixed treatments.
 
 ::: {.notes}
-This chapter is based on @hernan2020causal [Chapter 17, pp. 247-264].
+This chapter is based on @hernan2020causal [Chapter 17].
 
-**Key challenge**: Survival outcomes involve time, and individuals may be censored before experiencing the event. This requires careful definition of potential outcomes and attention to competing risks.
+**Key challenge**: Survival outcomes involve time, and individuals may be censored before experiencing the event. The estimation of hazards is often a useful intermediate step for the estimation of survivals and risks. This chapter shows how IP weighting and the parametric g-formula extend naturally to survival outcomes.
 :::
 
-## 17.1 Hazards and Risks (pp. 247-250)
+## 17.1 Hazards and Risks
 
 ---
 
-We begin by reviewing key concepts from survival analysis.
+Suppose we want to estimate the average causal effect of smoking cessation $A$ (1: yes, 0: no) on the time to death $T$ with time measured from the start of follow-up. This is an example of a survival analysis: the outcome is time to an event of interest that can occur at any time after the start of follow-up.
 
-### Basic Definitions
+In most follow-up studies, the event of interest is not observed to happen for all, or even the majority of, individuals in the study. This is so because most follow-up studies have a date after which there is no information on any individuals: the **administrative end of follow-up**. Individuals who do not develop the event of interest before the administrative end of follow-up have their survival time **administratively censored**.
 
-::: {#def-survival-concepts}
-## Survival Analysis Terms
-
-**Event time** $T$: Time from baseline until an event occurs (e.g., death, disease onset)
-
-**Censoring time** $C$: Time from baseline until censoring (e.g., loss to follow-up, study end)
-
-**Observed time** $Y = \min(T, C)$: The time we actually observe
-
-**Event indicator** $D = I(T \leq C)$: 1 if event occurred, 0 if censored
-
-**Risk** at time $t$: $\Pr[T \leq t]$ (cumulative incidence)
-
-**Survival** at time $t$: $S(t) = \Pr[T > t] = 1 - \Pr[T \leq t]$
-
-**Hazard** at time $t$: $\lambda(t) = \lim_{dt \to 0} \frac{\Pr[t \leq T < t + dt \mid T \geq t]}{dt}$
-:::
-
-### Hazard vs Risk
-
-**Hazard**: Instantaneous rate of event occurrence among those at risk
-
-- Ranges from 0 to $\infty$
-- Can increase, decrease, or remain constant over time
-- Related to survival: $S(t) = \exp\left(-\int_0^t \lambda(s) ds\right)$
-
-**Risk (cumulative incidence)**: Probability of event by time $t$
-
-- Ranges from 0 to 1
-- Always non-decreasing
-- More interpretable for most purposes
+We conduct the above survival analysis among the 1629 cigarette smokers from the NHEFS who were aged 25–74 years at baseline and who were alive through 1982. For all individuals, the start of follow-up is January 1, 1983 and the administrative end of follow-up is December 31, 1992. The administrative censoring time is the same—120 months—for all individuals. Of the 1629 individuals, only 318 died before the end of 1992, so the survival time of the remaining 1311 individuals is administratively censored.
 
 ::: {.notes}
-**Relationship**:
+Administrative censoring is a problem intrinsic to survival analyses. In a study with staggered entry (i.e., with a variable start of follow-up date) different individuals will have different administrative censoring times, even when the administrative end of follow-up date is common to all.
 
-$$\text{Risk}(t) = 1 - \exp\left(-\int_0^t \lambda(s) ds\right)$$
-
-**Intuition**: The hazard is like a velocity (rate of change), while risk is like a distance traveled (cumulative probability).
-
-For causal inference, we typically focus on **causal risks** rather than causal hazards, though both can be defined.
+In addition to administrative censoring, survival analyses may also need to handle non-administrative types of censoring, such as loss to follow-up and competing events (see Fine Point 17.1). In previous chapters we discussed how to adjust for the selection bias introduced by non-administrative censoring via standardization or IP weighting. The same approaches can be applied to survival analyses. In this chapter, we focus on administrative censoring and defer non-administrative censoring to Part III.
 :::
 
-## 17.2 From Hazards to Risks (pp. 250-252)
+### Survival, Risk, and Hazard
+
+The **survival probability** $\Pr[T > k]$, or simply the survival at month $k$, is the proportion of individuals who survived through time $k$. If we calculate the survivals at each month until the administrative end of follow-up $k_\text{end} = 120$ and plot them along a horizontal time axis, we obtain the **survival curve**. The survival curve starts at $\Pr[T > 0] = 1$ for $k = 0$ and then decreases monotonically with subsequent values of $k = 1, 2, \ldots, k_\text{end}$.
+
+Alternatively, we can define the **risk**, or **cumulative incidence**, at time $k$ as one minus the survival:
+
+$$\Pr[T \leq k] = 1 - \Pr[T > k]$$
+
+The cumulative incidence curve starts at $\Pr[T \leq 0] = 0$ and increases monotonically during the follow-up.
+
+At any time $k$, we can also calculate the proportion of individuals who develop the event among those who had not developed it before $k$. This is the **hazard**:
+
+$$\Pr[T = k \mid T > k - 1]$$
+
+Technically, this is the discrete-time hazard, i.e., the hazard in a study in which time is measured in discrete intervals, as opposed to measured continuously. Because in real-world studies time is indeed measured in discrete intervals (years, months, weeks, days…) rather than in a truly continuous fashion, we will refer to the discrete-time hazard as, simply, the hazard.
+
+::: {.notes}
+In our example, if we assume (provisionally) that quitters ($A = 1$) and non-quitters ($A = 0$) are marginally exchangeable, the survival curves at 120 months were 76.2% among quitters and 82.0% among non-quitters. Equivalently, the 120-month risk was 23.8% among quitters and 18.0% among non-quitters.
+
+The hazard at 120 months was 0% among quitters (because the last death happened at 113 months in this group) and 1/986 = 0.10% among non-quitters, and the hazard curves between 0 and 120 months had roughly the shape of a letter M.
+:::
+
+### Risk vs. Hazard
+
+The **risk** and the **hazard** are different measures:
+
+- The denominator of the **risk**—the number of individuals at baseline—is constant across times $k$ and its numerator—all events between baseline and $k$—is cumulative. The risk will stay flat or increase as $k$ increases.
+- The denominator of the **hazard**—the number of individuals alive at $k$—varies over time and its numerator includes only recent events. The hazard may increase or decrease over time.
+
+A frequent approach to quantify the treatment effect in survival analyses is to estimate the ratio of the hazards in the treated and the untreated, known as the hazard ratio. However, the hazard ratio is problematic for the reasons described in Fine Point 17.2. Therefore, the survival analyses in this book privilege survival/risk over hazard. However, that does not mean that we should completely ignore hazards. The estimation of hazards is often a useful intermediate step for the estimation of survivals and risks.
+
+::: {.callout-note title="Fine Point 17.1: Competing Events"}
+As described in Section 8.5, a **competing event** is an event (typically, death) that prevents the event of interest (e.g., stroke) from happening: individuals who die from other causes (say, cancer) cannot ever develop stroke. In survival analyses, the key decision is whether to consider competing events a form of non-administrative censoring.
+
+- If the competing event is considered a censoring event, then the analysis is effectively an attempt to simulate a population in which death from other causes is somehow either abolished or rendered independent of the risk factors for stroke. The resulting effect estimate is hard to interpret and may not correspond to a meaningful estimand. In addition, the censoring may introduce selection bias under the null, which would require adjustment using data on the measured risk factors for the event of interest.
+
+- If the competing event is not considered a censoring event, then the analysis effectively sets the time to event to be infinite. That is, dead individuals are considered to have probability zero of developing stroke between their death and the administrative end of follow-up. The estimate of the effect of treatment on stroke is hard to interpret because a non-null estimate may arise from a direct effect of treatment on death, which would prevent the occurrence of stroke.
+
+An alternative is to create a composite event that includes both the competing event and the event of interest (e.g., death and stroke) and conduct a survival analysis for the composite event. This approach effectively eliminates the competing events, but fundamentally changes the causal question.
+
+None of the above strategies provides a satisfactory solution to the problem of competing events. For a detailed description of approaches to handle competing events and their challenges, see Young et al. (2019).
+:::
+
+## 17.2 From Hazards to Risks
 
 ---
 
-The **survival function** $S(t)$ and **cumulative hazard** $\Lambda(t)$ are key quantities.
+In survival analyses, there are two main ways to arrange the analytic dataset.
 
-### Cumulative Hazard
+In the first data arrangement each row of the database corresponds to one person. This data format—often referred to as the "wide" format when there are time-varying treatments and confounders—is the one we have used so far in this book. In the analyses of the previous section, the dataset had 1629 rows, one per individual.
 
-$$\Lambda(t) = \int_0^t \lambda(s) ds$$
+In the second data arrangement each row of the database corresponds to a **person-time**. That is, the first row contains the information for person 1 at $k = 0$, the second row the information for person 1 at $k = 1$, and so on until the follow-up of person 1 ends. This person-time (or "long") data format is the one we will use in most survival analyses in this chapter and in all analyses with time-varying treatments in Part III. In our smoking cessation example, the person-time dataset has 176,764 rows, one per person-month.
 
-**Interpretation**: Total accumulated hazard up to time $t$.
+### The Event Indicator $D_k$
 
-### Relationships
+To encode survival information through $k$ in the person-time data format, it is helpful to define a **time-varying indicator of event** $D_k$. For each person at each month $k$, the indicator $D_k$ takes value 1 if $T \leq k$ and value 0 if $T > k$.
 
-**Survival from cumulative hazard**:
+Using the time-varying outcome variable $D_k$, we can define:
 
-$$S(t) = \exp(-\Lambda(t))$$
+::: {#def-survival-risk-hazard}
+## Survival, Risk, and Hazard
 
-**Risk from survival**:
+- **Survival** at $k$: $\Pr[D_k = 0] = \Pr[T > k]$
+- **Risk** at $k$: $\Pr[D_k = 1] = \Pr[T \leq k]$
+- **Hazard** at $k$: $\Pr[D_k = 1 \mid D_{k-1} = 0]$
 
-$$\Pr[T \leq t] = 1 - S(t) = 1 - \exp(-\Lambda(t))$$
-
-### Kaplan-Meier Estimator
-
-**Nonparametric estimator** of survival function:
-
-$$\hat{S}(t) = \prod_{t_i \leq t} \left(1 - \frac{d_i}{n_i}\right)$$
-
-where:
-- $t_i$ are the ordered event times
-- $d_i$ is the number of events at $t_i$
-- $n_i$ is the number at risk just before $t_i$
-
-**Assumption**: Censoring is **independent** of event time (given covariates).
-
-::: {.notes}
-**Kaplan-Meier** provides a nonparametric estimate of the survival curve without assuming a parametric model for the hazard.
-
-**Limitation**: Doesn't adjust for confounders. For causal inference, we need IP weighting or parametric g-formula.
+For $k = 1$ the hazard is equal to the risk because everybody is, by definition, alive at $k = 0$.
 :::
 
-## 17.3 Why Censoring Matters (pp. 252-255)
+### From Hazards to Survival
+
+The survival probability at $k$ is the product of the conditional probabilities of having survived each interval between 0 and $k$. More generally, the survival at $k$ is:
+
+$$\Pr[D_k = 0] = \prod_{m=1}^k \Pr[D_m = 0 \mid D_{m-1} = 0]$$
+
+That is, the survival at $k$ equals the product of one minus the hazard at all previous times. If we know the hazards through $k$ we can easily compute the survival at $k$ (or the risk at $k$, which is just one minus the survival).
+
+::: {.notes}
+**Example**: The survival at $k = 2$, $\Pr[D_2 = 0]$, is equal to the survival probability at $k = 1$, $\Pr[D_1 = 0]$, times the survival probability at $k = 2$ conditional on having survived through $k = 1$, $\Pr[D_2 = 0 \mid D_1 = 0]$.
+:::
+
+### Nonparametric and Parametric Estimation
+
+The hazard at $k$, $\Pr[D_k = 1 \mid D_{k-1} = 0]$, can be estimated **nonparametrically** by dividing the number of cases during the interval $k$ by the number of individuals alive at the end of interval $k - 1$. The resulting nonparametric estimate of the survival $\Pr[D_k = 0]$ at $k$ is referred to as the **Kaplan-Meier**, or **product-limit**, estimator.
+
+An easy way to parametrically estimate the hazards is to fit a **logistic regression model** for $\Pr[D_{k+1} = 1 \mid D_k = 0]$ restricted to individuals who survived through $k$. In our example, we can estimate the hazards in the treated and untreated by fitting:
+
+$$\text{logit}\,\Pr[D_{k+1} = 1 \mid D_k = 0, A] = \theta_{0,k} + \theta_1 A + \theta_2 (A \times k) + \theta_3 (A \times k^2)$$
+
+where $\theta_{0,k} = \theta_0 + \theta_4 k + \theta_5 k^2$ is a flexible time-varying intercept. The product terms between treatment $A$ and time allow the hazard ratio to vary over time (see Technical Point 17.1 for details on how a logistic model approximates a hazards model).
+
+We then compute estimates of the survival $\Pr[D_{k+1} = 0 \mid A = a]$ by multiplying the estimates of one minus the hazard from the logistic model, separately for the treated and the untreated.
+
+::: {.callout-note title="Fine Point 17.2: The Hazards of Hazard Ratios"}
+When using the hazard ratio as a measure of causal effect, two important properties of the hazard ratio need to be taken into account.
+
+**First**, because the hazards vary over time, the hazard ratio generally does too. That is, the ratio at time $k$ may differ from that at time $k + 1$. However, many published survival analyses report a single hazard ratio, which is usually the consequence of fitting a Cox proportional hazards model that assumes a constant hazard ratio by ignoring interactions with time. The reported hazard ratio is a weighted average of the $k$-specific hazard ratios, which makes it hard to interpret. Because it is a weighted average, the reported hazard ratio may be 1 even if the survival curves are not identical. In contrast to "the" hazard ratio, ratios and differences of survival probabilities and risks are defined with respect to a fixed time period, e.g., the 5-year survival difference, the 120-month risk ratio.
+
+**Second**, even if we presented the time-specific hazard ratios, their causal interpretation is not straightforward. Suppose treatment kills all high-risk individuals by time $k$ and has no effects on others. Then the hazard ratio at time $k + 1$ compares the treated and the untreated individuals who survived through $k$. In the treated group, the survivors are all low-risk individuals (because the high-risk ones have already been killed by treatment); in the untreated group, the survivors are a mixture of high-risk and low-risk individuals (because treatment did not weed out the former). As a result the hazard ratio at $k + 1$ will be less than 1 even though treatment is not beneficial for any individual.
+
+This apparent paradox is an example of selection bias due to conditioning on a post-treatment variable (i.e., being alive at $k$) which is affected by treatment. The hazard ratio at time 2 is $\Pr[D_2 = 1 \mid D_1 = 0, A]$. Conditioning on the collider $D_1$ will generally open the path $A \to D_1 \leftarrow U \to D_2$ and therefore induce an association between treatment $A$ and event $D_2$ among those with $D_1 = 0$. This built-in selection bias of hazard ratios does not happen if the survival curves are the same in the treated and the untreated.
+:::
+
+::: {.callout-note title="Fine Point 17.3: Models for Survival Analysis"}
+Methods for survival analysis need to accommodate the expected censoring of failure times due to administrative end of follow-up.
+
+**Nonparametric** approaches to survival analysis, like constructing Kaplan-Meier curves, make no assumptions about the distribution of the unobserved failure times due to administrative censoring.
+
+**Parametric** models for survival analysis assume a particular statistical distribution (e.g., exponential, Weibull) for the failure times or hazards. The logistic model described in the main text to estimate hazards is an example of a parametric model.
+
+Other models for survival analysis, like the **Cox proportional hazards model** and the **accelerated failure time (AFT) model**, do not assume a particular distribution for the failure times or hazards. In particular, these models are agnostic about the shape of the hazard when all covariates in the model have value zero—often referred to as the baseline hazard. These models, however, impose a priori restrictions on the relation between the baseline hazard and the hazard under other combinations of covariate values. As a result, these methods are referred to as **semiparametric** methods.
+:::
+
+::: {.callout-note title="Technical Point 17.1: Approximating the Hazard Ratio via a Logistic Model"}
+The discrete-time hazard ratio $\frac{\Pr[D_{k+1}=1|D_k=0,A=1]}{\Pr[D_{k+1}=1|D_k=0,A=0]}$ equals $\exp(\alpha_1)$ at all times $k+1$ in the hazards model $\Pr[D_{k+1} = 1 \mid D_k = 0, A] = \Pr[D_{k+1} = 1 \mid D_k = 0, A = 0] \times \exp(\alpha_1 A)$.
+
+Suppose the hazard at $k + 1$ is small, i.e., $\Pr[D_{k+1} = 1 \mid D_k = 0, A] \approx 0$. Then the hazard is approximately equal to the odds, and we have:
+
+$$\text{logit}\,\Pr[D_{k+1} = 1 \mid D_k = 0, A] \approx \alpha_{0,k} + \alpha_1 A$$
+
+That is, if the hazard is close to zero at $k + 1$, we can approximate the log hazard ratio $\alpha_1$ by $\theta_1$ in the logistic model. As a rule of thumb, the approximation is often considered accurate enough when $\Pr[D_{k+1} = 1 \mid D_k = 0, A] < 0.1$ for all $k$.
+
+This rare event condition can almost always be guaranteed to hold: we just need to define a time unit $k$ that is short enough. For example, if $D_k$ stands for lung cancer, $k$ may be measured in years; if $D_k$ stands for infection with the common cold virus, $k$ may be measured in days.
+:::
+
+## 17.3 Why Censoring Matters
 
 ---
 
-**Censoring** creates missing data problems in survival analysis.
+The only source of censoring in our study is a common administrative censoring time $k_\text{end} = 120$ that is identical for all individuals. In this simple setting the procedure described in the previous section to estimate the survival is straightforward.
 
-### Types of Censoring
+Now suppose that individuals start the follow-up at different dates—there is **staggered entry** into the study—but the administrative end of follow-up date is common to all. Because the administrative censoring time is the difference between the administrative end of follow-up and the time of start of follow-up, different individuals will have different administrative censoring times.
 
-**Administrative censoring**: Study ends before all events occur
+### The Censoring Indicator
 
-- Predictable, often at a fixed time
-- Relatively benign if independent of event risk
+In this setting it is helpful to define a time-varying **indicator for censoring** $C_k$. For each person at each month $k$, the indicator $C_k$ takes value 0 if the administrative end of follow-up is greater than $k$ and 1 otherwise.
 
-**Loss to follow-up**: Participants drop out before event or study end
+Our goal is to estimate the survival curve that would have been observed if nobody had been censored before $k_\text{end}$. That is, our goal is to estimate the survival $\Pr[D_k = 0 \mid A = a]$ that would have been observed if the value of the time-varying indicators $D_k$ were known even after censoring. We can also refer to this quantity as $\Pr[D^{c=0}_k = 0 \mid A = a]$, where the superscript $c = 0$ makes explicit that we want the survival under no censoring.
 
-- Potentially problematic
-- May be related to prognosis (informative censoring)
+### Why Naive Estimation Fails
 
-**Competing risks**: Individuals experience a different event that precludes the event of interest
+We **cannot** validly estimate $\Pr[D_k = 0 \mid A = a]$ at time $k$ by simply computing the fraction of individuals who received treatment level $a$ and survived and were not censored through $k$. This fraction is a valid estimator of the joint probability $\Pr[C_{k+1} = 0, D_{k+1} = 0 \mid A = a]$, which is not what we want.
 
-- e.g., death from other causes when studying heart attack
-- Requires special treatment
+To see why, consider a study with $k_\text{end} = 2$ in which:
 
-### Independent Censoring Assumption
+- $\Pr[C_1 = 0] = 1$: nobody is censored by $k = 1$
+- $\Pr[D_1 = 0 \mid C_0 = 0] = 0.9$: 90% of individuals survive through $k = 1$
+- $\Pr[C_2 = 0 \mid D_1 = 0, C_1 = 0] = 0.5$: a random half of survivors is censored by $k = 2$
+- $\Pr[D_2 = 0 \mid C_2 = 0, D_1 = 0, C_1 = 0] = 0.9$: 90% of the remaining individuals survive through $k = 2$
 
-::: {#def-independent-censoring}
-## Independent Censoring
+The fraction of uncensored survivors at $k = 2$ is $1 \times 0.9 \times 0.5 \times 0.9 = 0.405$. However, if nobody had been censored, the survival would have been $1 \times 0.9 \times 1 \times 0.9 = 0.81$.
 
-Censoring is **independent** if:
+### Correct Estimation Under As-If Randomly Assigned Censoring
 
-$$T \perp\!\!\!\perp C \mid L$$
+Under (as-if) randomly assigned censoring, the survival $\Pr[D_k = 0 \mid A = a]$ at $k$ is:
 
-where $T$ is event time, $C$ is censoring time, $L$ are measured covariates.
+$$\Pr[D_k = 0 \mid A = a] = \prod_{m=1}^k \Pr[D_m = 0 \mid D_{m-1} = 0, C_m = 0, A = a] \quad \text{for } k < k_\text{end}$$
 
-**Interpretation**: Among individuals with the same covariate values, censoring is unrelated to their (unobserved) event time.
-:::
+The estimation procedure is the same as described above except that we estimate the **cause-specific hazard** $\Pr[D_{k+1} = 1 \mid D_k = 0, C_{k+1} = 0, A = a]$.
 
-**When violated**: Standard survival methods (Kaplan-Meier, Cox regression) are biased.
+Often we are not ready to assume that censoring is as if randomly assigned. When there is staggered entry, the calendar time at study entry may be associated with the outcome. Therefore, the above procedure will need to be adjusted for baseline confounders, which can be achieved through g-methods as described in the next sections.
 
-**Solution**: Use IP weighting for censoring (Section 17.5).
-
-::: {.notes}
-**Informative censoring**: When censoring is related to prognosis even after adjusting for covariates.
-
-**Example**: Patients who feel sicker may be more likely to drop out AND more likely to have events. If we can measure "feeling sick", we can adjust. If not, we have a problem.
-
-**Practical approach**: Measure as many predictors of censoring as possible, then assume independence given those predictors.
-:::
-
-## 17.4 The Hazard Ratio (pp. 255-257)
+## 17.4 IP Weighting of Marginal Structural Models
 
 ---
 
-The **hazard ratio** is commonly used to quantify treatment effects in survival analysis.
+When the treated and the untreated are not exchangeable, a direct contrast of their survival curves cannot be endowed with a causal interpretation. In our smoking cessation example, we estimated that the 120-month survival was lower in quitters than in non-quitters (76.2% versus 82.0%), but that does not necessarily imply that smoking cessation increases mortality. Older people are more likely to quit smoking and also more likely to die. This confounding by age makes smoking cessation look bad because the proportion of older people is greater among quitters than among non-quitters.
 
-### Definition
+### Counterfactual Survivals
 
-::: {#def-hazard-ratio}
-## Hazard Ratio
+Let us define $D^a_k$ as a counterfactual time-varying indicator for death at $k$ under treatment level $a$ and no censoring. Suppose we want to compare the counterfactual survivals $\Pr[D^{a=1}_{k+1} = 0]$ and $\Pr[D^{a=0}_{k+1} = 0]$ that would have been observed if everybody had received treatment ($a = 1$) and no treatment ($a = 0$), respectively. The causal contrast of interest is:
 
-The **hazard ratio** comparing treatment $a$ to $a'$ is:
+$$\Pr[D^{a=1}_{k+1} = 0] \text{ vs. } \Pr[D^{a=0}_{k+1} = 0] \quad \text{for } k = 0, 1, \ldots, k_\text{end} - 1$$
 
-$$HR^{a,a'}(t) = \frac{\lambda^a(t)}{\lambda^{a'}(t)}$$
+Because of confounding, this contrast may not be validly estimated by the contrast of the survivals $\Pr[D_{k+1} = 0 \mid A = 1]$ and $\Pr[D_{k+1} = 0 \mid A = 0]$.
 
-where $\lambda^a(t)$ is the hazard function under treatment $a$.
+### Estimation via IP Weighting
 
-**Cox proportional hazards model**: Assumes $HR^{a,a'}(t) = HR^{a,a'}$ (constant over time).
-:::
+Let us assume that the treated ($A = 1$) and the untreated ($A = 0$) are exchangeable within levels of the $L$ variables. Like in Chapters 12 to 15, $L$ includes the variables sex, age, race, education, intensity and duration of smoking, physical activity in daily life, recreational exercise, and weight. We also assume positivity and consistency. The estimation of IP weighted survival curves has two steps.
 
-### Interpretation Challenges
+**Step 1**: We estimate the stabilized IP weight $SW^A$ for each individual in the study population, using exactly the same procedure as described in Chapter 12. The estimated weight $SW^A$ has mean 1 (as expected); in our example the weights ranged from 0.33 to 4.21.
 
-**Collapsibility**: Unlike risk differences and risk ratios, hazard ratios are **non-collapsible**.
+**Step 2**: Using the person-time data format, we fit a weighted hazards model:
 
-- Marginal HR $\neq$ average of conditional HRs
-- Adjusted HR from Cox model is **not** a causal marginal effect
-- Conditional on covariates, HR has complex interpretation
+$$\text{logit}\,\Pr[D^a_{k+1} = 1 \mid D^a_k = 0] = \beta_{0,k} + \beta_1 a + \beta_2 (a \times k) + \beta_3 (a \times k^2)$$
 
-**Built-in selection bias**: Hazards condition on survival to time $t$, creating selection bias when effects are heterogeneous.
+where individuals are weighted by their estimated $SW^A$. This IP weighted model estimates the parameters of the **marginal structural logistic model**, i.e., the time-varying hazards that would have been observed if all individuals in the study population had been treated ($a = 1$) and if they had been untreated ($a = 0$).
+
+The estimates of $\Pr[D^a_{k+1} = 1 \mid D^a_k = 0]$ (the counterfactual hazards) from the IP weighted hazards model can then be converted to estimates of the survival $\Pr[D^a_{k+1} = 0] = \prod_{m=0}^k (1 - \Pr[D^a_{m+1} = 1 \mid D^a_m = 0])$ under treatment $a = 1$ and under no treatment $a = 0$.
 
 ::: {.notes}
-**Why hazard ratios are tricky**:
+In our example, the 120-month survival estimates were 80.7% under smoking cessation and 80.5% under no smoking cessation; difference 0.2% (95% confidence interval from −4.1% to 3.7% based on 500 bootstrap samples). Though the survival curve under treatment was lower than the curve under no treatment for most of the follow-up, the maximum difference never exceeded −1.4% with a 95% confidence interval from −3.4% to 0.7%. That is, after adjustment for the covariates $L$ via IP weighting, we found little evidence of an effect of smoking cessation on mortality at any time during the follow-up.
 
-1. **Non-collapsibility**: Even under no confounding, adjusted HR $\neq$ unadjusted HR
-2. **Selection bias**: By conditioning on $T \geq t$, we select a subset of the population that changes over time
-3. **No causal interpretation**: The HR from a Cox model is not generally a causal parameter
-
-**Better approach for causal inference**: Focus on **causal risk differences** or **causal risk ratios**, not hazard ratios.
+The validity of this procedure requires no misspecification of both the treatment model and the marginal hazards model.
 :::
 
-## 17.5 IP Weighting of Survival Curves (pp. 257-260)
+## 17.5 The Parametric G-Formula
 
 ---
 
-We can use **IP weighting** to estimate causal survival curves.
+In the previous section we estimated the survival curve under treatment and under no treatment via IP weighting. Another method to estimate the marginal survival curves under exchangeability, positivity, and consistency is standardization based on parametric models, i.e., the **parametric g-formula**.
 
-### Causal Survival Curve
+### Identification via Standardization
 
-::: {#def-causal-survival}
-## Causal Survival Function
+The survival $\Pr[D^a_{k+1} = 0]$ at $k + 1$ under treatment level $a$ is the weighted average of the survival conditional probabilities at $k + 1$ within levels of the covariates $L$ and treatment level $A = a$, with the proportion of individuals in each level $l$ of $L$ as the weights. That is, under exchangeability, positivity, and consistency, $\Pr[D^a_{k+1} = 0]$ equals the standardized survival:
 
-The **causal survival function** under treatment $a$ is:
+$$\sum_l \Pr[D_{k+1} = 0 \mid L = l, A = a]\, \Pr[L = l]$$
 
-$$S^a(t) = \Pr[T^a > t]$$
+### Estimation
 
-where $T^a$ is the potential event time under treatment $a$.
+The estimation of the parametric g-formula has two steps.
 
-**Causal risk** at time $t$: $\Pr[T^a \leq t] = 1 - S^a(t)$
-:::
+**Step 1**: Fit a parametric hazards model including the variables in $L$ as covariates:
 
-### IP Weighted Kaplan-Meier
+$$\text{logit}\,\Pr[D_{k+1} = 1 \mid D_k = 0, L, A] = \theta_{0,k} + \theta_1 A + \theta_2 A \times k + \theta_3 A \times k^2 + \boldsymbol{\theta}_L^\top L$$
 
-**Goal**: Estimate $S^a(t)$ adjusting for confounding.
+If the model is correctly specified, it validly estimates the time-varying hazards $\Pr[D_{k+1} = 1 \mid D_k = 0, L, A]$ within levels of treatment $A$ and covariates $L$. The product of one minus the conditional hazards:
 
-**Method**: IP weighted Kaplan-Meier estimator
+$$\prod_{m=0}^k \Pr[D_{m+1} = 0 \mid D_m = 0, L = l, A = a]$$
 
-1. Compute IP weights for treatment: $W^A = \frac{1}{\Pr[A \mid L]}$
-2. Apply weighted Kaplan-Meier:
+is equal to the conditional survival $\Pr[D_{k+1} = 0 \mid L = l, A = a]$.
 
-$$\hat{S}^a(t) = \prod_{t_i \leq t} \left(1 - \frac{\sum_{j: A_j = a} W_j^A I(Y_j = t_i, D_j = 1)}{\sum_{j: A_j = a} W_j^A I(Y_j \geq t_i)}\right)$$
-
-**Result**: Estimate of causal survival curve under treatment $a$.
-
-### Handling Censoring
-
-**Joint weights** for treatment and censoring:
-
-$$W^{A,C}_i = \frac{1}{\Pr[A_i \mid L_i]} \times \frac{1}{\Pr[C_i > t \mid A_i, L_i, \bar{Y}_i(t)]}$$
-
-where $\bar{Y}_i(t)$ represents the history of being at risk up to time $t$.
-
-**Stabilized weights** can improve stability:
-
-$$SW^{A,C} = \frac{\Pr[A]}{\Pr[A \mid L]} \times \frac{\Pr[C > t \mid A]}{\Pr[C > t \mid A, L, \bar{Y}(t)]}$$
+**Step 2**: Compute the weighted average of the conditional survival across all values $l$ of the covariates $L$—that is, standardize the survival to the confounder distribution—using the method described in Section 13.3.
 
 ::: {.notes}
-**Time-dependent weights**: Censoring weights can change over time if censoring depends on time-varying covariates or outcome history.
+In our example, the survival curve under treatment was lower than the curve under no treatment during the entire follow-up, but the maximum difference never exceeded −2.0% (95% confidence interval from −5.6% to 1.8%). The 120-month survival estimates were 80.4% under smoking cessation and 80.6% under no smoking cessation; difference 0.2% (95% confidence interval from −4.6% to 4.1%). That is, after adjustment for the covariates $L$ via standardization, we found little evidence of an effect of smoking cessation on mortality at any time during the follow-up.
 
-**Estimation**: 
-
-1. Model $\Pr[C > t \mid A, L, \bar{Y}(t)]$ using pooled logistic regression
-2. For each individual at each time, compute censoring probability
-3. Create weights as product of treatment weights and censoring weights
-4. Apply weighted Kaplan-Meier
-
-This is implemented in various R packages (e.g., `ipw`, `WeightIt`).
+Note that the survival curves estimated via IP weighting (previous section) and the parametric g-formula (this section) are similar but not identical because they rely on different parametric assumptions: the IP weighted estimates require no misspecification of a model for treatment and a model for the unconditional hazards; the parametric g-formula estimates require no misspecification of a model for the conditional hazards.
 :::
 
-## 17.6 The Parametric G-Formula for Survival Data (pp. 260-262)
+## 17.6 G-Estimation of Structural Nested Models
 
 ---
 
-The **parametric g-formula** can also be used for survival outcomes.
+The previous sections describe causal contrasts that compare survivals, or risks, under different levels of treatment $A$. The survival was computed from hazards estimated by logistic regression models. This approach is feasible when the analytic method is IP weighting of marginal structural models or the parametric g-formula, but not when the method is g-estimation of structural nested models.
 
-### Discrete-Time Approach
+As explained in Chapter 14, structural nested models are models for **conditional causal contrasts** (e.g., the difference or ratio of covariate-specific means under different treatment levels), not for the components of those contrasts. Therefore we cannot estimate survivals or hazards using a structural nested model.
 
-**Model**: Hazard at each time point $t$
+### Structural Nested AFT Models
 
-$$\Pr[T = t \mid T \geq t, A, L] = \text{expit}(\alpha_0(t) + \alpha_1 A + \alpha_2^{\top} L)$$
+We can, however, model the ratio of survival times under different treatment levels. Let $T^a_i$ be the counterfactual time of survival for individual $i$ under treatment level $a$. Suppose the effect of treatment is the same for every individual. We can then consider the **structural nested accelerated failure time (AFT) model**:
 
-This can be fit using **pooled logistic regression**:
+$$T^a_i / T^{a=0}_i = \exp(-\psi_1 a)$$
 
-- Create one record per person per time period
-- Include time as a predictor (e.g., dummy variables for each $t$)
-- Fit logistic regression
+where $\psi_1$ measures the expansion (or contraction) of each individual's survival time attributable to treatment:
 
-**G-formula algorithm**:
+- $\psi_1 < 0$: treatment increases survival time
+- $\psi_1 > 0$: treatment decreases survival time
+- $\psi_1 = 0$: treatment does not affect survival time
 
-1. Fit pooled logistic model for $\Pr[T = t \mid T \geq t, A, L]$
-2. For each individual $i$ and each time $t$:
-   - Predict $\hat{p}_{it}^a = \Pr[T = t \mid T \geq t, A = a, L_i]$
-3. Compute survival probabilities:
-   - $\hat{S}_i^a(t) = \prod_{s=1}^t (1 - \hat{p}_{is}^a)$
-4. Average over individuals:
-   - $\hat{S}^a(t) = \frac{1}{n} \sum_{i=1}^n \hat{S}_i^a(t)$
+More generally, the effect of treatment may depend on covariates $L$ so a more general structural AFT would be $T^a_i / T^{a=0}_i = \exp(-\psi_1 a - \psi_2 a L_i)$. Rearranging, the model can be written as:
 
-### Continuous-Time Approach
+$$T^{a=0}_i = T^a_i \exp(\psi_1 a + \psi_2 a L_i) \quad \text{for all individuals } i$$
 
-For continuous time, use **parametric survival models**:
+### Selection Bias from Administrative Censoring
 
-- Weibull, exponential, log-normal, etc.
-- Specify hazard function with parameters depending on $A, L$
-- Predict survival curves for each individual under each treatment
-- Average to get causal survival curves
+Consider a 60-month randomized experiment. Table 17.1 shows the survival time under treatment and under no treatment for three types of individuals:
 
-::: {.notes}
-**Pooled logistic regression**:
+| Type | $T^{a=0}$ | $T^{a=1}$ |
+|------|-----------|-----------|
+| 1 | 36 | 24 |
+| 2 | 72 | 48 |
+| 3 | 108 | 72 |
 
-Approximates the continuous-time hazard when time intervals are small. As intervals $\to 0$, converges to Cox model.
+Because the administrative end of follow-up is $K = 60$ months, the death of type 1 individuals will be observed whether they are randomly assigned to $A = 1$ or $A = 0$ (both survival times are less than 60), and the death of type 3 individuals will be administratively censored whether they are randomly assigned to $A = 1$ or $A = 0$ (both survival times are greater than 60). The death of type 2 individuals, however, will only be observed if they are assigned to $A = 1$.
 
-**Advantages over IP weighting**:
-
-- May be more efficient when outcome model is correct
-- Easier to incorporate time-varying covariates
-- Natural for discrete-time data
-
-**Disadvantages**:
-
-- Requires correct specification of outcome model
-- More complex with time-varying treatments
-:::
-
-## 17.7 Competing Risks (pp. 262-264)
-
----
-
-**Competing risks** occur when multiple types of events can prevent observation of the event of interest.
-
-### Definition
-
-::: {#def-competing-risks}
-## Competing Risks
-
-A **competing risk** is an event that precludes the occurrence of the event of interest.
-
-**Example**: When studying heart attack incidence, death from cancer is a competing risk.
-
-If someone dies from cancer, they can never have a heart attack (or at least we can't observe it).
-:::
-
-### Challenges
-
-**Censoring is not independent**: Individuals who experience competing events may have different risk of the event of interest.
-
-**Standard survival methods fail**: Treating competing events as censoring leads to biased estimates.
-
-### Approaches
-
-**1. Cause-specific hazards**:
-
-- Model hazard for each type of event separately
-- Use cause-specific Cox models
-- Provides hazard ratios, not easily interpretable as causal effects
-
-**2. Subdistribution hazards** (Fine-Gray model):
-
-- Models cumulative incidence function directly
-- Individuals with competing events remain in risk set
-- More interpretable but still has issues
-
-**3. Parametric g-formula**:
-
-- Model all event types jointly
-- Simulate outcomes under each treatment
-- Compute cumulative incidence of each event type
-- **Recommended for causal inference**
+Hence an analysis that is restricted to individuals with non-administratively censored death times will have an imbalance of individual types between the treated and the untreated. Exchangeability will be broken because the $A = 1$ group will include type 1 and type 2 individuals, whereas the $A = 0$ group will include type 1 individuals only. Individuals in the $A = 0$ group will have, on average, a worse prognosis than those in the $A = 1$ group, which will make treatment look better than it really is. This selection bias arises when treatment has a non-null effect on survival time.
 
 ::: {.notes}
-**Why g-formula for competing risks**:
+The g-estimation procedure for the AFT model must account for administrative censoring to avoid this selection bias. The key insight is that we need to create "artificially censored" versions of the observed survival times to construct an unbiased estimating equation. See Technical Point 17.3 for details.
 
-The g-formula naturally handles competing risks by modeling the joint distribution of all outcomes. Under an intervention to set $A = a$:
-
-1. Predict which event type each person would experience first
-2. Compute the proportion experiencing each event type by time $t$
-3. These are the causal cumulative incidence functions
-
-**Practical implementation**:
-
-- Use multinomial logistic regression for multiple event types
-- Or separate models for each event type with appropriate risk sets
-- Simulate individual trajectories under each treatment
-- Summarize to get causal curves
+The structural AFT model as written is both deterministic and rank-preserving. It is **deterministic** because it assumes that for each individual, the counterfactual survival time under no treatment $T^{a=0}$ can be computed without error. It is **rank-preserving** because if individual $i$ would die before individual $j$ had they both been untreated, then individual $i$ would also die before individual $j$ had they both been treated. Because of the implausibility of rank preservation, one should not generally use methods for causal inference that rely on it.
 :::
 
 ## Summary
 
 ---
 
-**Key concepts**:
+**Key concepts from this chapter**:
 
-1. **Survival analysis**: Study of time-to-event outcomes with censoring
-2. **Hazard vs risk**: Instantaneous rate vs cumulative probability
-3. **Censoring**: Missing data problem requiring careful assumptions
-4. **Causal survival curves**: $S^a(t) = \Pr[T^a > t]$ under treatment $a$
-5. **IP weighted Kaplan-Meier**: Adjusts for confounding via weighting
-6. **Parametric g-formula**: Models hazards, predicts survival curves, averages
-7. **Competing risks**: Multiple event types that preclude each other
+1. **Survival analysis**: Methods for time-to-event outcomes that accommodate administrative censoring
+2. **Survival, risk, and hazard**: Related but distinct measures; $\Pr[D_k = 0] = \prod_{m=1}^k \Pr[D_m = 0 \mid D_{m-1} = 0]$
+3. **Person-time data format**: Enables parametric modeling of time-varying hazards via logistic regression
+4. **Why censoring matters**: Staggered entry creates individual-specific censoring times; naive estimation is biased
+5. **Counterfactual survivals**: The target is $\Pr[D^a_{k+1} = 0]$ under treatment $a$ and no censoring
+6. **IP weighting of marginal structural models**: Estimates causal survival curves by weighting by $SW^A$
+7. **Parametric g-formula**: Standardizes conditional survivals to the covariate distribution
+8. **G-estimation of structural nested AFT models**: Models the ratio of survival times; requires artificial censoring to handle administrative censoring
 
-**Methods for causal survival analysis**:
+**Causal estimands for survival outcomes**:
 
-| Method | Approach | Advantages | Disadvantages |
-|--------|----------|------------|---------------|
-| **IP weighted KM** | Weight observations | Nonparametric, robust | Needs correct treatment/censoring models |
-| **Parametric g-formula** | Model hazards | Efficient, handles competing risks | Needs correct outcome model |
-| **Cox model** | Model conditional hazard | Familiar, flexible | HR not causally interpretable |
+- **Causal survival difference**: $\Pr[D^{a=1}_{k} = 0] - \Pr[D^{a=0}_{k} = 0]$
+- **Causal risk difference**: $\Pr[D^{a=1}_{k} = 1] - \Pr[D^{a=0}_{k} = 1]$
 
-**Causal estimands**:
+**NHEFS smoking cessation example** (120-month results):
 
-- **Causal risk difference**: $\Pr[T^{a=1} \leq t] - \Pr[T^{a=0} \leq t]$
-- **Causal risk ratio**: $\frac{\Pr[T^{a=1} \leq t]}{\Pr[T^{a=0} \leq t]}$
-- **Causal survival ratio**: $\frac{S^{a=1}(t)}{S^{a=0}(t)}$
+- Unadjusted: 76.2% survival among quitters vs. 82.0% among non-quitters (confounded)
+- IP weighting: 80.7% under cessation vs. 80.5% under continued smoking; difference 0.2%
+- Parametric g-formula: 80.4% under cessation vs. 80.6% under continued smoking; difference −0.2%
 
-**NOT generally causal**:
+Both adjusted methods found little evidence of an effect of smoking cessation on mortality.
 
-- Hazard ratio from Cox model with covariates (non-collapsible, built-in selection)
+**Why not just use hazard ratios?** (Fine Point 17.2):
 
-**Assumptions**:
-
-1. **Conditional exchangeability**: $T^a \perp\!\!\!\perp A \mid L$
-2. **Independent censoring**: $T \perp\!\!\!\perp C \mid A, L$
-3. **Positivity**: $\Pr[A = a \mid L] > 0$ and $\Pr[C > t \mid A, L] > 0$
-4. **Correct models**: Treatment, censoring, and/or outcome models
-
-**Practical recommendations**:
-
-1. **Focus on risks**, not hazards, for causal inference
-2. **Adjust for confounding** using IP weighting or g-formula
-3. **Handle censoring** via IP weighting or modeling
-4. **Use g-formula for competing risks**
-5. **Check assumptions**, especially independent censoring
-6. **Report survival curves**, not just summary measures
+- Hazard ratios vary over time; a "single" hazard ratio from Cox regression is a weighted average
+- Even time-specific hazard ratios have built-in selection bias (conditioning on survival is conditioning on a collider)
+- Risk and survival differences/ratios are better-defined causal estimands
 
 ::: {.notes}
-**Common mistakes**:
+**Common mistakes in survival analysis**:
 
-1. Interpreting adjusted hazard ratios as causal effects
-2. Treating competing events as independent censoring
-3. Ignoring time-varying confounding (see Part III)
-4. Using methods that assume independent censoring when it's violated
+1. Reporting only a single (time-averaged) hazard ratio from a Cox model and interpreting it causally
+2. Treating competing events as independent censoring (see Fine Point 17.1)
+3. Ignoring time-varying confounding (addressed in Part III)
+4. Restricting the analysis to uncensored individuals when estimating AFT models, which introduces selection bias
 
-**Looking ahead**: Part III extends these ideas to time-varying treatments, where survival analysis becomes even more complex but the g-formula and IP weighting remain powerful tools.
+**Looking ahead**: Part III extends these ideas to time-varying treatments, where survival analysis becomes even more complex. The g-formula and IP weighting remain powerful tools, but they must account for the time-varying nature of both treatment and confounders.
+:::
+
+## References
+
+---
+
+::: {#refs}
 :::
