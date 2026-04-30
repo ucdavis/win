@@ -66,6 +66,91 @@ website:
           - text: "Chapter 18: Variable Selection for Causal Inference"
             href: chapters/18-variable-selection-causal-inference.qmd
 
+callouty-theorem:
+  thm:
+    override-title: false
+    callout:
+      type: lem  # same color as lem (royal blue)
+      appearance: minimal
+  lem:
+    override-title: false
+    callout:
+      type: lem
+      appearance: minimal
+  cor:
+    override-title: false
+    callout:
+      type: cor
+      appearance: minimal
+  prp:
+    override-title: false
+    callout:
+      type: prp
+      appearance: minimal
+  cnj:
+    override-title: false
+    callout:
+      type: cnj
+      appearance: minimal
+  def:
+    override-title: false
+    callout:
+      type: def
+      appearance: minimal
+  exm:
+    override-title: false
+    callout:
+      type: exm
+      appearance: minimal
+  exr:
+    override-title: false
+    callout:
+      type: exr
+      appearance: minimal
+  proof:
+    override-title: true
+    callout:
+      type: proof
+      appearance: default
+      collapse: true
+      icon: true
+  solution:
+    override-title: true
+    callout:
+      type: solution
+      appearance: default
+      collapse: true
+      icon: false
+  remark:
+    override-title: true
+    callout:
+      type: remark
+      appearance: default
+      collapse: false
+      icon: true
+
+custom-callout:
+  lem:
+    color: "#1565C0"  # royal blue (also used for thm)
+  cor:
+    color: "#00838F"  # dark cyan
+  prp:
+    color: "#827717"  # dark olive
+  cnj:
+    color: "#558B2F"  # grass green
+  def:
+    color: "#1B5E20"  # forest green
+  exm:
+    color: "#6A1B9A"  # deep purple
+  exr:
+    color: "#FFA500"  # orange
+  proof:
+    color: "#37474F"  # blue-grey slate
+  solution:
+    color: "#4E342E"  # dark cocoa
+  remark:
+    color: "#AD1457"  # dark magenta
+
 format:
   html:
     theme:
@@ -91,6 +176,8 @@ format:
     date-format: "[Last modified:] YYYY-MM-DD HH:mm:ss (z)"
     filters:
       - _extensions/preview-highlight.lua
+      - sun123zxy/callouty-theorem
+      - coatless-quarto/custom-callout
   revealjs:
     theme: simple
     slide-number: true
@@ -134,6 +221,9 @@ format:
     colorlinks: true
     number-sections: true
     number-depth: 3
+    filters:
+      - sun123zxy/callouty-theorem
+      - coatless-quarto/custom-callout
   docx:
     toc: true
     toc-depth: 3
@@ -141,6 +231,9 @@ format:
     number-depth: 3
     df-print: tibble
     prefer-html: true
+    filters:
+      - sun123zxy/callouty-theorem
+      - coatless-quarto/custom-callout
 
 execute:
   warning: false
