@@ -53,7 +53,7 @@ $$\Pr[T = k \mid T > k - 1]$$
 Technically, this is the discrete-time hazard, i.e., the hazard in a study in which time is measured in discrete intervals, as opposed to measured continuously. Because in real-world studies time is indeed measured in discrete intervals (years, months, weeks, days…) rather than in a truly continuous fashion, we will refer to the discrete-time hazard as, simply, the hazard.
 
 ::: {.notes}
-In our example, if we assume (provisionally) that quitters ($A = 1$) and non-quitters ($A = 0$) are marginally exchangeable, the survival curves at 120 months were 76.2% among quitters and 82.0% among non-quitters. Equivalently, the 120-month risk was 23.8% among quitters and 18.0% among non-quitters.
+In our example, if we assume (provisionally—until Section 17.4—that quitters ($A = 1$) and non-quitters ($A = 0$) are marginally exchangeable, the unadjusted survival curves at 120 months were 76.2% among quitters and 82.0% among non-quitters. Equivalently, the 120-month risk was 23.8% among quitters and 18.0% among non-quitters. These figures are unadjusted for confounding and thus do not have a causal interpretation; see Section 17.4 for the adjusted estimates.
 
 The hazard at 120 months was 0% among quitters (because the last death happened at 113 months in this group) and 1/986 = 0.10% among non-quitters, and the hazard curves between 0 and 120 months had roughly the shape of a letter M.
 :::
@@ -292,7 +292,7 @@ $$T^{a=0}_i = T^a_i \exp(\psi_1 a + \psi_2 a L_i) \quad \text{for all individual
 
 ### Selection Bias from Administrative Censoring
 
-Consider a 60-month randomized experiment. Table 17.1 shows the survival time under treatment and under no treatment for three types of individuals:
+Consider a 60-month randomized experiment. @tbl-aft-example shows the survival time under treatment and under no treatment for three types of individuals:
 
 | Type | $T^{a=0}$ | $T^{a=1}$ |
 |------|-----------|-----------|
@@ -300,7 +300,9 @@ Consider a 60-month randomized experiment. Table 17.1 shows the survival time un
 | 2 | 72 | 48 |
 | 3 | 108 | 72 |
 
-Because the administrative end of follow-up is $K = 60$ months, the death of type 1 individuals will be observed whether they are randomly assigned to $A = 1$ or $A = 0$ (both survival times are less than 60), and the death of type 3 individuals will be administratively censored whether they are randomly assigned to $A = 1$ or $A = 0$ (both survival times are greater than 60). The death of type 2 individuals, however, will only be observed if they are assigned to $A = 1$.
+: Survival times under treatment and no treatment for each individual type in a 60-month experiment. {#tbl-aft-example}
+
+Because the administrative end of follow-up is $K = 60$ months, the death of type 1 individuals will be observed whether they are randomly assigned to $A = 1$ or $A = 0$ (both survival times are less than 60), and the death of type 3 individuals will be administratively censored whether they are randomly assigned to $A = 1$ or $A = 0$ (both survival times are greater than 60). The death of type 2 individuals, however, will only be observed if they are assigned to $A = 1$ (see @tbl-aft-example).
 
 Hence an analysis that is restricted to individuals with non-administratively censored death times will have an imbalance of individual types between the treated and the untreated. Exchangeability will be broken because the $A = 1$ group will include type 1 and type 2 individuals, whereas the $A = 0$ group will include type 1 individuals only. Individuals in the $A = 0$ group will have, on average, a worse prognosis than those in the $A = 1$ group, which will make treatment look better than it really is. This selection bias arises when treatment has a non-null effect on survival time.
 
