@@ -130,6 +130,108 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<style>
+div.callout-proof.callout {
+  border-left-color: #37474F;
+}
+div.callout-proof.callout-style-default .callout-header {
+  background-color: rgba(55, 71, 79, 0.13);
+}
+div.callout-proof .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-cor.callout {
+  border-left-color: #00838F;
+}
+div.callout-cor.callout-style-default .callout-header {
+  background-color: rgba(0, 131, 143, 0.13);
+}
+div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-remark.callout {
+  border-left-color: #AD1457;
+}
+div.callout-remark.callout-style-default .callout-header {
+  background-color: rgba(173, 20, 87, 0.13);
+}
+div.callout-remark .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-remark.callout-style-default .callout-icon::before, div.callout-remark.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-prp.callout {
+  border-left-color: #827717;
+}
+div.callout-prp.callout-style-default .callout-header {
+  background-color: rgba(130, 119, 23, 0.13);
+}
+div.callout-prp .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-prp.callout-style-default .callout-icon::before, div.callout-prp.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-exr.callout {
+  border-left-color: #FFA500;
+}
+div.callout-exr.callout-style-default .callout-header {
+  background-color: rgba(255, 165, 0, 0.13);
+}
+div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-def.callout {
+  border-left-color: #1B5E20;
+}
+div.callout-def.callout-style-default .callout-header {
+  background-color: rgba(27, 94, 32, 0.13);
+}
+div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-lem.callout {
+  border-left-color: #1565C0;
+}
+div.callout-lem.callout-style-default .callout-header {
+  background-color: rgba(21, 101, 192, 0.13);
+}
+div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-solution.callout {
+  border-left-color: #4E342E;
+}
+div.callout-solution.callout-style-default .callout-header {
+  background-color: rgba(78, 52, 46, 0.13);
+}
+div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-cnj.callout {
+  border-left-color: #558B2F;
+}
+div.callout-cnj.callout-style-default .callout-header {
+  background-color: rgba(85, 139, 47, 0.13);
+}
+div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-exm.callout {
+  border-left-color: #6A1B9A;
+}
+div.callout-exm.callout-style-default .callout-header {
+  background-color: rgba(106, 27, 154, 0.13);
+}
+div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -504,7 +606,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last modified: 2026-04-29 00:05:30 (UTC)</p>
+      <p class="date">Last modified: 2026-04-30 05:58:49 (UTC)</p>
     </div>
   </div>
   
@@ -526,8 +628,17 @@ window.Quarto = {
 <hr>
 <p>In an observational study, treatment is not randomly assigned by the investigator. Instead, individuals receive treatment based on their characteristics, preferences, physician recommendations, or other factors. As a result, treated and untreated individuals may differ systematically in ways that affect the outcome.</p>
 <p>Can we still estimate causal effects from observational data? The answer is yes—but only under certain conditions called <strong>identifiability conditions</strong>.</p>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-identifiability" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Identifiability)</strong></span> A causal quantity (such as the average treatment effect) is <strong>identifiable</strong> if it can be computed from the observed data distribution under a given set of assumptions.</p>
+</div>
+</div>
+</div>
 </div>
 <p>Three key identifiability conditions are required for causal inference from observational data:</p>
 <ol type="1">
@@ -562,10 +673,19 @@ window.Quarto = {
 <h2 data-number="2" class="anchored" data-anchor-id="exchangeability-pp.-27-29"><span class="header-section-number">2</span> 3.2 Exchangeability (pp.&nbsp;27-29)</h2>
 <hr>
 <p>The most critical identifiability condition is <strong>exchangeability</strong>. Informally, exchangeability means that the treated and untreated are comparable with respect to their potential outcomes.</p>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-exchangeability-conditional" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2 (Conditional Exchangeability)</strong></span> The treated and untreated are <strong>exchangeable</strong> conditional on covariates <span class="math inline">\(L\)</span> when:</p>
 <p><span class="math display">\[Y^a \perp\!\!\!\perp A \mid L \quad \text{for all } a\]</span></p>
 <p>This means the potential outcome <span class="math inline">\(Y^a\)</span> is independent of treatment <span class="math inline">\(A\)</span> within levels of <span class="math inline">\(L\)</span>.</p>
+</div>
+</div>
+</div>
 </div>
 <p>Under conditional exchangeability:</p>
 <p><span class="math display">\[Pr[Y^a = 1 | A = 1, L] = Pr[Y^a = 1 | A = 0, L] = Pr[Y^a = 1 | L]\]</span></p>
@@ -578,10 +698,19 @@ window.Quarto = {
 <section id="exchangeability-and-confounding" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="exchangeability-and-confounding"><span class="header-section-number">2.1</span> Exchangeability and Confounding</h3>
 <p><strong>Confounding</strong> is the absence of exchangeability. When exchangeability fails, comparing treated and untreated groups yields a biased estimate of the causal effect.</p>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-confounding" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Confounding Example)</strong></span> Suppose we want to estimate the causal effect of smoking on lung cancer using observational data. If smokers differ from non-smokers in other ways that affect lung cancer risk (e.g., occupational exposures, genetic factors), then:</p>
 <p><span class="math display">\[Pr[Y^{a=1} = 1 | A = 1] \neq Pr[Y^{a=1} = 1 | A = 0]\]</span></p>
 <p>The potential outcome under smoking is not independent of actual smoking status. The treated (smokers) are not exchangeable with the untreated (non-smokers).</p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="achieving-conditional-exchangeability" class="level3" data-number="2.2">
@@ -611,18 +740,36 @@ window.Quarto = {
 <h2 data-number="3" class="anchored" data-anchor-id="positivity-pp.-29-30"><span class="header-section-number">3</span> 3.3 Positivity (pp.&nbsp;29-30)</h2>
 <hr>
 <p>The second identifiability condition is <strong>positivity</strong>, also called the experimental treatment assignment assumption.</p>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-positivity" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3 (Positivity)</strong></span> <strong>Positivity</strong> requires that, for every combination of values of <span class="math inline">\(L\)</span> for which <span class="math inline">\(Pr[L] &gt; 0\)</span>:</p>
 <p><span class="math display">\[Pr[A = a | L] &gt; 0 \quad \text{for all } a\]</span></p>
 <p>In words: every individual has a non-zero probability of receiving every level of treatment, conditional on their measured covariates.</p>
 </div>
+</div>
+</div>
+</div>
 <section id="why-positivity-matters" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="why-positivity-matters"><span class="header-section-number">3.1</span> Why Positivity Matters</h3>
 <p>Without positivity, we cannot estimate causal effects for all individuals. If certain individuals (with specific values of <span class="math inline">\(L\)</span>) have zero probability of receiving treatment, we cannot learn about their counterfactual outcome under treatment from the data.</p>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-positivity-violation" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Positivity Violation Example)</strong></span> Suppose we want to estimate the effect of a treatment on 90-year-old individuals, but in our data, no 90-year-old person received the treatment. Then:</p>
 <p><span class="math display">\[Pr[A = 1 | \text{Age} = 90] = 0\]</span></p>
 <p>We cannot estimate <span class="math inline">\(E[Y^{a=1} | \text{Age} = 90]\)</span> from the data because we have no treated 90-year-olds to observe.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="notes">
 <p><strong>Positivity violations</strong> can occur due to:</p>
@@ -645,14 +792,29 @@ window.Quarto = {
 <h2 data-number="4" class="anchored" data-anchor-id="consistency-first-define-the-counterfactual-outcome-pp.-30-32"><span class="header-section-number">4</span> 3.4 Consistency: First, Define the Counterfactual Outcome (pp.&nbsp;30-32)</h2>
 <hr>
 <p>The third identifiability condition is <strong>consistency</strong>. Unlike exchangeability and positivity, consistency is not about the relationship between treatment and outcome. Instead, it concerns the definition of the counterfactual outcome itself.</p>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-consistency" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4 (Consistency)</strong></span> The <strong>consistency assumption</strong> states that:</p>
 <p><span class="math display">\[Y = Y^A\]</span></p>
 <p>In words: the observed outcome <span class="math inline">\(Y\)</span> for an individual equals their counterfactual outcome <span class="math inline">\(Y^a\)</span> under the treatment level <span class="math inline">\(a\)</span> that they actually received.</p>
 </div>
+</div>
+</div>
+</div>
 <section id="well-defined-interventions" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="well-defined-interventions"><span class="header-section-number">4.1</span> Well-Defined Interventions</h3>
 <p>For consistency to hold, the treatment must be <strong>well-defined</strong>. This means we must be able to precisely specify what it means to receive treatment level <span class="math inline">\(a\)</span>.</p>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-ill-defined-treatment" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3 (Ill-Defined Treatment Example)</strong></span> Consider “exercise” as a treatment. What does <span class="math inline">\(A = 1\)</span> (receives exercise) mean?</p>
 <ul>
@@ -662,6 +824,9 @@ window.Quarto = {
 <li>Weight training?</li>
 </ul>
 <p>If different individuals in the <span class="math inline">\(A = 1\)</span> group received different forms of exercise, then <span class="math inline">\(Y^{a=1}\)</span> is not well-defined. The potential outcome under “exercise” depends on which specific form of exercise.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="notes">
 <p>When treatment is not well-defined, we have <strong>treatment variation irrelevance</strong>. Different versions of “treatment” may have different effects on the outcome. In this case:</p>
@@ -681,10 +846,19 @@ window.Quarto = {
 <p><strong>Interference</strong> occurs when one individual’s treatment affects another individual’s outcome. For consistency to hold, we need:</p>
 <p><span class="math display">\[Y_i = Y_i^{A_i}\]</span></p>
 <p>The outcome for individual <span class="math inline">\(i\)</span> depends only on individual <span class="math inline">\(i\)</span>’s treatment, not on other individuals’ treatments.</p>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-interference" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4 (Interference Example)</strong></span> Consider a vaccine study. If vaccinating person A reduces person B’s risk of disease (through herd immunity), then:</p>
 <p><span class="math display">\[Y_B \neq Y_B^{A_B}\]</span></p>
 <p>Person B’s outcome depends not just on <span class="math inline">\(A_B\)</span> (whether B was vaccinated), but also on <span class="math inline">\(A_A\)</span> and the vaccination status of others in the population.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="notes">
 <p>When interference exists, the full counterfactual notation must specify everyone’s treatment:</p>
@@ -718,6 +892,12 @@ window.Quarto = {
 <h2 data-number="6" class="anchored" data-anchor-id="the-target-trial-pp.-34-36"><span class="header-section-number">6</span> 3.6 The Target Trial (pp.&nbsp;34-36)</h2>
 <hr>
 <p>A useful framework for thinking about identifiability conditions in observational studies is the <strong>target trial</strong>.</p>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-target-trial" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 5 (Target Trial)</strong></span> The <strong>target trial</strong> is the (hypothetical) randomized experiment we would conduct if we could. By specifying the target trial, we clarify:</p>
 <ol type="1">
@@ -727,6 +907,9 @@ window.Quarto = {
 <li>The eligibility criteria</li>
 <li>The estimand (parameter to be estimated)</li>
 </ol>
+</div>
+</div>
+</div>
 </div>
 <section id="emulating-the-target-trial" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="emulating-the-target-trial"><span class="header-section-number">6.1</span> Emulating the Target Trial</h3>
@@ -749,6 +932,12 @@ window.Quarto = {
 </section>
 <section id="example-target-trial-for-statins-and-cardiovascular-disease" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="example-target-trial-for-statins-and-cardiovascular-disease"><span class="header-section-number">6.2</span> Example: Target Trial for Statins and Cardiovascular Disease</h3>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-target-trial" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5 (Target Trial Example)</strong></span> <strong>Research question</strong>: Does taking statins reduce the risk of cardiovascular disease (CVD)?</p>
 <p><strong>Target trial specification</strong>:</p>
@@ -766,6 +955,9 @@ window.Quarto = {
 <li>Adjust for baseline confounders <span class="math inline">\(L\)</span> (age, sex, blood pressure, smoking, etc.)</li>
 <li>Follow individuals for 5 years, censoring if they move or die from non-CVD causes</li>
 </ul>
+</div>
+</div>
+</div>
 </div>
 <div class="notes">
 <p>In this example, the key challenges are:</p>

@@ -128,7 +128,109 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script><link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><style>
+div.callout-solution.callout {
+  border-left-color: #4E342E;
+}
+div.callout-solution.callout-style-default .callout-header {
+  background-color: rgba(78, 52, 46, 0.13);
+}
+div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-lem.callout {
+  border-left-color: #1565C0;
+}
+div.callout-lem.callout-style-default .callout-header {
+  background-color: rgba(21, 101, 192, 0.13);
+}
+div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-def.callout {
+  border-left-color: #1B5E20;
+}
+div.callout-def.callout-style-default .callout-header {
+  background-color: rgba(27, 94, 32, 0.13);
+}
+div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-prp.callout {
+  border-left-color: #827717;
+}
+div.callout-prp.callout-style-default .callout-header {
+  background-color: rgba(130, 119, 23, 0.13);
+}
+div.callout-prp .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-prp.callout-style-default .callout-icon::before, div.callout-prp.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-proof.callout {
+  border-left-color: #37474F;
+}
+div.callout-proof.callout-style-default .callout-header {
+  background-color: rgba(55, 71, 79, 0.13);
+}
+div.callout-proof .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-exm.callout {
+  border-left-color: #6A1B9A;
+}
+div.callout-exm.callout-style-default .callout-header {
+  background-color: rgba(106, 27, 154, 0.13);
+}
+div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-exr.callout {
+  border-left-color: #FFA500;
+}
+div.callout-exr.callout-style-default .callout-header {
+  background-color: rgba(255, 165, 0, 0.13);
+}
+div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-cnj.callout {
+  border-left-color: #558B2F;
+}
+div.callout-cnj.callout-style-default .callout-header {
+  background-color: rgba(85, 139, 47, 0.13);
+}
+div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-cor.callout {
+  border-left-color: #00838F;
+}
+div.callout-cor.callout-style-default .callout-header {
+  background-color: rgba(0, 131, 143, 0.13);
+}
+div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-remark.callout {
+  border-left-color: #AD1457;
+}
+div.callout-remark.callout-style-default .callout-header {
+  background-color: rgba(173, 20, 87, 0.13);
+}
+div.callout-remark .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-remark.callout-style-default .callout-icon::before, div.callout-remark.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -503,7 +605,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last modified: 2026-04-29 00:05:30 (UTC)</p>
+      <p class="date">Last modified: 2026-04-30 05:58:49 (UTC)</p>
     </div>
   </div>
   
@@ -526,10 +628,19 @@ window.Quarto = {
 </li>
 <li>There are <strong>no cycles</strong>: following the arrows, you can never return to a starting node</li>
 </ul>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-dag" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Directed Acyclic Graph (DAG))</strong></span> A <strong>directed acyclic graph (DAG)</strong> used as a causal diagram represents a <strong>non-parametric structural equation model (NPSEM)</strong>. For each variable <span class="math inline">\(V_k\)</span> with parents <span class="math inline">\(\mathrm{pa}(V_k)\)</span> in the graph, there is a structural equation:</p>
 <p><span class="math display">\[V_k = f_k\bigl(\mathrm{pa}(V_k),\, U_k\bigr)\]</span></p>
 <p>where <span class="math inline">\(U_k\)</span> is an <strong>unmeasured background variable</strong> (exogenous variable) that represents all causes of <span class="math inline">\(V_k\)</span> not otherwise shown in the graph.</p>
+</div>
+</div>
+</div>
 </div>
 <section id="the-main-example" class="level3" data-number="1.1"><h3 data-number="1.1" class="anchored" data-anchor-id="the-main-example">
 <span class="header-section-number">1.1</span> The Main Example</h3>
@@ -586,6 +697,12 @@ window.Quarto = {
 <li>A path is <strong>open</strong> if it contains no collider (all intermediate nodes are non-colliders)</li>
 </ul>
 <p>Two variables are <strong>marginally associated</strong> if and only if there is at least one open path between them.</p>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-marginal-independence" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Marginal Independence: Key Examples)</strong></span> <strong>Example 1</strong>: <span class="math inline">\(A \rightarrow Y\)</span></p>
 <ul>
@@ -611,6 +728,9 @@ window.Quarto = {
 <li>
 <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> marginally</li>
 </ul>
+</div>
+</div>
+</div>
 </div>
 <div class="notes">
 <p><strong>d-separation:</strong></p>
@@ -658,6 +778,12 @@ window.Quarto = {
 </section></section><section id="collider-stratification-bias" class="level3" data-number="3.2"><h3 data-number="3.2" class="anchored" data-anchor-id="collider-stratification-bias">
 <span class="header-section-number">3.2</span> Collider Stratification Bias</h3>
 <p>Collider stratification bias is a <strong>subtle and important</strong> source of spurious association that arises from conditioning on a common effect of two variables.</p>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-collider-bias" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Collider Stratification Bias: Aspirin, Smoking, and Hospitalization)</strong></span> Consider two variables that are <strong>independent</strong> in the general population:</p>
 <ul>
@@ -671,6 +797,9 @@ window.Quarto = {
 <p><strong>In the general population</strong>: aspirin use <span class="math inline">\(A\)</span> and smoking <span class="math inline">\(B\)</span> are independent — knowing someone uses aspirin tells you nothing about whether they smoke.</p>
 <p><strong>Among hospitalized patients (<span class="math inline">\(C = 1\)</span>)</strong>: aspirin use and smoking become <strong>negatively associated</strong>. If a hospitalized patient does not use aspirin, it is more likely their hospitalization is due to smoking-related disease. If a hospitalized patient does not smoke, their admission is more likely due to a cardiovascular condition related to aspirin use.</p>
 <p>This spurious negative association between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> among the hospitalized is <strong>collider stratification bias</strong>: conditioning on hospitalization <span class="math inline">\(C\)</span> opens the previously blocked path <span class="math inline">\(A \to C \leftarrow B\)</span>.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="notes">
 <p><strong>Collider bias is pervasive in epidemiology:</strong></p>
@@ -745,6 +874,12 @@ window.Quarto = {
 <section id="confounding-bias" class="level3" data-number="5.1"><h3 data-number="5.1" class="anchored" data-anchor-id="confounding-bias">
 <span class="header-section-number">5.1</span> Confounding Bias</h3>
 <p><strong>Confounding</strong> is present when there is an open <strong>backdoor path</strong> from treatment <span class="math inline">\(A\)</span> to outcome <span class="math inline">\(Y\)</span>.</p>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-backdoor-path" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2 (Backdoor Path)</strong></span> A <strong>backdoor path</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> is any path that:</p>
 <ol type="1">
@@ -754,9 +889,21 @@ window.Quarto = {
 </ol>
 <p>Such paths represent non-causal flows of association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> induced by common causes.</p>
 </div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-dag-confounding" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3 (Confounding (Structural Definition))</strong></span> <strong>Confounding</strong> of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> exists when there is at least one open backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>.</p>
 <p>In the diagram <span class="math inline">\(L \to A\)</span>, <span class="math inline">\(L \to Y\)</span>, <span class="math inline">\(A \to Y\)</span>: the path <span class="math inline">\(A \leftarrow L \to Y\)</span> is a backdoor path. Since <span class="math inline">\(L\)</span> is a non-collider on this path and has not been conditioned on, the path is open. There is therefore confounding.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -768,6 +915,12 @@ window.Quarto = {
 </div>
 </section><section id="the-backdoor-criterion" class="level3" data-number="5.2"><h3 data-number="5.2" class="anchored" data-anchor-id="the-backdoor-criterion">
 <span class="header-section-number">5.2</span> The Backdoor Criterion</h3>
+<div class="callout callout-style-simple callout-def no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="def-backdoor-criterion" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4 (Backdoor Criterion)</strong></span> A set of measured variables <span class="math inline">\(L\)</span> satisfies the <strong>backdoor criterion</strong> for estimating the causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if:</p>
 <ol type="1">
@@ -779,6 +932,15 @@ window.Quarto = {
 </ol>
 <p>When <span class="math inline">\(L\)</span> satisfies the backdoor criterion, adjusting for <span class="math inline">\(L\)</span> (via stratification, standardization, or IP weighting) eliminates confounding and yields an unbiased estimate of the causal effect.</p>
 </div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-backdoor" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3 (Backdoor Criterion Example)</strong></span> <strong>DAG</strong>: <span class="math inline">\(U \to L \to A \to Y\)</span>, <span class="math inline">\(L \to Y\)</span></p>
 <p><strong>Backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></strong>: <span class="math inline">\(A \leftarrow L \to Y\)</span></p>
@@ -791,6 +953,9 @@ window.Quarto = {
 <p>Yes — adjusting for <span class="math inline">\(L\)</span> suffices to identify the causal effect, even though <span class="math inline">\(L\)</span> has an unmeasured cause <span class="math inline">\(U\)</span>.</p>
 <p><strong>Does <span class="math inline">\(\{U\}\)</span> satisfy the backdoor criterion?</strong></p>
 <p>No — <span class="math inline">\(U\)</span> is an ancestor of <span class="math inline">\(L\)</span> but is not on the backdoor path <span class="math inline">\(A \leftarrow L \to Y\)</span>. Conditioning on <span class="math inline">\(U\)</span> alone does not block the path through <span class="math inline">\(L\)</span>.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="notes">
 <p><strong>Minimal sufficient adjustment sets:</strong></p>
@@ -879,6 +1044,12 @@ window.Quarto = {
 <li>
 <strong>Neither</strong>: <span class="math inline">\(V\)</span> is unrelated to the <span class="math inline">\(A \to Y\)</span> causal structure</li>
 </ul>
+<div class="callout callout-style-simple callout-exm no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div id="exm-confounder-modifier-dag" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4 (Confounder and Effect Modifier Roles)</strong></span> <strong>Scenario 1: <span class="math inline">\(V\)</span> is a confounder only</strong></p>
 <p><span class="math display">\[V \to A \to Y, \quad V \to Y\]</span></p>
@@ -889,6 +1060,9 @@ window.Quarto = {
 <p><strong>Scenario 3: <span class="math inline">\(V\)</span> is both confounder and effect modifier</strong></p>
 <p><span class="math display">\[V \to A \to Y, \quad V \to Y, \quad \text{($A$-$Y$ effect varies by $V$)}\]</span></p>
 <p>We must adjust for <span class="math inline">\(V\)</span> (removes confounding) and report stratum-specific effects (captures modification).</p>
+</div>
+</div>
+</div>
 </div>
 </section><section id="identifying-effect-modification" class="level3" data-number="6.3"><h3 data-number="6.3" class="anchored" data-anchor-id="identifying-effect-modification">
 <span class="header-section-number">6.3</span> Identifying Effect Modification</h3>
