@@ -215,7 +215,8 @@ class HTMLDiffer:
                     highlighted_elem = f'{open_tag}{highlighted_inner}{close_tag}'
                     
                     escaped_elem = re.escape(new_elem)
-                    highlighted_new_html = re.sub(escaped_elem, highlighted_elem, highlighted_new_html, count=1)
+                    repl = highlighted_elem
+                    highlighted_new_html = re.sub(escaped_elem, lambda m: repl, highlighted_new_html, count=1)
                     changes_made += 1
             
             elif (best_match_idx is None or best_ratio < SIMILARITY_THRESHOLD_MIN) and new_text:
@@ -225,7 +226,8 @@ class HTMLDiffer:
                     highlighted_elem = f'{open_tag}<mark class="preview-element-added">{inner_content}</mark>{close_tag}'
                     
                     escaped_elem = re.escape(new_elem)
-                    highlighted_new_html = re.sub(escaped_elem, highlighted_elem, highlighted_new_html, count=1)
+                    repl = highlighted_elem
+                    highlighted_new_html = re.sub(escaped_elem, lambda m: repl, highlighted_new_html, count=1)
                     changes_made += 1
         
         return highlighted_new_html, changes_made
