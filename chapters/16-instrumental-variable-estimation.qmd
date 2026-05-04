@@ -10,6 +10,8 @@ format:
     output-file: 16-instrumental-variable-estimation.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 This chapter introduces **instrumental variable (IV) estimation**, a method for identifying causal effects when there is **unmeasured confounding**. Unlike the methods in previous chapters, IV estimation does not rely on conditional exchangeability. Instead, it uses a special variable (the instrument) that affects treatment but not the outcome directly.
 
 ::: {.notes}

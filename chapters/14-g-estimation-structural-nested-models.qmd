@@ -10,6 +10,8 @@ format:
     output-file: 14-g-estimation-structural-nested-models.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 This chapter introduces **G-estimation**, a method for estimating the parameters of **structural nested models (SNMs)**. Unlike IP weighting and standardization, G-estimation does not directly model either the treatment mechanism or the outcome mechanism. Instead, it models the **causal effect itself**, making it robust to certain types of model misspecification.
 
 ::: {.notes}
