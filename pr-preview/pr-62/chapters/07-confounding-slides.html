@@ -346,7 +346,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><figcaption>Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L; adjusting for L still suffices. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U.</figcaption><p><a href="07-confounding_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L; adjusting for L still suffices. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U."><img data-src="07-confounding_files/figure-html/unnamed-chunk-2-1.png" width="1152" alt="Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L; adjusting for L still suffices. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U."></a></p>
+<figure><figcaption>Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L (U causes Y only via L and directly); adjusting for L blocks both paths. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U.</figcaption><p><a href="07-confounding_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L (U causes Y only via L and directly); adjusting for L blocks both paths. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U."><img data-src="07-confounding_files/figure-html/unnamed-chunk-2-1.png" width="1152" alt="Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L (U causes Y only via L and directly); adjusting for L blocks both paths. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U."></a></p>
 </figure>
 </div>
 </div>
@@ -359,12 +359,14 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 <span class="math inline">\(\{L\}\)</span> satisfies the backdoor criterion: <span class="math inline">\(L\)</span> is not a descendant of <span class="math inline">\(A\)</span> and blocks the only backdoor path.</li>
 <li>Adjustment for <span class="math inline">\(L\)</span> suffices.</li>
 </ul>
-<p><strong>Structure II</strong> (<span class="math inline">\(U \to L \to A\)</span>, <span class="math inline">\(L \to Y\)</span>, <span class="math inline">\(A \to Y\)</span>, <span class="math inline">\(U\)</span> unmeasured):</p>
+<p><strong>Structure II</strong> (<span class="math inline">\(U \to L \to A\)</span>, <span class="math inline">\(U \to Y\)</span>, <span class="math inline">\(L \to Y\)</span>, <span class="math inline">\(A \to Y\)</span>, <span class="math inline">\(U\)</span> unmeasured):</p>
 <ul>
-<li>Backdoor path: <span class="math inline">\(A \leftarrow L \to Y\)</span> (the only backdoor path; the path from <span class="math inline">\(U\)</span> to <span class="math inline">\(A\)</span> goes through <span class="math inline">\(L\)</span>)</li>
+<li>Backdoor paths: <span class="math inline">\(A \leftarrow L \to Y\)</span> and <span class="math inline">\(A \leftarrow L \leftarrow U \to Y\)</span>
+</li>
 <li>
-<span class="math inline">\(\{L\}\)</span> still satisfies the backdoor criterion: conditioning on <span class="math inline">\(L\)</span> (a non-collider on the path <span class="math inline">\(A \leftarrow L \leftarrow U\)</span>) blocks all association through <span class="math inline">\(U\)</span> as well.</li>
-<li>Adjustment for <span class="math inline">\(L\)</span> suffices even though <span class="math inline">\(U\)</span> is unmeasured.</li>
+<span class="math inline">\(L\)</span> is a non-collider on both paths; conditioning on <span class="math inline">\(L\)</span> blocks them both.</li>
+<li>
+<span class="math inline">\(\{L\}\)</span> satisfies the backdoor criterion: adjustment for <span class="math inline">\(L\)</span> suffices even though <span class="math inline">\(U\)</span> is unmeasured.</li>
 </ul>
 <p><strong>Structure III</strong> (<span class="math inline">\(U \to A\)</span>, <span class="math inline">\(U \to Y\)</span>, <span class="math inline">\(L \to A\)</span>, <span class="math inline">\(L \to Y\)</span>, <span class="math inline">\(A \to Y\)</span>, <span class="math inline">\(U\)</span> unmeasured):</p>
 <ul>
@@ -392,7 +394,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside></section><section id="when-no-sufficient-adjustment-set-exists" class="slide level2"><h2>When No Sufficient Adjustment Set Exists</h2>
+      }</style></aside></section><section id="when-no-sufficient-adjustment-set-exists" class="slide level2 scrollable"><h2>When No Sufficient Adjustment Set Exists</h2>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -424,7 +426,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside></section><section id="fine-point-7.1-descendants-of-treatment-and-adjustment-bias" class="slide level2 scrollable"><h2>Fine Point 7.1: Descendants of Treatment and Adjustment Bias</h2>
+      }</style></aside><div title="Fine Point 7.1: Do Not Adjust for Descendants of Treatment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -441,6 +443,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 <li><mark class="preview-element-added"><p><strong>Collider stratification bias</strong>: If <span class="math inline">\(A \to C \leftarrow U\)</span> and <span class="math inline">\(U \to Y\)</span> (so <span class="math inline">\(C\)</span> is a collider on the path <span class="math inline">\(A \to C \leftarrow U \to Y\)</span>), conditioning on <span class="math inline">\(C\)</span> <strong>opens</strong> this previously blocked path and introduces a spurious association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> via <span class="math inline">\(U\)</span>, even if <span class="math inline">\(U\)</span> is unmeasured.</mark></p></li>
 </ol>
 <p><mark class="preview-element-added">The second scenario is particularly insidious because the bias may not be obvious without drawing the causal diagram. The practical implication: when selecting variables to include in the adjustment set, first verify using the causal diagram that no candidate variable is a descendant of <span class="math inline">\(A\)</span>.</mark></p>
+</div>
 </div>
 </div>
 </div>
@@ -501,7 +504,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside></section><section id="fine-point-7.2-the-traditional-definition-of-confounder" class="slide level2"><h2>Fine Point 7.2: The Traditional Definition of Confounder</h2>
+      }</style></aside><div title="Fine Point 7.2: Limitations of Association-Based Confounder Criteria">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -514,6 +517,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 <p>The traditional association-based criteria for confounding are <strong>population-dependent</strong>: a variable <span class="math inline">\(L\)</span> may satisfy criteria 1 and 2 in one population but not in another, even though the causal structure is identical. This means the decision about whether <span class="math inline">\(L\)</span> is a “confounder” depends on the study population, not on the underlying causal mechanism.</p>
 <p>In contrast, the structural (DAG-based) definition is <strong>population-independent</strong>: if <span class="math inline">\(L\)</span> opens a backdoor path in the causal diagram, it is a structural confounder regardless of the population distribution.</p>
 <p>This distinction has practical implications. When planning a study, one should identify the structural confounders using subject-matter knowledge and causal diagrams—not by testing associations in the current dataset. Adjusting for structural confounders is necessary to eliminate confounding bias across all populations satisfying the assumed causal structure.</p>
+</div>
 </div>
 </div>
 </div>
@@ -540,13 +544,11 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 <p>The SWIG for the intervention <span class="math inline">\(do(A = a)\)</span> has nodes <span class="math inline">\(\{L,\; a \mid A,\; Y^a\}\)</span>:</p>
 <ul>
 <li>
-<span class="math inline">\(L \to a\)</span> (the fixed intervention value is determined, but <span class="math inline">\(L\)</span> still affects what the natural value of <span class="math inline">\(A\)</span> would have been)</li>
+<span class="math inline">\(L \to A\)</span> (the natural value of <span class="math inline">\(A\)</span> is caused by <span class="math inline">\(L\)</span>; incoming arrows stay on the natural-value half)</li>
 <li>
-<span class="math inline">\(a \to Y^a\)</span> (the intervention value <span class="math inline">\(a\)</span> causes <span class="math inline">\(Y^a\)</span>)</li>
+<span class="math inline">\(a \to Y^a\)</span> (the fixed intervention value <span class="math inline">\(a\)</span> causes the counterfactual outcome <span class="math inline">\(Y^a\)</span>; outgoing arrows leave from the fixed-value half)</li>
 <li>
-<span class="math inline">\(L \to Y^a\)</span> (the confounder <span class="math inline">\(L\)</span> also causes <span class="math inline">\(Y^a\)</span>)</li>
-<li>
-<span class="math inline">\(L \to A\)</span> (the natural value of <span class="math inline">\(A\)</span> is caused by <span class="math inline">\(L\)</span>)</li>
+<span class="math inline">\(L \to Y^a\)</span> (the confounder <span class="math inline">\(L\)</span> also directly causes <span class="math inline">\(Y^a\)</span>)</li>
 </ul>
 <p>In the SWIG, the counterfactual <span class="math inline">\(Y^a\)</span> is <strong>d-separated</strong> from the natural value <span class="math inline">\(A\)</span> given <span class="math inline">\(L\)</span>, because the only path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y^a\)</span> would go through <span class="math inline">\(a\)</span>, but <span class="math inline">\(A\)</span> and <span class="math inline">\(a\)</span> are split. This d-separation corresponds directly to the conditional exchangeability condition:</p>
 <p><span class="math display">\[Y^a \perp\!\!\!\perp A \mid L\]</span></p>
