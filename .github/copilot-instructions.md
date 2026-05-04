@@ -213,6 +213,24 @@ spelling::spell_check_files("README.md")
 - Add comments within complex code blocks
 - Reference the "What If?" textbook (Hernán MA, Robins JM) when applicable
 - **Use theorem variations to structure content**: Use Quarto's theorem environments (`#def-`, `#thm-`, `#exm-`, `#exr-`, etc.) to organize definitions, theorems, examples, and exercises for better clarity and cross-referencing (see "Theorems and Proofs" section)
+- **Use Quarto callouts for Fine Points and Technical Points**: Textbook "Fine Point" and "Technical Point" boxes should be rendered as Quarto callout blocks using the `.callout-note` class with an explicit title matching the textbook numbering, e.g.:
+  ```markdown
+  ::: {.callout-note title="Fine Point 17.1: Competing Events"}
+  Content of the fine point...
+  :::
+  
+  ::: {.callout-note title="Technical Point 17.1: Approximating the Hazard Ratio via a Logistic Model"}
+  Content of the technical point...
+  :::
+  ```
+  Always add the actual callout content; never leave a dangling reference to a Technical/Fine Point that has no corresponding callout in the file.
+- **Reflow paragraphs — one line per major phrase**: In `.qmd` chapter files, write prose with one sentence (or major clause) per source line. Single newlines within a paragraph render as a space in HTML/PDF, so this does not affect output but makes git diffs much easier to read. Example:
+  ```markdown
+  This is the first sentence of the paragraph.
+  This is the second sentence, which is on its own line.
+  Long sentences may be split at a natural clause boundary,
+  for example after a comma or conjunction.
+  ```
 - **Use single space between sentences**: Use only one space after periods between sentences, not two spaces
 - **Use bullet points for lists**: When presenting lists of items, tools, formats, or steps, use bullet points rather than comma-separated lists for better readability and clarity
 - **Always leave a blank line before bullet point lists**: In Quarto/Markdown, always insert a blank line before starting a bullet point list to ensure proper formatting. Without the blank line, the list may not render correctly.

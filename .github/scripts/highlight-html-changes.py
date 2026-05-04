@@ -214,9 +214,7 @@ class HTMLDiffer:
                     highlighted_inner = self.highlight_html_diff(old_inner_content, inner_content)
                     highlighted_elem = f'{open_tag}{highlighted_inner}{close_tag}'
                     
-                    escaped_elem = re.escape(new_elem)
-                    repl = highlighted_elem
-                    highlighted_new_html = re.sub(escaped_elem, lambda m: repl, highlighted_new_html, count=1)
+                    highlighted_new_html = highlighted_new_html.replace(new_elem, highlighted_elem, 1)
                     changes_made += 1
             
             elif (best_match_idx is None or best_ratio < SIMILARITY_THRESHOLD_MIN) and new_text:
@@ -225,9 +223,7 @@ class HTMLDiffer:
                     open_tag, inner_content, close_tag = tag_match.groups()
                     highlighted_elem = f'{open_tag}<mark class="preview-element-added">{inner_content}</mark>{close_tag}'
                     
-                    escaped_elem = re.escape(new_elem)
-                    repl = highlighted_elem
-                    highlighted_new_html = re.sub(escaped_elem, lambda m: repl, highlighted_new_html, count=1)
+                    highlighted_new_html = highlighted_new_html.replace(new_elem, highlighted_elem, 1)
                     changes_made += 1
         
         return highlighted_new_html, changes_made
