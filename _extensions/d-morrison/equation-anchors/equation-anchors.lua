@@ -122,7 +122,7 @@ function ensureEquationAnchorStyles() {
     }
     .equation-anchor {
       position: absolute;
-      right: calc(-1 * var(--equation-anchor-offset));
+      left: calc(-1 * var(--equation-anchor-offset));
       top: 50%;
       transform: translateY(-50%);
       text-decoration: none;
@@ -144,30 +144,38 @@ function ensureEquationAnchorStyles() {
 document.addEventListener("DOMContentLoaded", function () {
   ensureEquationAnchorStyles();
 
-  const equations = document.querySelectorAll("[id^='eq-']");
-  equations.forEach(function (equation) {
-    if (equation.querySelector(".equation-anchor")) {
+  let counter = 0;
+
+  document.querySelectorAll(".math.display").forEach(function (mathEl) {
+    // For labeled equations, Quarto wraps the math display span in an eq-* span.
+    // For unlabeled equations, use the parent element (typically a <p>).
+    const labeledContainer = mathEl.closest("[id^='eq-']");
+    const target = labeledContainer || mathEl.parentElement;
+
+    if (!target) {
       return;
     }
 
-    const isDisplayMath =
-      equation.matches(".math.display") || equation.querySelector(".math.display");
-    if (!isDisplayMath) {
+    // Skip if already processed.
+    if (target.querySelector(".equation-anchor")) {
       return;
     }
 
-    const id = equation.getAttribute("id");
+    // Use the labeled container's id, or assign an auto-generated id.
+    let id = labeledContainer ? labeledContainer.id : target.id;
     if (!id) {
-      return;
+      counter++;
+      id = "eq-anchor-" + counter;
+      target.id = id;
     }
 
-    equation.classList.add("equation-anchor-target");
+    target.classList.add("equation-anchor-target");
 
     const anchor = document.createElement("a");
     anchor.className = "equation-anchor anchorjs-link";
     anchor.href = "#" + id;
     anchor.setAttribute("aria-label", "Permalink to this equation");
-    equation.appendChild(anchor);
+    target.appendChild(anchor);
   });
 
   alignEquationAnchorsWithDefault();
