@@ -12,407 +12,491 @@ format:
 
 {{< include ../latex-macros/macros.qmd >}}
 
-In Chapter 3, we introduced exchangeability as a key identifiability condition. In Chapter 6, we learned to represent causal relationships using DAGs and introduced the backdoor criterion for identifying confounding. This chapter provides a detailed examination of **confounding**—the most common threat to validity in observational studies.
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+library(ggdag)
+library(dagitty)
+library(ggplot2)
+library(patchwork)
+```
+
+In Chapter 6 we described causal diagrams and showed how to read independence relations from them using d-separation. We also identified three structural sources of bias—confounding, selection bias, and measurement bias—and introduced the backdoor criterion as the graphical condition for eliminating confounding. This chapter examines confounding in greater depth. We show that confounding is equivalent to the absence of marginal exchangeability, characterize it through the structure of the causal diagram, and relate the structural (graphical) definition to the traditional epidemiological criteria for identifying confounders. We close with an introduction to Single-World Intervention Graphs (SWIGs), which embed counterfactual variables directly in a causal diagram.
 
 ::: {.notes}
-This chapter is based on @hernan2020causal [Chapter 7, pp. 77-92].
+This chapter is based on @hernan2020causal [Chapter 7, pp. 77–92].
 :::
 
-## 7.1 The Structure of Confounding (pp. 77-80)
+## 7.1 The Structure of Confounding (pp. 77–80)
 
 ---
 
-Confounding occurs when a common cause of treatment and outcome creates a non-causal association between them.
+In a marginally randomized experiment (Chapter 2), the treated and untreated groups have the same distribution of potential outcomes because treatment was assigned independently of any pre-existing characteristics. As a result, the crude association between treatment $A$ and outcome $Y$ equals the average causal effect:
 
-::: {#def-confounding-structure}
-## Confounding Structure
+$$\Pr[Y = 1 \mid A = 1] - \Pr[Y = 1 \mid A = 0] = \Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]$$
 
-A variable $L$ is a **confounder** of the effect of $A$ on $Y$ if:
+In an observational study, however, the distribution of pre-existing characteristics typically differs between the treated and untreated. If some of those characteristics affect the outcome, the crude association will not equal the causal effect. This discrepancy is **confounding**.
 
-1. $L$ causes $A$ (or shares a common cause with $A$)
-2. $L$ causes $Y$ (or shares a common cause with $Y$)
-3. $L$ is not affected by $A$ (not a consequence of treatment)
-:::
+### A Hypothetical Example
 
-**Causal diagram representation**:
+Consider a hypothetical observational study of the causal effect of a cholesterol-lowering drug ($A$: 1 = treated, 0 = untreated) on 5-year mortality ($Y$: 1 = died, 0 = survived), where sex ($L$: 1 = male, 0 = female) affects both treatment assignment and mortality. The hypothetical data for 20 individuals are shown below.
+
+```{r}
+#| echo: false
+#| label: tbl-ch7-data
+#| tbl-cap: "Table 7.1. Hypothetical data from 20 individuals. A: treatment; L: sex (1=male); Y: mortality (1=died)."
+dat <- data.frame(
+  L = c(rep(1, 10), rep(0, 10)),
+  A = c(rep(1, 8), rep(0, 2), rep(1, 2), rep(0, 8)),
+  Y = c(rep(1, 4), rep(0, 4), rep(1, 1), rep(0, 1),
+        rep(1, 0), rep(0, 2), rep(1, 0), rep(0, 8))
+)
+# Summarize by (L, A)
+summary_tbl <- aggregate(Y ~ L + A, data = dat, FUN = function(y) c(n = length(y), died = sum(y)))
+summary_tbl <- do.call(data.frame, summary_tbl)
+names(summary_tbl) <- c("L", "A", "n", "Y=1")
+summary_tbl[["Pr[Y=1|A,L]"]] <- round(summary_tbl[["Y=1"]] / summary_tbl[["n"]], 2)
+summary_tbl$L <- ifelse(summary_tbl$L == 1, "1 (male)", "0 (female)")
+summary_tbl$A <- ifelse(summary_tbl$A == 1, "1 (treated)", "0 (untreated)")
+knitr::kable(summary_tbl, row.names = FALSE,
+             col.names = c("L", "A", "n", "Deaths (Y=1)", "Pr[Y=1 | A, L]"))
 ```
-L → A → Y
-L → Y
-```
 
-The path $A \leftarrow L \rightarrow Y$ is a **backdoor path** that creates non-causal association.
+Within each sex stratum, the mortality rate is the same for treated and untreated individuals:
+
+$$\Pr[Y = 1 \mid A = 1, L = 1] = \Pr[Y = 1 \mid A = 0, L = 1] = 0.50$$
+$$\Pr[Y = 1 \mid A = 1, L = 0] = \Pr[Y = 1 \mid A = 0, L = 0] = 0.00$$
+
+Within strata of $L$, the association equals the causal effect (null). But the crude (marginal) association is non-null:
+
+$$\Pr[Y = 1 \mid A = 1] = \tfrac{4}{10} = 0.40 \neq \Pr[Y = 1 \mid A = 0] = \tfrac{1}{10} = 0.10$$
+
+The crude risk difference of $0.30$ is entirely due to confounding: males are more frequently treated ($8/10$) and have higher baseline mortality ($0.50$) than females.
 
 ::: {.notes}
-**Why confounding creates bias**:
+**Why confounding arises here:**
 
-Without confounding:
-$$E[Y | A = 1] - E[Y | A = 0] = E[Y^{a=1}] - E[Y^{a=0}]$$
-(association equals causation)
+Males ($L = 1$) are more likely to receive treatment (80%) and have higher mortality (50%), while females ($L = 0$) are less likely to receive treatment (20%) and have lower mortality (0%). Within each sex, treatment has no effect. But marginally, treated individuals have higher mortality than untreated individuals—not because of any causal effect of treatment, but because the treated group is disproportionately male.
 
-With confounding:
-$$E[Y | A = 1] - E[Y | A = 0] \neq E[Y^{a=1}] - E[Y^{a=0}]$$
-(association does not equal causation)
-
-The observed association includes both:
-
-- The causal effect of $A$ on $Y$
-- The confounding bias due to the common cause $L$
+The crude risk difference of 0.30 is entirely confounding bias; the true average causal effect is zero.
 :::
 
-### Common Confounding Scenarios
+### The Structural Definition
 
-**Example 1: Healthy worker bias**
+In the causal diagram framework, confounding arises when there is an open backdoor path from $A$ to $Y$. In the example above, sex $L$ is a common cause of treatment $A$ and mortality $Y$:
 
-- Healthier individuals are more likely to be employed (employed → more likely to be exposed at work)
-- Healthier individuals have better outcomes
-- Comparing employed vs. unemployed introduces confounding by health status
+```{r}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 2.5
+#| fig-cap: "Figure 7.1. Causal diagram for the cholesterol-lowering drug example. Sex (L) is a common cause of treatment (A) and outcome (Y), creating a backdoor path A ← L → Y."
+dag_ch7_main <- dagitty('dag {
+  L [pos="1,1"]
+  A [pos="0,0"]
+  Y [pos="2,0"]
+  L -> A
+  L -> Y
+  A -> Y
+}')
+ggdag(dag_ch7_main, stylized = TRUE) +
+  theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4)
+```
 
-**Example 2: Confounding by indication**
+The path $A \leftarrow L \rightarrow Y$ is a backdoor path from $A$ to $Y$. Because $L$ is a non-collider on this path and has not been conditioned on, the path is open. Confounding bias exists whenever at least one backdoor path from $A$ to $Y$ is open.
 
-- Sicker patients receive more aggressive treatment
-- Sicker patients have worse outcomes
-- Treatment appears harmful when in fact it may be beneficial
+::: {#def-confounding}
+## Confounding (Structural Definition)
+
+**Confounding** of the effect of $A$ on $Y$ is present when the observed (crude) association between $A$ and $Y$ differs from the causal effect of $A$ on $Y$:
+
+$$\Pr[Y = 1 \mid A = 1] - \Pr[Y = 1 \mid A = 0] \neq \Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]$$
+
+In structural terms, confounding exists when there is at least one open backdoor path from $A$ to $Y$ in the causal diagram.
+:::
 
 ::: {.notes}
-**Confounding can go in either direction**:
+**Confounding can operate in any direction:**
 
-- **Positive confounding**: Makes treatment appear more beneficial (or more harmful) than it truly is
-- **Negative confounding**: Makes treatment appear less beneficial (or less harmful) than it truly is
-- **Zero confounding**: The magnitude depends on the strength and direction of the $L \rightarrow A$ and $L \rightarrow Y$ relationships
+- **Positive confounding**: the crude estimate overstates the causal effect (or makes a harmful treatment look beneficial, or a beneficial treatment look even more beneficial)
+- **Negative confounding**: the crude estimate understates the causal effect (or makes a beneficial treatment look harmful)
+- The direction depends on the signs of the associations $L \to A$ and $L \to Y$
+
+In the drug example above, sicker patients (males) were more likely to receive treatment and had worse outcomes, so the drug appears harmful even though it has no effect. This is **confounding by indication** or **channeling bias**—the indication for treatment (higher disease severity) is itself a risk factor for the outcome.
 :::
 
-## 7.2 Confounding and Exchangeability (pp. 80-82)
+## 7.2 Confounding and Exchangeability (pp. 80–82)
 
 ---
 
-Confounding is equivalent to lack of (conditional) exchangeability.
+Confounding is mathematically equivalent to the failure of **marginal exchangeability**. Recall from Chapter 2 that marginal exchangeability holds when:
 
-### No Confounding = Exchangeability
-
-**No confounding** means:
 $$Y^a \perp\!\!\!\perp A \quad \text{for all } a$$
 
-This is **marginal exchangeability**: the counterfactual outcomes are independent of treatment.
+This means the treated and untreated groups have the same distribution of potential outcomes: $\Pr[Y^a = 1 \mid A = 1] = \Pr[Y^a = 1 \mid A = 0] = \Pr[Y^a = 1]$.
 
-**Confounding** means exchangeability does not hold:
-$$Y^a \not\perp\!\!\!\perp A$$
+When marginal exchangeability holds, association equals causation:
 
-The treated and untreated differ with respect to their potential outcomes.
+$$\Pr[Y = 1 \mid A = 1] - \Pr[Y = 1 \mid A = 0] = \Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]$$
 
-::: {#exm-confounding-exchangeability}
-## Confounding and Exchangeability
+**No confounding is equivalent to marginal exchangeability.** When confounding is present, marginal exchangeability fails: $Y^a \not\perp\!\!\!\perp A$, and the treated and untreated differ in their potential outcomes.
 
-Suppose exercise ($A$) affects heart disease ($Y$), and both are affected by age ($L$):
+### Eliminating Confounding via Conditioning
 
-**Without confounding**: 
-
-- Young and old people equally likely to exercise
-- $E[Y^{a=1} | A = 1] = E[Y^{a=1} | A = 0]$ (exchangeable)
-
-**With confounding**:
-
-- Younger people more likely to exercise  
-- Younger people have lower baseline risk
-- $E[Y^{a=1} | A = 1] \neq E[Y^{a=1} | A = 0]$ (not exchangeable)
-- Those who exercise would have had better outcomes even without exercising
-:::
-
-### Conditional Exchangeability
-
-Even when marginal exchangeability fails, we may achieve **conditional exchangeability** by adjusting for confounders:
+Even when marginal exchangeability fails, we can often achieve **conditional exchangeability** by adjusting for the measured confounders $L$:
 
 $$Y^a \perp\!\!\!\perp A \mid L \quad \text{for all } a$$
 
-Within levels of $L$, the treated and untreated are exchangeable.
+This means that within each stratum of $L$, the treated and untreated are exchangeable. In the drug example:
+
+- Within males ($L = 1$): $\Pr[Y^{a} = 1 \mid A = 1, L = 1] = \Pr[Y^{a} = 1 \mid A = 0, L = 1]$ ✓
+- Within females ($L = 0$): $\Pr[Y^{a} = 1 \mid A = 1, L = 0] = \Pr[Y^{a} = 1 \mid A = 0, L = 0]$ ✓
+
+Under conditional exchangeability and positivity, the standardization (g-formula) identifies the causal effect:
+
+$$\Pr[Y^{a} = 1] = \sum_l \Pr[Y = 1 \mid A = a, L = l] \, \Pr[L = l]$$
+
+Applying standardization to the data in Table 7.1:
+
+$$\Pr[Y^{a=1} = 1] = 0.50 \times 0.50 + 0.00 \times 0.50 = 0.25$$
+$$\Pr[Y^{a=0} = 1] = 0.50 \times 0.50 + 0.00 \times 0.50 = 0.25$$
+
+The standardized risk difference is zero, correctly recovering the null causal effect.
 
 ::: {.notes}
-**Key insight**: Confounding can be eliminated by conditioning on (adjusting for) the confounders.
+**Marginal vs. conditional exchangeability:**
 
-**Requirements**:
-1. We must **identify** all confounders based on subject-matter knowledge
-2. We must **measure** them accurately
-3. We must **adjust** for them appropriately in analysis
+- **Marginal exchangeability** ($Y^a \perp\!\!\!\perp A$): holds in marginally randomized experiments; association equals causation without any adjustment.
+- **Conditional exchangeability** ($Y^a \perp\!\!\!\perp A \mid L$): holds in conditionally randomized experiments and (by assumption) in observational studies after adjusting for all confounders $L$.
 
-If these requirements are met, we can estimate causal effects from observational data.
+In practice, we can never verify from data alone that conditional exchangeability holds. We must rely on subject-matter knowledge to argue that the measured $L$ captures all common causes of $A$ and $Y$.
+
+**The no-unmeasured-confounding assumption:**
+
+Conditional exchangeability given $L$ is sometimes called the **no-unmeasured-confounding assumption** or **ignorability**. It is the key assumption required for identification of causal effects in observational studies.
 :::
 
-## 7.3 Confounding and the Backdoor Criterion (pp. 82-85)
+## 7.3 Confounding and the Backdoor Criterion (pp. 82–85)
 
 ---
 
-The backdoor criterion (Chapter 6) provides a graphical method for identifying confounding.
+The **backdoor criterion** (Chapter 6) provides a graphical condition for identifying sets of variables $L$ that suffice to eliminate confounding by adjustment.
 
-### Backdoor Paths and Confounding
+::: {#def-backdoor-criterion-ch7}
+## Backdoor Criterion
 
-A **backdoor path** from $A$ to $Y$:
+A set of variables $L$ satisfies the **backdoor criterion** for the effect of $A$ on $Y$ in a causal diagram if:
 
-- Starts with an arrow into $A$ (i.e., $\cdot \rightarrow A$)
-- Connects $A$ to $Y$ through any sequence of arrows
+1. No variable in $L$ is a descendant of $A$
+2. $L$ blocks every backdoor path from $A$ to $Y$
 
-**Confounding exists if backdoor paths are open (unblocked)**.
-
-::: {#exm-backdoor-confounding}
-## Identifying Confounders with the Backdoor Criterion
-
-**Diagram 1**:
-```
-L → A → Y
-L → Y
-```
-**Backdoor path**: $A \leftarrow L \rightarrow Y$
-**Confounders**: $L$
-**Solution**: Adjust for $L$
-
-**Diagram 2**:
-```
-U → L → A → Y
-      L → Y
-```
-**Backdoor paths**: $A \leftarrow L \rightarrow Y$, $A \leftarrow L \leftarrow U \rightarrow Y$ (if U causes Y)
-**Confounders**: $L$ (and $U$ if it affects $Y$)
-**Solution**: Adjust for $L$ (and $U$ if measured)
-
-**Diagram 3**:
-```
-A → M → Y
-L → A
-L → Y
-```
-**Backdoor path**: $A \leftarrow L \rightarrow Y$
-**Confounders**: $L$
-**Do NOT adjust for $M$**: $M$ is a mediator (on the causal path), not a confounder
+When $L$ satisfies the backdoor criterion, adjusting for $L$ (via standardization, IP weighting, or regression) eliminates confounding and identifies the average causal effect.
 :::
+
+### Multiple DAG Structures
+
+Different causal structures imply different sets of variables that satisfy the backdoor criterion.
+
+```{r}
+#| echo: false
+#| fig-width: 12
+#| fig-height: 3
+#| fig-cap: "Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L (U causes Y only via L and directly); adjusting for L blocks both paths. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U."
+dag_a <- dagitty('dag {
+  L [pos="1,1"]; A [pos="0,0"]; Y [pos="2,0"]
+  L -> A; L -> Y; A -> Y
+}')
+dag_b <- dagitty('dag {
+  U [pos="1,2"]; L [pos="1,1"]; A [pos="0,0"]; Y [pos="2,0"]
+  U -> L; U -> Y; L -> A; L -> Y; A -> Y
+}')
+dag_c <- dagitty('dag {
+  U [pos="1,2"]; L [pos="1,1"]; A [pos="0,0"]; Y [pos="2,0"]
+  U -> A; U -> Y; L -> A; L -> Y; A -> Y
+}')
+
+p_a <- ggdag(dag_a, stylized = TRUE) + theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4) +
+  labs(title = "Structure I: Adjust for L")
+
+p_b <- ggdag(dag_b, stylized = TRUE) + theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4) +
+  labs(title = "Structure II: Adjust for L (U unmeasured)")
+
+p_c <- ggdag(dag_c, stylized = TRUE) + theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4) +
+  labs(title = "Structure III: Residual confounding by U")
+
+p_a + p_b + p_c
+```
+
+**Structure I** ($L \to A$, $L \to Y$, $A \to Y$):
+
+- Backdoor path: $A \leftarrow L \to Y$
+- $\{L\}$ satisfies the backdoor criterion: $L$ is not a descendant of $A$ and blocks the only backdoor path.
+- Adjustment for $L$ suffices.
+
+**Structure II** ($U \to L \to A$, $U \to Y$, $L \to Y$, $A \to Y$, $U$ unmeasured):
+
+- Backdoor paths: $A \leftarrow L \to Y$ and $A \leftarrow L \leftarrow U \to Y$
+- $L$ is a non-collider on both paths; conditioning on $L$ blocks them both.
+- $\{L\}$ satisfies the backdoor criterion: adjustment for $L$ suffices even though $U$ is unmeasured.
+
+**Structure III** ($U \to A$, $U \to Y$, $L \to A$, $L \to Y$, $A \to Y$, $U$ unmeasured):
+
+- Backdoor paths: $A \leftarrow L \to Y$ **and** $A \leftarrow U \to Y$
+- Conditioning on $L$ blocks $A \leftarrow L \to Y$, but the path $A \leftarrow U \to Y$ does **not** pass through $L$—conditioning on $L$ leaves it open.
+- $\{L\}$ does **not** satisfy the backdoor criterion because not all backdoor paths are blocked.
+- Since $U$ is unmeasured, no measured adjustment set can block $A \leftarrow U \to Y$. The causal effect is not identified by adjustment alone.
 
 ::: {.notes}
-**Common mistakes**:
+**Sufficient adjustment sets:**
 
-1. **Adjusting for mediators**: Variables on the causal path from $A$ to $Y$ should NOT be adjusted for, as this blocks the causal effect we're trying to estimate
+In Structure II, adjusting for $L$ alone suffices even though $U$ is unmeasured, because every backdoor path from $A$ to $Y$ passes through $L$. This illustrates an important point: we do not need to measure all common causes; we only need to measure variables sufficient to block all backdoor paths.
 
-2. **Adjusting for colliders**: Variables caused by both $A$ and $Y$ should NOT be adjusted for, as this induces bias
+In Structure III, the unmeasured $U$ bypasses $L$ entirely (direct arrow $U \to A$), so there is no measured set that can block the path $A \leftarrow U \to Y$. This is **unmeasured confounding** that cannot be handled by standard adjustment methods.
 
-3. **Failing to adjust for all confounders**: If even one confounder is unmeasured or unadjusted, bias remains
+**Minimal sufficient adjustment sets:**
 
-4. **Overadjustment**: Including unnecessary variables (especially descendants of treatment) can introduce bias
+Multiple different sets of variables may satisfy the backdoor criterion. A **minimal sufficient adjustment set** is one from which no variable can be removed while still blocking all backdoor paths. The R package `dagitty` can enumerate all minimal sufficient adjustment sets automatically.
+
+**Necessary conditions for a valid adjustment set:**
+
+The backdoor criterion is a sufficient condition but not always necessary. Other identification strategies (instrumental variables, front-door criterion, etc.) can sometimes identify causal effects when no set satisfies the backdoor criterion.
 :::
 
-## 7.4 Confounding and Confounders (pp. 85-87)
+### When No Sufficient Adjustment Set Exists
+
+```{r}
+#| echo: false
+#| fig-width: 5
+#| fig-height: 3
+#| fig-cap: "Figure 7.3. Unmeasured confounding: U is an unmeasured common cause of A and Y with no measured common cause on the backdoor path. No measured set satisfies the backdoor criterion."
+dag_unmeasured <- dagitty('dag {
+  U [pos="1,1"]; A [pos="0,0"]; Y [pos="2,0"]
+  U -> A; U -> Y; A -> Y
+}')
+ggdag(dag_unmeasured, stylized = TRUE) +
+  theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(aes(color = name == "U"), size = 14) +
+  scale_color_manual(values = c("FALSE" = "steelblue", "TRUE" = "gray60"), guide = "none") +
+  geom_dag_text(color = "white", size = 4)
+```
+
+When the only common cause of $A$ and $Y$ is an unmeasured variable $U$ (shown in gray), there is no measured set that satisfies the backdoor criterion. Standard adjustment methods cannot identify the causal effect without additional assumptions (e.g., instrumental variables, Chapter 16).
+
+::: {.notes}
+**Unmeasured confounding:**
+
+Unmeasured confounding is the central challenge in observational causal inference. The assumption of "no unmeasured confounders" (conditional exchangeability given measured $L$) is untestable from observed data alone.
+
+Strategies to address unmeasured confounding include:
+
+- **Sensitivity analysis**: quantify how much an unmeasured confounder would need to change conclusions
+- **Negative controls**: use outcome or exposure controls to detect unmeasured confounders
+- **Instrumental variable methods** (Chapter 16): exploit exogenous variation in treatment assignment
+- **Difference-in-differences and fixed effects** (Chapter 21): exploit longitudinal data structure
+:::
+
+::: {.callout-note title="Fine Point 7.1: Do Not Adjust for Descendants of Treatment"}
+
+A fundamental rule for constructing valid adjustment sets is: **never include a descendant of treatment $A$ in the adjustment set**.
+
+**Why not?** There are two distinct ways that adjusting for a post-treatment variable $C$ (a descendant of $A$) can introduce bias:
+
+1. **Blocking part of the causal effect**: If $A \to C \to Y$ (so $C$ is a mediator), conditioning on $C$ removes part of the causal effect we are trying to estimate. We would estimate only the direct effect $A \to Y$, not the total effect through $C$.
+
+2. **Collider stratification bias**: If $A \to C \leftarrow U$ and $U \to Y$ (so $C$ is a collider on the path $A \to C \leftarrow U \to Y$), conditioning on $C$ **opens** this previously blocked path and introduces a spurious association between $A$ and $Y$ via $U$, even if $U$ is unmeasured.
+
+The second scenario is particularly insidious because the bias may not be obvious without drawing the causal diagram. The practical implication: when selecting variables to include in the adjustment set, first verify using the causal diagram that no candidate variable is a descendant of $A$.
+:::
+
+## 7.4 Confounding and Confounders (pp. 85–87)
 
 ---
 
-The traditional definition of "confounder" in epidemiology differs slightly from the causal DAG perspective.
+The term **confounder** is commonly used in epidemiology to refer to a variable that should be adjusted for to eliminate confounding. However, the traditional criteria used to identify confounders differ from the structural (DAG-based) definition—and the two do not always agree.
 
-### Traditional Confounder Definition
+### The Traditional Epidemiological Criteria
 
-Traditionally, a variable $L$ is considered a confounder if:
-1. $L$ is associated with treatment $A$
-2. $L$ is associated with outcome $Y$ (among the untreated)
-3. $L$ is not affected by treatment $A$
+In the traditional approach, a variable $C$ is labeled a confounder of the $A$–$Y$ association if it satisfies three criteria:
 
-### DAG-Based Definition
+1. $C$ is associated with treatment $A$
+2. $C$ is a risk factor for outcome $Y$ among the unexposed ($A = 0$)
+3. $C$ is not on the causal pathway from $A$ to $Y$ (i.e., $C$ is not a mediator)
 
-From the DAG perspective, $L$ is a confounder if:
+These criteria are assessed from the data (criteria 1 and 2) and from prior knowledge (criterion 3).
 
-- $L$ opens a backdoor path from $A$ to $Y$
+### Limitations of the Traditional Criteria
 
-::: {.notes}
-**Differences**:
+The traditional criteria have two important limitations:
 
-The traditional definition is based on **associations** (statistical relationships).
-The DAG definition is based on **causal structure** (graphical relationships).
+**Problem 1: A variable can satisfy all three criteria without being a structural confounder.**
 
-**Why this matters**:
+If $C$ is a **collider** on a non-causal path between $A$ and $Y$ (e.g., $A \to C \leftarrow Y$), then $C$ may be associated with both $A$ and $Y$ in some data sets yet is not on any backdoor path. Including $C$ in the adjustment set could introduce **collider stratification bias** rather than removing confounding.
 
-1. **A variable can be associated with both $A$ and $Y$ without being a confounder**
-   - Example: A collider caused by both $A$ and $Y$
-   - Adjusting for it would induce bias, not remove it
+**Problem 2: A structural confounder may fail one of the traditional criteria.**
 
-2. **A variable can be a confounder without being associated with both $A$ and $Y$ in the data**
-   - Example: A confounder whose effects cancel out, leaving no association
-   - Failing to adjust for it would leave bias
+A variable $L$ that opens a backdoor path from $A$ to $Y$ might fail criterion 1 (not associated with $A$ in the data) if its effects on $A$ and $Y$ cancel in a specific population. In that population, adjusting for $L$ is still required to eliminate structural confounding, but the traditional criteria would not flag it as a confounder.
 
-**Best practice**: Use DAGs to identify confounders based on causal structure, not associations alone.
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 3
+#| fig-cap: "Figure 7.4. Left: C is a collider (A → C ← Y); it satisfies traditional criteria 1 and 2 but adjusting for C introduces bias. Right: L is a structural confounder (opens backdoor path) but may not satisfy traditional criteria if its effects on A and Y cancel."
+dag_collider_confound <- dagitty('dag {
+  A [pos="0,0"]; C [pos="1,0"]; Y [pos="2,0"]
+  A -> C; Y -> C; A -> Y
+}')
+dag_structural <- dagitty('dag {
+  L [pos="1,1"]; A [pos="0,0"]; Y [pos="2,0"]
+  L -> A; L -> Y; A -> Y
+}')
+
+p_left <- ggdag(dag_collider_confound, stylized = TRUE) + theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4) +
+  labs(title = "Collider C: do NOT adjust")
+
+p_right <- ggdag(dag_structural, stylized = TRUE) + theme_dag() +
+  geom_dag_edges() +
+  geom_dag_point(color = "steelblue", size = 14) +
+  geom_dag_text(color = "white", size = 4) +
+  labs(title = "Structural confounder L: adjust")
+
+p_left + p_right
+```
+
+::: {#def-structural-confounder}
+## Structural Confounder vs. Traditional Confounder
+
+A variable $L$ is a **structural confounder** of the effect of $A$ on $Y$ if it opens at least one backdoor path from $A$ to $Y$ in the causal diagram. The structural definition depends on the causal structure, not on observed associations.
+
+The traditional epidemiological definition of confounder depends on observed associations (criteria 1 and 2) and may disagree with the structural definition in specific populations.
+
+**Best practice**: Use the causal diagram (DAG) to identify the structural confounders and the appropriate adjustment set via the backdoor criterion.
 :::
 
-## 7.5 Single-World Intervention Graphs (pp. 87-89)
+::: {.notes}
+**Why the discrepancy matters:**
+
+The traditional approach of testing whether $C$ is associated with $A$ and $Y$ and then deciding whether to adjust can lead to:
+
+1. **Over-adjustment**: Adjusting for colliders or mediators because they are associated with both $A$ and $Y$
+2. **Under-adjustment**: Failing to adjust for structural confounders whose effects happen to cancel in the observed data
+3. **Selection bias through collider adjustment**: Stratifying on $C = c$ when $C$ is a collider opens the backdoor path and introduces bias
+
+The DAG-based approach avoids these pitfalls by relying on causal structure rather than associations.
+:::
+
+::: {.callout-note title="Fine Point 7.2: Limitations of Association-Based Confounder Criteria"}
+
+The traditional association-based criteria for confounding are **population-dependent**: a variable $L$ may satisfy criteria 1 and 2 in one population but not in another, even though the causal structure is identical. This means the decision about whether $L$ is a "confounder" depends on the study population, not on the underlying causal mechanism.
+
+In contrast, the structural (DAG-based) definition is **population-independent**: if $L$ opens a backdoor path in the causal diagram, it is a structural confounder regardless of the population distribution.
+
+This distinction has practical implications. When planning a study, one should identify the structural confounders using subject-matter knowledge and causal diagrams—not by testing associations in the current dataset. Adjusting for structural confounders is necessary to eliminate confounding bias across all populations satisfying the assumed causal structure.
+:::
+
+## 7.5 Single-World Intervention Graphs (pp. 87–89)
 
 ---
 
-Single-World Intervention Graphs (SWIGs) are an extension of DAGs that explicitly represent interventions and counterfactual outcomes.
+The causal diagrams introduced in Chapter 6 represent relationships among **observed** variables ($A$, $L$, $Y$, etc.). They do not directly represent counterfactual variables ($Y^a$, $L^a$, etc.). **Single-World Intervention Graphs (SWIGs)**, developed by Richardson and Robins (2014), extend causal diagrams to include counterfactual variables explicitly.
 
-### SWIGs vs. DAGs
+### Constructing a SWIG
 
-- **Standard DAGs**: Represent relationships among observed variables
-- **SWIGs**: Represent relationships among counterfactual variables under specified interventions
+A SWIG for the intervention $A = a$ is obtained from the original causal diagram by the following operation:
 
-::: {.notes}
-**SWIG notation**:
+- **Split each treatment node $A$** into two parts:
+  - The **fixed intervention value** $a$ (the value to which $A$ is set by the intervention)
+  - The **natural value** $A$ (the random variable representing what treatment the individual would have received in the absence of intervention)
+- All arrows into $A$ now point to the natural value $A$; all arrows out of $A$ now originate from the fixed value $a$.
+- Each child of $A$ in the original DAG becomes a counterfactual variable (e.g., $Y$ becomes $Y^a$).
 
-- $Y_a$: Counterfactual outcome under intervention $do(A = a)$
-- $A_a$: Treatment value set to $a$ by intervention
-- Edges represent causal effects in the counterfactual world where $A = a$
+The key result is that in the SWIG, **counterfactual independence can be read off using d-separation**, just as ordinary independence is read from a standard DAG.
 
-**Example SWIG**: For the causal effect of $A$ on $Y$ with confounder $L$:
-```
-L → A_a → Y_a
-L → Y_a
-```
+::: {#exm-swig}
+## SWIG for the Standard Confounding Structure
 
-SWIGs make explicit:
+Consider the original DAG: $L \to A \to Y$, $L \to Y$.
 
-- Which variables are set by intervention
-- Which variables remain as observed
-- Which counterfactual outcome we're interested in
+The SWIG for the intervention $do(A = a)$ has nodes $\{L,\; a \mid A,\; Y^a\}$:
 
-**Advantages**:
+- $L \to A$ (the natural value of $A$ is caused by $L$; incoming arrows stay on the natural-value half)
+- $a \to Y^a$ (the fixed intervention value $a$ causes the counterfactual outcome $Y^a$; outgoing arrows leave from the fixed-value half)
+- $L \to Y^a$ (the confounder $L$ also directly causes $Y^a$)
 
-- Clearer representation of counterfactuals
-- Explicit about the intervention
-- Useful for complex scenarios (time-varying treatments, mediation)
+In the SWIG, the counterfactual $Y^a$ is **d-separated** from the natural value $A$ given $L$, because the only path from $A$ to $Y^a$ would go through $a$, but $A$ and $a$ are split. This d-separation corresponds directly to the conditional exchangeability condition:
 
-**Disadvantages**:
+$$Y^a \perp\!\!\!\perp A \mid L$$
 
-- More complex notation
-- Require more assumptions to be specified
-- Not yet as widely used as standard DAGs
-
-For most purposes in this book, standard DAGs suffice. SWIGs are mentioned for completeness and for readers interested in advanced topics.
+SWIGs thus provide a graphical proof of conditional exchangeability whenever $L$ satisfies the backdoor criterion.
 :::
 
-## 7.6 Confounding Adjustment (pp. 89-92)
+### What SWIGs Add
 
----
+Standard DAGs allow us to determine which variables to adjust for (via the backdoor criterion) but cannot directly show that $Y^a \perp\!\!\!\perp A \mid L$, because $Y^a$ is not a node in the DAG. SWIGs resolve this by making counterfactual variables explicit:
 
-Once confounders are identified, several methods can adjust for them.
-
-### Methods for Confounding Adjustment
-
-1. **Stratification**: Estimate effects within strata of $L$, then combine (standardization)
-
-2. **Regression adjustment**: Include $L$ as covariates in a regression model
-
-3. **Inverse probability weighting**: Weight by $1/Pr[A | L]$ to create a pseudo-population where $A$ and $L$ are independent (Chapter 12)
-
-4. **Matching**: Match treated and untreated individuals on $L$
-
-::: {#exm-adjustment-methods}
-## Comparing Adjustment Methods
-
-**Data**: Effect of smoking ($A$) on lung cancer ($Y$), adjusting for age ($L$)
-
-**Stratification**:
-
-- Estimate effect separately for age = 40, 50, 60, 70
-- Combine using weighted average
-
-**Regression**:
-```r
-glm(Y ~ A + L, family = binomial())
-```
-
-**IP weighting** (Chapter 12):
-```r
-weight <- 1 / predict(glm(A ~ L, family = binomial()), type = "response")
-glm(Y ~ A, weights = weight, family = binomial())
-```
-
-**Matching**:
-
-- For each smoker, find non-smoker of same age
-- Compare outcomes
-:::
+- The d-separation statement $Y^a \perp\!\!\!\perp A \mid L$ in the SWIG directly implies conditional exchangeability
+- This equivalence provides a graphical justification for identification by standardization
 
 ::: {.notes}
-**Choosing an adjustment method**:
+**Historical note:**
 
-**Stratification**:
+SWIGs were introduced by Richardson and Robins (2014) as a formal framework for representing counterfactuals in causal diagrams. They unify the potential outcomes framework (Chapters 1–5) with the causal diagrams framework (Chapter 6) by constructing a single graph in which both observed and counterfactual variables appear.
 
-- ✓ Transparent, easy to understand
-- ✓ Allows checking for effect modification
-- ✗ Limited to discrete confounders
-- ✗ Requires large sample sizes for fine strata
+**Notation:**
 
-**Regression**:
+In SWIG notation, each treatment node $A$ is written as $a \mid A$ (read: "intervention value $a$ given natural value $A$"). The counterfactual $Y^a$ is written simply as $Y^a$ or sometimes $Y(a)$.
 
-- ✓ Handles continuous confounders
-- ✓ Efficient (uses all data)
-- ✗ Relies on model assumptions
-- ✗ Can obscure effect modification
+**Beyond exchangeability:**
 
-**IP weighting**:
+SWIGs also provide a graphical representation of more complex counterfactual independence conditions, including those arising in time-varying treatment settings (Part III of the textbook). For example, in longitudinal settings, SWIGs can be used to represent the sequential exchangeability conditions needed to identify dynamic treatment regimes.
 
-- ✓ Flexible, can handle complex confounding
-- ✓ Estimates marginal (population-average) effects
-- ✗ Can be unstable with extreme weights
-- ✗ More complex to implement
-
-**Matching**:
-
-- ✓ Intuitive, creates comparable groups
-- ✗ Discards unmatched data
-- ✗ Largely superseded by other methods
-
-**Modern recommendation**: Use IP weighting or doubly robust methods (combine regression and weighting) for flexibility and robustness.
+For most purposes in this textbook, standard DAGs combined with the backdoor criterion are sufficient. SWIGs provide an additional layer of rigor for readers interested in the formal connections between the potential outcomes framework and the graphical framework.
 :::
 
 ## Summary
 
 ---
 
-This chapter provided a detailed examination of **confounding**.
+This chapter examined **confounding** in depth, providing both an intuitive numerical example and a formal structural definition.
 
-**Key concepts**:
+**Key concepts:**
 
-1. **Confounding structure**: Common causes of treatment and outcome create backdoor paths
+1. **Confounding** is present when the crude (marginal) association between $A$ and $Y$ differs from the average causal effect. Structurally, confounding exists when at least one backdoor path from $A$ to $Y$ is open.
 
-2. **Exchangeability**: Confounding = lack of exchangeability; conditional exchangeability can be achieved by adjusting for confounders
+2. **Confounding = lack of marginal exchangeability**: $Y^a \not\perp\!\!\!\perp A$. The treated and untreated groups have different distributions of potential outcomes.
 
-3. **Backdoor criterion**: Provides a graphical method to identify which variables to adjust for
+3. **Conditional exchangeability** ($Y^a \perp\!\!\!\perp A \mid L$) can restore identifiability when $L$ satisfies the backdoor criterion. Under conditional exchangeability and positivity, the causal effect is identified by standardization.
 
-4. **DAG vs. traditional definitions**: DAG-based confounding identification is preferred over association-based criteria
+4. **The backdoor criterion** provides a graphical sufficient condition for valid adjustment. A set $L$ satisfies the criterion if it (i) contains no descendants of $A$ and (ii) blocks all backdoor paths from $A$ to $Y$.
 
-5. **Adjustment methods**: Stratification, regression, IP weighting, and matching can all adjust for confounding
+5. **Structural vs. traditional confounders**: The traditional association-based criteria for confounders can disagree with the structural (DAG-based) definition—either flagging colliders as confounders (causing harm from adjustment) or missing structural confounders. The DAG approach is preferred.
 
-6. **Critical assumptions**: 
-   - All confounders must be identified (no unmeasured confounding)
-   - All confounders must be measured accurately
-   - Adjustment must be done correctly
+6. **SWIGs** embed counterfactual variables in a causal diagram and provide a graphical proof of conditional exchangeability whenever the backdoor criterion is satisfied.
 
 ::: {.notes}
-**Practical guidelines for dealing with confounding**:
+**Looking ahead:**
 
-1. **Draw a DAG** based on subject-matter knowledge before analyzing data
+- **Chapter 8** examines selection bias—another structural source of bias arising from conditioning on colliders (or their descendants)
+- **Chapter 9** examines measurement bias—bias arising from imperfect measurement of $A$, $Y$, or $L$
+- **Chapters 12–15** present methods for adjusting for confounding: IP weighting, standardization, g-estimation, and outcome regression
 
-2. **Identify confounders** using the backdoor criterion
-
-3. **Measure confounders** as accurately as possible
-
-4. **Choose an adjustment method** appropriate for your data and confounders
-
-5. **Check assumptions**: 
-   - Positivity: Do all $(A, L)$ combinations occur?
-   - Model fit: Are regression model assumptions met?
-   - Balance: After adjustment, are confounders balanced?
-
-6. **Conduct sensitivity analyses**: How robust are findings to unmeasured confounding?
-
-7. **Be transparent**: Report the DAG, adjustment set, and method clearly
-
-**Limitations**:
-
-Even with perfect adjustment for measured confounders, bias can remain if:
-
-- Important confounders are unmeasured (Chapter 19 covers sensitivity analysis)
-- Confounders are measured with error (Chapter 9)
-- Adjustment methods are applied incorrectly
-- Positivity is violated
-
-Confounding control is necessary but not sufficient for valid causal inference.
-
-**Looking ahead**:
-
-- **Chapter 8**: Selection bias
-- **Chapter 9**: Measurement bias
-- **Chapters 12-15**: Advanced methods for confounding adjustment
+Confounding bias is the central challenge in observational causal inference. This chapter has provided the structural tools needed to identify which variables to adjust for (the backdoor criterion) and the formal justification for why that adjustment works (conditional exchangeability, proved graphically via SWIGs).
 :::
 
 ## References
