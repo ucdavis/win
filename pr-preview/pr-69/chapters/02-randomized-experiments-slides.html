@@ -880,10 +880,10 @@
 <h2>2.2 Derivation of the IPW estimator</h2>
 <p>The IPW estimator can be derived from first principles. Under <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span> and positivity:</p>
 <p><span class="math display">\[\begin{align}
-\text{E}{\left[Y^a\right]} &amp;= \text{E}{\left[E[Y^a|L]\right]} \quad \text{(law of total expectation)} \\
-&amp;= \text{E}{\left[E[Y^a|A=a, L]\right]} \quad \text{(by conditional exchangeability)} \\
-&amp;= \text{E}{\left[E[Y|A=a, L]\right]} \quad \text{(by consistency)} \\
-&amp;= \text{E}{\left[\frac{I(A=a)}{Pr[A=a|L]} \text{E}{\left[Y|A=a, L\right]}\right]} \quad \text{(inverse weighting)} \\
+\text{E}{\left[Y^a\right]} &amp;= \text{E}{\left[\text{E}{\left[Y^a \mid L\right]}\right]} \quad \text{(law of total expectation)} \\
+&amp;= \text{E}{\left[\text{E}{\left[Y^a \mid A=a, L\right]}\right]} \quad \text{(by conditional exchangeability)} \\
+&amp;= \text{E}{\left[\text{E}{\left[Y \mid A=a, L\right]}\right]} \quad \text{(by consistency)} \\
+&amp;= \text{E}{\left[\frac{I(A=a)}{Pr[A=a|L]} \text{E}{\left[Y \mid A=a, L\right]}\right]} \quad \text{(inverse weighting)} \\
 &amp;= \text{E}{\left[\frac{I(A=a) \cdot Y}{Pr[A=a|L]}\right]} \quad \text{(by law of total expectation)}
 \end{align}\]</span></p>
 <p>The key step is the third equality, which uses the fact that <span class="math inline">\(\text{E}{\left[I(A=a)/Pr[A=a|L]\right]} = 1\)</span>.</p>
