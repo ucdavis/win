@@ -65,7 +65,6 @@ jobs:
             poppler-utils \
             tesseract-ocr \
             tesseract-ocr-eng \
-            maxima \
             python3-pip
       
       # Set up pandoc for documentation
