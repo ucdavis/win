@@ -10,6 +10,8 @@ format:
     output-file: 17-causal-survival-analysis.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 In previous chapters we have been concerned with causal questions about treatment effects on outcomes occurring at a particular time point.
 For example, we estimated the effect of smoking cessation on weight gain measured in the year 1982.
 Many causal questions, however, are concerned with treatment effects on the **time until** the occurrence of an event of interest.

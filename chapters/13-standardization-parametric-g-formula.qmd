@@ -10,6 +10,8 @@ format:
     output-file: 13-standardization-parametric-g-formula.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 This chapter describes **standardization** and the **parametric g-formula**, methods for computing standardized means and risks by outcome modeling. While IP weighting models the treatment assignment mechanism, standardization models the outcome mechanism. Both approaches can estimate the same causal effects under conditional exchangeability.
 
 ::: {.notes}

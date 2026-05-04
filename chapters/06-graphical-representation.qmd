@@ -10,6 +10,8 @@ format:
     output-file: 06-graphical-representation.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 ```{r}
 #| label: setup
 #| echo: false

@@ -16,3 +16,4 @@
 ^renv\.lock$
 ^renv$
 ^\.Rprofile$
+^latex-macros$

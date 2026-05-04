@@ -10,6 +10,8 @@ format:
     output-file: 08-selection-bias.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 Suppose an investigator conducted a randomized experiment to answer the causal question "does one's looking up to the sky make other pedestrians look up too?" She found a strong association between her looking up and other pedestrians' looking up. Does this association reflect a causal effect? By definition of a randomized experiment, confounding bias is not expected. However, another potential problem existed: the analysis included only those pedestrians who, after having been part of the experiment, gave consent for their data to be used. Shy pedestrians and pedestrians in front of whom the investigator looked up were less likely to participate. Thus participating individuals in front of whom the investigator looked up are less likely to be shy and therefore more likely to look up. That is, the process of selection of individuals into the analysis guarantees that looking up is associated with other pedestrians' looking up, regardless of whether it actually makes others look up.
 
 An association created as a result of the process by which individuals are selected into the analysis is referred to as **selection bias**. Unlike confounding, this type of bias is not due to the presence of common causes of treatment and outcome, and can arise in both randomized experiments and observational studies. Like confounding, selection bias is just a form of lack of exchangeability between the treated and the untreated. This chapter provides a definition of selection bias and reviews the methods to adjust for it.
@@ -28,7 +30,7 @@ The term "selection bias" encompasses various biases that arise from the procedu
 
 Suppose Figure 8.1 represents a study to estimate the effect of folic acid supplements $A$ given to pregnant women shortly after conception on the fetus's risk of developing a cardiac malformation $Y$ (1: yes, 0: no) during the first two months of pregnancy. The variable $C$ represents death before birth. A cardiac malformation increases mortality (arrow from $Y$ to $C$), and folic acid supplementation decreases mortality by reducing the risk of malformations other than cardiac ones (arrow from $A$ to $C$). The study was restricted to fetuses who survived until birth, i.e., conditioned on no death $C = 0$ (indicated by the box around node $C$).
 
-$$A \rightarrow C \leftarrow Y$$
+$$A \rightarrow Y, \quad A \rightarrow C \leftarrow Y$$
 
 The diagram shows two sources of association between treatment and outcome:
 
@@ -57,7 +59,7 @@ Figures 8.4–8.6 present additional causal diagrams that could lead to selectio
 ::: {#def-selection-bias}
 ## Selection Bias
 
-**Selection bias** refers to all biases that arise from conditioning on a common effect of two variables, one of which is either the treatment or a cause of treatment, and the other is either the outcome or a cause of the outcome.
+**Selection bias** refers to all biases that arise from conditioning on a common effect of two variables, one of which is either the treatment or a cause of treatment, and the other is either the outcome or a cause of the outcome—including conditioning on a descendant of such a common effect.
 :::
 
 ::: {.notes}
@@ -88,9 +90,7 @@ These examples show that selection bias may occur in retrospective studies—tho
 No bias arises in randomized experiments from selection into the study before treatment is assigned. For example, only volunteers who agree to participate are enrolled in randomized clinical trials, but such trials are not affected by volunteer bias because participants are randomly assigned to treatment only after agreeing to participate ($C = 0$). Thus none of Figures 8.3–8.6 can represent volunteer bias in a randomized trial.
 :::
 
-::: {.callout-note}
-## Fine Point 8.1: Selection Bias in Case-Control Studies
-
+::: {.callout-note title="Fine Point 8.1: Selection Bias in Case-Control Studies"}
 Figure 8.1 can be used to represent selection bias in a case-control study. Suppose an investigator wants to estimate the effect of postmenopausal estrogen treatment $A$ on coronary heart disease $Y$. The variable $C$ indicates whether a woman in the study population is selected for the case-control study (1: no, 0: yes). The arrow from disease status $Y$ to selection $C$ indicates that cases in the population are more likely to be selected than noncases.
 
 In this particular case-control study, the investigator decided to select controls ($Y = 0$) preferentially among women with a hip fracture. Because treatment $A$ has a protective causal effect on hip fracture, the selection of controls with hip fracture implies that treatment $A$ now has a causal effect on selection $C$ (arrow $A \rightarrow C$). The association measure (the treatment-outcome odds ratio) is by definition conditional on having been selected into the study ($C = 0$). If individuals with hip fracture are oversampled as controls, the probability of control selection depends on a consequence of treatment $A$, and "inappropriate control selection" bias will occur. This bias arises because we are conditioning on a common effect $C$ of treatment and outcome.
@@ -139,9 +139,7 @@ The term "healthy worker bias" is used to describe two structurally different bi
 
 The use of causal diagrams to represent the structure of the "healthy worker bias" prevents confusions that may arise from employing the same term for different sources of non-exchangeability.
 
-::: {.callout-note}
-## Technical Point 8.1: The Built-in Selection Bias of Hazard Ratios
-
+::: {.callout-note title="Technical Point 8.1: The Built-in Selection Bias of Hazard Ratios"}
 The causal DAG in Figure 8.8 describes a randomized experiment of the effect of heart transplant $A$ on death at times 1 ($Y_1$) and 2 ($Y_2$). The arrow from $A$ to $Y_1$ represents that transplant decreases the risk of death at time 1. The lack of an arrow from $A$ to $Y_2$ indicates that $A$ has no direct effect on death at time 2. The unmeasured haplotype $U$ decreases the individual's risk of death at all times.
 
 The time-specific hazard ratio at time 2 is $\Pr[Y_2 = 1 | A = 1, Y_1 = 0] / \Pr[Y_2 = 1 | A = 0, Y_1 = 0]$, which conditions on having survived past time 1 (the square around $Y_1$). Treated survivors of time 1 are less likely than untreated survivors of time 1 to have the protective haplotype $U$ (because treatment can explain their survival) and therefore are more likely to die at time 2. Thus, the hazard ratio at time 1 is less than 1, whereas the hazard ratio at time 2 is greater than 1, i.e., the hazards have crossed.
@@ -259,9 +257,7 @@ In contrast, $A$ and $E$ will not be independent conditionally on $Y = 0$ when a
 In summary, conditioning on a collider always induces an association between its causes, but this association could be restricted to certain levels of the common effect. Selection on a common effect does not always result in selection bias when the analysis is restricted to a single level of the common effect.
 :::
 
-::: {.callout-note}
-## Technical Point 8.2: Multiplicative Survival Model
-
+::: {.callout-note title="Technical Point 8.2: Multiplicative Survival Model"}
 When the conditional probability of survival $\Pr[Y = 0 | E = e, A = a]$ given $A$ and $E$ is equal to a product $g(e) h(a)$ of functions of $e$ and $a$, we say that a **multiplicative survival model** holds:
 
 $$\Pr[Y = 0 | E = e, A = a] = g(e) h(a)$$
@@ -277,9 +273,7 @@ where the first equality is by determinism and the second by the DAG factorizati
 Note that when $A$ and $E$ are conditionally independent given $Y = 0$, they will be conditionally dependent given $Y = 1$.
 :::
 
-::: {.callout-note}
-## Fine Point 8.2: The Strength and Direction of Selection Bias
-
+::: {.callout-note title="Fine Point 8.2: The Strength and Direction of Selection Bias"}
 We have referred to selection bias as an "all or nothing" issue: either bias exists or it doesn't. In practice, however, it is important to consider the expected direction and magnitude of the bias.
 
 The direction of the conditional association between two marginally independent causes $A$ and $E$ within strata of their common effect $Y$ depends on how $A$ and $E$ interact to cause $Y$. For example, suppose that, in the presence of an undiscovered background factor $U$ that is unassociated with $A$ or $E$, having either $A = 1$ or $E = 1$ is sufficient and necessary to cause death (an "or" mechanism), but that neither $A$ nor $E$ causes death in the absence of $U$. Then among those who died ($Y = 1$), $A$ and $E$ will be negatively associated, because it is more likely that an individual with $A = 0$ had $E = 1$ (since the absence of $A$ increases the chance that $E$ was the cause of death).

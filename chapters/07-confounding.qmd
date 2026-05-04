@@ -10,6 +10,8 @@ format:
     output-file: 07-confounding.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 In Chapter 3, we introduced exchangeability as a key identifiability condition. In Chapter 6, we learned to represent causal relationships using DAGs and introduced the backdoor criterion for identifying confounding. This chapter provides a detailed examination of **confounding**—the most common threat to validity in observational studies.
 
 ::: {.notes}
