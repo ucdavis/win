@@ -159,6 +159,9 @@
 </section>
 <section class="slide level2">
 
+<!-- https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX#Named_colors_provided_by_the_xcolor_package -->
+<!-- \def\or{\theta}  -->
+<!-- doesn't work for some reason -->
 <p>In previous chapters we have been concerned with causal questions about treatment effects on outcomes occurring at a particular time point. For example, we estimated the effect of smoking cessation on weight gain measured in the year 1982. Many causal questions, however, are concerned with treatment effects on the <strong>time until</strong> the occurrence of an event of interest. For example, we may want to estimate the causal effect of smoking cessation on the time until death, whenever death occurs. This is an example of a <strong>survival analysis</strong>.</p>
 <p>The use of the word “survival” does not imply that the event of interest must be death. The term “survival analysis”, or the equivalent term “failure time analysis”, is applied to any analyses about time to an event, where the event may be death, marriage, incarceration, cancer, flu infection, etc. Survival analyses require some special considerations and techniques because the failure time of many individuals may occur after the study has ended and is therefore unknown. This chapter outlines basic techniques for survival analysis in the simplified setting of time-fixed treatments.</p>
 <aside class="notes">
@@ -352,7 +355,7 @@
 <p><strong>Technical Point 17.1: Approximating the Hazard Ratio via a Logistic Model</strong></p>
 </div>
 <div class="callout-content">
-<p>The discrete-time hazard ratio <span class="math inline">\(\frac{\Pr[D_{k+1}=1 \mid D_k=0,A=1]}{\Pr[D_{k+1}=1 \mid D_k=0,A=0]}\)</span> equals <span class="math inline">\(\exp(\alpha_1)\)</span> at all times <span class="math inline">\(k+1\)</span> in the hazards model <span class="math inline">\(\Pr[D_{k+1} = 1 \mid D_k = 0, A] = \Pr[D_{k+1} = 1 \mid D_k = 0, A = 0] \times \exp(\alpha_1 A)\)</span>.</p>
+<p>The discrete-time hazard ratio <span class="math inline">\(\frac{\Pr[D_{k+1}=1 \mid D_k=0,A=1]}{\Pr[D_{k+1}=1 \mid D_k=0,A=0]}\)</span> equals <span class="math inline">\(\text{exp}{\left\{(\right\}}\alpha_1)\)</span> at all times <span class="math inline">\(k+1\)</span> in the hazards model <span class="math inline">\(\Pr[D_{k+1} = 1 \mid D_k = 0, A] = \Pr[D_{k+1} = 1 \mid D_k = 0, A = 0] \times \text{exp}{\left\{(\right\}}\alpha_1 A)\)</span>.</p>
 <p>Suppose the hazard at <span class="math inline">\(k + 1\)</span> is small, i.e., <span class="math inline">\(\Pr[D_{k+1} = 1 \mid D_k = 0, A] \approx 0\)</span>. Then the hazard is approximately equal to the odds, and we have:</p>
 <p><span class="math display">\[\text{logit}\,\Pr[D_{k+1} = 1 \mid D_k = 0, A] \approx \alpha_{0,k} + \alpha_1 A\]</span></p>
 <p>That is, if the hazard is close to zero at <span class="math inline">\(k + 1\)</span>, we can approximate the log hazard ratio <span class="math inline">\(\alpha_1\)</span> by <span class="math inline">\(\theta_1\)</span> in the logistic model. As a rule of thumb, the approximation is often considered accurate enough when <span class="math inline">\(\Pr[D_{k+1} = 1 \mid D_k = 0, A] &lt; 0.1\)</span> for all <span class="math inline">\(k\)</span>.</p>
@@ -485,15 +488,15 @@
 <section id="structural-nested-aft-models" class="slide level2">
 <h2>Structural Nested AFT Models</h2>
 <p>We can, however, model the ratio of survival times under different treatment levels. Let <span class="math inline">\(T^a_i\)</span> be the counterfactual time of survival for individual <span class="math inline">\(i\)</span> under treatment level <span class="math inline">\(a\)</span>. Suppose the effect of treatment is the same for every individual. We can then consider the <strong>structural nested accelerated failure time (AFT) model</strong>:</p>
-<p><span class="math display">\[T^a_i / T^{a=0}_i = \exp(-\psi_1 a)\]</span></p>
+<p><span class="math display">\[T^a_i / T^{a=0}_i = \text{exp}{\left\{(\right\}}-\psi_1 a)\]</span></p>
 <p>where <span class="math inline">\(\psi_1\)</span> measures the expansion (or contraction) of each individual’s survival time attributable to treatment:</p>
 <ul>
 <li><span class="math inline">\(\psi_1 &lt; 0\)</span>: treatment increases survival time</li>
 <li><span class="math inline">\(\psi_1 &gt; 0\)</span>: treatment decreases survival time</li>
 <li><span class="math inline">\(\psi_1 = 0\)</span>: treatment does not affect survival time</li>
 </ul>
-<p>More generally, the effect of treatment may depend on covariates <span class="math inline">\(L\)</span> so a more general structural AFT would be <span class="math inline">\(T^a_i / T^{a=0}_i = \exp(-\psi_1 a - \psi_2 a L_i)\)</span>. Rearranging, the model can be written as:</p>
-<p><span class="math display">\[T^{a=0}_i = T^a_i \exp(\psi_1 a + \psi_2 a L_i) \quad \text{for all individuals } i\]</span></p>
+<p>More generally, the effect of treatment may depend on covariates <span class="math inline">\(L\)</span> so a more general structural AFT would be <span class="math inline">\(T^a_i / T^{a=0}_i = \text{exp}{\left\{(\right\}}-\psi_1 a - \psi_2 a L_i)\)</span>. Rearranging, the model can be written as:</p>
+<p><span class="math display">\[T^{a=0}_i = T^a_i \text{exp}{\left\{(\right\}}\psi_1 a + \psi_2 a L_i) \quad \text{for all individuals } i\]</span></p>
 </section>
 <section id="selection-bias-from-administrative-censoring" class="slide level2">
 <h2>Selection Bias from Administrative Censoring</h2>
@@ -560,11 +563,11 @@ Table&nbsp;1: Survival times under treatment and no treatment for each individua
 <div class="callout-content">
 <p>The key challenge in g-estimation of structural nested AFT models is that administrative censoring creates selection bias when treatment affects the censoring indicator (see the main text above). The solution is to create “artificially censored” versions of the observed survival times.</p>
 <p>For a given candidate value <span class="math inline">\(\psi\)</span>, define the <strong>blipped-down</strong> survival time for treated individuals (<span class="math inline">\(A_i = 1\)</span>) as:</p>
-<p><span class="math display">\[U_i(\psi) = T_i \exp(\psi A_i)\]</span></p>
+<p><span class="math display">\[U_i(\psi) = T_i \text{exp}{\left\{(\right\}}\psi A_i)\]</span></p>
 <p>This quantity equals <span class="math inline">\(T^{a=0}_i\)</span> if <span class="math inline">\(\psi\)</span> equals the true <span class="math inline">\(\psi_1\)</span>. Under no unmeasured confounding, <span class="math inline">\(U_i(\psi_1)\)</span> is independent of <span class="math inline">\(A_i\)</span> within levels of <span class="math inline">\(L_i\)</span>.</p>
 <p>To account for administrative censoring at time <span class="math inline">\(K\)</span>, we define an <strong>artificially censored</strong> version of <span class="math inline">\(U_i(\psi)\)</span>:</p>
-<p><span class="math display">\[U^*_i(\psi) = \min\!\bigl(U_i(\psi),\; K \exp(-\psi A_i)\bigr)\]</span></p>
-<p>with corresponding artificial censoring indicator <span class="math inline">\(\Delta^*_i(\psi) = \mathbf{1}[U_i(\psi) \leq K \exp(-\psi A_i)]\)</span>.</p>
+<p><span class="math display">\[U^*_i(\psi) = \min\!\bigl(U_i(\psi),\; K \text{exp}{\left\{(\right\}}-\psi A_i)\bigr)\]</span></p>
+<p>with corresponding artificial censoring indicator <span class="math inline">\(\Delta^*_i(\psi) = \mathbf{1}[U_i(\psi) \leq K \text{exp}{\left\{(\right\}}-\psi A_i)]\)</span>.</p>
 <p>The g-estimator solves the estimating equation</p>
 <p><span class="math display">\[\sum_i \bigl(A_i - \hat{E}[A_i \mid L_i]\bigr) \cdot h\!\bigl(U^*_i(\psi), \Delta^*_i(\psi)\bigr) = 0\]</span></p>
 <p>where <span class="math inline">\(h(\cdot)\)</span> is a score function (e.g., from a rank-based or weighted log-rank statistic) and <span class="math inline">\(\hat{E}[A_i \mid L_i]\)</span> is the estimated propensity score. By searching over <span class="math inline">\(\psi\)</span>, we find the value that makes treated and untreated individuals comparable in terms of their blipped-down survival times.</p>
