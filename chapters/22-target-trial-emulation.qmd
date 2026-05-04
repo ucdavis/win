@@ -79,7 +79,7 @@ using precisely the methods from Chapters 19–21.
 **Why PP effects matter**:
 
 Policy questions are often best answered by the PP effect.
-For example, the question "does statins reduce cardiovascular events?"
+For example, the question "do statins reduce cardiovascular events?"
 is really asking about the effect of *taking* statins,
 not merely being assigned to the statin group.
 If adherence is poor, the ITT estimate will underestimate the biological efficacy of the drug.
