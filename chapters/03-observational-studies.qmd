@@ -10,6 +10,8 @@ format:
     output-file: 03-observational-studies.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 In Chapter 1, we defined causal effects using counterfactual outcomes. In Chapter 2, we showed how randomized experiments allow us to estimate causal effects because randomization ensures exchangeability. But most research questions cannot be answered with randomized experiments—either because it would be unethical, impractical, or impossible to randomize treatment. This chapter discusses observational studies, which do not involve randomization of treatment.
 
 The key question is: under what conditions can we validly estimate causal effects from observational data? This chapter introduces the fundamental identifiability conditions necessary for causal inference in observational studies.

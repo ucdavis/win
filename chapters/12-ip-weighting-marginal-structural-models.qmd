@@ -10,6 +10,8 @@ format:
     output-file: 12-ip-weighting-marginal-structural-models.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 This chapter introduces **inverse probability (IP) weighting**, a method for estimating causal effects that creates a pseudo-population in which treatment is independent of measured confounders. IP weighting is used to fit **marginal structural models**, which provide a natural framework for estimating marginal causal effects when treatment and confounding vary over time.
 
 ::: {.notes}

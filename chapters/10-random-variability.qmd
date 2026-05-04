@@ -10,6 +10,8 @@ format:
     output-file: 10-random-variability.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 Part I focused on causal inference in settings where we conceptualized study populations as effectively infinite, allowing us to ignore random variability and focus solely on systematic bias from confounding, selection, and measurement. Part II now introduces **random variability** and the use of **statistical models** for causal inference. This chapter bridges identification (Part I) and estimation (Part II), explaining why we need models and how to quantify uncertainty.
 
 ::: {.notes}

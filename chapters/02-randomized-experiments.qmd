@@ -10,6 +10,8 @@ format:
     output-file: 02-randomized-experiments.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 In Chapter 1, we concluded that association is not causation, and we asked under which conditions we could use data to estimate causal effects. This chapter provides one answer: conduct a randomized experiment. We use randomized experiments to illustrate fundamental concepts of causal inference, including exchangeability and the distinction between conditional and unconditional effects.
 
 ::: {.notes}

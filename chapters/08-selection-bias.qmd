@@ -10,6 +10,8 @@ format:
     output-file: 08-selection-bias.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 An association created as a result of the process by which individuals are selected into the analysis is referred to as **selection bias**. Unlike confounding, this type of bias is not due to the presence of common causes of treatment and outcome, and can arise in both randomized experiments and observational studies. Like confounding, selection bias is just a form of lack of exchangeability between the treated and the untreated. This chapter provides a definition of selection bias and reviews the methods to adjust for it.
 
 ::: {.notes}
