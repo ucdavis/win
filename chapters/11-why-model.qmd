@@ -10,6 +10,8 @@ format:
     output-file: 11-why-model.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 Part I of this book was mostly conceptual, with calculations kept to a minimum. In contrast, Part II requires the use of computers to fit regression models. This chapter describes the differences between the **nonparametric estimators** used in Part I and the **parametric (model-based) estimators** used in Part II. It reviews the concept of smoothing and the bias-variance trade-off in modeling decisions, motivating the need for models in data analysis regardless of whether the goal is causal inference or prediction.
 
 ::: {.notes}

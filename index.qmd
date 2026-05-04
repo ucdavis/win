@@ -10,6 +10,8 @@ format:
     output-file: index.docx
 ---
 
+{{< include latex-macros/macros.qmd >}}
+
 # Welcome {.unnumbered}
 
 This is a Quarto book project based on the textbook "What If?" by Miguel Hernán and James Robins.

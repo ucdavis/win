@@ -7,6 +7,7 @@ project:
     - "!README.md"
     - "!DUAL_FORMAT_GUIDE.md"
     - "!STRUCTURE_VERIFICATION.md"
+    - "!latex-macros/**"
 
 website:
   title: "What If? - Lecture Notes"

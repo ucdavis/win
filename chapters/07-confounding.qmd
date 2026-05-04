@@ -10,6 +10,8 @@ format:
     output-file: 07-confounding.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 ```{r}
 #| label: setup
 #| echo: false

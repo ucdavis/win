@@ -10,6 +10,8 @@ format:
     output-file: 09-measurement-bias.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 Measurement error can introduce bias in causal inference, even in the absence of confounding and selection bias. Unlike confounding (systematic differences in treatment groups) and selection bias (systematic differences in who is included in analysis), measurement bias arises from inaccurate measurement of variables. This chapter explores the structure and consequences of measurement error.
 
 ::: {.notes}

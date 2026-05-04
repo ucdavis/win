@@ -10,6 +10,8 @@ format:
     output-file: 18-variable-selection-causal-inference.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 This chapter addresses a critical question in causal inference: **Which variables should we adjust for?** Not all variables that predict the outcome should be included in causal models. Some variables, if adjusted for, can introduce bias rather than remove it. We provide guidance on variable selection using causal diagrams.
 
 ::: {.notes}

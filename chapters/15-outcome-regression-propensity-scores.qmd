@@ -10,6 +10,8 @@ format:
     output-file: 15-outcome-regression-propensity-scores.docx
 ---
 
+{{< include ../latex-macros/macros.qmd >}}
+
 This chapter explores **outcome regression** and **propensity scores** in greater depth, clarifying their roles in causal inference. We examine when simple regression adjustment is sufficient, when it fails, and how propensity scores can be used for confounding adjustment through matching, stratification, or weighting.
 
 ::: {.notes}
