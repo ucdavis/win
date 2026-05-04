@@ -1,3 +1,4 @@
+Berkson
 Berkson's
 Confounder
 Counterfactuals
@@ -8,6 +9,7 @@ Exchangeability
 Hernán
 IC
 JM
+LDL
 NPSEM
 NPSEMs
 Positivity
@@ -16,6 +18,8 @@ RevealJS
 SWIGs
 Survivorship
 TinyTeX
+antiretroviral
+associational
 bigl
 bigr
 callout
@@ -27,6 +31,9 @@ dagitty
 deterministically
 docx
 exchangeability
+frac
+ggdag
+immunosuppression
 ggdag
 ignorability
 leftarrow
@@ -34,15 +41,22 @@ longleftarrow
 longrightarrow
 mathrm
 navbar
+noncases
+nongrieving
+nonresponse
 neq
 notin
+oversampled
 patchwork
 perp
 positivity
+pre
 python
 qquad
+reweighting
 rightarrow
 roxygen
 tfrac
 tidyverse
+unassociated
 untestable
