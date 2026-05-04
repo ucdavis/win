@@ -162,6 +162,7 @@
 <!-- https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX#Named_colors_provided_by_the_xcolor_package -->
 <!-- \def\or{\theta}  -->
 <!-- doesn't work for some reason -->
+<p>Suppose an investigator conducted a randomized experiment to answer the causal question “does one’s looking up to the sky make other pedestrians look up too?” She found a strong association between her looking up and other pedestrians’ looking up. Does this association reflect a causal effect? By definition of a randomized experiment, confounding bias is not expected. However, another potential problem existed: the analysis included only those pedestrians who, after having been part of the experiment, gave consent for their data to be used. Shy pedestrians and pedestrians in front of whom the investigator looked up were less likely to participate. Thus participating individuals in front of whom the investigator looked up are less likely to be shy and therefore more likely to look up. That is, the process of selection of individuals into the analysis guarantees that looking up is associated with other pedestrians’ looking up, regardless of whether it actually makes others look up.</p>
 <p>An association created as a result of the process by which individuals are selected into the analysis is referred to as <strong>selection bias</strong>. Unlike confounding, this type of bias is not due to the presence of common causes of treatment and outcome, and can arise in both randomized experiments and observational studies. Like confounding, selection bias is just a form of lack of exchangeability between the treated and the untreated. This chapter provides a definition of selection bias and reviews the methods to adjust for it.</p>
 <aside class="notes">
 <p>This chapter is based on <span class="citation" data-cites="hernan2020causal">Hernán and Robins (<a href="#/references" role="doc-biblioref" onclick="">2020, chap. 8</a>, pp.&nbsp;103-116)</span>.</p>
@@ -184,58 +185,39 @@
 </section>
 <section class="slide level2">
 
-<p>The term “selection bias” encompasses various biases that arise from the procedure by which individuals are selected into the analysis. Here we focus on bias that would arise even if the treatment had a null effect on the outcome, i.e., <strong>selection bias under the null</strong>.</p>
-<p>The structure of selection bias can be represented using causal diagrams. Figure 8.1 depicts a dichotomous treatment <span class="math inline">\(A\)</span>, outcome <span class="math inline">\(Y\)</span>, and their common effect <span class="math inline">\(C\)</span>.</p>
+<p>The term “selection bias” encompasses various biases that arise from the procedure by which individuals are selected into the analysis. Here we focus on bias that would arise even if the treatment had a null effect on the outcome, i.e., <strong>selection bias under the null</strong> (as described in Section 6.5). The structure of selection bias can be represented using causal diagrams like Figure 8.1, which depicts dichotomous treatment <span class="math inline">\(A\)</span>, outcome <span class="math inline">\(Y\)</span>, and their common effect <span class="math inline">\(C\)</span>.</p>
 </section>
-<section id="example-folic-acid-and-cardiac-malformations" class="slide level2">
-<h2>Example: Folic Acid and Cardiac Malformations</h2>
-<p>Suppose we study the effect of folic acid supplements <span class="math inline">\(A\)</span> given to pregnant women shortly after conception on the fetus’s risk of developing a cardiac malformation <span class="math inline">\(Y\)</span> (1: yes, 0: no) during the first trimester of pregnancy.</p>
-<p>Let <span class="math inline">\(C\)</span> (1: yes, 0: no) indicate whether the pregnancy results in a live birth. Both treatment and outcome affect <span class="math inline">\(C\)</span>:</p>
-<ul>
-<li>Folic acid <span class="math inline">\(A\)</span> reduces the risk of spontaneous abortion (increases probability of live birth)</li>
-<li>Cardiac malformations <span class="math inline">\(Y\)</span> increase the risk of spontaneous abortion (decrease probability of live birth)</li>
-</ul>
-<p>Therefore, <span class="math inline">\(C\)</span> is a <strong>common effect</strong> (collider) of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>: <span class="math inline">\(A \rightarrow C \leftarrow Y\)</span></p>
-<aside class="notes">
-<p><strong>Key insight</strong>: Even in a perfectly randomized study with no confounding, if we restrict our analysis to live births only (<span class="math inline">\(C = 1\)</span>), we induce an association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> through conditioning on their common effect <span class="math inline">\(C\)</span>.</p>
-<p>This is the fundamental structure of selection bias: conditioning on (or restricting to) a common effect of treatment and outcome.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="figure-8.1-folic-acid-and-cardiac-malformations" class="slide level2 scrollable">
+<h2>Figure 8.1: Folic Acid and Cardiac Malformations</h2>
+<p>Suppose Figure 8.1 represents a study to estimate the effect of folic acid supplements <span class="math inline">\(A\)</span> given to pregnant women shortly after conception on the fetus’s risk of developing a cardiac malformation <span class="math inline">\(Y\)</span> (1: yes, 0: no) during the first two months of pregnancy. The variable <span class="math inline">\(C\)</span> represents death before birth. A cardiac malformation increases mortality (arrow from <span class="math inline">\(Y\)</span> to <span class="math inline">\(C\)</span>), and folic acid supplementation decreases mortality by reducing the risk of malformations other than cardiac ones (arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(C\)</span>). The study was restricted to fetuses who survived until birth, i.e., conditioned on no death <span class="math inline">\(C = 0\)</span> (indicated by the box around node <span class="math inline">\(C\)</span>).</p>
+<p><span class="math display">\[A \rightarrow Y, \quad A \rightarrow C \leftarrow Y\]</span></p>
+<p>The diagram shows two sources of association between treatment and outcome:</p>
+<ol type="1">
+<li>The open path <span class="math inline">\(A \rightarrow Y\)</span> representing the causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span></li>
+<li>The open path <span class="math inline">\(A \rightarrow C \leftarrow Y\)</span> linking <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> through their conditioned-on common effect <span class="math inline">\(C\)</span></li>
+</ol>
+<p>An analysis conditioned on <span class="math inline">\(C\)</span> will generally result in an association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>. Because of this selection bias, the associational risk ratio <span class="math inline">\(\Pr[Y = 1 | A = 1, C = 0] / \Pr[Y = 1 | A = 0, C = 0]\)</span> does not equal the causal risk ratio <span class="math inline">\(\Pr[Y^{a=1} = 1] / \Pr[Y^{a=0} = 1]\)</span>; association is not causation. If the analysis were not conditioned on the common effect (collider) <span class="math inline">\(C\)</span>, then the only open path between treatment and outcome would be <span class="math inline">\(A \rightarrow Y\)</span>, and thus the entire association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> would be due to the causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span>.</p>
 </section>
-<section id="bias-from-conditioning-on-a-collider" class="slide level2">
-<h2>Bias from Conditioning on a Collider</h2>
-<p>In the full population (not conditioning on <span class="math inline">\(C\)</span>):</p>
+<section id="figure-8.2-extension-with-parental-grief" class="slide level2">
+<h2>Figure 8.2: Extension with Parental Grief</h2>
+<p>The causal diagram in Figure 8.2 extends Figure 8.1 by adding a node <span class="math inline">\(S\)</span> representing parental grief (1: yes, 0: no), which is affected by vital status at birth (arrow from <span class="math inline">\(C\)</span> to <span class="math inline">\(S\)</span>). Suppose the study was restricted to nongrieving parents (<span class="math inline">\(S = 0\)</span>) because the others were unwilling to participate. As discussed in Chapter 6, conditioning on a variable <span class="math inline">\(S\)</span> affected by the collider <span class="math inline">\(C\)</span> also opens the path <span class="math inline">\(A \rightarrow C \leftarrow Y\)</span>.</p>
+<p>Both Figures 8.1 and 8.2 depict examples of selection bias in which the bias arises because of conditioning on a common effect of treatment and outcome: <span class="math inline">\(C\)</span> in Figure 8.1 and <span class="math inline">\(S\)</span> in Figure 8.2. This bias arises regardless of whether there is an arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>, i.e., it is <strong>selection bias under the null</strong>.</p>
+</section>
+<section id="figures-8.38.6-selection-bias-from-differential-loss-to-follow-up" class="slide level2">
+<h2>Figures 8.3–8.6: Selection Bias from Differential Loss to Follow-Up</h2>
+<p>Consider the causal diagram in Figure 8.3, which represents a follow-up study of individuals with HIV infection to estimate the effect of certain antiretroviral treatment <span class="math inline">\(A\)</span> on the 3-year risk of death <span class="math inline">\(Y\)</span> (with no arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> to reduce clutter). The unmeasured variable <span class="math inline">\(U\)</span> represents high level of immunosuppression (1: yes, 0: no). Individuals with <span class="math inline">\(U = 1\)</span> have a greater risk of death. Individuals who drop out from the study or are otherwise lost to follow-up are censored (<span class="math inline">\(C = 1\)</span>). Individuals with <span class="math inline">\(U = 1\)</span> are more likely to be censored because the severity of their disease prevents them from participating. The effect of <span class="math inline">\(U\)</span> on censoring <span class="math inline">\(C\)</span> is mediated by symptoms (fever, weight loss, diarrhea), CD4 count, and viral load, all included in <span class="math inline">\(L\)</span>. Individuals receiving treatment are at a greater risk of experiencing side effects, which could lead them to drop out (arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(C\)</span>). The square around <span class="math inline">\(C\)</span> indicates that the analysis is restricted to individuals who remained uncensored (<span class="math inline">\(C = 0\)</span>).</p>
+<p>According to the rules of d-separation, conditioning on the collider <span class="math inline">\(C\)</span> opens the path <span class="math inline">\(A \rightarrow C \leftarrow L \leftarrow U \rightarrow Y\)</span> and thus association flows from treatment <span class="math inline">\(A\)</span> to outcome <span class="math inline">\(Y\)</span>, i.e., the associational risk ratio is not equal to 1 even though the causal risk ratio is equal to 1. The bias in Figure 8.3 is an example of selection bias that results from conditioning on censoring <span class="math inline">\(C\)</span>, which is a common effect of treatment <span class="math inline">\(A\)</span> and of a cause <span class="math inline">\(U\)</span> of the outcome <span class="math inline">\(Y\)</span>, rather than a common effect of treatment and outcome.</p>
+<p>Figures 8.4–8.6 present additional causal diagrams that could lead to selection bias by differential loss to follow-up:</p>
 <ul>
-<li>Treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> are marginally independent if there’s no causal effect</li>
-<li>No association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>: <span class="math inline">\(A \perp\!\!\!\perp Y\)</span></li>
-</ul>
-<p>After restricting to live births (<span class="math inline">\(C = 1\)</span>):</p>
-<ul>
-<li>Treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> become associated</li>
-<li>Association is induced by conditioning on the collider <span class="math inline">\(C\)</span></li>
-<li>This association exists even if <span class="math inline">\(A\)</span> has no causal effect on <span class="math inline">\(Y\)</span></li>
+<li><strong>Figure 8.4</strong>: Prior treatment <span class="math inline">\(A\)</span> has a direct effect on symptoms <span class="math inline">\(L\)</span>. Restricting to uncensored individuals implies conditioning on the common effect <span class="math inline">\(C\)</span> of <span class="math inline">\(A\)</span> and <span class="math inline">\(U\)</span>, introducing an association between treatment and outcome.</li>
+<li><strong>Figures 8.5 and 8.6</strong>: Variations of Figures 8.3 and 8.4 that include a common cause <span class="math inline">\(W\)</span> of <span class="math inline">\(A\)</span> and another measured variable.</li>
 </ul>
 <div id="def-selection-bias" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Selection Bias)</strong></span> <strong>Selection bias</strong> occurs when conditioning on (or restricting the analysis to) a common effect of treatment and outcome, or conditioning on a variable affected by such a common effect.</p>
-<p>This creates a non-causal association between treatment and outcome, even under the null hypothesis of no treatment effect.</p>
+<p><span class="theorem-title"><strong>Definition 1 (Selection Bias)</strong></span> <strong>Selection bias</strong> refers to all biases that arise from conditioning on a common effect of two variables, one of which is either the treatment or a cause of treatment, and the other is either the outcome or a cause of the outcome—including conditioning on a descendant of such a common effect.</p>
 </div>
 <aside class="notes">
-<p><strong>Why does this create bias?</strong></p>
-<p>Within the selected subset (e.g., live births):</p>
-<ul>
-<li>Treated mothers who had a live birth are more likely to have fetuses without malformations (because treatment reduces abortion risk, so treated mothers with malformed fetuses can still have live births)</li>
-<li>Untreated mothers who had a live birth and whose fetuses had malformations must have been “lucky” in other ways to avoid abortion</li>
-</ul>
-<p>This creates a spurious negative association between treatment and malformation in live births, even if treatment has no causal effect on malformations.</p>
+<p>Causal structures that result in bias under the null also cause bias when the treatment has a non-null effect. Both confounding (due to common causes) and selection bias (due to conditioning on common effects) are examples of bias under the null.</p>
+<p>An important difference between confounding and selection bias: randomization protects against confounding, but not against selection bias when the selection occurs after the randomization.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -255,31 +237,17 @@
 </section>
 <section class="slide level2">
 
-<p>Selection bias can arise in many settings. Here we review several common examples.</p>
-</section>
-<section id="self-selection-and-volunteer-bias" class="slide level2">
-<h2>Self-Selection and Volunteer Bias</h2>
-<p><strong>Scenario</strong>: Volunteers for a study may differ systematically from non-volunteers.</p>
-<p><strong>Example</strong>: A study of the effect of exercise <span class="math inline">\(A\)</span> on depression <span class="math inline">\(Y\)</span> recruits volunteers.</p>
-<p>If both:</p>
+<p>The causal diagrams in Figures 8.3–8.6 can represent several types of selection bias:</p>
 <ul>
-<li>People who exercise are more likely to volunteer</li>
-<li>People without depression are more likely to volunteer</li>
+<li><p><strong>Differential loss to follow-up</strong> (also called bias due to informative censoring): The variable <span class="math inline">\(C\)</span> in Figures 8.3–8.6 represents censoring, and the bias is precisely as described in the previous section.</p></li>
+<li><p><strong>Missing data bias, nonresponse bias</strong>: The variable <span class="math inline">\(C\)</span> in Figures 8.3–8.6 can represent missing data on the outcome for any reason, not just as a result of loss to follow-up. Individuals could have missing data because they are reluctant to provide information or because they miss study visits. Restricting the analysis to individuals with complete data (<span class="math inline">\(C = 0\)</span>) may result in bias.</p></li>
+<li><p><strong>Healthy worker bias</strong>: Figures 8.3–8.6 can also describe a bias that arises when estimating the effect of an occupational exposure <span class="math inline">\(A\)</span> (e.g., a chemical) on mortality <span class="math inline">\(Y\)</span> in a cohort of factory workers. The underlying unmeasured true health status <span class="math inline">\(U\)</span> is a determinant of both death <span class="math inline">\(Y\)</span> and of being at work <span class="math inline">\(C\)</span> (1: not at work, 0: at work). The study is restricted to individuals who are at work (<span class="math inline">\(C = 0\)</span>) at the time of outcome ascertainment. Being exposed to the chemical reduces the probability of being at work in the near future, either directly (e.g., exposure can cause disabling asthma) like in Figures 8.3 and 8.4, or through a common cause <span class="math inline">\(W\)</span> like in Figures 8.5 and 8.6.</p></li>
+<li><p><strong>Self-selection bias, volunteer bias</strong>: Figures 8.3–8.6 can also represent a study in which <span class="math inline">\(C\)</span> is agreement to participate (1: no, 0: yes), <span class="math inline">\(A\)</span> is cigarette smoking, <span class="math inline">\(Y\)</span> is coronary heart disease, <span class="math inline">\(U\)</span> is family history of heart disease, and <span class="math inline">\(W\)</span> is healthy lifestyle. Under any of these structures, selection bias may be present if the study is restricted to those who volunteered or elected to participate (<span class="math inline">\(C = 0\)</span>).</p></li>
+<li><p><strong>Selection affected by treatment received before study entry</strong>: If treatment <span class="math inline">\(A\)</span> took place before the study started and affects the probability of being selected into the study, selection bias is expected. This bias may be present in any study that attempts to estimate the causal effect of a treatment that occurred before the study started or in which treatment includes a pre-study component.</p></li>
 </ul>
-<p>Then among volunteers, exercisers may appear less depressed even without a causal effect, simply because volunteers who don’t exercise are selected for being unusually non-depressed (to offset their lower volunteering tendency).</p>
-</section>
-<section id="loss-to-follow-up" class="slide level2">
-<h2>Loss to Follow-Up</h2>
-<p><strong>Scenario</strong>: Individuals drop out of a study after treatment assignment but before outcome measurement.</p>
-<p><strong>Example</strong>: Sicker patients are more likely to drop out, and treatment affects sickness.</p>
-<p>If the analysis is restricted to those who complete the study, selection bias may occur because completion status <span class="math inline">\(C\)</span> is affected by both treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> (or their common causes).</p>
 <aside class="notes">
-<p><strong>Loss to follow-up</strong> is one of the most common sources of selection bias in practice.</p>
-<p>The bias can go in either direction depending on the pattern of dropout:</p>
-<ul>
-<li>If treatment makes people sicker and sicker people drop out more, the effect may appear less harmful than it truly is</li>
-<li>If treatment makes people healthier and healthier people drop out less, the effect may appear more beneficial than it truly is</li>
-</ul>
+<p>These examples show that selection bias may occur in retrospective studies—those in which data on treatment <span class="math inline">\(A\)</span> are collected after the outcome <span class="math inline">\(Y\)</span> occurs—and in prospective studies—those in which data on treatment <span class="math inline">\(A\)</span> are collected before the outcome <span class="math inline">\(Y\)</span> occurs. Further, selection bias may occur both in observational studies and in randomized experiments (when selection happens after randomization).</p>
+<p>No bias arises in randomized experiments from selection into the study before treatment is assigned. For example, only volunteers who agree to participate are enrolled in randomized clinical trials, but such trials are not affected by volunteer bias because participants are randomly assigned to treatment only after agreeing to participate (<span class="math inline">\(C = 0\)</span>). Thus none of Figures 8.3–8.6 can represent volunteer bias in a randomized trial.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -291,84 +259,51 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
-<section id="healthy-worker-bias" class="slide level2">
-<h2>Healthy Worker Bias</h2>
-<p><strong>Scenario</strong>: Workers must be healthy enough to remain employed.</p>
-<p><strong>Example</strong>: Studying occupational exposures <span class="math inline">\(A\)</span> on mortality <span class="math inline">\(Y\)</span> among employed workers.</p>
-<p>Employment status <span class="math inline">\(C\)</span> is affected by both:</p>
-<ul>
-<li>Occupational exposures (some exposures make workers sick, leading to job loss)</li>
-<li>Health status (sick workers leave the workforce)</li>
-</ul>
-<p>Restricting to currently employed workers conditions on <span class="math inline">\(C\)</span>, inducing selection bias.</p>
-<p>Result: Occupational cohorts often show lower mortality than the general population (the “healthy worker effect”), even for harmful exposures.</p>
-</section>
-<section id="berksons-bias-hospital-selection-bias" class="slide level2">
-<h2>Berkson’s Bias (Hospital Selection Bias)</h2>
-<p><strong>Scenario</strong>: Hospital-based case-control studies.</p>
-<p><strong>Example</strong>: Studying the effect of smoking <span class="math inline">\(A\)</span> on lung cancer <span class="math inline">\(Y\)</span> using hospitalized patients.</p>
-<p>If:</p>
-<ul>
-<li>Smokers with other conditions (e.g., heart disease) are more likely to be hospitalized</li>
-<li>Non-smokers with lung cancer are more likely to be hospitalized than healthy non-smokers</li>
-</ul>
-<p>Then among hospitalized individuals, smoking and lung cancer may appear less associated than in the general population.</p>
-<aside class="notes">
-<p><strong>Berkson’s bias</strong> (Berkson 1946) was one of the first recognized forms of selection bias.</p>
-<p>Named after Joseph Berkson, who noted that hospital-based studies can produce spurious associations because hospitalization itself is influenced by multiple factors.</p>
-<p>The bias arises because hospitalization <span class="math inline">\(C\)</span> is a collider: various diseases and risk factors increase the probability of hospitalization.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<div title="Fine Point 8.1: Selection Bias in Case-Control Studies">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Fine Point 8.1: Selection Bias in Case-Control Studies</strong></p>
+</div>
+<div class="callout-content">
+<p>Figure 8.1 can be used to represent selection bias in a case-control study. Suppose an investigator wants to estimate the effect of postmenopausal estrogen treatment <span class="math inline">\(A\)</span> on coronary heart disease <span class="math inline">\(Y\)</span>. The variable <span class="math inline">\(C\)</span> indicates whether a woman in the study population is selected for the case-control study (1: no, 0: yes). The arrow from disease status <span class="math inline">\(Y\)</span> to selection <span class="math inline">\(C\)</span> indicates that cases in the population are more likely to be selected than noncases.</p>
+<p>In this particular case-control study, the investigator decided to select controls (<span class="math inline">\(Y = 0\)</span>) preferentially among women with a hip fracture. Because treatment <span class="math inline">\(A\)</span> has a protective causal effect on hip fracture, the selection of controls with hip fracture implies that treatment <span class="math inline">\(A\)</span> now has a causal effect on selection <span class="math inline">\(C\)</span> (arrow <span class="math inline">\(A \rightarrow C\)</span>). The association measure (the treatment-outcome odds ratio) is by definition conditional on having been selected into the study (<span class="math inline">\(C = 0\)</span>). If individuals with hip fracture are oversampled as controls, the probability of control selection depends on a consequence of treatment <span class="math inline">\(A\)</span>, and “inappropriate control selection” bias will occur. This bias arises because we are conditioning on a common effect <span class="math inline">\(C\)</span> of treatment and outcome.</p>
+<p>Other forms of selection bias in case-control studies, including some biases described by Berkson (1946) and incidence-prevalence bias, can also be represented by Figure 8.1 or modifications of it.</p>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="selection-bias-and-confounding-pp.-109-111" class="title-slide slide level1 center" data-number="3">
 <h1><span class="header-section-number">3</span> 8.3 Selection Bias and Confounding (pp.&nbsp;109-111)</h1>
 
 </section>
-<section class="slide level2">
+<section class="slide level2 scrollable">
 
-<p>Selection bias and confounding are both forms of non-exchangeability, but they have different causal structures.</p>
-</section>
-<section id="structural-differences" class="slide level2">
-<h2>Structural Differences</h2>
-<p><strong>Confounding</strong>:</p>
-<ul>
-<li>Due to common <strong>causes</strong> of treatment and outcome</li>
-<li>Structure: <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> (backdoor path)</li>
-<li>Present in the population before any selection</li>
-</ul>
-<p><strong>Selection bias</strong>:</p>
-<ul>
-<li>Due to conditioning on common <strong>effects</strong> of treatment and outcome</li>
-<li>Structure: <span class="math inline">\(A \rightarrow C \leftarrow Y\)</span> (collider)</li>
-<li>Created by the process of selecting individuals into the analysis</li>
-</ul>
-</section>
-<section id="can-both-occur-simultaneously" class="slide level2 scrollable">
-<h2>Can Both Occur Simultaneously?</h2>
-<p>Yes! A variable can be both a confounder and a source of selection bias.</p>
-<p><strong>Example</strong>: Consider a variable <span class="math inline">\(L\)</span> that:</p>
+<p>In the previous chapter and in this chapter, we described two reasons why the treated and the untreated may not be exchangeable:</p>
 <ol type="1">
-<li>Is a common cause of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> (creates confounding)</li>
-<li>Is conditioned on in the analysis (creates selection bias if <span class="math inline">\(L\)</span> is also affected by <span class="math inline">\(A\)</span> or <span class="math inline">\(Y\)</span>)</li>
+<li>The presence of <strong>common causes</strong> of treatment and outcome (confounding)</li>
+<li><strong>Conditioning on common effects</strong> of treatment and outcome or causes of them (selection bias)</li>
 </ol>
+<p>This structural definition provides a clear-cut classification, even though it might not coincide perfectly with the traditional terminology of some disciplines.</p>
+</section>
+<section id="the-firefighter-example" class="slide level2 scrollable">
+<h2>The Firefighter Example</h2>
+<p>Consider a study restricted to firefighters that aims to estimate the causal effect of being physically active <span class="math inline">\(A\)</span> on the risk of heart disease <span class="math inline">\(Y\)</span> (Figure 8.7). For simplicity, assume that <span class="math inline">\(A\)</span> does not cause <span class="math inline">\(Y\)</span>. Parental socioeconomic status <span class="math inline">\(L\)</span> affects both the risk of becoming a firefighter <span class="math inline">\(C\)</span> and, through childhood diet, of heart disease <span class="math inline">\(Y\)</span>. Attraction toward activities that involve physical activity (an unmeasured variable <span class="math inline">\(U\)</span>) affects both the risk of becoming a firefighter and of being physically active (<span class="math inline">\(A\)</span>). <span class="math inline">\(U\)</span> does not affect <span class="math inline">\(Y\)</span>, and <span class="math inline">\(L\)</span> does not affect <span class="math inline">\(A\)</span>.</p>
+<p>According to our terminology, there is no confounding because there are no common causes of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>. Thus, in the full population, the associational risk ratio <span class="math inline">\(\Pr[Y = 1 | A = 1] / \Pr[Y = 1 | A = 0]\)</span> is expected to equal the causal risk ratio <span class="math inline">\(\Pr[Y^{a=1} = 1] / \Pr[Y^{a=0} = 1] = 1\)</span>.</p>
+<p>However, in a study restricted to firefighters (<span class="math inline">\(C = 0\)</span>), the associational and causal risk ratios would differ because conditioning on a common effect <span class="math inline">\(C\)</span> of causes of treatment and outcome induces selection bias. To the study investigators, the distinction between confounding and selection bias is moot because, regardless of nomenclature, they must adjust for <span class="math inline">\(L\)</span> to make the treated and untreated firefighters comparable.</p>
 <aside class="notes">
-<p><strong>Practical implication</strong>: Adjusting for a variable can simultaneously:</p>
-<ul>
-<li>Reduce confounding (if the variable is a confounder)</li>
-<li>Introduce selection bias (if the variable is a collider)</li>
-</ul>
-<p>This is why careful causal analysis using DAGs is essential before deciding which variables to adjust for.</p>
+<p>There are advantages to adopting a structural approach to classifying sources of non-exchangeability:</p>
+<ol type="1">
+<li><p>The structure frequently guides the choice of analytical methods to reduce or avoid the bias. In longitudinal studies with time-varying treatments, identifying the structure allows us to detect situations in which adjustment for confounding via stratification would introduce selection bias.</p></li>
+<li><p>Even when understanding the structure does not have implications for data analysis, it could still help study design.</p></li>
+<li><p>Selection bias resulting from conditioning on pre-treatment variables could explain why certain variables behave as “confounders” in some studies but not others.</p></li>
+<li><p>Causal diagrams enhance communication among investigators.</p></li>
+</ol>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -381,15 +316,31 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="confounding-by-selection" class="slide level2">
-<h2>Confounding by Selection</h2>
-<p>In some causal diagrams, selection can induce confounding by opening backdoor paths that would otherwise be blocked.</p>
-<p><strong>Example</strong>: Suppose there is no confounding in the full population, but restricting the analysis to a subset creates confounding.</p>
-<p>This occurs when:</p>
-<ul>
-<li>Selection <span class="math inline">\(S\)</span> is a collider on a path between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span></li>
-<li>Conditioning on <span class="math inline">\(S\)</span> opens that path, creating confounding</li>
-</ul>
+<section id="healthy-worker-bias-revisited" class="slide level2 scrollable">
+<h2>Healthy Worker Bias Revisited</h2>
+<p>The term “healthy worker bias” is used to describe two structurally different biases:</p>
+<ol type="1">
+<li><p>The bias described in Section 8.2, which arises from conditioning on the variable <span class="math inline">\(C\)</span>—a common effect of (a cause of) treatment and (a cause of) the outcome. This is selection bias and can be represented by Figures 8.3–8.6.</p></li>
+<li><p>The bias that occurs when comparing the risk in a group of workers with that in a group of individuals from the general population. Here <span class="math inline">\(L\)</span> represents health status, <span class="math inline">\(A\)</span> represents membership in the group of workers, and <span class="math inline">\(Y\)</span> represents the outcome. There are arrows from <span class="math inline">\(L\)</span> to <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> because being healthy affects job type and risk of subsequent outcome. This is confounding (from the common cause <span class="math inline">\(L\)</span>) and can be represented by Figure 7.1.</p></li>
+</ol>
+<p>The use of causal diagrams to represent the structure of the “healthy worker bias” prevents confusions that may arise from employing the same term for different sources of non-exchangeability.</p>
+<div title="Technical Point 8.1: The Built-in Selection Bias of Hazard Ratios">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Technical Point 8.1: The Built-in Selection Bias of Hazard Ratios</strong></p>
+</div>
+<div class="callout-content">
+<p>The causal DAG in Figure 8.8 describes a randomized experiment of the effect of heart transplant <span class="math inline">\(A\)</span> on death at times 1 (<span class="math inline">\(Y_1\)</span>) and 2 (<span class="math inline">\(Y_2\)</span>). The arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y_1\)</span> represents that transplant decreases the risk of death at time 1. The lack of an arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y_2\)</span> indicates that <span class="math inline">\(A\)</span> has no direct effect on death at time 2. The unmeasured haplotype <span class="math inline">\(U\)</span> decreases the individual’s risk of death at all times.</p>
+<p>The time-specific hazard ratio at time 2 is <span class="math inline">\(\Pr[Y_2 = 1 | A = 1, Y_1 = 0] / \Pr[Y_2 = 1 | A = 0, Y_1 = 0]\)</span>, which conditions on having survived past time 1 (the square around <span class="math inline">\(Y_1\)</span>). Treated survivors of time 1 are less likely than untreated survivors of time 1 to have the protective haplotype <span class="math inline">\(U\)</span> (because treatment can explain their survival) and therefore are more likely to die at time 2. Thus, the hazard ratio at time 1 is less than 1, whereas the hazard ratio at time 2 is greater than 1, i.e., the hazards have crossed.</p>
+<p>The hazard ratio at time 2 is a biased estimate of the direct effect of treatment on mortality at time 2. The bias is selection bias arising from conditioning on a common effect <span class="math inline">\(Y_1\)</span> of treatment <span class="math inline">\(A\)</span> and of <span class="math inline">\(U\)</span>, which is a cause of <span class="math inline">\(Y_2\)</span> that opens the associational path <span class="math inline">\(A \rightarrow Y_1 \leftarrow U \rightarrow Y_2\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="selection-bias-and-censoring-pp.-111-113" class="title-slide slide level1 center" data-number="4">
@@ -398,41 +349,31 @@
 </section>
 <section class="slide level2">
 
-<p><strong>Censoring</strong> is a specific form of selection where we fail to observe the outcome for some individuals.</p>
-</section>
-<section id="types-of-censoring" class="slide level2">
-<h2>Types of Censoring</h2>
-<p><strong>Right censoring</strong>: Outcome is not observed because follow-up ends before the outcome occurs (e.g., study ends, patient drops out).</p>
-<p><strong>Left censoring</strong>: Outcome occurred before observation began.</p>
-<p><strong>Interval censoring</strong>: Outcome time is known only to occur within an interval.</p>
-</section>
-<section id="selection-bias-due-to-censoring" class="slide level2 scrollable">
-<h2>Selection Bias Due to Censoring</h2>
-<p>Censoring causes selection bias if:</p>
-<ol type="1">
-<li>Censoring is affected by treatment, outcome, or their common causes</li>
-<li>The analysis is restricted to uncensored observations</li>
-</ol>
-<div id="exm-censoring-bias" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Censoring Creates Selection Bias)</strong></span> Study the effect of AZT <span class="math inline">\(A\)</span> on mortality <span class="math inline">\(Y\)</span> in HIV-positive individuals.</p>
-<p>Suppose:</p>
-<ul>
-<li>AZT reduces mortality (increases survival time)</li>
-<li>Sicker patients are more likely to drop out of the study</li>
-<li>We censor (exclude) individuals who drop out</li>
-</ul>
-<p>Let <span class="math inline">\(C\)</span> indicate whether an individual remains in the study until outcome measurement.</p>
-<p>If <span class="math inline">\(C\)</span> is affected by both <span class="math inline">\(A\)</span> (through its effect on health/survival) and <span class="math inline">\(Y\)</span> (sicker people with worse outcomes drop out more), then restricting to <span class="math inline">\(C = 1\)</span> creates selection bias.</p>
-</div>
+<p>Suppose an investigator conducted a marginally randomized experiment to estimate the average causal effect of wasabi intake on the one-year risk of death (<span class="math inline">\(Y = 1\)</span>). Half of the 60 study participants were randomly assigned to eating meals supplemented with wasabi (<span class="math inline">\(A = 1\)</span>) until the end of follow-up or death, whichever occurred first. The other half were assigned to meals that contained no wasabi (<span class="math inline">\(A = 0\)</span>). After 1 year, 17 individuals died in each group. That is, the associational risk ratio <span class="math inline">\(\Pr[Y = 1 | A = 1] / \Pr[Y = 1 | A = 0]\)</span> was 1. Because of randomization, the causal risk ratio <span class="math inline">\(\Pr[Y^{a=1} = 1] / \Pr[Y^{a=0} = 1]\)</span> is also expected to be 1.</p>
+<p>Unfortunately, the investigator could not observe the 17 deaths that occurred in each group because many patients were lost to follow-up, or censored, before the end of the study. The proportion of censoring (<span class="math inline">\(C = 1\)</span>) was higher among patients with heart disease (<span class="math inline">\(L = 1\)</span>) at the start of the study and among those assigned to wasabi supplementation (<span class="math inline">\(A = 1\)</span>). In fact, only 9 individuals in the wasabi group and 22 individuals in the other group were not lost to follow-up. The investigator observed 4 deaths in the wasabi group and 11 deaths in the other group. That is, the associational risk ratio <span class="math inline">\(\Pr[Y = 1 | A = 1, C = 0] / \Pr[Y = 1 | A = 0, C = 0]\)</span> was <span class="math inline">\((4/9)/(11/22) = 0.89\)</span> among the uncensored. The risk ratio of 0.89 in the uncensored differs from the causal risk ratio of 1 in the entire population: there is selection bias due to conditioning on the common effect <span class="math inline">\(C\)</span>.</p>
 <aside class="notes">
-<p><strong>Informative censoring</strong>: Censoring is said to be informative if it is associated with the outcome (conditional on treatment and measured covariates).</p>
-<p>Informative censoring creates selection bias because it’s equivalent to conditioning on a collider or descendant of a collider.</p>
-<p><strong>Methods to handle censoring</strong>:</p>
-<ul>
-<li>Inverse probability of censoring weighting (IPCW)</li>
-<li>Imputation methods</li>
-<li>Survival analysis methods (Chapter 17)</li>
-</ul>
+<p>The causal diagram in Figure 8.3 depicts the relation between the variables <span class="math inline">\(L\)</span>, <span class="math inline">\(A\)</span>, <span class="math inline">\(C\)</span>, and <span class="math inline">\(Y\)</span> in the randomized trial of wasabi. <span class="math inline">\(U\)</span> represents atherosclerosis, an unmeasured variable, that affects both heart disease <span class="math inline">\(L\)</span> and death <span class="math inline">\(Y\)</span>. Figure 8.3 shows there are no common causes of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>, as expected in a marginally randomized experiment, and thus there is no need to adjust for confounding to compute the causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span>.</p>
+<p>The backdoor criterion says that adjustment for the causal effect of censoring <span class="math inline">\(C\)</span> on <span class="math inline">\(Y\)</span> (which is null in Figure 8.3) is possible because the measured variable <span class="math inline">\(L\)</span> can be used to block the backdoor path <span class="math inline">\(C \leftarrow L \leftarrow U \rightarrow Y\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="counterfactual-notation-for-censoring" class="slide level2">
+<h2>Counterfactual Notation for Censoring</h2>
+<p>The causal contrast of interest needs to be modified in the presence of censoring. Because selection bias would not exist if everybody had been uncensored, we want to consider a causal contrast that reflects what would have happened in the absence of censoring.</p>
+<p>Let <span class="math inline">\(Y^{a=1,c=0}\)</span> be an individual’s counterfactual outcome if they had received treatment <span class="math inline">\(A = 1\)</span> and had remained uncensored <span class="math inline">\(C = 0\)</span>. Similarly, let <span class="math inline">\(Y^{a=0,c=0}\)</span> be an individual’s counterfactual outcome if they had not received treatment <span class="math inline">\(A = 0\)</span> and had remained uncensored <span class="math inline">\(C = 0\)</span>. Our causal contrast of interest is:</p>
+<p><span class="math display">\[\Pr[Y^{a=1,c=0} = 1] \quad \text{versus} \quad \Pr[Y^{a=0,c=0} = 1]\]</span></p>
+<aside class="notes">
+<p>By conceptualizing the causal contrast of interest in terms of <span class="math inline">\(Y^{a,c=0}\)</span>, we can think of censoring <span class="math inline">\(C\)</span> as just another treatment. The goal of the analysis is to compute the causal effect of a joint intervention on <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>. To eliminate selection bias for the effect of treatment <span class="math inline">\(A\)</span>, we need to adjust for confounding for the effect of treatment <span class="math inline">\(C\)</span>.</p>
+<p>Since censoring <span class="math inline">\(C\)</span> is now viewed as a treatment, we need to ensure that the identifiability conditions of exchangeability, positivity, and consistency hold for <span class="math inline">\(C\)</span> as well as for <span class="math inline">\(A\)</span>, and use analytical methods appropriate to both.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -452,22 +393,25 @@
 </section>
 <section class="slide level2">
 
-<p>Like confounding, selection bias can sometimes be adjusted for if appropriate data are available.</p>
+<p>Though selection bias can sometimes be avoided by an adequate design (see Fine Point 8.1), it is often unavoidable. Loss to follow-up, self-selection, and missing data leading to bias can occur no matter how careful the investigator. In those cases, the selection bias needs to be explicitly corrected in the analysis.</p>
 </section>
-<section id="methods-to-adjust-for-selection-bias" class="slide level2 scrollable">
-<h2>Methods to Adjust for Selection Bias</h2>
-<p><strong>1. Inverse Probability of Selection Weighting</strong></p>
-<p>Create a pseudo-population where selection is independent of treatment and outcome.</p>
-<p>For each individual in the selected sample, assign weight:</p>
-<p><span class="math display">\[w^S = \frac{1}{Pr[S = 1 | A, Y, L]}\]</span></p>
-<p>where <span class="math inline">\(S\)</span> indicates selection into the analysis and <span class="math inline">\(L\)</span> are measured variables.</p>
+<section id="inverse-probability-weighting-for-selection-bias" class="slide level2">
+<h2>Inverse Probability Weighting for Selection Bias</h2>
+<p>This correction can sometimes be accomplished by IP weighting (or by standardization), which is based on assigning a weight <span class="math inline">\(W^C\)</span> to each selected individual (<span class="math inline">\(C = 0\)</span>) so that she accounts in the analysis not only for herself, but also for those like her—with the same values of <span class="math inline">\(L\)</span> and <span class="math inline">\(A\)</span>—who were not selected (<span class="math inline">\(C = 1\)</span>). The IP weight <span class="math inline">\(W^C\)</span> is the inverse of the probability of her selection <span class="math inline">\(\Pr[C = 0 | L, A]\)</span>:</p>
+<p><span class="math display">\[W^C = \frac{1}{\Pr[C = 0 \mid L, A]}\]</span></p>
+</section>
+<section id="the-wasabi-trial-ip-weighting-in-practice" class="slide level2">
+<h2>The Wasabi Trial: IP Weighting in Practice</h2>
+<p>Consider again the wasabi randomized trial. The tree graph in Figure 8.10 presents the trial data. Of the 60 individuals in the trial, 40 had (<span class="math inline">\(L = 1\)</span>) and 20 did not have (<span class="math inline">\(L = 0\)</span>) heart disease at the time of randomization. Regardless of their <span class="math inline">\(L\)</span> status, all individuals had a 50/50 chance of being assigned to wasabi supplementation (<span class="math inline">\(A = 1\)</span>). Thus 10 individuals in the <span class="math inline">\(L = 0\)</span> group and 20 in the <span class="math inline">\(L = 1\)</span> group received treatment <span class="math inline">\(A = 1\)</span>.</p>
+<p>The probability of remaining uncensored varies across branches in the tree. For example:</p>
+<ul>
+<li>50% of individuals without heart disease assigned to wasabi (<span class="math inline">\(L = 0, A = 1\)</span>) remained uncensored</li>
+<li>60% of individuals with heart disease assigned to no wasabi (<span class="math inline">\(L = 1, A = 0\)</span>) remained uncensored</li>
+</ul>
+<p>Look at the bottom of the tree. There are 20 individuals with heart disease (<span class="math inline">\(L = 1\)</span>) who were assigned to wasabi supplementation (<span class="math inline">\(A = 1\)</span>). Of these, 4 remained uncensored and 16 were lost to follow-up. The conditional probability of remaining uncensored in this group is <span class="math inline">\(\Pr[C = 0 | L = 1, A = 1] = 4/20 = 0.2\)</span>. In an IP-weighted analysis the 16 censored individuals receive a zero weight, whereas the 4 uncensored individuals each receive a weight of <span class="math inline">\(5 = 1/0.2\)</span>—representing themselves and 4 others like them. IP weighting replaces the 20 original individuals by 5 copies of each of the 4 uncensored individuals.</p>
+<p>The same procedure can be repeated for all branches of the tree (Figure 8.11) to construct a pseudo-population of the same size as the original study population but in which nobody is lost to follow-up. The associational risk ratio in the pseudo-population is 1, the same as the causal risk ratio <span class="math inline">\(\Pr[Y^{a=1,c=0} = 1] / \Pr[Y^{a=0,c=0} = 1]\)</span> that would have been computed in the original population if nobody had been censored.</p>
 <aside class="notes">
-<p><strong>Assumptions required</strong>:</p>
-<ol type="1">
-<li>Selection probabilities <span class="math inline">\(Pr[S = 1 | A, Y, L]\)</span> can be estimated (requires data on <span class="math inline">\(A\)</span>, <span class="math inline">\(Y\)</span>, <span class="math inline">\(L\)</span> for at least some non-selected individuals, or strong modeling assumptions)</li>
-<li>Positivity: <span class="math inline">\(Pr[S = 1 | A, Y, L] &gt; 0\)</span> for all relevant combinations</li>
-<li>The variables <span class="math inline">\(L\)</span> are sufficient to make <span class="math inline">\(S\)</span> independent of unmeasured factors affecting the <span class="math inline">\(A\)</span>-<span class="math inline">\(Y\)</span> relationship</li>
-</ol>
+<p>When both confounding and selection bias exist, the product weight <span class="math inline">\(W^A W^C\)</span> can be used to adjust simultaneously for both biases, where <span class="math inline">\(W^A = 1/f(A|L)\)</span> adjusts for confounding and <span class="math inline">\(W^C = 1/\Pr[C = 0|A,L]\)</span> adjusts for selection bias.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -479,33 +423,23 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p><strong>2. Standardization (Restriction and Conditioning)</strong></p>
-<p>If selection depends only on measured variables <span class="math inline">\(L\)</span>:</p>
-<ul>
-<li>Estimate the association within strata of <span class="math inline">\(L\)</span></li>
-<li>Standardize to the population distribution of <span class="math inline">\(L\)</span></li>
-</ul>
-<p><strong>3. Stratification on Selection</strong></p>
-<p>If possible, collect data on both selected and non-selected individuals.</p>
-<p>Estimate the effect separately in selected and non-selected subgroups.</p>
-<p>If the causal effect is the same in both groups, we can identify the population average causal effect.</p>
 </section>
-<section id="when-can-selection-bias-be-eliminated" class="slide level2 scrollable">
-<h2>When Can Selection Bias Be Eliminated?</h2>
-<p>Selection bias can be eliminated if:</p>
+<section id="identifiability-conditions-for-ip-weighting" class="slide level2 scrollable">
+<h2>Identifiability Conditions for IP Weighting</h2>
+<p>The association measure in the pseudo-population equals the effect measure in the original population if three identifiability conditions are met:</p>
 <ol type="1">
-<li>We measure all variables that determine selection and are associated with treatment and outcome</li>
-<li>These variables suffice to make selection independent of the treatment-outcome relationship</li>
+<li><p><strong>Exchangeability</strong>: The average outcome in the uncensored individuals must equal the unobserved average outcome in the censored individuals with the same values of <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span>. This requires that the variables in <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span> are sufficient to block all backdoor paths between <span class="math inline">\(C\)</span> and <span class="math inline">\(Y\)</span>.</p></li>
+<li><p><strong>Positivity</strong>: All conditional probabilities of being uncensored given <span class="math inline">\(A\)</span> and the variables in <span class="math inline">\(L\)</span> must be greater than zero, i.e., <span class="math inline">\(\Pr[C = 0 | A, L] &gt; 0\)</span> for all relevant values of <span class="math inline">\(A\)</span> and <span class="math inline">\(L\)</span>. (Note this positivity condition is required for the probability of being uncensored, not for the probability of being censored.)</p></li>
+<li><p><strong>Consistency</strong>: The interventions are sufficiently well-defined. IP weighting creates a pseudo-population in which censoring <span class="math inline">\(C\)</span> has been abolished, and in which the effect of the treatment <span class="math inline">\(A\)</span> is the same as in the original population. This is relatively well defined when censoring is the result of loss to follow-up or nonresponse, but may be problematic when censoring is defined as the occurrence of a competing event (such as death from causes other than the outcome of interest).</p></li>
 </ol>
+</section>
+<section id="stratification-vs.-ip-weighting" class="slide level2">
+<h2>Stratification vs.&nbsp;IP Weighting</h2>
+<p>One might attempt to remove selection bias by stratification (estimating the effect conditional on <span class="math inline">\(L\)</span>) rather than by IP weighting. Stratification could yield unbiased conditional effect measures within levels of <span class="math inline">\(L\)</span> because conditioning on <span class="math inline">\(L\)</span> is sufficient to block the backdoor path from <span class="math inline">\(C\)</span> to <span class="math inline">\(Y\)</span> in Figure 8.3:</p>
+<p><span class="math display">\[\Pr[Y = 1 | A = 1, C = 0, L = l] / \Pr[Y = 1 | A = 0, C = 0, L = l]\]</span></p>
+<p>However, stratification would not work under the causal structures depicted in Figures 8.4 and 8.6. In Figure 8.4, conditioning on <span class="math inline">\(L\)</span> blocks the backdoor path from <span class="math inline">\(C\)</span> to <span class="math inline">\(Y\)</span> but also opens the path <span class="math inline">\(A \rightarrow L \leftarrow U \rightarrow Y\)</span> from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> because <span class="math inline">\(L\)</span> is a collider on that path. In contrast, IP weighting appropriately adjusts for selection bias under Figures 8.3–8.6 because it estimates unconditional effect measures after reweighting the individuals.</p>
 <aside class="notes">
-<p><strong>Practical challenge</strong>: Often we cannot measure all determinants of selection.</p>
-<p>For example:</p>
-<ul>
-<li>In studies with loss to follow-up, we may not know why people dropped out</li>
-<li>In volunteer studies, we may not know what motivated volunteers vs.&nbsp;non-volunteers</li>
-<li>This makes selection bias often more difficult to address than confounding</li>
-</ul>
-<p><strong>Prevention is better than cure</strong>: Design studies to minimize selection bias rather than trying to adjust for it statistically.</p>
+<p>This is the first time we discuss a situation in which stratification cannot be used to validly compute the causal effect of treatment, even if the three conditions of exchangeability, positivity, and consistency hold. We will discuss other situations with a similar structure in Part III when considering the effect of time-varying treatments.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -523,51 +457,29 @@
 <h1><span class="header-section-number">6</span> 8.6 Selection Without Bias (pp.&nbsp;115-116)</h1>
 
 </section>
-<section class="slide level2">
+<section class="slide level2 scrollable">
 
-<p>Not all selection creates bias. Selection is harmless under certain conditions.</p>
-</section>
-<section id="unconditional-selection" class="slide level2 scrollable">
-<h2>Unconditional Selection</h2>
-<p>Selection does not create bias if the probability of selection does not depend on both treatment and outcome simultaneously.</p>
-<p><strong>Examples of harmless selection</strong>:</p>
+<p>The causal diagram in Figure 8.12 represents a hypothetical study with dichotomous variables surgery <span class="math inline">\(A\)</span>, certain genetic haplotype <span class="math inline">\(E\)</span>, and death <span class="math inline">\(Y\)</span>. According to the rules of d-separation, surgery <span class="math inline">\(A\)</span> and haplotype <span class="math inline">\(E\)</span> are:</p>
 <ol type="1">
-<li><strong>Random sampling</strong>: Each individual has the same probability of selection, independent of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span></li>
-<li><strong>Selection based only on treatment</strong>: Study only treated individuals (but selection doesn’t depend on <span class="math inline">\(Y\)</span>)</li>
-<li><strong>Selection based only on outcome (case-control studies)</strong>: If analyzed correctly, selection on outcome can be valid</li>
+<li>Marginally independent: the probability of receiving surgery is the same for people with and without the genetic haplotype</li>
+<li>Associated conditionally on <span class="math inline">\(Y\)</span>: the probability of receiving surgery varies by haplotype when the study is restricted to, say, the survivors (<span class="math inline">\(Y = 0\)</span>)</li>
 </ol>
-<aside class="notes">
-<p><strong>Case-control studies</strong>: These studies select on outcome (all cases, sample of controls).</p>
-<p>Despite this selection, case-control studies can validly estimate odds ratios under certain conditions:</p>
-<ul>
-<li>Selection of controls is independent of exposure, conditional on matching variables</li>
-<li>No selection bias for exposure-outcome association</li>
-<li>Can use logistic regression, with proper design and analysis</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>Indeed, conditioning on the common effect <span class="math inline">\(Y\)</span> of two independent causes <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> always induces a conditional association between <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> in at least one of the strata of <span class="math inline">\(Y\)</span>.</p>
 </section>
-<section id="conditional-selection" class="slide level2">
-<h2>Conditional Selection</h2>
-<p>Selection based on variables that are not affected by treatment or outcome generally doesn’t create bias.</p>
-<p><strong>Example</strong>: Selecting only women for a study of a treatment and outcome.</p>
-<p>If sex is not affected by treatment or outcome, this selection doesn’t bias the treatment-outcome association within women.</p>
+<section id="when-collider-stratification-does-not-cause-bias" class="slide level2">
+<h2>When Collider Stratification Does Not Cause Bias</h2>
+<p>Suppose <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> affect survival through totally independent mechanisms such that <span class="math inline">\(E\)</span> cannot possibly modify the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span>, and vice versa. For example, suppose surgery <span class="math inline">\(A\)</span> affects survival through the removal of a tumor, whereas the haplotype <span class="math inline">\(E\)</span> affects survival through increasing LDL-cholesterol levels resulting in an increased risk of heart attack (whether or not a tumor is present).</p>
+<p>We can consider three cause-specific mortality variables: death from tumor <span class="math inline">\(Y_A\)</span>, death from heart attack <span class="math inline">\(Y_E\)</span>, and death from any other causes <span class="math inline">\(Y_O\)</span>. The observed mortality variable <span class="math inline">\(Y = 1\)</span> (death) when <span class="math inline">\(Y_A\)</span> or <span class="math inline">\(Y_E\)</span> or <span class="math inline">\(Y_O\)</span> is 1, and <span class="math inline">\(Y = 0\)</span> (survival) when all three equal 0.</p>
+<p>The causal diagram in Figure 8.13 (an expansion of Figure 8.12) represents this causal structure. Because the arrows from <span class="math inline">\(Y_A\)</span>, <span class="math inline">\(Y_E\)</span>, and <span class="math inline">\(Y_O\)</span> to <span class="math inline">\(Y\)</span> are deterministic, conditioning on observed survival (<span class="math inline">\(Y = 0\)</span>) is equivalent to simultaneously conditioning on <span class="math inline">\(Y_A = 0\)</span>, <span class="math inline">\(Y_E = 0\)</span>, and <span class="math inline">\(Y_O = 0\)</span>. As a consequence, <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> are conditionally independent given <span class="math inline">\(Y = 0\)</span>: conditioning on collider <span class="math inline">\(Y = 0\)</span>, the path between <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> through <span class="math inline">\(Y\)</span> is blocked by conditioning on the non-colliders <span class="math inline">\(Y_A\)</span>, <span class="math inline">\(Y_E\)</span>, and <span class="math inline">\(Y_O\)</span>.</p>
+<p>When the data can be summarized by Figure 8.13, we say that the data follow a <strong>multiplicative survival model</strong> (see Technical Point 8.2). In other words, collider stratification is not always a source of selection bias.</p>
 <aside class="notes">
-<p><strong>Generalizability vs.&nbsp;internal validity</strong>:</p>
+<p>In contrast, <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> will not be independent conditionally on <span class="math inline">\(Y = 0\)</span> when any of the following situations occur (Figures 8.14–8.16):</p>
 <ul>
-<li>Selection may limit <strong>generalizability</strong> (external validity) even when it doesn’t create <strong>selection bias</strong> (internal validity)</li>
-<li>Estimating the effect only in women is internally valid but may not generalize to men</li>
-<li>This is different from selection bias, which creates a spurious association even within the selected population</li>
+<li>If <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> affect survival through a common mechanism, there will exist an arrow either from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y_E\)</span> or from <span class="math inline">\(E\)</span> to <span class="math inline">\(Y_A\)</span> (Figure 8.14)</li>
+<li>If <span class="math inline">\(Y_A\)</span> and <span class="math inline">\(Y_E\)</span> are not independent because of a common cause <span class="math inline">\(V\)</span> (Figure 8.15)</li>
+<li>If the causes <span class="math inline">\(Y_A\)</span> and <span class="math inline">\(Y_O\)</span>, and <span class="math inline">\(Y_E\)</span> and <span class="math inline">\(Y_O\)</span>, are not independent because of common causes <span class="math inline">\(W_1\)</span> and <span class="math inline">\(W_2\)</span> (Figure 8.16)</li>
 </ul>
+<p>In summary, conditioning on a collider always induces an association between its causes, but this association could be restricted to certain levels of the common effect. Selection on a common effect does not always result in selection bias when the analysis is restricted to a single level of the common effect.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -579,6 +491,44 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+<div title="Technical Point 8.2: Multiplicative Survival Model">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Technical Point 8.2: Multiplicative Survival Model</strong></p>
+</div>
+<div class="callout-content">
+<p>When the conditional probability of survival <span class="math inline">\(\Pr[Y = 0 | E = e, A = a]\)</span> given <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> is equal to a product <span class="math inline">\(g(e) h(a)\)</span> of functions of <span class="math inline">\(e\)</span> and <span class="math inline">\(a\)</span>, we say that a <strong>multiplicative survival model</strong> holds:</p>
+<p><span class="math display">\[\Pr[Y = 0 | E = e, A = a] = g(e) h(a)\]</span></p>
+<p>This is equivalent to a model that assumes the survival ratio <span class="math inline">\(\Pr[Y = 0 | E = e, A = a] / \Pr[Y = 0 | E = e, A = 0]\)</span> does not depend on <span class="math inline">\(e\)</span> and is equal to <span class="math inline">\(h(a)\)</span>. The data follow a multiplicative survival model when there is no interaction between <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> for <span class="math inline">\(Y = 0\)</span> on the multiplicative scale.</p>
+<p>A proof that Figure 8.13 represents a multiplicative survival model:</p>
+<p><span class="math display">\[\Pr[Y = 0 | E = e, A = a] = \Pr[Y_A = 0, Y_E = 0, Y_O = 0 | E = e, A = a] = \Pr[Y_O = 0] \Pr[Y_A = 0 | A = a] \Pr[Y_E = 0 | E = e]\]</span></p>
+<p>where the first equality is by determinism and the second by the DAG factorization. Setting <span class="math inline">\(g(e) = \Pr[Y_E = 0 | E = e]\)</span> and <span class="math inline">\(h(a) = \Pr[Y_O = 0] \Pr[Y_A = 0 | A = a]\)</span> confirms the multiplicative structure.</p>
+<p>Note that when <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> are conditionally independent given <span class="math inline">\(Y = 0\)</span>, they will be conditionally dependent given <span class="math inline">\(Y = 1\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div title="Fine Point 8.2: The Strength and Direction of Selection Bias">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Fine Point 8.2: The Strength and Direction of Selection Bias</strong></p>
+</div>
+<div class="callout-content">
+<p>We have referred to selection bias as an “all or nothing” issue: either bias exists or it doesn’t. In practice, however, it is important to consider the expected direction and magnitude of the bias.</p>
+<p>The direction of the conditional association between two marginally independent causes <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> within strata of their common effect <span class="math inline">\(Y\)</span> depends on how <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> interact to cause <span class="math inline">\(Y\)</span>. For example, suppose that, in the presence of an undiscovered background factor <span class="math inline">\(U\)</span> that is unassociated with <span class="math inline">\(A\)</span> or <span class="math inline">\(E\)</span>, having either <span class="math inline">\(A = 1\)</span> or <span class="math inline">\(E = 1\)</span> is sufficient and necessary to cause death (an “or” mechanism), but that neither <span class="math inline">\(A\)</span> nor <span class="math inline">\(E\)</span> causes death in the absence of <span class="math inline">\(U\)</span>. Then among those who died (<span class="math inline">\(Y = 1\)</span>), <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> will be negatively associated, because it is more likely that an individual with <span class="math inline">\(A = 0\)</span> had <span class="math inline">\(E = 1\)</span> (since the absence of <span class="math inline">\(A\)</span> increases the chance that <span class="math inline">\(E\)</span> was the cause of death).</p>
+<p>Alternatively, suppose that having both <span class="math inline">\(A = 1\)</span> and <span class="math inline">\(E = 1\)</span> is sufficient and necessary to cause death (an “and” mechanism). In this case, among those who died (<span class="math inline">\(Y = 1\)</span>), <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> will be positively associated: knowing that an individual with <span class="math inline">\(A = 1\)</span> died implies that <span class="math inline">\(E = 1\)</span> must also have been present for the death to occur.</p>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="summary" class="title-slide slide level1 center" data-number="7">
@@ -587,59 +537,39 @@
 </section>
 <section class="slide level2 scrollable">
 
-<p>This chapter examined <strong>selection bias</strong>, another threat to exchangeability.</p>
+<p>This chapter examined <strong>selection bias</strong>, a form of lack of exchangeability that arises from conditioning on common effects rather than common causes.</p>
 <p><strong>Key concepts</strong>:</p>
 <ol type="1">
-<li><p><strong>Structure of selection bias</strong>: Arises from conditioning on a common effect (collider) of treatment and outcome</p></li>
-<li><p><strong>Sources of selection bias</strong>:</p>
+<li><p><strong>Structure of selection bias</strong>: Arises from conditioning on a common effect (collider) of treatment and outcome, or a variable affected by such a common effect (Figures 8.1–8.6)</p></li>
+<li><p><strong>Examples</strong> (Figures 8.3–8.6):</p>
 <ul>
-<li>Self-selection and volunteer bias</li>
-<li>Loss to follow-up</li>
+<li>Differential loss to follow-up and informative censoring</li>
+<li>Missing data and nonresponse bias</li>
 <li>Healthy worker bias</li>
-<li>Berkson’s bias (hospital-based studies)</li>
+<li>Self-selection and volunteer bias</li>
+<li>Selection affected by pre-study treatment</li>
 </ul></li>
 <li><p><strong>Selection bias vs.&nbsp;confounding</strong>:</p>
 <ul>
 <li>Confounding: common causes (<span class="math inline">\(A \leftarrow L \rightarrow Y\)</span>)</li>
-<li>Selection bias: common effects (<span class="math inline">\(A \rightarrow C \leftarrow Y\)</span>)</li>
-<li>Can occur simultaneously</li>
+<li>Selection bias: conditioning on common effects (<span class="math inline">\(A \rightarrow C \leftarrow Y\)</span>)</li>
+<li>Randomization prevents confounding but not selection bias occurring after randomization</li>
 </ul></li>
-<li><p><strong>Censoring</strong>: A specific type of selection where outcomes are unobserved</p></li>
-<li><p><strong>Adjustment methods</strong>:</p>
-<ul>
-<li>Inverse probability of selection weighting</li>
-<li>Standardization</li>
-<li>Stratification (when possible)</li>
-</ul></li>
-<li><p><strong>Selection without bias</strong>: Not all selection creates bias (e.g., random sampling, case-control studies with proper analysis)</p></li>
+<li><p><strong>Censoring as selection</strong>: In the wasabi trial, restricting to uncensored individuals (<span class="math inline">\(C = 0\)</span>) gives a risk ratio of 0.89 instead of the true causal value of 1. The counterfactual of interest becomes <span class="math inline">\(Y^{a,c=0}\)</span>, and censoring <span class="math inline">\(C\)</span> is treated as another treatment.</p></li>
+<li><p><strong>Adjustment</strong>: IP weighting with <span class="math inline">\(W^C = 1 / \Pr[C = 0 | L, A]\)</span> creates a pseudo-population free of selection bias. Stratification adjusts for selection bias only in some causal structures (Figures 8.3, 8.5) but not others (Figures 8.4, 8.6).</p></li>
+<li><p><strong>Selection without bias</strong>: Collider stratification does not always induce selection bias. When data follow a multiplicative survival model (Figure 8.13), conditioning on survivors does not create a spurious association.</p></li>
 </ol>
 <aside class="notes">
 <p><strong>Practical implications</strong>:</p>
 <ol type="1">
-<li><strong>Study design</strong>: Minimize selection bias through careful design
-<ul>
-<li>Maximize follow-up</li>
-<li>Reduce loss to follow-up</li>
-<li>Consider incentives for participation</li>
-</ul></li>
-<li><strong>Analysis</strong>: Use causal diagrams (DAGs) to identify potential selection bias
-<ul>
-<li>Identify colliders</li>
-<li>Determine whether selection opens or blocks causal paths</li>
-<li>Adjust only when appropriate</li>
-</ul></li>
-<li><strong>Reporting</strong>: Be transparent about:
-<ul>
-<li>Selection mechanisms</li>
-<li>Loss to follow-up</li>
-<li>Potential for selection bias</li>
-<li>Methods used to address it</li>
-</ul></li>
+<li><p><strong>Study design</strong>: Minimize selection bias by maximizing follow-up and reducing loss to follow-up.</p></li>
+<li><p><strong>Analysis</strong>: Use causal diagrams (DAGs) to identify the structure of selection bias and determine appropriate adjustment methods.</p></li>
+<li><p><strong>Key warning</strong>: Stratification can remove selection bias in simple structures (Figure 8.3) but can introduce additional bias in other structures (Figure 8.4) by opening a collider path on the treatment variable. IP weighting is more general.</p></li>
 </ol>
 <p><strong>Looking ahead</strong>:</p>
 <ul>
 <li><strong>Chapter 9</strong>: Measurement bias</li>
-<li><strong>Chapters 12-15</strong>: Advanced methods including censoring and time-varying treatments</li>
+<li><strong>Chapters 12–15</strong>: Advanced estimation methods including censoring and time-varying treatments</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
