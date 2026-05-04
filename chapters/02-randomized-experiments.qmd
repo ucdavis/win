@@ -480,10 +480,10 @@ The standardization formula follows by taking expectations over $L$.
 The IPW estimator can be derived from first principles. Under $Y^a \ind A | L$ and positivity:
 
 \begin{align}
-\E{Y^a} &= \E{E[Y^a|L]} \quad \text{(law of total expectation)} \\
-&= \E{E[Y^a|A=a, L]} \quad \text{(by conditional exchangeability)} \\
-&= \E{E[Y|A=a, L]} \quad \text{(by consistency)} \\
-&= \E{\frac{I(A=a)}{Pr[A=a|L]} \E{Y|A=a, L}} \quad \text{(inverse weighting)} \\
+\E{Y^a} &= \E{\E{Y^a \mid L}} \quad \text{(law of total expectation)} \\
+&= \E{\E{Y^a \mid A=a, L}} \quad \text{(by conditional exchangeability)} \\
+&= \E{\E{Y \mid A=a, L}} \quad \text{(by consistency)} \\
+&= \E{\frac{I(A=a)}{Pr[A=a|L]} \E{Y \mid A=a, L}} \quad \text{(inverse weighting)} \\
 &= \E{\frac{I(A=a) \cdot Y}{Pr[A=a|L]}} \quad \text{(by law of total expectation)}
 \end{align}
 

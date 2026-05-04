@@ -212,7 +212,7 @@ $$\text{Bias}(\hat{\theta}) = \E{\hat{\theta}} - \theta$$
 
 **Variance**: Random error, the variability of the estimator across repeated samples.
 
-$$\text{Var}(\hat{\theta}) = \E{(\hat{\theta} - E[\hat{\theta}])^2}$$
+$$\text{Var}(\hat{\theta}) = \E{(\hat{\theta} - \E{\hat{\theta}})^2}$$
 
 **Mean squared error (MSE)**: Combines both sources of error.
 
