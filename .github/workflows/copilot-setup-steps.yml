@@ -62,7 +62,7 @@ jobs:
             libjpeg-dev \
             libnode-dev \
             libglpk-dev \
-            libjpeg-dev \ 
+            libjpeg-dev \
             libglpk \
             poppler-utils \
             tesseract-ocr \
