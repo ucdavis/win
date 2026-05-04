@@ -203,14 +203,14 @@ Different causal structures imply different sets of variables that satisfy the b
 #| echo: false
 #| fig-width: 12
 #| fig-height: 3
-#| fig-cap: "Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L; adjusting for L still suffices. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U."
+#| fig-cap: "Figure 7.2. Three causal structures. Left: L is the only confounder; adjust for L. Middle: U is unmeasured but all backdoor paths pass through L (U causes Y only via L and directly); adjusting for L blocks both paths. Right: U has a direct arrow into A bypassing L; adjusting for L alone leaves residual confounding through U."
 dag_a <- dagitty('dag {
   L [pos="1,1"]; A [pos="0,0"]; Y [pos="2,0"]
   L -> A; L -> Y; A -> Y
 }')
 dag_b <- dagitty('dag {
   U [pos="1,2"]; L [pos="1,1"]; A [pos="0,0"]; Y [pos="2,0"]
-  U -> L; L -> A; L -> Y; A -> Y
+  U -> L; U -> Y; L -> A; L -> Y; A -> Y
 }')
 dag_c <- dagitty('dag {
   U [pos="1,2"]; L [pos="1,1"]; A [pos="0,0"]; Y [pos="2,0"]
@@ -244,11 +244,11 @@ p_a + p_b + p_c
 - $\{L\}$ satisfies the backdoor criterion: $L$ is not a descendant of $A$ and blocks the only backdoor path.
 - Adjustment for $L$ suffices.
 
-**Structure II** ($U \to L \to A$, $L \to Y$, $A \to Y$, $U$ unmeasured):
+**Structure II** ($U \to L \to A$, $U \to Y$, $L \to Y$, $A \to Y$, $U$ unmeasured):
 
-- Backdoor path: $A \leftarrow L \to Y$ (the only backdoor path; the path from $U$ to $A$ goes through $L$)
-- $\{L\}$ still satisfies the backdoor criterion: conditioning on $L$ (a non-collider on the path $A \leftarrow L \leftarrow U$) blocks all association through $U$ as well.
-- Adjustment for $L$ suffices even though $U$ is unmeasured.
+- Backdoor paths: $A \leftarrow L \to Y$ and $A \leftarrow L \leftarrow U \to Y$
+- $L$ is a non-collider on both paths; conditioning on $L$ blocks them both.
+- $\{L\}$ satisfies the backdoor criterion: adjustment for $L$ suffices even though $U$ is unmeasured.
 
 **Structure III** ($U \to A$, $U \to Y$, $L \to A$, $L \to Y$, $A \to Y$, $U$ unmeasured):
 
@@ -307,10 +307,7 @@ Strategies to address unmeasured confounding include:
 - **Difference-in-differences and fixed effects** (Chapter 21): exploit longitudinal data structure
 :::
 
-### Fine Point 7.1: Descendants of Treatment and Adjustment Bias
-
-::: {.callout-note}
-## Fine Point 7.1: Do Not Adjust for Descendants of Treatment
+::: {.callout-note title="Fine Point 7.1: Do Not Adjust for Descendants of Treatment"}
 
 A fundamental rule for constructing valid adjustment sets is: **never include a descendant of treatment $A$ in the adjustment set**.
 
@@ -402,10 +399,7 @@ The traditional approach of testing whether $C$ is associated with $A$ and $Y$ a
 The DAG-based approach avoids these pitfalls by relying on causal structure rather than associations.
 :::
 
-### Fine Point 7.2: The Traditional Definition of Confounder
-
-::: {.callout-note}
-## Fine Point 7.2: Limitations of Association-Based Confounder Criteria
+::: {.callout-note title="Fine Point 7.2: Limitations of Association-Based Confounder Criteria"}
 
 The traditional association-based criteria for confounding are **population-dependent**: a variable $L$ may satisfy criteria 1 and 2 in one population but not in another, even though the causal structure is identical. This means the decision about whether $L$ is a "confounder" depends on the study population, not on the underlying causal mechanism.
 
@@ -439,10 +433,9 @@ Consider the original DAG: $L \to A \to Y$, $L \to Y$.
 
 The SWIG for the intervention $do(A = a)$ has nodes $\{L,\; a \mid A,\; Y^a\}$:
 
-- $L \to a$ (the fixed intervention value is determined, but $L$ still affects what the natural value of $A$ would have been)
-- $a \to Y^a$ (the intervention value $a$ causes $Y^a$)
-- $L \to Y^a$ (the confounder $L$ also causes $Y^a$)
-- $L \to A$ (the natural value of $A$ is caused by $L$)
+- $L \to A$ (the natural value of $A$ is caused by $L$; incoming arrows stay on the natural-value half)
+- $a \to Y^a$ (the fixed intervention value $a$ causes the counterfactual outcome $Y^a$; outgoing arrows leave from the fixed-value half)
+- $L \to Y^a$ (the confounder $L$ also directly causes $Y^a$)
 
 In the SWIG, the counterfactual $Y^a$ is **d-separated** from the natural value $A$ given $L$, because the only path from $A$ to $Y^a$ would go through $a$, but $A$ and $a$ are split. This d-separation corresponds directly to the conditional exchangeability condition:
 
