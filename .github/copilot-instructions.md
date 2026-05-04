@@ -581,6 +581,44 @@ The repository uses GitHub Actions for continuous integration:
 
 All workflows run on relevant triggers (push to main, pull requests, etc.).
 
+### GitHub Secrets and PATs
+
+#### `MACROS_REPO_PAT_WIN`
+
+The repository has a PAT (Personal Access Token) secret named **`MACROS_REPO_PAT_WIN`** that grants write access to the [`d-morrison/macros`](https://github.com/d-morrison/macros) repository, which is the upstream of the `latex-macros` git submodule (path `latex-macros/`).
+
+**Permitted uses:**
+
+- Push commits to a branch in `d-morrison/macros`
+- Open pull requests against `d-morrison/macros`
+
+**Restrictions:**
+
+- **Do NOT merge pull requests into the `main` branch** of `d-morrison/macros` using this token.
+  Merging is a human decision and must be done by a repository maintainer.
+
+**How to use in a GitHub Actions workflow:**
+
+```yaml
+- name: Push changes to macros submodule
+  env:
+    MACROS_REPO_PAT: ${{ secrets.MACROS_REPO_PAT_WIN }}
+  run: |
+    git -C latex-macros remote set-url origin \
+      https://x-access-token:${MACROS_REPO_PAT}@github.com/d-morrison/macros.git
+    git -C latex-macros push origin HEAD:<branch-name>
+```
+
+**How to use locally (for testing):**
+
+Set the environment variable `MACROS_REPO_PAT` to the token value, then use it as the password when pushing:
+
+```bash
+git -C latex-macros remote set-url origin \
+  https://x-access-token:${MACROS_REPO_PAT}@github.com/d-morrison/macros.git
+git -C latex-macros push origin HEAD:<branch-name>
+```
+
 ### Debugging Workflow Failures
 
 **CRITICAL**: When asked to fix workflow errors or when workflows fail:
