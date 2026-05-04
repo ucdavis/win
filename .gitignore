@@ -28,6 +28,7 @@ site_libs
 
 # Temporary files from book downloads and extractions
 *.pdf
+*.log
 chapter1_*.txt
 
 # PR preview files
