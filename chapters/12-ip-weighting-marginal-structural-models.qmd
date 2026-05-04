@@ -35,7 +35,7 @@ We return to the NHEFS study to estimate the average causal effect of quitting s
 **Outcome**: $Y$ = weight change in kg between visits
 
 **Causal estimand**: 
-$$E[Y^{a=1}] - E[Y^{a=0}]$$
+$$\E{Y^{a=1}} - \E{Y^{a=0}}$$
 
 The average treatment effect of smoking cessation on weight gain.
 
@@ -53,7 +53,7 @@ We have measured baseline covariates $L$ that may confound the relationship:
 - Other lifestyle and health factors
 
 **Assumption**: Conditional exchangeability given $L$:
-$$Y^a \perp\!\!\!\perp A \mid L$$
+$$Y^a \ind A \mid L$$
 
 ::: {.notes}
 **Why we need adjustment**: People who quit smoking differ systematically from those who continue. For example, those who quit may be more health-conscious, may have experienced health scares, or may differ in baseline weight. These factors could also affect weight gain independently of smoking cessation.
@@ -148,7 +148,7 @@ For dichotomous $A$:
 1. Mean is exactly 1.0
 2. Smaller range than unstandardized weights
 3. More stable variance estimates
-4. Still create pseudo-population with $A \perp\!\!\!\perp L$
+4. Still create pseudo-population with $A \ind L$
 
 **Estimation**:
 - Numerator: Fit model for $\Pr[A = 1]$ (intercept-only logistic regression)
@@ -176,11 +176,11 @@ IP weighting is used to fit **marginal structural models** - models for the marg
 
 A **marginal structural model (MSM)** is a model for the marginal mean of the potential outcome $Y^a$ as a function of treatment $a$ (and possibly other variables):
 
-$$E[Y^a] = \beta_0 + \beta_1 a$$
+$$\E{Y^a} = \beta_0 + \beta_1 a$$
 
 For dichotomous $A$, parameter $\beta_1$ equals the average causal effect:
 
-$$\beta_1 = E[Y^{a=1}] - E[Y^{a=0}]$$
+$$\beta_1 = \E{Y^{a=1}} - \E{Y^{a=0}}$$
 :::
 
 ### Fitting Marginal Structural Models
@@ -199,7 +199,7 @@ $$\beta_1 = E[Y^{a=1}] - E[Y^{a=0}]$$
 ### Example: NHEFS Study
 
 **MSM**: 
-$$E[Y^a] = \beta_0 + \beta_1 a$$
+$$\E{Y^a} = \beta_0 + \beta_1 a$$
 
 **Weighted linear regression**:
 ```r
@@ -216,7 +216,7 @@ fit <- lm(weight_change ~ quit_smoking,
 ::: {.notes}
 **Comparison to stratification**: 
 
-- IP weighting estimates the marginal effect: $E[Y^{a=1}] - E[Y^{a=0}]$
+- IP weighting estimates the marginal effect: $\E{Y^{a=1}} - \E{Y^{a=0}}$
 - Stratification + standardization can estimate the same quantity
 - IP weighting and standardization are mathematically equivalent under certain conditions
 - IP weighting is often more convenient, especially for continuous confounders or time-varying treatments
@@ -235,7 +235,7 @@ MSMs can model effect modification by including interactions with baseline covar
 
 To assess effect modification by variable $V$:
 
-$$E[Y^a \mid V] = \beta_0 + \beta_1 a + \beta_2 V + \beta_3 a \times V$$
+$$\E{Y^a \mid V} = \beta_0 + \beta_1 a + \beta_2 V + \beta_3 a \times V$$
 
 where $\beta_3$ quantifies effect modification:
 
@@ -254,7 +254,7 @@ where $\beta_3$ quantifies effect modification:
 ### Example: Effect Modification by Sex
 
 **MSM**:
-$$E[Y^a \mid \text{Sex}] = \beta_0 + \beta_1 a + \beta_2 \text{Sex} + \beta_3 a \times \text{Sex}$$
+$$\E{Y^a \mid \text{Sex}} = \beta_0 + \beta_1 a + \beta_2 \text{Sex} + \beta_3 a \times \text{Sex}$$
 
 **Results** (hypothetical):
 - $\hat{\beta}_1 = 2.5$ kg (effect in men)
@@ -264,7 +264,7 @@ $$E[Y^a \mid \text{Sex}] = \beta_0 + \beta_1 a + \beta_2 \text{Sex} + \beta_3 a 
 ::: {.notes}
 **Important distinction**: 
 
-- The MSM $E[Y^a \mid V]$ models the mean of the potential outcome within levels of $V$
+- The MSM $\E{Y^a \mid V}$ models the mean of the potential outcome within levels of $V$
 - This is a **conditional causal effect** (conditional on $V$)
 - $V$ appears in the model, but we still adjust for confounders $L$ through IP weighting
 - $V$ must not be affected by treatment (must be a pre-treatment variable)
@@ -302,7 +302,7 @@ $$SW^{A,C} = \frac{\Pr[A]}{\Pr[A \mid L]} \times \frac{\Pr[C = 0 \mid A]}{\Pr[C 
 
 **Assumption**: Censoring is independent of potential outcomes given $(A, L)$:
 
-$$C \perp\!\!\!\perp Y^a \mid A, L$$
+$$C \ind Y^a \mid A, L$$
 
 **Procedure**:
 
@@ -314,8 +314,8 @@ $$C \perp\!\!\!\perp Y^a \mid A, L$$
 ::: {.notes}
 **Assumptions required**:
 
-1. **Treatment**: $Y^a \perp\!\!\!\perp A \mid L$ (conditional exchangeability)
-2. **Censoring**: $C \perp\!\!\!\perp Y^a \mid A, L$ (missing at random)
+1. **Treatment**: $Y^a \ind A \mid L$ (conditional exchangeability)
+2. **Censoring**: $C \ind Y^a \mid A, L$ (missing at random)
 3. **Positivity**: $\Pr[A = a \mid L] > 0$ and $\Pr[C = 0 \mid A, L] > 0$ for all $a, L$
 
 Missing at random (MAR) means censoring may depend on observed variables but not on the (unobserved) outcome. This is weaker than missing completely at random (MCAR).
@@ -339,9 +339,9 @@ $$L_W(\beta) = \prod_{i=1}^n [f(Y_i \mid A_i; \beta)]^{W^A_i}$$
 
 ### Connection to Maximum Likelihood
 
-**Without confounding**: Standard MLE of $\beta$ in model $E[Y \mid A] = g(A; \beta)$ 
+**Without confounding**: Standard MLE of $\beta$ in model $\E{Y \mid A} = g(A; \beta)$ 
 
-**With confounding**: IP weighted MLE of $\beta$ in MSM $E[Y^a] = g(a; \beta)$
+**With confounding**: IP weighted MLE of $\beta$ in MSM $\E{Y^a} = g(a; \beta)$
 
 The IP weights "adjust" the likelihood to account for confounding.
 

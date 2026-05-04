@@ -75,7 +75,7 @@ The most critical identifiability condition is **exchangeability**. Informally, 
 
 The treated and untreated are **exchangeable** conditional on covariates $L$ when:
 
-$$Y^a \perp\!\!\!\perp A \mid L \quad \text{for all } a$$
+$$Y^a \ind A \mid L \quad \text{for all } a$$
 
 This means the potential outcome $Y^a$ is independent of treatment $A$ within levels of $L$.
 :::
@@ -87,11 +87,11 @@ $$Pr[Y^a = 1 | A = 1, L] = Pr[Y^a = 1 | A = 0, L] = Pr[Y^a = 1 | L]$$
 for all values of $a$ and $L$.
 
 ::: {.notes}
-**Conditional** exchangeability means the treated and untreated are exchangeable within strata defined by $L$. This is weaker than **marginal** exchangeability (which requires $Y^a \perp\!\!\!\perp A$ without conditioning on anything).
+**Conditional** exchangeability means the treated and untreated are exchangeable within strata defined by $L$. This is weaker than **marginal** exchangeability (which requires $Y^a \ind A$ without conditioning on anything).
 
 In randomized experiments, we have marginal exchangeability by design. In observational studies, we typically only hope for conditional exchangeability after adjusting for measured confounders.
 
-The notation $\perp\!\!\!\perp$ denotes statistical independence.
+The notation $\ind$ denotes statistical independence.
 :::
 
 ### Exchangeability and Confounding
@@ -158,7 +158,7 @@ Suppose we want to estimate the effect of a treatment on 90-year-old individuals
 
 $$Pr[A = 1 | \text{Age} = 90] = 0$$
 
-We cannot estimate $E[Y^{a=1} | \text{Age} = 90]$ from the data because we have no treated 90-year-olds to observe.
+We cannot estimate $\E{Y^{a=1} | \text{Age} = 90}$ from the data because we have no treated 90-year-olds to observe.
 :::
 
 ::: {.notes}
@@ -359,7 +359,7 @@ The target trial framework helps us think systematically about these issues.
 
 This chapter introduced the fundamental **identifiability conditions** for causal inference in observational studies:
 
-1. **Exchangeability**: $Y^a \perp\!\!\!\perp A \mid L$ (no unmeasured confounding)
+1. **Exchangeability**: $Y^a \ind A \mid L$ (no unmeasured confounding)
 2. **Positivity**: $Pr[A = a | L] > 0$ for all $a$ and $L$ (every subgroup can receive every treatment level)
 3. **Consistency**: $Y = Y^A$ (well-defined interventions, no interference)
 

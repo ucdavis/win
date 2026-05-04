@@ -177,7 +177,7 @@ and introduces collider bias.
 Let the causal DAG contain the path $A_0 \to L_1 \leftarrow U \to Y$
 and the confounding path $A_1 \leftarrow L_1 \to Y$.
 Then no estimator that conditions on $L_1$ as a standard covariate (in a regression or stratification)
-can consistently estimate $E[Y^{\bar{a}=\bar{1}}] - E[Y^{\bar{a}=\bar{0}}]$.
+can consistently estimate $\E{Y^{\bar{a}=\bar{1}}} - \E{Y^{\bar{a}=\bar{0}}}$.
 :::
 
 ### A DAG-Based Explanation

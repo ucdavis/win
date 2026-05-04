@@ -57,7 +57,7 @@ Unlike Table 1.2 in Chapter 1 (where treatment was not randomized), Table 2.1 sh
 
 The key feature of a randomized experiment is that treatment assignment is independent of an individual's baseline characteristics, including their potential outcomes. We say the treated and untreated are **exchangeable** when:
 
-$$Y^a \perp\!\!\!\perp A \quad \text{for all } a$$
+$$Y^a \ind A \quad \text{for all } a$$
 
 This notation means the counterfactual outcome $Y^a$ is independent of the treatment actually received $A$. Exchangeability implies:
 
@@ -70,7 +70,7 @@ for all values of $a$.
 
 Treatment groups are **exchangeable** if the distribution of counterfactual outcomes is the same in both groups:
 
-$$Y^a \perp\!\!\!\perp A \quad \text{for all } a$$
+$$Y^a \ind A \quad \text{for all } a$$
 
 Under exchangeability, individuals in the treated group would have experienced the same distribution of outcomes if they had remained untreated (and vice versa).
 :::
@@ -103,7 +103,7 @@ In practice, we cannot verify exchangeability directly because we don't observe 
 
 When exchangeability holds, we can identify the average causal effect from observed data:
 
-$$E[Y^{a=1}] - E[Y^{a=0}] = E[Y|A = 1] - E[Y|A = 0]$$
+$$\E{Y^{a=1}} - \E{Y^{a=0}} = \E{Y|A = 1} - \E{Y|A = 0}$$
 
 The right side is the observed associational difference, which we can compute from Table 2.1. Under the exchangeability guaranteed by randomization, this associational difference equals the causal effect.
 
@@ -158,7 +158,7 @@ In Table 2.2, $L$ denotes sex (0 for female, 1 for male). Exactly 5 of the 10 wo
 
 In a conditionally randomized experiment, exchangeability holds **within each stratum** but not necessarily overall. We have:
 
-$$Y^a \perp\!\!\!\perp A | L \quad \text{for all } a$$
+$$Y^a \ind A | L \quad \text{for all } a$$
 
 This is **conditional exchangeability** (or **conditional randomization**).
 
@@ -167,7 +167,7 @@ This is **conditional exchangeability** (or **conditional randomization**).
 
 Treatment groups are **conditionally exchangeable** given covariates $L$ if:
 
-$$Y^a \perp\!\!\!\perp A | L \quad \text{for all } a$$
+$$Y^a \ind A | L \quad \text{for all } a$$
 
 Within each stratum of $L$, the treated and untreated are exchangeable.
 :::
@@ -179,7 +179,7 @@ $$Pr[Y^a = 1|A = 1, L = l] = Pr[Y^a = 1|A = 0, L = l] = Pr[Y^a = 1|L = l]$$
 for all values of $a$ and $l$.
 
 ::: {.notes}
-Conditional randomization guarantees conditional exchangeability but **not marginal exchangeability** (unconditional exchangeability). That is, $Y^a \perp\!\!\!\perp A | L$ does not imply $Y^a \perp\!\!\!\perp A$.
+Conditional randomization guarantees conditional exchangeability but **not marginal exchangeability** (unconditional exchangeability). That is, $Y^a \ind A | L$ does not imply $Y^a \ind A$.
 
 In Table 2.2, if women have higher baseline risk than men, and we ensure equal numbers of women in each treatment group, then the treated and untreated groups are balanced with respect to sex. However, the marginal (overall) association may not equal the causal effect if sex is related to the outcome.
 :::
@@ -206,18 +206,18 @@ When exchangeability is conditional rather than marginal, we cannot simply compa
 
 ### The Standardization Formula
 
-Under conditional exchangeability $Y^a \perp\!\!\!\perp A | L$, the average causal effect can be computed using **standardization**:
+Under conditional exchangeability $Y^a \ind A | L$, the average causal effect can be computed using **standardization**:
 
-$$E[Y^a] = \sum_l E[Y|A = a, L = l] \times Pr[L = l]$$
+$$\E{Y^a} = \sum_l \E{Y|A = a, L = l} \times Pr[L = l]$$
 
 This formula weights the stratum-specific mean outcomes by the population distribution of $L$.
 
 ::: {#def-standardization}
 ## Standardization Formula
 
-Under conditional exchangeability $Y^a \perp\!\!\!\perp A | L$, the mean counterfactual outcome is:
+Under conditional exchangeability $Y^a \ind A | L$, the mean counterfactual outcome is:
 
-$$E[Y^a] = \sum_l E[Y|A = a, L = l] \times Pr[L = l]$$
+$$\E{Y^a} = \sum_l \E{Y|A = a, L = l} \times Pr[L = l]$$
 
 where the sum is over all values $l$ of the covariate $L$.
 :::
@@ -226,7 +226,7 @@ where the sum is over all values $l$ of the covariate $L$.
 This formula is sometimes called the **g-formula** (generalized formula). It expresses the counterfactual mean as a weighted average of conditional means.
 
 The standardization formula requires:
-1. **Conditional exchangeability**: $Y^a \perp\!\!\!\perp A | L$
+1. **Conditional exchangeability**: $Y^a \ind A | L$
 2. **Positivity**: $Pr[A = a|L = l] > 0$ for all values $l$ with $Pr[L = l] > 0$
 3. **Consistency**: $Y = Y^A$ (the observed outcome equals the counterfactual under treatment received)
 :::
@@ -255,13 +255,13 @@ Using Table 2.2, let's compute the standardized causal risk difference.
 **Step 3**: Apply standardization formula
 
 \begin{align}
-E[Y^{a=1}] &= 0.6 \times 0.5 + 0.8 \times 0.5 = 0.7 \\
-E[Y^{a=0}] &= 0.4 \times 0.5 + 0.6 \times 0.5 = 0.5
+\E{Y^{a=1}} &= 0.6 \times 0.5 + 0.8 \times 0.5 = 0.7 \\
+\E{Y^{a=0}} &= 0.4 \times 0.5 + 0.6 \times 0.5 = 0.5
 \end{align}
 
 **Step 4**: Compute causal effect
 
-$$E[Y^{a=1}] - E[Y^{a=0}] = 0.7 - 0.5 = 0.2$$
+$$\E{Y^{a=1}} - \E{Y^{a=0}} = 0.7 - 0.5 = 0.2$$
 
 The standardized causal risk difference is 0.2. In this particular example, this equals the crude (unstandardized) associational difference: $(7/10) - (5/10) = 0.2$.
 
@@ -275,11 +275,11 @@ The standardization formula can be used with continuous outcomes by replacing pr
 
 ### Interpretation
 
-The standardized mean $E[Y^{a=1}]$ answers: "What would the mean outcome be if everyone in the population received treatment $a = 1$?" It's a weighted average of the stratum-specific mean outcomes, where weights are the proportion of the population in each stratum.
+The standardized mean $\E{Y^{a=1}}$ answers: "What would the mean outcome be if everyone in the population received treatment $a = 1$?" It's a weighted average of the stratum-specific mean outcomes, where weights are the proportion of the population in each stratum.
 
-Similarly, $E[Y^{a=0}]$ answers: "What would the mean outcome be if everyone in the population received treatment $a = 0$?"
+Similarly, $\E{Y^{a=0}}$ answers: "What would the mean outcome be if everyone in the population received treatment $a = 0$?"
 
-The difference $E[Y^{a=1}] - E[Y^{a=0}]$ is the **average causal effect** in the population.
+The difference $\E{Y^{a=1}} - \E{Y^{a=0}}$ is the **average causal effect** in the population.
 
 ## 2.4 Inverse Probability Weighting (pp. 21-24)
 
@@ -313,15 +313,15 @@ The weights are also called **stabilized weights** when modified to improve effi
 
 ### IPW Estimation
 
-Under conditional exchangeability $Y^a \perp\!\!\!\perp A | L$, the mean counterfactual outcome can be estimated as:
+Under conditional exchangeability $Y^a \ind A | L$, the mean counterfactual outcome can be estimated as:
 
-$$E[Y^a] = E\left[\frac{I(A = a) \times Y}{Pr[A = a|L]}\right]$$
+$$\E{Y^a} = \E{\frac{I(A = a) \times Y}{Pr[A = a|L]}}$$
 
 where $I(A = a)$ is an indicator function equal to 1 if $A = a$ and 0 otherwise.
 
 The IPW estimator of the causal risk difference is:
 
-$$\widehat{E[Y^{a=1}] - E[Y^{a=0}]} = \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 1) \times Y_i}{Pr[A_i = 1|L_i]} - \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 0) \times Y_i}{Pr[A_i = 0|L_i]}$$
+$$\widehat{\E{Y^{a=1}} - \E{Y^{a=0}}} = \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 1) \times Y_i}{Pr[A_i = 1|L_i]} - \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 0) \times Y_i}{Pr[A_i = 0|L_i]}$$
 
 ::: {.notes}
 This is equivalent to computing a weighted mean in each treatment group:
@@ -385,15 +385,15 @@ Both methods are consistent (converge to the true causal effect) under the same 
 | Feature | Standardization | IPW |
 |---------|----------------|-----|
 | **Idea** | Weight stratum-specific outcomes by population distribution | Create pseudo-population with marginal randomization |
-| **Formula** | $E[Y^a] = \sum_l E[Y \vert A=a,L=l] Pr[L=l]$ | $E[Y^a] = E[Y \cdot I(A=a) / Pr[A=a \vert L]]$ |
+| **Formula** | $\E{Y^a} = \sum_l \E{Y \vert A=a,L=l} Pr[L=l]$ | $\E{Y^a} = \E{Y \cdot I(A=a) / Pr[A=a \vert L]}$ |
 | **Weights** | Stratum probabilities $Pr[L=l]$ | Inverse treatment probabilities $1/Pr[A \vert L]$ |
-| **Model** | Outcome model $E[Y \vert A,L]$ | Treatment model $Pr[A \vert L]$ |
+| **Model** | Outcome model $\E{Y \vert A,L}$ | Treatment model $Pr[A \vert L]$ |
 | **Extensions** | G-computation, parametric g-formula | Marginal structural models |
 
 ::: {.notes}
 In randomized experiments, treatment probabilities $Pr[A|L]$ are known by design. In observational studies, we must estimate them from data, which introduces additional assumptions and potential for bias.
 
-Standardization requires correctly specifying the outcome model $E[Y|A,L]$. IPW requires correctly specifying the treatment model $Pr[A|L]$. **Doubly robust** methods combine both and remain consistent if *either* model is correct.
+Standardization requires correctly specifying the outcome model $\E{Y|A,L}$. IPW requires correctly specifying the treatment model $Pr[A|L]$. **Doubly robust** methods combine both and remain consistent if *either* model is correct.
 :::
 
 ### Positivity
@@ -413,7 +413,7 @@ for all values $l$ such that $Pr[L = l] > 0$ and for all treatment levels $a$.
 :::
 
 ::: {.notes}
-Positivity means there are both treated and untreated individuals at every level of $L$ that occurs in the population. Without positivity, we cannot estimate $E[Y|A = a, L = l]$ for some strata because we have no data.
+Positivity means there are both treated and untreated individuals at every level of $L$ that occurs in the population. Without positivity, we cannot estimate $\E{Y|A = a, L = l}$ for some strata because we have no data.
 
 Randomized experiments guarantee positivity if the randomization probabilities are strictly between 0 and 1. Observational studies often violate positivity, leading to non-identifiability and extreme IPW weights.
 :::
@@ -424,11 +424,11 @@ Randomized experiments guarantee positivity if the randomization probabilities a
 
 This chapter introduced fundamental concepts using randomized experiments:
 
-1. **Randomization** ensures exchangeability $Y^a \perp\!\!\!\perp A$, allowing causal effects to be identified from associational contrasts
+1. **Randomization** ensures exchangeability $Y^a \ind A$, allowing causal effects to be identified from associational contrasts
 
-2. **Conditional randomization** achieves conditional exchangeability $Y^a \perp\!\!\!\perp A | L$ within strata, requiring adjustment methods
+2. **Conditional randomization** achieves conditional exchangeability $Y^a \ind A | L$ within strata, requiring adjustment methods
 
-3. **Standardization** computes $E[Y^a] = \sum_l E[Y|A=a,L=l] Pr[L=l]$ by weighting stratum-specific outcomes
+3. **Standardization** computes $\E{Y^a} = \sum_l \E{Y|A=a,L=l} Pr[L=l]$ by weighting stratum-specific outcomes
 
 4. **Inverse probability weighting** creates a pseudo-population where treatment is marginally randomized by weighting individuals as $W^A = 1/Pr[A|L]$
 
@@ -444,13 +444,13 @@ In randomized experiments, these assumptions are met by design. In observational
 
 In randomized experiments, individuals may not receive or adhere to their assigned treatment. For example, someone randomized to receive a transplant may refuse it. The **intention-to-treat (ITT) effect** is the causal effect of treatment *assignment* (not treatment received).
 
-Let $Z$ denote random assignment and $A$ denote treatment actually received. The ITT effect is $E[Y^{z=1}] - E[Y^{z=0}]$, while the **per-protocol effect** is $E[Y^{a=1}] - E[Y^{a=0}]$.
+Let $Z$ denote random assignment and $A$ denote treatment actually received. The ITT effect is $\E{Y^{z=1}} - \E{Y^{z=0}}$, while the **per-protocol effect** is $\E{Y^{a=1}} - \E{Y^{a=0}}$.
 
-ITT effects are always identified in randomized experiments (because $Y^z \perp\!\!\!\perp Z$ by randomization). Per-protocol effects require additional assumptions about non-adherence.
+ITT effects are always identified in randomized experiments (because $Y^z \ind Z$ by randomization). Per-protocol effects require additional assumptions about non-adherence.
 
 ### 2.2 The null hypothesis
 
-Chapter 1 distinguished the **average causal null hypothesis** ($E[Y^{a=1}] = E[Y^{a=0}]$) from the **sharp causal null hypothesis** ($Y^{a=1} = Y^{a=0}$ for all individuals).
+Chapter 1 distinguished the **average causal null hypothesis** ($\E{Y^{a=1}} = \E{Y^{a=0}}$) from the **sharp causal null hypothesis** ($Y^{a=1} = Y^{a=0}$ for all individuals).
 
 In randomized experiments, the sharp null allows for **exact inference** using permutation tests (Fisher's randomization test). These tests are valid in finite samples without distributional assumptions.
 
@@ -464,30 +464,30 @@ Under the average null (but not the sharp null), standard large-sample inference
 
 A causal quantity is **identified** if it can be expressed as a function of the observed data distribution. Exchangeability is a sufficient condition for identifying average causal effects.
 
-Under $Y^a \perp\!\!\!\perp A$, we have:
-$$E[Y^a] = E[Y|A=a]$$
+Under $Y^a \ind A$, we have:
+$$\E{Y^a} = \E{Y|A=a}$$
 
 This is because:
-$$E[Y^a] = E[Y^a|A=a] \quad \text{(by exchangeability)} = E[Y|A=a] \quad \text{(by consistency)}$$
+$$\E{Y^a} = \E{Y^a|A=a} \quad \text{(by exchangeability)} = \E{Y|A=a} \quad \text{(by consistency)}$$
 
-Similarly, under $Y^a \perp\!\!\!\perp A | L$:
-$$E[Y^a|L=l] = E[Y|A=a, L=l]$$
+Similarly, under $Y^a \ind A | L$:
+$$\E{Y^a|L=l} = \E{Y|A=a, L=l}$$
 
 The standardization formula follows by taking expectations over $L$.
 
 ### 2.2 Derivation of the IPW estimator
 
-The IPW estimator can be derived from first principles. Under $Y^a \perp\!\!\!\perp A | L$ and positivity:
+The IPW estimator can be derived from first principles. Under $Y^a \ind A | L$ and positivity:
 
 \begin{align}
-E[Y^a] &= E[E[Y^a|L]] \quad \text{(law of total expectation)} \\
-&= E[E[Y^a|A=a, L]] \quad \text{(by conditional exchangeability)} \\
-&= E[E[Y|A=a, L]] \quad \text{(by consistency)} \\
-&= E\left[\frac{I(A=a)}{Pr[A=a|L]} E[Y|A=a, L]\right] \quad \text{(inverse weighting)} \\
-&= E\left[\frac{I(A=a) \cdot Y}{Pr[A=a|L]}\right] \quad \text{(by law of total expectation)}
+\E{Y^a} &= \E{E[Y^a|L]} \quad \text{(law of total expectation)} \\
+&= \E{E[Y^a|A=a, L]} \quad \text{(by conditional exchangeability)} \\
+&= \E{E[Y|A=a, L]} \quad \text{(by consistency)} \\
+&= \E{\frac{I(A=a)}{Pr[A=a|L]} \E{Y|A=a, L}} \quad \text{(inverse weighting)} \\
+&= \E{\frac{I(A=a) \cdot Y}{Pr[A=a|L]}} \quad \text{(by law of total expectation)}
 \end{align}
 
-The key step is the third equality, which uses the fact that $E[I(A=a)/Pr[A=a|L]] = 1$.
+The key step is the third equality, which uses the fact that $\E{I(A=a)/Pr[A=a|L]} = 1$.
 
 ## References
 

@@ -31,11 +31,11 @@ Structural nested models directly parameterize the causal effect rather than the
 
 A **structural nested mean model (SNMM)** specifies how the mean of $Y^a$ differs from the mean of $Y^{a'}$ as a function of treatment and covariates:
 
-$$E[Y^a - Y^{a'} \mid L] = \gamma(a, a'; \psi, L)$$
+$$\E{Y^a - Y^{a'} \mid L} = \gamma(a, a'; \psi, L)$$
 
 For dichotomous treatment with $a = 1$ and $a' = 0$:
 
-$$E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L$$
+$$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$$
 
 where $\psi = (\psi_0, \psi_1)$ are the parameters of interest.
 :::
@@ -43,15 +43,15 @@ where $\psi = (\psi_0, \psi_1)$ are the parameters of interest.
 ### Comparison to Previous Approaches
 
 **Marginal structural model** (IP weighting):
-$$E[Y^a] = \beta_0 + \beta_1 a$$
+$$\E{Y^a} = \beta_0 + \beta_1 a$$
 Models the mean outcome under treatment $a$.
 
 **Outcome regression** (standardization):
-$$E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)$$
+$$\E{Y \mid A, L} = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)$$
 Models the conditional mean outcome given treatment and confounders.
 
 **Structural nested model** (G-estimation):
-$$E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L$$
+$$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$$
 Models the conditional causal effect directly.
 
 ::: {.notes}
@@ -103,7 +103,7 @@ Equivalently: Treatment does not reverse the ranking of individuals with respect
 ::: {.notes}
 **Why this matters**: 
 
-Rank preservation is stronger than the average null hypothesis $E[Y^1] = E[Y^0]$. It's closer to the sharp null hypothesis $Y_i^1 = Y_i^0$ for all $i$.
+Rank preservation is stronger than the average null hypothesis $\E{Y^1} = \E{Y^0}$. It's closer to the sharp null hypothesis $Y_i^1 = Y_i^0$ for all $i$.
 
 While strong, rank preservation is often plausible for outcomes where we expect treatment to affect everyone in the same direction (even if by different amounts).
 :::
@@ -138,17 +138,17 @@ $$H(\psi) = Y^0 \text{ for all individuals}$$
 
 Since $Y^0$ is the potential outcome under no treatment, it should be independent of actual treatment $A$ given confounders $L$:
 
-$$H(\psi) \perp\!\!\!\perp A \mid L$$
+$$H(\psi) \ind A \mid L$$
 
 ::: {.notes}
 **Intuition**: 
 
 1. $H(\psi)$ "removes" the effect of treatment from $Y$ using parameter $\psi$
 2. If we remove the correct effect, what remains is the untreated potential outcome $Y^0$
-3. Under conditional exchangeability, $Y^0 \perp\!\!\!\perp A \mid L$
+3. Under conditional exchangeability, $Y^0 \ind A \mid L$
 4. So the correct $\psi$ makes $H(\psi)$ independent of $A$ conditional on $L$
 
-This is the **estimating principle**: Find $\psi$ such that $H(\psi) \perp\!\!\!\perp A \mid L$.
+This is the **estimating principle**: Find $\psi$ such that $H(\psi) \ind A \mid L$.
 :::
 
 ## 14.4 Estimating the Causal Effect (pp. 196-199)
@@ -160,13 +160,13 @@ G-estimation finds the value of $\psi$ that makes $H(\psi)$ independent of $A$ c
 ### G-Estimation Algorithm
 
 **Step 1**: Specify a structural nested model
-$$E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L$$
+$$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$$
 
 **Step 2**: For a candidate value $\psi$, compute pseudo-outcome
 $$H(\psi) = Y - A(\psi_0 + \psi_1^{\top} L)$$
 
-**Step 3**: Test whether $H(\psi) \perp\!\!\!\perp A \mid L$ by fitting
-$$E[H(\psi) \mid A, L] = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L$$
+**Step 3**: Test whether $H(\psi) \ind A \mid L$ by fitting
+$$\E{H(\psi) \mid A, L} = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L$$
 
 **Step 4**: The correct $\psi$ is the one that makes $\alpha_1 = 0$
 
@@ -178,7 +178,7 @@ where $U_i(\psi)$ is an appropriate function (often $U_i = A_i$ or $U_i = A_i(1,
 
 ### Example: Simple Model
 
-**SNMM**: $E[Y^1 - Y^0] = \psi_0$ (constant effect)
+**SNMM**: $\E{Y^1 - Y^0} = \psi_0$ (constant effect)
 
 **Estimating equation**:
 $$\sum_{i=1}^n A_i(Y_i - A_i \psi_0) = 0$$
@@ -195,7 +195,7 @@ This is the mean outcome among the treated when there is no confounding.
 $$\sum_{i=1}^n [A_i - \hat{E}[A \mid L_i]][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0$$
 
 This requires:
-1. Estimating $E[A \mid L]$ (e.g., via logistic regression)
+1. Estimating $\E{A \mid L}$ (e.g., via logistic regression)
 2. Solving for $\psi$ using the estimating equation
 
 The estimator is **doubly robust** in some cases: consistent if either the effect model or the treatment model is correct.
@@ -210,15 +210,15 @@ G-estimation has robustness properties that differ from IP weighting and standar
 ### Robustness Properties
 
 **When SNMM is correctly specified**:
-- G-estimation is consistent even if $E[A \mid L]$ is misspecified
-- Need to correctly model the effect $E[Y^1 - Y^0 \mid L]$, not the full outcome model $E[Y \mid A, L]$
+- G-estimation is consistent even if $\E{A \mid L}$ is misspecified
+- Need to correctly model the effect $\E{Y^1 - Y^0 \mid L}$, not the full outcome model $\E{Y \mid A, L}$
 
 **When treatment model is correctly specified**:
 - G-estimation is consistent even if the effect model is misspecified in certain ways
 - Specific robustness depends on the choice of estimating function $U(\psi)$
 
 **Double robustness**:
-- Some G-estimators are doubly robust: consistent if either the effect model or a working model for $E[H(\psi) \mid A, L]$ is correct
+- Some G-estimators are doubly robust: consistent if either the effect model or a working model for $\E{H(\psi) \mid A, L}$ is correct
 - This is similar to doubly robust IP weighted estimators
 
 ### Comparison to Other Methods
@@ -226,8 +226,8 @@ G-estimation has robustness properties that differ from IP weighting and standar
 | Method | Requires Correct | Robust To |
 |--------|-----------------|-----------|
 | **IP weighting** | $\Pr[A \mid L]$ | Outcome model misspec. |
-| **Standardization** | $E[Y \mid A, L]$ | Treatment model misspec. |
-| **G-estimation** | $E[Y^1 - Y^0 \mid L]$ | Full outcome model misspec. |
+| **Standardization** | $\E{Y \mid A, L}$ | Treatment model misspec. |
+| **G-estimation** | $\E{Y^1 - Y^0 \mid L}$ | Full outcome model misspec. |
 | **Doubly robust** | Either model | One model misspecification |
 
 ::: {.notes}
@@ -246,33 +246,33 @@ From the SNMM, we can compute the average causal effect.
 
 ### From Conditional to Marginal Effects
 
-**SNMM**: $E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L$
+**SNMM**: $\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$
 
 **Average causal effect**:
-$$E[Y^1 - Y^0] = E_L[E[Y^1 - Y^0 \mid L]] = E_L[\psi_0 + \psi_1^{\top} L] = \psi_0 + \psi_1^{\top} E[L]$$
+$$\E{Y^1 - Y^0} = E_L[\E{Y^1 - Y^0 \mid L}] = E_L[\psi_0 + \psi_1^{\top} L] = \psi_0 + \psi_1^{\top} \E{L}$$
 
 **Estimator**:
-$$\widehat{E[Y^1 - Y^0]} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}$$
+$$\widehat{\E{Y^1 - Y^0}} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}$$
 
 where $\bar{L} = n^{-1} \sum_i L_i$ is the sample mean of $L$.
 
 ### Effect in Specific Subgroups
 
 **Effect at $L = \ell$**:
-$$E[Y^1 - Y^0 \mid L = \ell] = \psi_0 + \psi_1^{\top} \ell$$
+$$\E{Y^1 - Y^0 \mid L = \ell} = \psi_0 + \psi_1^{\top} \ell$$
 
 **Effect in the treated** (ATT):
-$$E[Y^1 - Y^0 \mid A = 1] = \psi_0 + \psi_1^{\top} E[L \mid A = 1]$$
+$$\E{Y^1 - Y^0 \mid A = 1} = \psi_0 + \psi_1^{\top} \E{L \mid A = 1}$$
 
 **Estimator for ATT**:
-$$\widehat{E[Y^1 - Y^0 \mid A = 1]} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}_{A=1}$$
+$$\widehat{\E{Y^1 - Y^0 \mid A = 1}} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}_{A=1}$$
 
 where $\bar{L}_{A=1}$ is the mean of $L$ among the treated.
 
 ::: {.notes}
-**Flexibility**: The SNMM $E[Y^1 - Y^0 \mid L]$ describes effect modification. From this, we can compute:
+**Flexibility**: The SNMM $\E{Y^1 - Y^0 \mid L}$ describes effect modification. From this, we can compute:
 
-- Overall average effect $E[Y^1 - Y^0]$
+- Overall average effect $\E{Y^1 - Y^0}$
 - Effects in subgroups defined by $L$
 - ATT or ATU (average treatment effect in the untreated)
 
@@ -287,7 +287,7 @@ SNMMs can include multiple effect modifiers.
 
 ### General SNMM
 
-$$E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1 L_1 + \psi_2 L_2 + \psi_3 L_1 L_2 + \ldots$$
+$$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1 L_1 + \psi_2 L_2 + \psi_3 L_1 L_2 + \ldots$$
 
 **Parameters**: $\psi = (\psi_0, \psi_1, \psi_2, \psi_3, \ldots)$
 
@@ -302,7 +302,7 @@ for $j = 1, 2, \ldots, p$ where $p$ is the number of parameters.
 Common choices for $U_{ij}$:
 
 1. **Simple**: $U_i = (A_i, A_i L_{i1}, A_i L_{i2}, \ldots)^{\top}$
-2. **Optimal**: $U_i = (A_i - E[A \mid L_i])(1, L_{i1}, L_{i2}, \ldots)^{\top}$
+2. **Optimal**: $U_i = (A_i - \E{A \mid L_i})(1, L_{i1}, L_{i2}, \ldots)^{\top}$
 3. **Doubly robust**: More complex functions that achieve double robustness
 
 The choice affects:
@@ -328,7 +328,7 @@ G-estimation extends to handle censoring and missing outcomes.
 
 Let $C = 1$ if censored, $C = 0$ if observed.
 
-**Assumption**: $C \perp\!\!\!\perp Y^a \mid A, L$ (censoring independent of potential outcomes given treatment and covariates)
+**Assumption**: $C \ind Y^a \mid A, L$ (censoring independent of potential outcomes given treatment and covariates)
 
 **Weighted estimating equation**:
 
@@ -360,15 +360,15 @@ Or using stabilized weights for improved stability.
 
 ---
 
-G-estimation naturally estimates conditional effects $E[Y^1 - Y^0 \mid L]$. We can average to get marginal effects.
+G-estimation naturally estimates conditional effects $\E{Y^1 - Y^0 \mid L}$. We can average to get marginal effects.
 
 ### Three Types of Effects
 
 **Marginal effect** (population average):
-$$E[Y^1 - Y^0]$$
+$$\E{Y^1 - Y^0}$$
 
 **Conditional effect** (within levels of $L$):
-$$E[Y^1 - Y^0 \mid L]$$
+$$\E{Y^1 - Y^0 \mid L}$$
 
 **Individual effect**:
 $$Y_i^1 - Y_i^0$$
@@ -377,11 +377,11 @@ $$Y_i^1 - Y_i^0$$
 
 | Method | Natural Estimand | To Get Other Estimands |
 |--------|-----------------|------------------------|
-| **IP weighting** | Marginal effect | Model $E[Y^a \mid V]$ for conditional |
+| **IP weighting** | Marginal effect | Model $\E{Y^a \mid V}$ for conditional |
 | **Standardization** | Conditional effect | Average over $L$ for marginal |
 | **G-estimation** | Conditional effect | Average over $L$ for marginal |
 
-**Advantage of SNMMs**: By modeling $E[Y^1 - Y^0 \mid L]$ directly, G-estimation provides natural inference for effect modification while still allowing marginal effect estimation.
+**Advantage of SNMMs**: By modeling $\E{Y^1 - Y^0 \mid L}$ directly, G-estimation provides natural inference for effect modification while still allowing marginal effect estimation.
 
 ::: {.notes}
 **Choosing a method**:

@@ -110,7 +110,7 @@ that make these scientific goals achievable without the ambiguities of the class
 
 The **natural direct effect** of $A$ (comparing $a = 1$ to $a = 0$) is
 
-$$\text{NDE} = E[Y^{a=1, M^{a=0}}] - E[Y^{a=0, M^{a=0}}],$$
+$$\text{NDE} = \E{Y^{a=1, M^{a=0}}} - \E{Y^{a=0, M^{a=0}}},$$
 
 where $Y^{a, m}$ is the potential outcome under treatment $a$ and mediator value $m$,
 and $M^{a=0}$ is the potential value of the mediator under no treatment.
@@ -123,7 +123,7 @@ it would have taken under no treatment?
 
 The **natural indirect effect** of $A$ (comparing $a = 1$ to $a = 0$) is
 
-$$\text{NIE} = E[Y^{a=1, M^{a=1}}] - E[Y^{a=1, M^{a=0}}],$$
+$$\text{NIE} = \E{Y^{a=1, M^{a=1}}} - \E{Y^{a=1, M^{a=0}}},$$
 
 which captures the effect of changing the mediator from $M^{a=0}$ to $M^{a=1}$
 while holding treatment at $a = 1$.
@@ -134,7 +134,7 @@ The NIE asks: how much of the treatment effect is attributable to the change in 
 
 The **total effect** decomposes as:
 
-$$E[Y^{a=1}] - E[Y^{a=0}] = \text{NDE} + \text{NIE}.$$
+$$\E{Y^{a=1}} - \E{Y^{a=0}} = \text{NDE} + \text{NIE}.$$
 
 This decomposition always holds on the additive (difference) scale.
 On other scales (ratio, odds ratio), decompositions exist but are more complex.
@@ -175,7 +175,7 @@ that do not require cross-world counterfactuals.
 
 The **controlled direct effect** of $A$ at mediator level $m$ is
 
-$$\text{CDE}(m) = E[Y^{a=1, m}] - E[Y^{a=0, m}],$$
+$$\text{CDE}(m) = \E{Y^{a=1, m}} - \E{Y^{a=0, m}},$$
 
 where both $A$ and $M$ are set simultaneously to specified values.
 The CDE asks: what is the effect of $A$ on $Y$ when $M$ is held at level $m$
@@ -202,7 +202,7 @@ when the mediator is fixed at $m$, and one obtains a different CDE for each valu
 **Relationship between CDE and NDE**:
 
 When there is no $A \times M$ interaction on the additive scale
-(i.e., $E[Y^{1,m}] - E[Y^{0,m}]$ does not depend on $m$),
+(i.e., $\E{Y^{1,m}} - \E{Y^{0,m}}$ does not depend on $m$),
 the CDE equals the NDE for any value of $m$.
 In this case, both estimands agree and the choice is immaterial.
 When interaction is present, they differ, and the analyst must decide which is of interest.
@@ -235,7 +235,7 @@ to estimands that correspond to interventions that *could actually be performed*
 Let $Q$ be a distribution over mediator values.
 Define the **randomized interventional analogue** of the indirect effect as
 
-$$\text{rIIE} = E[Y^{a=1, G_1}] - E[Y^{a=1, G_0}],$$
+$$\text{rIIE} = \E{Y^{a=1, G_1}} - \E{Y^{a=1, G_0}},$$
 
 where $G_a \sim Q(M^a)$ denotes assigning the mediator at random
 from the distribution it would have under treatment $a$.
@@ -252,8 +252,8 @@ it would have under $A = 0$?" — which is an intervention that could be impleme
 The randomized interventional analogue of the indirect effect is identified
 under conditions that do not require assumption (4) from Section 23.2:
 
-$$\text{rIIE} = E\left[ \int_m E[Y \mid A = 1, M = m, C]\, dF_{M \mid A=0, C}(m) \right]
-- E\left[ E[Y \mid A = 1, M, C] \right],$$
+$$\text{rIIE} = \E{ \int_m \E{Y \mid A = 1, M = m, C}\, dF_{M \mid A=0, C}(m) }
+- \E{ \E{Y \mid A = 1, M, C} },$$
 
 where $C$ are baseline covariates sufficient to control confounding of both
 the $A \to Y$ and $M \to Y$ pathways.
@@ -292,9 +292,9 @@ by removing all arrows into $M$ in the causal DAG.
 
 The **controlled direct effect** in Pearl's framework is:
 
-$$\text{CDE}(m) = E[Y \mid \text{do}(A = 1), \text{do}(M = m)] - E[Y \mid \text{do}(A = 0), \text{do}(M = m)].$$
+$$\text{CDE}(m) = \E{Y \mid \text{do}(A = 1), \text{do}(M = m)} - \E{Y \mid \text{do}(A = 0), \text{do}(M = m)}.$$
 
-This is equivalent to the potential outcome expression $E[Y^{a=1,m}] - E[Y^{a=0,m}]$
+This is equivalent to the potential outcome expression $\E{Y^{a=1,m}} - \E{Y^{a=0,m}}$
 under the consistency assumption.
 :::
 
@@ -335,13 +335,13 @@ and this controlled direct effect.
   and does not extend to non-linear models.
 - The **natural direct effect** (NDE) and **natural indirect effect** (NIE)
   are defined via nested cross-world counterfactuals:
-  $$\text{NDE} = E[Y^{a=1, M^{a=0}}] - E[Y^{a=0, M^{a=0}}],$$
-  $$\text{NIE} = E[Y^{a=1, M^{a=1}}] - E[Y^{a=1, M^{a=0}}].$$
+  $$\text{NDE} = \E{Y^{a=1, M^{a=0}}} - \E{Y^{a=0, M^{a=0}}},$$
+  $$\text{NIE} = \E{Y^{a=1, M^{a=1}}} - \E{Y^{a=1, M^{a=0}}}.$$
 - The NDE and NIE sum to the total effect and allow decomposition in non-linear models,
   but require cross-world consistency and the absence of $A$-affected $M$–$Y$ confounders.
 - The **controlled direct effect** (CDE) avoids cross-world counterfactuals
   and corresponds to an intervention that fixes $M$ at a specific value:
-  $$\text{CDE}(m) = E[Y^{a=1, m}] - E[Y^{a=0, m}].$$
+  $$\text{CDE}(m) = \E{Y^{a=1, m}} - \E{Y^{a=0, m}}.$$
 - The **interventionist** approach further resolves the cross-world problem
   by replacing the NDE/NIE with stochastic interventional analogues
   that correspond to realizable experiments.

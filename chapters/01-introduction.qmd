@@ -101,14 +101,14 @@ $$Pr[Y^{a=1} = 1] \neq Pr[Y^{a=0} = 1]$$
 
 or equivalently (using expected values):
 
-$$E[Y^{a=1}] \neq E[Y^{a=0}]$$
+$$\E{Y^{a=1}} \neq \E{Y^{a=0}}$$
 
 In our population, treatment does *not* have an average causal effect because both risks equal 0.5. The **null hypothesis of no average causal effect** holds. However, this does not mean there are no individual effects.
 
 ::: {.notes}
 Even though the average causal effect is null, 12 individuals in Table 1.1 have individual causal effects. Six were harmed by treatment ($Y^{a=1} - Y^{a=0} = 1$), including Zeus, and six were helped ($Y^{a=1} - Y^{a=0} = -1$). The harmful and beneficial effects cancel out in the average.
 
-The average causal effect $E[Y^{a=1}] - E[Y^{a=0}]$ always equals the average of individual causal effects $E[Y^{a=1} - Y^{a=0}]$, because a difference of averages equals the average of the differences.
+The average causal effect $\E{Y^{a=1}} - \E{Y^{a=0}}$ always equals the average of individual causal effects $\E{Y^{a=1} - Y^{a=0}}$, because a difference of averages equals the average of the differences.
 
 When there is no causal effect for *any* individual (i.e., $Y^{a=1} = Y^{a=0}$ for all individuals), we say the **sharp causal null hypothesis** is true. The sharp null implies the null hypothesis of no average effect.
 :::
@@ -164,7 +164,7 @@ We can view our study population in two ways:
 Under the superpopulation perspective, even if the true average causal effect is zero, our sample estimate might not be exactly zero due to **sampling variability**.
 
 ::: {.notes}
-For example, suppose we randomly sample 20 individuals from a superpopulation where $E[Y^{a=1}] = E[Y^{a=0}] = 0.5$ (true null effect). We might observe $\hat{E}[Y^{a=1}] = 0.55$ and $\hat{E}[Y^{a=0}] = 0.45$ in our sample just by chance.
+For example, suppose we randomly sample 20 individuals from a superpopulation where $\E{Y^{a=1}} = \E{Y^{a=0}} = 0.5$ (true null effect). We might observe $\hat{E}[Y^{a=1}] = 0.55$ and $\hat{E}[Y^{a=0}] = 0.45$ in our sample just by chance.
 
 **Statistical inference** helps us determine whether an observed association is due to a true causal effect or random variability. We use:
 
@@ -236,9 +236,9 @@ Treatment $A$ and outcome $Y$ are **independent** (not associated) when:
 
 $$Pr[Y = 1|A = 1] = Pr[Y = 1|A = 0]$$
 
-or equivalently: $E[Y|A = 1] = E[Y|A = 0]$
+or equivalently: $\E{Y|A = 1} = \E{Y|A = 0}$
 
-This is denoted $Y \perp\!\!\!\perp A$.
+This is denoted $Y \ind A$.
 
 When this equality does not hold, $A$ and $Y$ are **associated** or **dependent**. Association measures include:
 
@@ -283,7 +283,7 @@ This chapter introduced fundamental concepts:
 
 1. **Individual causal effects**: Defined as $Y^{a=1} \neq Y^{a=0}$, but cannot be identified due to the fundamental problem (missing counterfactuals)
 
-2. **Average causal effects**: Defined as $E[Y^{a=1}] \neq E[Y^{a=0}]$, can sometimes be identified from data
+2. **Average causal effects**: Defined as $\E{Y^{a=1}} \neq \E{Y^{a=0}}$, can sometimes be identified from data
 
 3. **Effect measures**: Include risk difference (additive), risk ratio (multiplicative), and odds ratio
 

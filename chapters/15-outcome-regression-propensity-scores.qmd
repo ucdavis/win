@@ -33,7 +33,7 @@ This chapter is based on @hernan2020causal [Chapter 15, pp. 207-226].
 
 **Outcome regression** for causal inference:
 
-1. Fit a model for $E[Y \mid A, L]$
+1. Fit a model for $\E{Y \mid A, L}$
 2. Use the model to compute standardized means (g-formula)
 3. Estimate causal effects as contrasts of standardized means
 
@@ -42,13 +42,13 @@ For simple cases, the treatment coefficient may approximate the causal effect, b
 
 ### When Does the Treatment Coefficient Equal the Causal Effect?
 
-**Model**: $E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L$
+**Model**: $\E{Y \mid A, L} = \beta_0 + \beta_1 A + \beta_2^{\top} L$
 
-**Question**: When does $\beta_1 = E[Y^{a=1}] - E[Y^{a=0}]$?
+**Question**: When does $\beta_1 = \E{Y^{a=1}} - \E{Y^{a=0}}$?
 
 **Answer**: Only under restrictive conditions:
 
-1. **No confounding**: $Y^a \perp\!\!\!\perp A$ (conditional exchangeability not needed)
+1. **No confounding**: $Y^a \ind A$ (conditional exchangeability not needed)
 2. **No effect modification**: The causal effect doesn't vary with $L$
 3. **Correct model specification**: Linear model is correct
 
@@ -69,7 +69,7 @@ When effect modification exists, use the g-formula to properly standardize, or i
 ### Example: NHEFS Study
 
 **Simple model**:
-$$E[\text{Weight Change} \mid A, L] = \beta_0 + \beta_1 \text{Quit} + \beta_2 \text{Age} + \beta_3 \text{Sex} + \ldots$$
+$$\E{\text{Weight Change} \mid A, L} = \beta_0 + \beta_1 \text{Quit} + \beta_2 \text{Age} + \beta_3 \text{Sex} + \ldots$$
 
 **Issues**:
 
@@ -78,7 +78,7 @@ $$E[\text{Weight Change} \mid A, L] = \beta_0 + \beta_1 \text{Quit} + \beta_2 \t
 - Need to add interactions or use g-formula
 
 **Better approach**:
-$$E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)$$
+$$\E{Y \mid A, L} = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)$$
 
 Then use g-formula to compute marginal effect.
 
@@ -100,9 +100,9 @@ For individual $i$ with covariates $L_i$, the propensity score is $e(L_i) = \Pr[
 
 ### Balancing Property
 
-**Key theorem**: If $Y^a \perp\!\!\!\perp A \mid L$, then:
+**Key theorem**: If $Y^a \ind A \mid L$, then:
 
-$$Y^a \perp\!\!\!\perp A \mid e(L)$$
+$$Y^a \ind A \mid e(L)$$
 
 **Interpretation**: Conditional on the propensity score, treatment assignment is independent of potential outcomes.
 
@@ -267,7 +267,7 @@ Clarifying terminology: propensity scores, treatment models, and MSMs.
 
 **Treatment model**: Any model for $\Pr[A \mid L]$ (or $f(A \mid L)$ for non-binary $A$)
 
-**Marginal structural model (MSM)**: Model for $E[Y^a]$ or $E[Y^a \mid V]$
+**Marginal structural model (MSM)**: Model for $\E{Y^a}$ or $\E{Y^a \mid V}$
 
 ### Relationship
 
@@ -281,7 +281,7 @@ $$W^A = \frac{1}{e(L)} \text{ if } A = 1, \quad W^A = \frac{1}{1 - e(L)} \text{ 
 
 **MSM** is then fit using IP weights:
 
-$$E[Y^a] = \beta_0 + \beta_1 a$$
+$$\E{Y^a} = \beta_0 + \beta_1 a$$
 
 ::: {.notes}
 **Distinction**:
@@ -358,7 +358,7 @@ $$f(A \mid L)$$
 
 **Balancing property**: Under conditional exchangeability,
 
-$$Y^a \perp\!\!\!\perp A \mid f(A \mid L)$$
+$$Y^a \ind A \mid f(A \mid L)$$
 
 ### Estimation
 
@@ -399,7 +399,7 @@ Despite these challenges, GPS methods can be useful for continuous exposures (do
 
 **Key concepts**:
 
-1. **Outcome regression**: Models $E[Y \mid A, L]$ to estimate causal effects via g-formula
+1. **Outcome regression**: Models $\E{Y \mid A, L}$ to estimate causal effects via g-formula
 2. **Propensity score**: $e(L) = \Pr[A = 1 \mid L]$, reduces confounding adjustment to a single dimension
 3. **Balancing property**: Conditioning on propensity score achieves conditional exchangeability
 4. **Propensity stratification**: Create strata by propensity score and standardize
@@ -411,7 +411,7 @@ Despite these challenges, GPS methods can be useful for continuous exposures (do
 
 | Method | Uses | Advantages | Disadvantages |
 |--------|------|------------|---------------|
-| **Outcome regression** | $E[Y \mid A, L]$ | Natural, efficient when correct | Requires correct outcome model |
+| **Outcome regression** | $\E{Y \mid A, L}$ | Natural, efficient when correct | Requires correct outcome model |
 | **IP weighting** | $\Pr[A \mid L]$ | Natural for MSMs, handles time-varying | Can be unstable, needs correct treatment model |
 | **Propensity matching** | $e(L)$ | Intuitive, easy to check balance | Discards data, complex inference |
 | **Propensity stratification** | $e(L)$ | Reduces dimensionality | Requires choosing # of strata |

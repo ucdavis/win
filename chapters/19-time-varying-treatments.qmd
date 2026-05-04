@@ -83,7 +83,7 @@ but we observe only the one that corresponds to the treatment the individual act
 
 The **average causal effect** of treatment history $\bar{a}_K$ versus $\bar{a}_K^*$ is
 
-$$E[Y^{\bar{a}_K}] - E[Y^{\bar{a}_K^*}].$$
+$$\E{Y^{\bar{a}_K}} - \E{Y^{\bar{a}_K^*}}.$$
 
 When the treatment is binary at each time point, there are $2^{K+1}$ possible histories,
 so comparing all pairs quickly becomes unwieldy.
@@ -180,7 +180,7 @@ treatment at time $k$ is effectively randomized.
 
 In a sequentially randomized experiment, the counterfactual mean under strategy $g$ equals
 
-$$E[Y^g] = \sum_{\bar{l}_K} E[Y \mid \bar{A}_K = g(\bar{l}_K), \bar{L}_K = \bar{l}_K]
+$$\E{Y^g} = \sum_{\bar{l}_K} \E{Y \mid \bar{A}_K = g(\bar{l}_K), \bar{L}_K = \bar{l}_K}
 \prod_{k=0}^K f(l_k \mid \bar{A}_{k-1} = g_{k-1}(\bar{l}_{k-1}), \bar{L}_{k-1} = \bar{l}_{k-1}),$$
 
 an expression that we will expand in Chapter 21.
@@ -191,7 +191,7 @@ the counterfactual mean can be expressed as a function of observable data.
 **Why sequential randomization differs from a single randomization**:
 
 In a standard (single-time-point) randomized trial, randomization happens once at baseline.
-This guarantees marginal exchangeability: $Y^a \perp\!\!\!\perp A$.
+This guarantees marginal exchangeability: $Y^a \ind A$.
 But if new covariates $L_1$ emerge after baseline and influence both $A_1$ and $Y$,
 we need randomization at time 1 as well.
 In a sequentially randomized experiment, this is guaranteed at every time point,
@@ -216,7 +216,7 @@ The identifying assumption that replaces sequential randomization is
 
 Sequential exchangeability holds if, for every time $k$ and every strategy $g$,
 
-$$Y^g \perp\!\!\!\perp A_k \mid \bar{A}_{k-1} = \bar{g}_{k-1}(\bar{L}_{k-1}), \bar{L}_k,$$
+$$Y^g \ind A_k \mid \bar{A}_{k-1} = \bar{g}_{k-1}(\bar{L}_{k-1}), \bar{L}_k,$$
 
 where $\bar{g}_{k-1}$ denotes the treatment history up to $k-1$ as dictated by $g$.
 :::
@@ -230,7 +230,7 @@ have been measured in $\bar{L}_k$.
 
 ### Comparison with Time-Fixed Exchangeability
 
-In the time-fixed setting, exchangeability reads $Y^a \perp\!\!\!\perp A \mid L$:
+In the time-fixed setting, exchangeability reads $Y^a \ind A \mid L$:
 potential outcomes are independent of treatment, given measured covariates.
 Sequential exchangeability extends this to every time point in sequence.
 
@@ -408,8 +408,8 @@ This is explained in detail in Chapter 20.
 - A **treatment strategy** $g$ specifies how treatment decisions are made at each time point,
   possibly as a function of past history (dynamic strategy) or not (static strategy).
 - The counterfactual $Y^g$ is the potential outcome under strategy $g$;
-  its mean $E[Y^g]$ is the primary estimand.
-- **Sequential exchangeability** ($Y^g \perp\!\!\!\perp A_k \mid \bar{A}_{k-1} = \bar{g}_{k-1}, \bar{L}_k$)
+  its mean $\E{Y^g}$ is the primary estimand.
+- **Sequential exchangeability** ($Y^g \ind A_k \mid \bar{A}_{k-1} = \bar{g}_{k-1}, \bar{L}_k$)
   and **sequential positivity** are the two key identifying assumptions.
 - Not all strategies may be identifiable; the analysis should be restricted
   to strategies for which both conditions hold.

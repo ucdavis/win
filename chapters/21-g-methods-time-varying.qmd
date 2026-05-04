@@ -37,7 +37,7 @@ for choosing the right tool in any given applied problem.
 
 The **g-computation formula** (or simply the **g-formula**)
 is the natural extension of standardization to the longitudinal setting.
-It expresses the counterfactual mean $E[Y^{\bar{a}_K}]$ as a function of the observed data
+It expresses the counterfactual mean $\E{Y^{\bar{a}_K}}$ as a function of the observed data
 by averaging the conditional expectation of $Y$ over the joint distribution of
 the time-varying covariates under the counterfactual treatment history.
 
@@ -46,7 +46,7 @@ the time-varying covariates under the counterfactual treatment history.
 
 Under sequential exchangeability, positivity, and consistency,
 
-$$E[Y^{\bar{a}_K}] = \sum_{\bar{l}_K} E[Y \mid \bar{A}_K = \bar{a}_K, \bar{L}_K = \bar{l}_K]
+$$\E{Y^{\bar{a}_K}} = \sum_{\bar{l}_K} \E{Y \mid \bar{A}_K = \bar{a}_K, \bar{L}_K = \bar{l}_K}
 \prod_{k=0}^{K} f(l_k \mid \bar{A}_{k-1} = \bar{a}_{k-1}, \bar{L}_{k-1} = \bar{l}_{k-1}),$$
 
 where the sum is over all possible covariate histories $\bar{l}_K$,
@@ -67,13 +67,13 @@ In practice, the g-formula is implemented by fitting parametric models
 for the outcome and each time-varying covariate, then computing expectations
 by Monte Carlo simulation:
 
-1. **Fit a model** for $E[Y \mid \bar{A}_K = \bar{a}_K, \bar{L}_K = \bar{l}_K]$.
+1. **Fit a model** for $\E{Y \mid \bar{A}_K = \bar{a}_K, \bar{L}_K = \bar{l}_K}$.
 2. **Fit models** for $f(l_k \mid \bar{a}_{k-1}, \bar{l}_{k-1})$ for each $k = 0, \ldots, K$.
 3. **Simulate** a large pseudo-population by drawing covariate histories
    under the counterfactual treatment $\bar{a}_K$,
    using the fitted covariate models.
 4. **Predict** the outcome for each simulated individual using the fitted outcome model.
-5. **Average** the predicted outcomes to estimate $E[Y^{\bar{a}_K}]$.
+5. **Average** the predicted outcomes to estimate $\E{Y^{\bar{a}_K}}$.
 
 Repeat steps 3–5 for each comparison strategy to obtain the causal contrast.
 
@@ -141,7 +141,7 @@ under sequential exchangeability.
 IP weighting for time-varying treatments is typically embedded in
 a **marginal structural model** (MSM) for the counterfactual mean:
 
-$$E[Y^{\bar{a}_K}] = m(\bar{a}_K; \beta),$$
+$$\E{Y^{\bar{a}_K}} = m(\bar{a}_K; \beta),$$
 
 where $m$ is a parametric model (e.g., logistic or linear) indexed by $\beta$.
 The MSM parameters are estimated by solving weighted estimating equations:
@@ -207,7 +207,7 @@ if *at least one* of the two sets of models is correctly specified.
 ## Doubly Robust Estimator (Augmented IPW)
 
 The augmented inverse probability weighted (AIPW) estimator
-for the counterfactual mean $E[Y^{\bar{a}_K}]$ takes the form
+for the counterfactual mean $\E{Y^{\bar{a}_K}}$ takes the form
 
 $$\hat{E}[Y^{\bar{a}_K}]_{\text{DR}} =
 \frac{1}{n} \sum_{i=1}^n \left[
@@ -234,7 +234,7 @@ The double robustness property follows from the structure of this estimator:
 **Practical considerations**:
 
 In the time-varying setting, "doubly robust" means that the outcome model must correctly specify
-the joint conditional distribution $E[Y \mid \bar{A}_K, \bar{L}_K]$,
+the joint conditional distribution $\E{Y \mid \bar{A}_K, \bar{L}_K}$,
 and the treatment model must correctly specify
 $f[A_k \mid \bar{A}_{k-1}, \bar{L}_k]$ for every $k$.
 There are $K+1$ treatment models and one outcome model;
@@ -265,7 +265,7 @@ $\gamma_k(\bar{a}_k, \bar{l}_k; \psi)$,
 which represents the effect on the outcome of setting treatment at time $k$
 from $a_k$ to $0$, given the past history $(\bar{a}_{k-1}, \bar{l}_k)$:
 
-$$E[Y^{\bar{a}_k, \bar{0}_{k+1}} - Y^{\bar{a}_{k-1}, \bar{0}_k} \mid \bar{A}_{k-1} = \bar{a}_{k-1}, \bar{L}_k = \bar{l}_k]
+$$\E{Y^{\bar{a}_k, \bar{0}_{k+1}} - Y^{\bar{a}_{k-1}, \bar{0}_k} \mid \bar{A}_{k-1} = \bar{a}_{k-1}, \bar{L}_k = \bar{l}_k}
 = \gamma_k(\bar{a}_k, \bar{l}_k; \psi),$$
 
 where $\bar{0}_j$ denotes no treatment from time $j$ onward.
@@ -290,7 +290,7 @@ $$H_k(\psi) = Y - \sum_{j=k}^{K} \gamma_j(\bar{A}_j, \bar{L}_j; \psi)$$
 must be mean-independent of $A_k$ conditional on $(\bar{A}_{k-1}, \bar{L}_k)$
 when $\psi$ equals the true parameter.
 G-estimation exploits this to estimate $\psi$ by searching for the value
-that makes $A_k \perp\!\!\!\perp H_k(\psi) \mid \bar{A}_{k-1}, \bar{L}_k$ for all $k$.
+that makes $A_k \ind H_k(\psi) \mid \bar{A}_{k-1}, \bar{L}_k$ for all $k$.
 
 Practically, this is often implemented via:
 
@@ -360,7 +360,7 @@ making them represent themselves and those who were censored.
 
 Under **sequential censoring exchangeability**:
 
-$$C_k \perp\!\!\!\perp Y^{\bar{a}_K, \bar{c}=\bar{0}} \mid \bar{C}_{k-1} = \bar{0}, \bar{A}_{k-1}, \bar{L}_k,$$
+$$C_k \ind Y^{\bar{a}_K, \bar{c}=\bar{0}} \mid \bar{C}_{k-1} = \bar{0}, \bar{A}_{k-1}, \bar{L}_k,$$
 
 the combined weight $SW^{A,C} = SW^A \cdot SW^C$ consistently estimates
 the counterfactual mean in the uncensored pseudo-population.
@@ -408,8 +408,8 @@ within a single unified expression.
 Under sequential exchangeability (for both treatment and censoring),
 positivity, and consistency, the counterfactual mean under joint strategy $(\bar{g}, \bar{c}=\bar{0})$ is
 
-$$E[Y^{g, \bar{c}=\bar{0}}] = \sum_{\bar{l}_K}
-E[Y \mid \bar{A}_K = \bar{g}(\bar{l}_K), \bar{C}_K = \bar{0}, \bar{L}_K = \bar{l}_K]
+$$\E{Y^{g, \bar{c}=\bar{0}}} = \sum_{\bar{l}_K}
+\E{Y \mid \bar{A}_K = \bar{g}(\bar{l}_K), \bar{C}_K = \bar{0}, \bar{L}_K = \bar{l}_K}
 \prod_{k=0}^K f(l_k \mid \bar{A}_{k-1} = \bar{g}_{k-1}, \bar{C}_{k-1} = \bar{0}, \bar{L}_{k-1} = \bar{l}_{k-1}),$$
 
 where the covariate density product is evaluated along the counterfactual treatment path
@@ -424,7 +424,7 @@ given correct models for the covariate and outcome processes.
 
 In practice, the big g-formula is implemented via a **parametric g-computation algorithm**:
 
-1. Fit outcome model: $E[Y \mid \bar{A}_K, \bar{C}_K = \bar{0}, \bar{L}_K]$.
+1. Fit outcome model: $\E{Y \mid \bar{A}_K, \bar{C}_K = \bar{0}, \bar{L}_K}$.
 2. For each $k$, fit covariate models:
    $f(L_k \mid \bar{A}_{k-1}, \bar{C}_{k-1} = \bar{0}, \bar{L}_{k-1})$.
 3. For each $k$, fit censoring model:
@@ -456,7 +456,7 @@ provides informal evidence that neither set is grossly misspecified.
 
 - The **g-formula** for time-varying treatments standardizes over the counterfactual
   covariate distribution under the treatment strategy:
-  $$E[Y^{\bar{a}_K}] = \sum_{\bar{l}_K} E[Y \mid \bar{A}_K = \bar{a}_K, \bar{L}_K = \bar{l}_K]
+  $$\E{Y^{\bar{a}_K}} = \sum_{\bar{l}_K} \E{Y \mid \bar{A}_K = \bar{a}_K, \bar{L}_K = \bar{l}_K}
   \prod_{k=0}^K f(l_k \mid \bar{a}_{k-1}, \bar{l}_{k-1}).$$
 - **IP weights** $SW^A = \prod_{k=0}^K \frac{f[A_k \mid \bar{A}_{k-1}]}{f[A_k \mid \bar{A}_{k-1}, \bar{L}_k]}$
   create a pseudo-population free of time-varying confounding,

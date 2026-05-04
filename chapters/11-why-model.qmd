@@ -30,7 +30,7 @@ Even the simple task of estimating a population mean requires modeling assumptio
 
 Consider a study of 16 HIV-positive individuals randomly sampled from a super-population. Each receives treatment $A$ (antiretroviral therapy), and we measure outcome $Y$ (CD4 cell count, cells/mm³).
 
-**Goal**: Estimate the population mean $E[Y|A = a]$ for each treatment level $a$.
+**Goal**: Estimate the population mean $\E{Y|A = a}$ for each treatment level $a$.
 
 ### Scenario 1: Binary Treatment
 
@@ -75,7 +75,7 @@ Treatment $A$ is dose in mg/day, taking integer values from 0 to 100 mg.
 - Cannot compute sample average for unobserved treatment levels
 - **The nonparametric estimator is undefined** for $A$ values with no data
 
-**Question**: How do we estimate $E[Y|A = 90]$ when no one received dose 90?
+**Question**: How do we estimate $\E{Y|A = 90}$ when no one received dose 90?
 
 ::: {.notes}
 **This is the fundamental motivation for modeling**:
@@ -95,20 +95,20 @@ When data are sparse relative to the dimension of covariates, nonparametric esti
 
 Assume the conditional mean follows a linear function:
 
-$$E[Y|A = a] = \beta_0 + \beta_1 a$$
+$$\E{Y|A = a} = \beta_0 + \beta_1 a$$
 
 **Parameters**: $(\beta_0, \beta_1)$ define the line.
 
 **Estimation**: Fit the model using least squares to estimate $(\hat{\beta}_0, \hat{\beta}_1)$.
 
-**Prediction**: For any value $a$, estimate $E[Y|A = a] = \hat{\beta}_0 + \hat{\beta}_1 a$.
+**Prediction**: For any value $a$, estimate $\E{Y|A = a} = \hat{\beta}_0 + \hat{\beta}_1 a$.
 
 ::: {#exm-linear-model}
 ## Linear Model for Continuous Treatment
 
 With the HIV data and continuous treatment dose:
 
-- Fit: $E[Y|A] = \beta_0 + \beta_1 A$
+- Fit: $\E{Y|A} = \beta_0 + \beta_1 A$
 - Obtain estimates: $\hat{\beta}_0 = 70$, $\hat{\beta}_1 = 1.25$
 - Predict for $A = 90$: $\hat{E}[Y|A = 90] = 70 + 1.25(90) = 182.5$
 
@@ -133,10 +133,10 @@ Even though no one received dose 90, the model provides an estimate by **interpo
 ### Other Parametric Models
 
 **Quadratic model**:
-$$E[Y|A = a] = \beta_0 + \beta_1 a + \beta_2 a^2$$
+$$\E{Y|A = a} = \beta_0 + \beta_1 a + \beta_2 a^2$$
 
 **Logarithmic model**:
-$$E[Y|A = a] = \beta_0 + \beta_1 \log(a)$$
+$$\E{Y|A = a} = \beta_0 + \beta_1 \log(a)$$
 
 **Piecewise linear (splines)**:
 Different linear relationships in different ranges of $A$.
@@ -169,7 +169,7 @@ Each model makes different assumptions about the shape of the dose-response curv
 ::: {.notes}
 **Smoothing intuition**:
 
-When estimating $E[Y|A = 90]$ with no observations at $A = 90$:
+When estimating $\E{Y|A = 90}$ with no observations at $A = 90$:
 
 - **No smoothing**: Cannot estimate (undefined)
 - **Weak smoothing**: Use nearby observations (e.g., $A = 85, 95$) with weights decreasing by distance
@@ -184,7 +184,7 @@ When estimating $E[Y|A = 90]$ with no observations at $A = 90$:
 
 ### Kernel Smoothing
 
-**Idea**: Estimate $E[Y|A = a]$ using a weighted average of nearby observations.
+**Idea**: Estimate $\E{Y|A = a}$ using a weighted average of nearby observations.
 
 $$\hat{E}[Y|A = a] = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}$$
 
@@ -208,11 +208,11 @@ Every statistical estimator involves a trade-off between **bias** and **variance
 
 **Bias**: Systematic error, the difference between the expected value of the estimator and the true parameter.
 
-$$\text{Bias}(\hat{\theta}) = E[\hat{\theta}] - \theta$$
+$$\text{Bias}(\hat{\theta}) = \E{\hat{\theta}} - \theta$$
 
 **Variance**: Random error, the variability of the estimator across repeated samples.
 
-$$\text{Var}(\hat{\theta}) = E[(\hat{\theta} - E[\hat{\theta}])^2]$$
+$$\text{Var}(\hat{\theta}) = \E{(\hat{\theta} - E[\hat{\theta}])^2}$$
 
 **Mean squared error (MSE)**: Combines both sources of error.
 
@@ -233,7 +233,7 @@ $$MSE(\hat{\theta}) = \text{Bias}^2(\hat{\theta}) + \text{Var}(\hat{\theta})$$
 - Works with sparse data, but relies on correct specification
 
 ::: {.notes}
-**Example: Estimating $E[Y|A = 90]$**
+**Example: Estimating $\E{Y|A = 90}$**
 
 **Nonparametric** (sample mean of individuals with $A = 90$):
 
@@ -241,7 +241,7 @@ $$MSE(\hat{\theta}) = \text{Bias}^2(\hat{\theta}) + \text{Var}(\hat{\theta})$$
 - If $n_{A=90} = 1$: Unbiased but very high variance
 - If $n_{A=90} = 100$: Unbiased and low variance
 
-**Linear model** ($E[Y|A] = \beta_0 + \beta_1 A$):
+**Linear model** ($\E{Y|A} = \beta_0 + \beta_1 A$):
 
 - Uses all 16 observations to estimate 2 parameters
 - Low variance estimate for any $A$
@@ -262,7 +262,7 @@ Simulation studies can illustrate the bias-variance trade-off across different s
 
 ### Simulation Setup
 
-1. Specify a true data-generating process (e.g., $E[Y|A] = \beta_0 + \beta_1 A + \beta_2 A^2$)
+1. Specify a true data-generating process (e.g., $\E{Y|A} = \beta_0 + \beta_1 A + \beta_2 A^2$)
 2. Generate many datasets of size $n$ from this process
 3. Fit different models to each dataset
 4. Compute bias, variance, and MSE of each estimator

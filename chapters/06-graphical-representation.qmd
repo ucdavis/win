@@ -510,13 +510,13 @@ We must adjust for $V$ (removes confounding) and report stratum-specific effects
 Because DAGs cannot directly represent effect modification, we must assess it empirically:
 
 1. First, ensure the causal effect is identified within each stratum of $V$ (using the backdoor criterion or other identification strategies)
-2. Estimate stratum-specific causal effects $E[Y^{a=1} - Y^{a=0} \mid V = v]$ for each level $v$
+2. Estimate stratum-specific causal effects $\E{Y^{a=1} - Y^{a=0} \mid V = v}$ for each level $v$
 3. Compare effect estimates across strata: if they differ, effect modification is present
 
 ::: {.notes}
 **Effect modification and interaction:**
 
-Chapter 5 defined additive interaction between two treatments $A$ and $E$ using the interaction contrast $\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}]$. Effect modification of the $A \to Y$ effect by $V$ corresponds to the case where $V$ plays the role of $E$, but one where $V$ is not itself a treatment under consideration — it simply describes a subgroup characteristic.
+Chapter 5 defined additive interaction between two treatments $A$ and $E$ using the interaction contrast $\text{IC} = \E{Y^{a=1,e=1}} - \E{Y^{a=1,e=0}} - \E{Y^{a=0,e=1}} + \E{Y^{a=0,e=0}}$. Effect modification of the $A \to Y$ effect by $V$ corresponds to the case where $V$ plays the role of $E$, but one where $V$ is not itself a treatment under consideration — it simply describes a subgroup characteristic.
 
 **Scale-dependence:**
 

@@ -39,15 +39,15 @@ Not necessarily. The average treatment effect can be zero even when there are la
 
 For a binary modifier $V$, effect modification exists when:
 
-$$E[Y^{a=1} - Y^{a=0} | V = 1] \neq E[Y^{a=1} - Y^{a=0} | V = 0]$$
+$$\E{Y^{a=1} - Y^{a=0} | V = 1} \neq \E{Y^{a=1} - Y^{a=0} | V = 0}$$
 :::
 
 ### Example: Effect Modification by Sex
 
 Suppose in Zeus's family:
 
-- Among males: $E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{male}] = -0.3$ (benefit from transplant)
-- Among females: $E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{female}] = +0.3$ (harm from transplant)
+- Among males: $\E{Y^{a=1} - Y^{a=0} | \text{Sex} = \text{male}} = -0.3$ (benefit from transplant)
+- Among females: $\E{Y^{a=1} - Y^{a=0} | \text{Sex} = \text{female}} = +0.3$ (harm from transplant)
 
 The average effect across the whole family is zero, but there is strong effect modification by sex. The treatment has opposite effects in males and females.
 
@@ -58,23 +58,23 @@ The average effect across the whole family is zero, but there is strong effect m
 - The causal effect **varies** or is **heterogeneous** across levels of $V$
 - Effect modification is a **property of the population**, not of individuals
 
-**Notation**: We write $E[Y^{a=1} - Y^{a=0} | V = v]$ to denote the average causal effect in the subpopulation with $V = v$. This is a **conditional average treatment effect**.
+**Notation**: We write $\E{Y^{a=1} - Y^{a=0} | V = v}$ to denote the average causal effect in the subpopulation with $V = v$. This is a **conditional average treatment effect**.
 :::
 
 ### Effect Modification Depends on the Scale
 
 Whether effect modification exists can depend on the **scale** (measure) used:
 
-- **Risk difference scale**: $E[Y^{a=1} | V] - E[Y^{a=0} | V]$
-- **Risk ratio scale**: $E[Y^{a=1} | V] / E[Y^{a=0} | V]$
+- **Risk difference scale**: $\E{Y^{a=1} | V} - \E{Y^{a=0} | V}$
+- **Risk ratio scale**: $\E{Y^{a=1} | V} / \E{Y^{a=0} | V}$
 
 ::: {#exm-scale-dependent}
 ## Scale-Dependent Effect Modification
 
 Suppose:
 
-- When $V = 0$: $E[Y^{a=1}] = 0.2$, $E[Y^{a=0}] = 0.1$
-- When $V = 1$: $E[Y^{a=1}] = 0.4$, $E[Y^{a=0}] = 0.2$
+- When $V = 0$: $\E{Y^{a=1}} = 0.2$, $\E{Y^{a=0}} = 0.1$
+- When $V = 1$: $\E{Y^{a=1}} = 0.4$, $\E{Y^{a=0}} = 0.2$
 
 **Risk difference**:
 
@@ -361,7 +361,7 @@ To estimate the effect of exercise on heart disease, modified by age, while adju
 Regression models provide a flexible framework for handling effect modification:
 
 **Model with effect modification**:
-$$E[Y | A, V, L] = \beta_0 + \beta_1 A + \beta_2 V + \beta_3 A \times V + \beta_4^T L$$
+$$\E{Y | A, V, L} = \beta_0 + \beta_1 A + \beta_2 V + \beta_3 A \times V + \beta_4^T L$$
 
 The **interaction term** $\beta_3 A \times V$ captures effect modification:
 
@@ -400,7 +400,7 @@ This chapter introduced **effect modification**: the phenomenon where causal eff
 
 **Key concepts**:
 
-1. **Definition**: Effect modification exists when $E[Y^{a=1} - Y^{a=0} | V]$ differs across levels of $V$
+1. **Definition**: Effect modification exists when $\E{Y^{a=1} - Y^{a=0} | V}$ differs across levels of $V$
 
 2. **Scale dependence**: Whether effect modification exists depends on the scale (risk difference, risk ratio, etc.)
 

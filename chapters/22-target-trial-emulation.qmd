@@ -48,7 +48,7 @@ The **intention-to-treat effect** is the causal effect of
 the *assigned* treatment strategy, regardless of whether participants
 actually adhered to their assigned strategy.
 
-$$\text{ITT effect} = E[Y^{a_{\text{assigned}} = 1}] - E[Y^{a_{\text{assigned}} = 0}].$$
+$$\text{ITT effect} = \E{Y^{a_{\text{assigned}} = 1}} - \E{Y^{a_{\text{assigned}} = 0}}.$$
 :::
 
 ::: {#def-pp}
@@ -57,7 +57,7 @@ $$\text{ITT effect} = E[Y^{a_{\text{assigned}} = 1}] - E[Y^{a_{\text{assigned}} 
 The **per-protocol effect** is the causal effect of
 *adhering* to the assigned treatment strategy throughout follow-up.
 
-$$\text{PP effect} = E[Y^{\bar{a} = \text{adhere to arm 1}}] - E[Y^{\bar{a} = \text{adhere to arm 0}}].$$
+$$\text{PP effect} = \E{Y^{\bar{a} = \text{adhere to arm 1}}} - \E{Y^{\bar{a} = \text{adhere to arm 0}}}.$$
 :::
 
 ### Differences Between ITT and PP

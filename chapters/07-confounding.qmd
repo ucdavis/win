@@ -135,7 +135,7 @@ In the drug example above, sicker patients (males) were more likely to receive t
 
 Confounding is mathematically equivalent to the failure of **marginal exchangeability**. Recall from Chapter 2 that marginal exchangeability holds when:
 
-$$Y^a \perp\!\!\!\perp A \quad \text{for all } a$$
+$$Y^a \ind A \quad \text{for all } a$$
 
 This means the treated and untreated groups have the same distribution of potential outcomes: $\Pr[Y^a = 1 \mid A = 1] = \Pr[Y^a = 1 \mid A = 0] = \Pr[Y^a = 1]$.
 
@@ -143,13 +143,13 @@ When marginal exchangeability holds, association equals causation:
 
 $$\Pr[Y = 1 \mid A = 1] - \Pr[Y = 1 \mid A = 0] = \Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]$$
 
-**No confounding is equivalent to marginal exchangeability.** When confounding is present, marginal exchangeability fails: $Y^a \not\perp\!\!\!\perp A$, and the treated and untreated differ in their potential outcomes.
+**No confounding is equivalent to marginal exchangeability.** When confounding is present, marginal exchangeability fails: $Y^a \not\ind A$, and the treated and untreated differ in their potential outcomes.
 
 ### Eliminating Confounding via Conditioning
 
 Even when marginal exchangeability fails, we can often achieve **conditional exchangeability** by adjusting for the measured confounders $L$:
 
-$$Y^a \perp\!\!\!\perp A \mid L \quad \text{for all } a$$
+$$Y^a \ind A \mid L \quad \text{for all } a$$
 
 This means that within each stratum of $L$, the treated and untreated are exchangeable. In the drug example:
 
@@ -170,8 +170,8 @@ The standardized risk difference is zero, correctly recovering the null causal e
 ::: {.notes}
 **Marginal vs. conditional exchangeability:**
 
-- **Marginal exchangeability** ($Y^a \perp\!\!\!\perp A$): holds in marginally randomized experiments; association equals causation without any adjustment.
-- **Conditional exchangeability** ($Y^a \perp\!\!\!\perp A \mid L$): holds in conditionally randomized experiments and (by assumption) in observational studies after adjusting for all confounders $L$.
+- **Marginal exchangeability** ($Y^a \ind A$): holds in marginally randomized experiments; association equals causation without any adjustment.
+- **Conditional exchangeability** ($Y^a \ind A \mid L$): holds in conditionally randomized experiments and (by assumption) in observational studies after adjusting for all confounders $L$.
 
 In practice, we can never verify from data alone that conditional exchangeability holds. We must rely on subject-matter knowledge to argue that the measured $L$ captures all common causes of $A$ and $Y$.
 
@@ -441,16 +441,16 @@ The SWIG for the intervention $do(A = a)$ has nodes $\{L,\; a \mid A,\; Y^a\}$:
 
 In the SWIG, the counterfactual $Y^a$ is **d-separated** from the natural value $A$ given $L$, because the only path from $A$ to $Y^a$ would go through $a$, but $A$ and $a$ are split. This d-separation corresponds directly to the conditional exchangeability condition:
 
-$$Y^a \perp\!\!\!\perp A \mid L$$
+$$Y^a \ind A \mid L$$
 
 SWIGs thus provide a graphical proof of conditional exchangeability whenever $L$ satisfies the backdoor criterion.
 :::
 
 ### What SWIGs Add
 
-Standard DAGs allow us to determine which variables to adjust for (via the backdoor criterion) but cannot directly show that $Y^a \perp\!\!\!\perp A \mid L$, because $Y^a$ is not a node in the DAG. SWIGs resolve this by making counterfactual variables explicit:
+Standard DAGs allow us to determine which variables to adjust for (via the backdoor criterion) but cannot directly show that $Y^a \ind A \mid L$, because $Y^a$ is not a node in the DAG. SWIGs resolve this by making counterfactual variables explicit:
 
-- The d-separation statement $Y^a \perp\!\!\!\perp A \mid L$ in the SWIG directly implies conditional exchangeability
+- The d-separation statement $Y^a \ind A \mid L$ in the SWIG directly implies conditional exchangeability
 - This equivalence provides a graphical justification for identification by standardization
 
 ::: {.notes}
@@ -479,9 +479,9 @@ This chapter examined **confounding** in depth, providing both an intuitive nume
 
 1. **Confounding** is present when the crude (marginal) association between $A$ and $Y$ differs from the average causal effect. Structurally, confounding exists when at least one backdoor path from $A$ to $Y$ is open.
 
-2. **Confounding = lack of marginal exchangeability**: $Y^a \not\perp\!\!\!\perp A$. The treated and untreated groups have different distributions of potential outcomes.
+2. **Confounding = lack of marginal exchangeability**: $Y^a \not\ind A$. The treated and untreated groups have different distributions of potential outcomes.
 
-3. **Conditional exchangeability** ($Y^a \perp\!\!\!\perp A \mid L$) can restore identifiability when $L$ satisfies the backdoor criterion. Under conditional exchangeability and positivity, the causal effect is identified by standardization.
+3. **Conditional exchangeability** ($Y^a \ind A \mid L$) can restore identifiability when $L$ satisfies the backdoor criterion. Under conditional exchangeability and positivity, the causal effect is identified by standardization.
 
 4. **The backdoor criterion** provides a graphical sufficient condition for valid adjustment. A set $L$ satisfies the criterion if it (i) contains no descendants of $A$ and (ii) blocks all backdoor paths from $A$ to $Y$.
 
