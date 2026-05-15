@@ -27,15 +27,15 @@ This chapter is based on @hernan2020causal [Chapter 13, pp. 175-188].
 We've seen two approaches to confounding adjustment:
 
 1. **IP weighting** (Chapter 12): Model $\Pr[A \mid L]$ and weight observations
-2. **Standardization** (this chapter): Model $E[Y \mid A, L]$ and compute weighted averages
+2. **Standardization** (this chapter): Model $\E{Y \mid A, L}$ and compute weighted averages
 
-Both can estimate $E[Y^a]$ under conditional exchangeability.
+Both can estimate $\E{Y^a}$ under conditional exchangeability.
 
 ### Standardization Review
 
 From Chapter 2, **standardization** computes:
 
-$$E[Y^a] = \sum_{\ell} E[Y \mid A = a, L = \ell] \Pr[L = \ell]$$
+$$\E{Y^a} = \sum_{\ell} \E{Y \mid A = a, L = \ell} \Pr[L = \ell]$$
 
 This is a weighted average of stratum-specific means, with weights equal to the population distribution of $L$.
 
@@ -44,7 +44,7 @@ This is a weighted average of stratum-specific means, with weights equal to the 
 
 **Standardization** estimates the mean outcome under treatment $a$ by:
 
-1. Computing $E[Y \mid A = a, L = \ell]$ for all levels $\ell$
+1. Computing $\E{Y \mid A = a, L = \ell}$ for all levels $\ell$
 2. Averaging over the population distribution of $L$:
 
 $$\hat{E}[Y^a] = \sum_{\ell} \hat{E}[Y \mid A = a, L = \ell] \times \hat{\Pr}[L = \ell]$$
@@ -78,9 +78,9 @@ When confounders are continuous or high-dimensional, we cannot compute stratum-s
 
 ### Parametric Outcome Model
 
-**Model**: Specify a model for $E[Y \mid A, L]$, such as:
+**Model**: Specify a model for $\E{Y \mid A, L}$, such as:
 
-$$E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)$$
+$$\E{Y \mid A, L} = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)$$
 
 This includes:
 - Main effects of $A$ and $L$
@@ -109,7 +109,7 @@ $$\hat{E}[Y^a] = \frac{1}{n} \sum_{i=1}^n \hat{E}[Y \mid A = a, L = L_i]$$
 
 **Outcome model**: Linear regression for weight change
 
-$$E[Y \mid A, L] = \beta_0 + \beta_1 A + \sum_{j} \beta_j L_j + \sum_{j} \gamma_j (A \times L_j)$$
+$$\E{Y \mid A, L} = \beta_0 + \beta_1 A + \sum_{j} \beta_j L_j + \sum_{j} \gamma_j (A \times L_j)$$
 
 **Procedure**:
 
@@ -120,11 +120,11 @@ $$E[Y \mid A, L] = \beta_0 + \beta_1 A + \sum_{j} \beta_j L_j + \sum_{j} \gamma_
 5. Estimate causal effect: $\hat{E}[Y^{a=1}] - \hat{E}[Y^{a=0}]$
 
 ::: {.notes}
-**Why this works**: Under conditional exchangeability $Y^a \perp\!\!\!\perp A \mid L$:
+**Why this works**: Under conditional exchangeability $Y^a \ind A \mid L$:
 
-$$E[Y^a] = E_L[E[Y^a \mid L]] = E_L[E[Y \mid A = a, L]]$$
+$$\E{Y^a} = E_L[\E{Y^a \mid L}] = E_L[\E{Y \mid A = a, L}]$$
 
-The g-formula estimates this by averaging the conditional mean $E[Y \mid A = a, L]$ over the empirical distribution of $L$.
+The g-formula estimates this by averaging the conditional mean $\E{Y \mid A = a, L}$ over the empirical distribution of $L$.
 :::
 
 ## 13.3 Standardizing the Mean Outcome to the Confounder Distribution (pp. 179-181)
@@ -137,19 +137,19 @@ The g-formula standardizes to the **observed distribution** of confounders. We c
 
 **Options for standardization**:
 
-1. **Population distribution**: $\sum_{\ell} E[Y \mid A = a, L = \ell] \Pr[L = \ell]$ (standard g-formula)
-2. **Treated distribution**: $\sum_{\ell} E[Y \mid A = a, L = \ell] \Pr[L = \ell \mid A = 1]$
-3. **Untreated distribution**: $\sum_{\ell} E[Y \mid A = a, L = \ell] \Pr[L = \ell \mid A = 0]$
-4. **External distribution**: $\sum_{\ell} E[Y \mid A = a, L = \ell] \Pr_{\text{ext}}[L = \ell]$
+1. **Population distribution**: $\sum_{\ell} \E{Y \mid A = a, L = \ell} \Pr[L = \ell]$ (standard g-formula)
+2. **Treated distribution**: $\sum_{\ell} \E{Y \mid A = a, L = \ell} \Pr[L = \ell \mid A = 1]$
+3. **Untreated distribution**: $\sum_{\ell} \E{Y \mid A = a, L = \ell} \Pr[L = \ell \mid A = 0]$
+4. **External distribution**: $\sum_{\ell} \E{Y \mid A = a, L = \ell} \Pr_{\text{ext}}[L = \ell]$
 
 ### ATT vs ATE
 
 **Average treatment effect (ATE)**:
-$$E[Y^{a=1}] - E[Y^{a=0}]$$
+$$\E{Y^{a=1}} - \E{Y^{a=0}}$$
 Standardized to the population (or sample) distribution of $L$.
 
 **Average treatment effect in the treated (ATT)**:
-$$E[Y^{a=1} \mid A = 1] - E[Y^{a=0} \mid A = 1]$$
+$$\E{Y^{a=1} \mid A = 1} - \E{Y^{a=0} \mid A = 1}$$
 Standardized to the distribution of $L$ among the treated.
 
 **G-formula for ATT**:
@@ -178,7 +178,7 @@ Both IP weighting and standardization can estimate causal effects. How do they c
 
 | Aspect | IP Weighting | Standardization |
 |--------|--------------|-----------------|
-| **Models** | $\Pr[A \mid L]$ (treatment) | $E[Y \mid A, L]$ (outcome) |
+| **Models** | $\Pr[A \mid L]$ (treatment) | $\E{Y \mid A, L}$ (outcome) |
 | **Target** | Marginal effect | Marginal effect (via averaging) |
 | **Natural for** | Marginal structural models | Conditional models |
 | **Handles** | Time-varying treatment easily | Time-varying treatment (complex) |
@@ -263,10 +263,10 @@ The **bias-variance trade-off** from Chapter 11 applies here. With large samples
 ### Example: Polynomial Models in NHEFS
 
 **Simple model**:
-$$E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2 \text{Age} + \beta_3 \text{Sex} + \ldots$$
+$$\E{Y \mid A, L} = \beta_0 + \beta_1 A + \beta_2 \text{Age} + \beta_3 \text{Sex} + \ldots$$
 
 **Flexible model**:
-$$E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2 \text{Age} + \beta_3 \text{Age}^2 + \beta_4 A \times \text{Age} + \ldots$$
+$$\E{Y \mid A, L} = \beta_0 + \beta_1 A + \beta_2 \text{Age} + \beta_3 \text{Age}^2 + \beta_4 A \times \text{Age} + \ldots$$
 
 Including $A \times L$ interactions is especially important, as it allows the confounder-outcome relationship to differ between treated and untreated.
 
@@ -281,7 +281,7 @@ The g-formula extends naturally to **continuous treatments**.
 **Setting**: Treatment $A$ is continuous (e.g., dose, duration, intensity)
 
 **G-formula**:
-$$E[Y^a] = E_L[E[Y \mid A = a, L]]$$
+$$\E{Y^a} = E_L[\E{Y \mid A = a, L}]$$
 
 Same as before, but now $a$ can be any value in the continuous range.
 
@@ -297,7 +297,7 @@ Same as before, but now $a$ can be any value in the continuous range.
 ::: {#def-dose-response}
 ## Dose-Response Curve
 
-The **dose-response curve** is the function $a \mapsto E[Y^a]$ showing how the mean potential outcome varies with treatment level $a$.
+The **dose-response curve** is the function $a \mapsto \E{Y^a}$ showing how the mean potential outcome varies with treatment level $a$.
 
 For continuous treatment, this is a smooth curve rather than discrete points.
 :::

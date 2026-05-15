@@ -63,14 +63,14 @@ This notation generalizes naturally to more than two treatments or to continuous
 
 There is **additive interaction** (on the risk difference scale) between treatments $A$ and $E$ if:
 
-$$E[Y^{a=1,e=1}] - E[Y^{a=0,e=0}] \neq \bigl(E[Y^{a=1,e=0}] - E[Y^{a=0,e=0}]\bigr) + \bigl(E[Y^{a=0,e=1}] - E[Y^{a=0,e=0}]\bigr)$$
+$$\E{Y^{a=1,e=1}} - \E{Y^{a=0,e=0}} \neq \bigl(\E{Y^{a=1,e=0}} - \E{Y^{a=0,e=0}}\bigr) + \bigl(\E{Y^{a=0,e=1}} - \E{Y^{a=0,e=0}}\bigr)$$
 
 In words: the joint effect of both treatments differs from the sum of the individual effects.
 :::
 
 Equivalently, we can define additive interaction using the **interaction contrast**:
 
-$$\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}]$$
+$$\text{IC} = \E{Y^{a=1,e=1}} - \E{Y^{a=1,e=0}} - \E{Y^{a=0,e=1}} + \E{Y^{a=0,e=0}}$$
 
 If $\text{IC} \neq 0$, there is additive interaction.
 
@@ -98,10 +98,10 @@ Suppose we study the effect of aspirin and exercise on heart attack risk (with l
 
 | Treatment Combination | Risk |
 |-----------------------|------|
-| No aspirin, no exercise: $E[Y^{a=0,e=0}]$ | 0.30 |
-| Aspirin only: $E[Y^{a=1,e=0}]$ | 0.25 |
-| Exercise only: $E[Y^{a=0,e=1}]$ | 0.20 |
-| Both aspirin and exercise: $E[Y^{a=1,e=1}]$ | 0.10 |
+| No aspirin, no exercise: $\E{Y^{a=0,e=0}}$ | 0.30 |
+| Aspirin only: $\E{Y^{a=1,e=0}}$ | 0.25 |
+| Exercise only: $\E{Y^{a=0,e=1}}$ | 0.20 |
+| Both aspirin and exercise: $\E{Y^{a=1,e=1}}$ | 0.10 |
 
 **Individual effects**:
 
@@ -147,7 +147,7 @@ To identify interaction from observed data, we need the three identifiability co
 ### Identifiability Conditions for Interaction
 
 1. **Exchangeability** for the joint treatment $(A, E)$:
-   $$Y^{a,e} \perp\!\!\!\perp (A, E) \quad \text{for all } (a,e)$$
+   $$Y^{a,e} \ind (A, E) \quad \text{for all } (a,e)$$
    
 2. **Positivity** for the joint treatment:
    $$Pr[A = a, E = e] > 0 \quad \text{for all } (a,e)$$
@@ -235,10 +235,10 @@ Suppose we have:
 
 Then:
 
-- $E[Y^{0,0}] = 0.30 + 0.20 + 0.10 = 0.60$
-- $E[Y^{1,0}] = 0.20 + 0.10 = 0.30$ (the 30% prevented by $A$ no longer get disease)
-- $E[Y^{0,1}] = 0.30 + 0.10 = 0.40$ (the 20% prevented by $E$ no longer get disease)
-- $E[Y^{1,1}] = 0.10$ (only the synergistic group still gets disease)
+- $\E{Y^{0,0}} = 0.30 + 0.20 + 0.10 = 0.60$
+- $\E{Y^{1,0}} = 0.20 + 0.10 = 0.30$ (the 30% prevented by $A$ no longer get disease)
+- $\E{Y^{0,1}} = 0.30 + 0.10 = 0.40$ (the 20% prevented by $E$ no longer get disease)
+- $\E{Y^{1,1}} = 0.10$ (only the synergistic group still gets disease)
 
 **Interaction contrast**:
 $$\text{IC} = 0.10 - 0.30 - 0.40 + 0.60 = 0$$
@@ -404,7 +404,7 @@ This chapter introduced **interaction** between two treatments.
 **Key concepts**:
 
 1. **Definition**: Interaction exists when the joint effect of two treatments differs from the sum of their individual effects:
-   $$\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}] \neq 0$$
+   $$\text{IC} = \E{Y^{a=1,e=1}} - \E{Y^{a=1,e=0}} - \E{Y^{a=0,e=1}} + \E{Y^{a=0,e=0}} \neq 0$$
 
 2. **Identification**: Requires exchangeability, positivity, and consistency for the joint treatment $(A, E)$
 
