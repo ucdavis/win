@@ -568,9 +568,11 @@ The repository uses GitHub Actions for continuous integration:
 
 1. **quarto-publish.yml**: Builds and publishes the Quarto website to GitHub Pages (via the d-morrison/gha reusable workflow)
    - Runs on push to main branch
-   - Uses Quarto actions to render and deploy
+   - Renders with Quarto (Quarto actions handle setup), then deploys
+     `_site/` to the `gh-pages` branch with
+     JamesIves/github-pages-deploy-action, preserving the `pr-preview/`
+     subtree
    - Installs TinyTeX for PDF rendering
-   - Outputs to `_site/` directory
 2. **preview.yml**: Generates preview of the website for pull requests
    - Uses PR preview action to deploy to separate preview URL
    - Allows reviewers to see rendered changes
