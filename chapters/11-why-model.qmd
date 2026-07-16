@@ -110,7 +110,7 @@ With the HIV data and continuous treatment dose:
 
 - Fit: $\E{Y|A} = \beta_0 + \beta_1 A$
 - Obtain estimates: $\hat{\beta}_0 = 70$, $\hat{\beta}_1 = 1.25$
-- Predict for $A = 90$: $\hat{E}[Y|A = 90] = 70 + 1.25(90) = 182.5$
+- Predict for $A = 90$: $\hE{Y|A = 90} = 70 + 1.25(90) = 182.5$
 
 Even though no one received dose 90, the model provides an estimate by **interpolation** from observed doses.
 :::
@@ -186,7 +186,7 @@ When estimating $\E{Y|A = 90}$ with no observations at $A = 90$:
 
 **Idea**: Estimate $\E{Y|A = a}$ using a weighted average of nearby observations.
 
-$$\hat{E}[Y|A = a] = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}$$
+$$\hE{Y|A = a} = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}$$
 
 where:
 

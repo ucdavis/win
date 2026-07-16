@@ -151,10 +151,10 @@ Propensity scores can be used to stratify the population and then standardize.
 
 1. Estimate propensity score $\hat{e}(L_i)$ for all individuals
 2. Create strata (e.g., quintiles) of the propensity score
-3. Within each stratum, compute $\hat{E}[Y \mid A = a, \text{stratum } s]$
+3. Within each stratum, compute $\hE{Y \mid A = a, \text{stratum } s}$
 4. Standardize across strata:
 
-$$\hat{E}[Y^a] = \sum_{s=1}^S \hat{E}[Y \mid A = a, \text{stratum } s] \times \Pr[\text{stratum } s]$$
+$$\hE{Y^a} = \sum_{s=1}^S \hE{Y \mid A = a, \text{stratum } s} \times \Pr[\text{stratum } s]$$
 
 ### Checking Balance
 
@@ -322,9 +322,9 @@ Can we combine propensity scores with outcome regression?
 
 **Advanced approach**: Combine IP weighting with outcome modeling:
 
-$$\hat{E}[Y^a] = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right]$$
+$$\hE{Y^a} = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right]$$
 
-where $m(a, L) = \hat{E}[Y \mid A = a, L]$ is the outcome model.
+where $m(a, L) = \hE{Y \mid A = a, L}$ is the outcome model.
 
 **Properties**:
 

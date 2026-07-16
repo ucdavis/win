@@ -209,7 +209,7 @@ if *at least one* of the two sets of models is correctly specified.
 The augmented inverse probability weighted (AIPW) estimator
 for the counterfactual mean $\E{Y^{\bar{a}_K}}$ takes the form
 
-$$\hat{E}[Y^{\bar{a}_K}]_{\text{DR}} =
+$$\hE{Y^{\bar{a}_K}}_{\text{DR}} =
 \frac{1}{n} \sum_{i=1}^n \left[
   \hat{m}(\bar{A}_{K,i}) +
   \frac{\mathbf{1}(\bar{A}_{K,i} = \bar{a}_K)}{W_i^A}

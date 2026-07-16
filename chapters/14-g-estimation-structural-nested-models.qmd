@@ -192,7 +192,7 @@ This is the mean outcome among the treated when there is no confounding.
 ::: {.notes}
 **With confounders**: The estimating equation becomes more complex:
 
-$$\sum_{i=1}^n [A_i - \hat{E}[A \mid L_i]][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0$$
+$$\sum_{i=1}^n [A_i - \hE{A \mid L_i}][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0$$
 
 This requires:
 1. Estimating $\E{A \mid L}$ (e.g., via logistic regression)

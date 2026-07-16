@@ -164,7 +164,7 @@ We can view our study population in two ways:
 Under the superpopulation perspective, even if the true average causal effect is zero, our sample estimate might not be exactly zero due to **sampling variability**.
 
 ::: {.notes}
-For example, suppose we randomly sample 20 individuals from a superpopulation where $\E{Y^{a=1}} = \E{Y^{a=0}} = 0.5$ (true null effect). We might observe $\hat{E}[Y^{a=1}] = 0.55$ and $\hat{E}[Y^{a=0}] = 0.45$ in our sample just by chance.
+For example, suppose we randomly sample 20 individuals from a superpopulation where $\E{Y^{a=1}} = \E{Y^{a=0}} = 0.5$ (true null effect). We might observe $\hE{Y^{a=1}} = 0.55$ and $\hE{Y^{a=0}} = 0.45$ in our sample just by chance.
 
 **Statistical inference** helps us determine whether an observed association is due to a true causal effect or random variability. We use:
 

@@ -544,10 +544,10 @@ with corresponding artificial censoring indicator $\Delta^*_i(\psi) = \mathbf{1}
 
 The g-estimator solves the estimating equation
 
-$$\sum_i \bigl(A_i - \hat{E}[A_i \mid L_i]\bigr) \cdot h\!\bigl(U^*_i(\psi), \Delta^*_i(\psi)\bigr) = 0$$
+$$\sum_i \bigl(A_i - \hE{A_i \mid L_i}\bigr) \cdot h\!\bigl(U^*_i(\psi), \Delta^*_i(\psi)\bigr) = 0$$
 
 where $h(\cdot)$ is a score function (e.g., from a rank-based or weighted log-rank statistic)
-and $\hat{E}[A_i \mid L_i]$ is the estimated propensity score.
+and $\hE{A_i \mid L_i}$ is the estimated propensity score.
 By searching over $\psi$, we find the value that makes treated and untreated individuals comparable in terms of their blipped-down survival times.
 :::
 

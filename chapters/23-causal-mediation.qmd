@@ -252,7 +252,7 @@ it would have under $A = 0$?" — which is an intervention that could be impleme
 The randomized interventional analogue of the indirect effect is identified
 under conditions that do not require assumption (4) from Section 23.2:
 
-$$\text{rIIE} = \E{ \int_m \E{Y \mid A = 1, M = m, C}\, dF_{M \mid A=0, C}(m) }
+$$\text{rIIE} = \E{ \int \E{Y \mid A = 1, M = m, C}\, dF_{M \mid A=0, C}(m) }
 - \E{ \E{Y \mid A = 1, M, C} },$$
 
 where $C$ are baseline covariates sufficient to control confounding of both
