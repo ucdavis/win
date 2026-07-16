@@ -298,7 +298,7 @@ Practically, this is often implemented via:
 2. Construct residuals $R_k = A_k - \hat{p}_k$ (the "de-confounded" treatment residual).
 3. Estimate $\psi$ by solving the estimating equation
 
-$$\sum_i \sum_k R_{k,i} \cdot \frac{\partial}{\partial \psi} H_k(\psi_i) = 0.$$
+$$\sum_i \sum_k R_{k,i} \cdot \frac{\partial}{\partial \psi} H_{k,i}(\psi) = 0.$$
 
 ::: {.notes}
 **Advantages of g-estimation**:
