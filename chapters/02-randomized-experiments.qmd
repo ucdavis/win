@@ -46,8 +46,8 @@ Table 2.1 shows the observed data from this randomized experiment.
 
 From Table 2.1, we can compute associational measures:
 
-- Risk in the treated: $Pr[Y = 1|A = 1] = 7/13 \approx 0.54$
-- Risk in the untreated: $Pr[Y = 1|A = 0] = 3/7 \approx 0.43$
+- Risk in the treated: $\Pr[Y = 1|A = 1] = 7/13 \approx 0.54$
+- Risk in the untreated: $\Pr[Y = 1|A = 0] = 3/7 \approx 0.43$
 
 ::: {.notes}
 Unlike Table 1.2 in Chapter 1 (where treatment was not randomized), Table 2.1 shows data from a randomized experiment. The treatment assignment is now determined by chance rather than by pre-existing characteristics.
@@ -61,7 +61,7 @@ $$Y^a \ind A \quad \text{for all } a$$
 
 This notation means the counterfactual outcome $Y^a$ is independent of the treatment actually received $A$. Exchangeability implies:
 
-$$Pr[Y^a = 1|A = 1] = Pr[Y^a = 1|A = 0] = Pr[Y^a = 1]$$
+$$\Pr[Y^a = 1|A = 1] = \Pr[Y^a = 1|A = 0] = \Pr[Y^a = 1]$$
 
 for all values of $a$.
 
@@ -78,7 +78,7 @@ Under exchangeability, individuals in the treated group would have experienced t
 ::: {.notes}
 Exchangeability is also called **no confounding**. When exchangeability holds, association equals causation. That is:
 
-$$Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0] = Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]$$
+$$\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0] = \Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]$$
 
 The left side is the associational risk difference (observed), and the right side is the causal risk difference (counterfactual). Under exchangeability, we can interpret the observed association as a causal effect.
 :::
@@ -89,7 +89,7 @@ In our randomized experiment, each individual had a 0.5 probability of receiving
 
 Specifically, randomization ensures:
 
-$$Pr[A = 1|Y^{a=1} = 1, Y^{a=0} = 1] = Pr[A = 1|Y^{a=1} = 0, Y^{a=0} = 0] = Pr[A = 1] = 0.5$$
+$$\Pr[A = 1|Y^{a=1} = 1, Y^{a=0} = 1] = \Pr[A = 1|Y^{a=1} = 0, Y^{a=0} = 0] = \Pr[A = 1] = 0.5$$
 
 The probability of treatment is the same regardless of an individual's potential outcomes. Therefore, the treated and untreated are exchangeable by design.
 
@@ -174,7 +174,7 @@ Within each stratum of $L$, the treated and untreated are exchangeable.
 
 Conditional exchangeability means:
 
-$$Pr[Y^a = 1|A = 1, L = l] = Pr[Y^a = 1|A = 0, L = l] = Pr[Y^a = 1|L = l]$$
+$$\Pr[Y^a = 1|A = 1, L = l] = \Pr[Y^a = 1|A = 0, L = l] = \Pr[Y^a = 1|L = l]$$
 
 for all values of $a$ and $l$.
 
@@ -208,7 +208,7 @@ When exchangeability is conditional rather than marginal, we cannot simply compa
 
 Under conditional exchangeability $Y^a \ind A | L$, the average causal effect can be computed using **standardization**:
 
-$$\E{Y^a} = \sum_l \E{Y|A = a, L = l} \times Pr[L = l]$$
+$$\E{Y^a} = \sum_l \E{Y|A = a, L = l} \times \Pr[L = l]$$
 
 This formula weights the stratum-specific mean outcomes by the population distribution of $L$.
 
@@ -217,7 +217,7 @@ This formula weights the stratum-specific mean outcomes by the population distri
 
 Under conditional exchangeability $Y^a \ind A | L$, the mean counterfactual outcome is:
 
-$$\E{Y^a} = \sum_l \E{Y|A = a, L = l} \times Pr[L = l]$$
+$$\E{Y^a} = \sum_l \E{Y|A = a, L = l} \times \Pr[L = l]$$
 
 where the sum is over all values $l$ of the covariate $L$.
 :::
@@ -227,7 +227,7 @@ This formula is sometimes called the **g-formula** (generalized formula). It exp
 
 The standardization formula requires:
 1. **Conditional exchangeability**: $Y^a \ind A | L$
-2. **Positivity**: $Pr[A = a|L = l] > 0$ for all values $l$ with $Pr[L = l] > 0$
+2. **Positivity**: $\Pr[A = a|L = l] > 0$ for all values $l$ with $\Pr[L = l] > 0$
 3. **Consistency**: $Y = Y^A$ (the observed outcome equals the counterfactual under treatment received)
 :::
 
@@ -239,18 +239,18 @@ Using Table 2.2, let's compute the standardized causal risk difference.
 
 *Among women ($L = 0$):*
 
-- $Pr[Y = 1|A = 1, L = 0] = 3/5 = 0.6$ (3 of 5 treated women died)
-- $Pr[Y = 1|A = 0, L = 0] = 2/5 = 0.4$ (2 of 5 untreated women died)
+- $\Pr[Y = 1|A = 1, L = 0] = 3/5 = 0.6$ (3 of 5 treated women died)
+- $\Pr[Y = 1|A = 0, L = 0] = 2/5 = 0.4$ (2 of 5 untreated women died)
 
 *Among men ($L = 1$):*
 
-- $Pr[Y = 1|A = 1, L = 1] = 4/5 = 0.8$ (4 of 5 treated men died)
-- $Pr[Y = 1|A = 0, L = 1] = 3/5 = 0.6$ (3 of 5 untreated men died)
+- $\Pr[Y = 1|A = 1, L = 1] = 4/5 = 0.8$ (4 of 5 treated men died)
+- $\Pr[Y = 1|A = 0, L = 1] = 3/5 = 0.6$ (3 of 5 untreated men died)
 
 **Step 2**: Compute population distribution of $L$
 
-- $Pr[L = 0] = 10/20 = 0.5$ (10 women)
-- $Pr[L = 1] = 10/20 = 0.5$ (10 men)
+- $\Pr[L = 0] = 10/20 = 0.5$ (10 women)
+- $\Pr[L = 1] = 10/20 = 0.5$ (10 men)
 
 **Step 3**: Apply standardization formula
 
@@ -266,7 +266,7 @@ $$\E{Y^{a=1}} - \E{Y^{a=0}} = 0.7 - 0.5 = 0.2$$
 The standardized causal risk difference is 0.2. In this particular example, this equals the crude (unstandardized) associational difference: $(7/10) - (5/10) = 0.2$.
 
 ::: {.notes}
-In general, the crude association $Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]$ does **not** equal the standardized causal effect when conditional randomization is used.
+In general, the crude association $\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]$ does **not** equal the standardized causal effect when conditional randomization is used.
 
 The standardization formula "adjusts for" or "controls for" $L$ by reweighting each stratum to match the population distribution. This is analogous to direct standardization in epidemiology.
 
@@ -293,16 +293,16 @@ The idea of IPW is to create a **pseudo-population** in which treatment is margi
 
 Each individual is weighted by the inverse of their probability of receiving the treatment they actually received:
 
-$$W^A = \frac{1}{Pr[A|L]}$$
+$$W^A = \frac{1}{\Pr[A|L]}$$
 
 ::: {#def-ipw}
 ## Inverse Probability Weights
 
 For an individual who received treatment $A$ and has covariates $L$, the **inverse probability weight** is:
 
-$$W^A = \frac{1}{Pr[A|L]}$$
+$$W^A = \frac{1}{\Pr[A|L]}$$
 
-where $Pr[A|L]$ is the probability (propensity) of receiving the treatment actually received, given covariates $L$.
+where $\Pr[A|L]$ is the probability (propensity) of receiving the treatment actually received, given covariates $L$.
 :::
 
 ::: {.notes}
@@ -315,19 +315,19 @@ The weights are also called **stabilized weights** when modified to improve effi
 
 Under conditional exchangeability $Y^a \ind A | L$, the mean counterfactual outcome can be estimated as:
 
-$$\E{Y^a} = \E{\frac{I(A = a) \times Y}{Pr[A = a|L]}}$$
+$$\E{Y^a} = \E{\frac{I(A = a) \times Y}{\Pr[A = a|L]}}$$
 
 where $I(A = a)$ is an indicator function equal to 1 if $A = a$ and 0 otherwise.
 
 The IPW estimator of the causal risk difference is:
 
-$$\widehat{\E{Y^{a=1}} - \E{Y^{a=0}}} = \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 1) \times Y_i}{Pr[A_i = 1|L_i]} - \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 0) \times Y_i}{Pr[A_i = 0|L_i]}$$
+$$\widehat{\E{Y^{a=1}} - \E{Y^{a=0}}} = \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 1) \times Y_i}{\Pr[A_i = 1|L_i]} - \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 0) \times Y_i}{\Pr[A_i = 0|L_i]}$$
 
 ::: {.notes}
 This is equivalent to computing a weighted mean in each treatment group:
 
-- Treated: $\frac{\sum_{i:A_i=1} W_i Y_i}{\sum_{i:A_i=1} W_i}$ where $W_i = 1/Pr[A_i = 1|L_i]$
-- Untreated: $\frac{\sum_{i:A_i=0} W_i Y_i}{\sum_{i:A_i=0} W_i}$ where $W_i = 1/Pr[A_i = 0|L_i]$
+- Treated: $\frac{\sum_{i:A_i=1} W_i Y_i}{\sum_{i:A_i=1} W_i}$ where $W_i = 1/\Pr[A_i = 1|L_i]$
+- Untreated: $\frac{\sum_{i:A_i=0} W_i Y_i}{\sum_{i:A_i=0} W_i}$ where $W_i = 1/\Pr[A_i = 0|L_i]$
 
 Then subtract the two weighted means.
 :::
@@ -340,10 +340,10 @@ Using Table 2.2, let's compute the IPW estimate of the causal effect.
 
 In the stratified randomization:
 
-- $Pr[A = 1|L = 0] = 5/10 = 0.5$ (among women)
-- $Pr[A = 1|L = 1] = 5/10 = 0.5$ (among men)
-- $Pr[A = 0|L = 0] = 5/10 = 0.5$ (among women)
-- $Pr[A = 0|L = 1] = 5/10 = 0.5$ (among men)
+- $\Pr[A = 1|L = 0] = 5/10 = 0.5$ (among women)
+- $\Pr[A = 1|L = 1] = 5/10 = 0.5$ (among men)
+- $\Pr[A = 0|L = 0] = 5/10 = 0.5$ (among women)
+- $\Pr[A = 0|L = 1] = 5/10 = 0.5$ (among men)
 
 **Step 2**: Compute weights
 
@@ -385,31 +385,31 @@ Both methods are consistent (converge to the true causal effect) under the same 
 | Feature | Standardization | IPW |
 |---------|----------------|-----|
 | **Idea** | Weight stratum-specific outcomes by population distribution | Create pseudo-population with marginal randomization |
-| **Formula** | $\E{Y^a} = \sum_l \E{Y \vert A=a,L=l} Pr[L=l]$ | $\E{Y^a} = \E{Y \cdot I(A=a) / Pr[A=a \vert L]}$ |
-| **Weights** | Stratum probabilities $Pr[L=l]$ | Inverse treatment probabilities $1/Pr[A \vert L]$ |
-| **Model** | Outcome model $\E{Y \vert A,L}$ | Treatment model $Pr[A \vert L]$ |
+| **Formula** | $\E{Y^a} = \sum_l \E{Y \vert A=a,L=l} \Pr[L=l]$ | $\E{Y^a} = \E{Y \cdot I(A=a) / \Pr[A=a \vert L]}$ |
+| **Weights** | Stratum probabilities $\Pr[L=l]$ | Inverse treatment probabilities $1/\Pr[A \vert L]$ |
+| **Model** | Outcome model $\E{Y \vert A,L}$ | Treatment model $\Pr[A \vert L]$ |
 | **Extensions** | G-computation, parametric g-formula | Marginal structural models |
 
 ::: {.notes}
-In randomized experiments, treatment probabilities $Pr[A|L]$ are known by design. In observational studies, we must estimate them from data, which introduces additional assumptions and potential for bias.
+In randomized experiments, treatment probabilities $\Pr[A|L]$ are known by design. In observational studies, we must estimate them from data, which introduces additional assumptions and potential for bias.
 
-Standardization requires correctly specifying the outcome model $\E{Y|A,L}$. IPW requires correctly specifying the treatment model $Pr[A|L]$. **Doubly robust** methods combine both and remain consistent if *either* model is correct.
+Standardization requires correctly specifying the outcome model $\E{Y|A,L}$. IPW requires correctly specifying the treatment model $\Pr[A|L]$. **Doubly robust** methods combine both and remain consistent if *either* model is correct.
 :::
 
 ### Positivity
 
 Both standardization and IPW require the **positivity assumption**: For all values of $L$ that occur in the population, there must be a non-zero probability of receiving each treatment level.
 
-Formally: If $Pr[L = l] > 0$, then $0 < Pr[A = a|L = l] < 1$ for all $a$.
+Formally: If $\Pr[L = l] > 0$, then $0 < \Pr[A = a|L = l] < 1$ for all $a$.
 
 ::: {#def-positivity}
 ## Positivity
 
 The **positivity assumption** (also called **experimental treatment assignment** or **overlap**) requires:
 
-$$0 < Pr[A = a|L = l] < 1$$
+$$0 < \Pr[A = a|L = l] < 1$$
 
-for all values $l$ such that $Pr[L = l] > 0$ and for all treatment levels $a$.
+for all values $l$ such that $\Pr[L = l] > 0$ and for all treatment levels $a$.
 :::
 
 ::: {.notes}
@@ -428,9 +428,9 @@ This chapter introduced fundamental concepts using randomized experiments:
 
 2. **Conditional randomization** achieves conditional exchangeability $Y^a \ind A | L$ within strata, requiring adjustment methods
 
-3. **Standardization** computes $\E{Y^a} = \sum_l \E{Y|A=a,L=l} Pr[L=l]$ by weighting stratum-specific outcomes
+3. **Standardization** computes $\E{Y^a} = \sum_l \E{Y|A=a,L=l} \Pr[L=l]$ by weighting stratum-specific outcomes
 
-4. **Inverse probability weighting** creates a pseudo-population where treatment is marginally randomized by weighting individuals as $W^A = 1/Pr[A|L]$
+4. **Inverse probability weighting** creates a pseudo-population where treatment is marginally randomized by weighting individuals as $W^A = 1/\Pr[A|L]$
 
 5. Both standardization and IPW require **conditional exchangeability**, **positivity**, and **consistency**
 
@@ -483,11 +483,11 @@ The IPW estimator can be derived from first principles. Under $Y^a \ind A | L$ a
 \E{Y^a} &= \E{\E{Y^a \mid L}} \quad \text{(law of total expectation)} \\
 &= \E{\E{Y^a \mid A=a, L}} \quad \text{(by conditional exchangeability)} \\
 &= \E{\E{Y \mid A=a, L}} \quad \text{(by consistency)} \\
-&= \E{\frac{I(A=a)}{Pr[A=a|L]} \E{Y \mid A=a, L}} \quad \text{(inverse weighting)} \\
-&= \E{\frac{I(A=a) \cdot Y}{Pr[A=a|L]}} \quad \text{(by law of total expectation)}
+&= \E{\frac{I(A=a)}{\Pr[A=a|L]} \E{Y \mid A=a, L}} \quad \text{(inverse weighting)} \\
+&= \E{\frac{I(A=a) \cdot Y}{\Pr[A=a|L]}} \quad \text{(by law of total expectation)}
 \end{align}
 
-The key step is the third equality, which uses the fact that $\E{I(A=a)/Pr[A=a|L]} = 1$.
+The key step is the third equality, which uses the fact that $\E{I(A=a)/\Pr[A=a|L]} = 1$.
 
 ## References
 

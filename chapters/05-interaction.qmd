@@ -150,7 +150,7 @@ To identify interaction from observed data, we need the three identifiability co
    $$Y^{a,e} \ind (A, E) \quad \text{for all } (a,e)$$
    
 2. **Positivity** for the joint treatment:
-   $$Pr[A = a, E = e] > 0 \quad \text{for all } (a,e)$$
+   $$\Pr[A = a, E = e] > 0 \quad \text{for all } (a,e)$$
    
 3. **Consistency**:
    $$Y = Y^{A,E}$$

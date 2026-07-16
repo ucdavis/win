@@ -129,14 +129,14 @@ Using data from a randomized trial of heart transplant in Zeus's family:
 
 **Stratum 1 (Males)**:
 
-- Risk in treated: $Pr[Y = 1 | A = 1, V = \text{male}] = 0.40$
-- Risk in untreated: $Pr[Y = 1 | A = 0, V = \text{male}] = 0.70$
+- Risk in treated: $\Pr[Y = 1 | A = 1, V = \text{male}] = 0.40$
+- Risk in untreated: $\Pr[Y = 1 | A = 0, V = \text{male}] = 0.70$
 - Risk difference: $0.40 - 0.70 = -0.30$ (benefit)
 
 **Stratum 2 (Females)**:
 
-- Risk in treated: $Pr[Y = 1 | A = 1, V = \text{female}] = 0.65$
-- Risk in untreated: $Pr[Y = 1 | A = 0, V = \text{female}] = 0.35$
+- Risk in treated: $\Pr[Y = 1 | A = 1, V = \text{female}] = 0.65$
+- Risk in untreated: $\Pr[Y = 1 | A = 0, V = \text{female}] = 0.35$
 - Risk difference: $0.65 - 0.35 = +0.30$ (harm)
 
 Since $-0.30 \neq +0.30$, there is effect modification by sex.

@@ -82,7 +82,7 @@ This means the potential outcome $Y^a$ is independent of treatment $A$ within le
 
 Under conditional exchangeability:
 
-$$Pr[Y^a = 1 | A = 1, L] = Pr[Y^a = 1 | A = 0, L] = Pr[Y^a = 1 | L]$$
+$$\Pr[Y^a = 1 | A = 1, L] = \Pr[Y^a = 1 | A = 0, L] = \Pr[Y^a = 1 | L]$$
 
 for all values of $a$ and $L$.
 
@@ -103,7 +103,7 @@ The notation $\ind$ denotes statistical independence.
 
 Suppose we want to estimate the causal effect of smoking on lung cancer using observational data. If smokers differ from non-smokers in other ways that affect lung cancer risk (e.g., occupational exposures, genetic factors), then:
 
-$$Pr[Y^{a=1} = 1 | A = 1] \neq Pr[Y^{a=1} = 1 | A = 0]$$
+$$\Pr[Y^{a=1} = 1 | A = 1] \neq \Pr[Y^{a=1} = 1 | A = 0]$$
 
 The potential outcome under smoking is not independent of actual smoking status. The treated (smokers) are not exchangeable with the untreated (non-smokers).
 :::
@@ -140,9 +140,9 @@ The second identifiability condition is **positivity**, also called the experime
 ::: {#def-positivity}
 ## Positivity
 
-**Positivity** requires that, for every combination of values of $L$ for which $Pr[L] > 0$:
+**Positivity** requires that, for every combination of values of $L$ for which $\Pr[L] > 0$:
 
-$$Pr[A = a | L] > 0 \quad \text{for all } a$$
+$$\Pr[A = a | L] > 0 \quad \text{for all } a$$
 
 In words: every individual has a non-zero probability of receiving every level of treatment, conditional on their measured covariates.
 :::
@@ -156,7 +156,7 @@ Without positivity, we cannot estimate causal effects for all individuals. If ce
 
 Suppose we want to estimate the effect of a treatment on 90-year-old individuals, but in our data, no 90-year-old person received the treatment. Then:
 
-$$Pr[A = 1 | \text{Age} = 90] = 0$$
+$$\Pr[A = 1 | \text{Age} = 90] = 0$$
 
 We cannot estimate $\E{Y^{a=1} | \text{Age} = 90}$ from the data because we have no treated 90-year-olds to observe.
 :::
@@ -174,7 +174,7 @@ When positivity is violated, we must either:
 - Make additional modeling assumptions (with their own limitations)
 - Accept that we cannot answer the original causal question with the available data
 
-In practice, **near-violations** of positivity (where $Pr[A = a | L]$ is very close to 0 or 1) can also cause problems, leading to unstable estimates with large variance.
+In practice, **near-violations** of positivity (where $\Pr[A = a | L]$ is very close to 0 or 1) can also cause problems, leading to unstable estimates with large variance.
 :::
 
 ## 3.4 Consistency: First, Define the Counterfactual Outcome (pp. 30-32)
@@ -331,7 +331,7 @@ This framework will be revisited throughout the book, particularly in Part III w
 - **Treatment**: Daily statin (yes/no)
 - **Assignment**: Random assignment to statin or no statin
 - **Outcome**: CVD event within 5 years
-- **Estimand**: Risk difference $Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]$
+- **Estimand**: Risk difference $\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]$
 
 **Observational study emulation**:
 
@@ -360,7 +360,7 @@ The target trial framework helps us think systematically about these issues.
 This chapter introduced the fundamental **identifiability conditions** for causal inference in observational studies:
 
 1. **Exchangeability**: $Y^a \ind A \mid L$ (no unmeasured confounding)
-2. **Positivity**: $Pr[A = a | L] > 0$ for all $a$ and $L$ (every subgroup can receive every treatment level)
+2. **Positivity**: $\Pr[A = a | L] > 0$ for all $a$ and $L$ (every subgroup can receive every treatment level)
 3. **Consistency**: $Y = Y^A$ (well-defined interventions, no interference)
 
 Under these three conditions, we can identify causal effects from observational data by adjusting for measured confounders $L$.

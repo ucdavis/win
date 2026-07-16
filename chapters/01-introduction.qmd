@@ -90,14 +90,14 @@ Since individual causal effects cannot be identified, we focus on **average caus
 
 From Table 1.1, we can compute:
 
-- Risk if all treated: $Pr[Y^{a=1} = 1] = 10/20 = 0.5$
-- Risk if all untreated: $Pr[Y^{a=0} = 1] = 10/20 = 0.5$
+- Risk if all treated: $\Pr[Y^{a=1} = 1] = 10/20 = 0.5$
+- Risk if all untreated: $\Pr[Y^{a=0} = 1] = 10/20 = 0.5$
 
 ### Definition of Average Causal Effect
 
 An **average causal effect** of treatment $A$ on outcome $Y$ is present if:
 
-$$Pr[Y^{a=1} = 1] \neq Pr[Y^{a=0} = 1]$$
+$$\Pr[Y^{a=1} = 1] \neq \Pr[Y^{a=0} = 1]$$
 
 or equivalently (using expected values):
 
@@ -121,19 +121,19 @@ When a causal effect exists, we can quantify its magnitude using different **eff
 
 ### Causal Risk Difference
 
-$$Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]$$
+$$\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]$$
 
 This additive measure equals zero under the null hypothesis. It measures the absolute difference in risk.
 
 ### Causal Risk Ratio
 
-$$\frac{Pr[Y^{a=1} = 1]}{Pr[Y^{a=0} = 1]}$$
+$$\frac{\Pr[Y^{a=1} = 1]}{\Pr[Y^{a=0} = 1]}$$
 
 This multiplicative measure equals one under the null hypothesis. It measures how many times treatment increases (or decreases) the risk.
 
 ### Causal Odds Ratio
 
-$$\frac{Pr[Y^{a=1} = 1] / Pr[Y^{a=1} = 0]}{Pr[Y^{a=0} = 1] / Pr[Y^{a=0} = 0]}$$
+$$\frac{\Pr[Y^{a=1} = 1] / \Pr[Y^{a=1} = 0]}{\Pr[Y^{a=0} = 1] / \Pr[Y^{a=0} = 0]}$$
 
 This also equals one under the null hypothesis.
 
@@ -226,15 +226,15 @@ Unlike causal effects (defined by counterfactuals), **associations** are defined
 In reality, we observe only one outcome per person—the one corresponding to their actual treatment. In Table 1.2, 13 individuals received transplants (A = 1) and 7 did not (A = 0). Among the 13 treated, 7 died (Y = 1). Among the 7 untreated, 3 died (Y = 1).
 :::
 
-The **associational risk** in the treated: $Pr[Y = 1|A = 1] = 7/13$
+The **associational risk** in the treated: $\Pr[Y = 1|A = 1] = 7/13$
 
-The **associational risk** in the untreated: $Pr[Y = 1|A = 0] = 3/7$
+The **associational risk** in the untreated: $\Pr[Y = 1|A = 0] = 3/7$
 
 ### Definitions of Association
 
 Treatment $A$ and outcome $Y$ are **independent** (not associated) when:
 
-$$Pr[Y = 1|A = 1] = Pr[Y = 1|A = 0]$$
+$$\Pr[Y = 1|A = 1] = \Pr[Y = 1|A = 0]$$
 
 or equivalently: $\E{Y|A = 1} = \E{Y|A = 0}$
 
@@ -242,16 +242,16 @@ This is denoted $Y \ind A$.
 
 When this equality does not hold, $A$ and $Y$ are **associated** or **dependent**. Association measures include:
 
-- **Associational risk difference**: $Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]$
-- **Associational risk ratio**: $Pr[Y = 1|A = 1] / Pr[Y = 1|A = 0]$  
-- **Associational odds ratio**: $\frac{Pr[Y = 1|A = 1]/Pr[Y = 0|A = 1]}{Pr[Y = 1|A = 0]/Pr[Y = 0|A = 0]}$
+- **Associational risk difference**: $\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]$
+- **Associational risk ratio**: $\Pr[Y = 1|A = 1] / \Pr[Y = 1|A = 0]$  
+- **Associational odds ratio**: $\frac{\Pr[Y = 1|A = 1]/\Pr[Y = 0|A = 1]}{\Pr[Y = 1|A = 0]/\Pr[Y = 0|A = 0]}$
 
 ### Causation vs. Association
 
 In our example:
 
-- **No causal effect**: $Pr[Y^{a=1} = 1] = Pr[Y^{a=0} = 1] = 0.5$
-- **Association present**: $Pr[Y = 1|A = 1] = 0.54 \neq 0.43 = Pr[Y = 1|A = 0]$
+- **No causal effect**: $\Pr[Y^{a=1} = 1] = \Pr[Y^{a=0} = 1] = 0.5$
+- **Association present**: $\Pr[Y = 1|A = 1] = 0.54 \neq 0.43 = \Pr[Y = 1|A = 0]$
 
 ::: {.notes}
 This demonstrates the fundamental principle: **Association is not causation**.
@@ -260,11 +260,11 @@ The distinction is:
 
 - **Causation**: Compares the *same* population under different treatment values
   - "What if everyone had been treated?" vs. "What if everyone had been untreated?"
-  - Uses counterfactual risks: $Pr[Y^{a=1} = 1]$ vs. $Pr[Y^{a=0} = 1]$
+  - Uses counterfactual risks: $\Pr[Y^{a=1} = 1]$ vs. $\Pr[Y^{a=0} = 1]$
 
 - **Association**: Compares *different subsets* of the population
   - "What is the risk in those who were treated?" vs. "What is the risk in those who were untreated?"
-  - Uses conditional risks: $Pr[Y = 1|A = 1]$ vs. $Pr[Y = 1|A = 0]$
+  - Uses conditional risks: $\Pr[Y = 1|A = 1]$ vs. $\Pr[Y = 1|A = 0]$
 
 In our example, there's an association because those who received transplants were sicker on average than those who didn't. This discrepancy between causation and association is called **confounding** (discussed in Chapter 7).
 :::
