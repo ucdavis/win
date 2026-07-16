@@ -1,3 +1,9 @@
+# Caller stub for d-morrison/gha's reusable @claude agent workflow
+# (replaces the stock anthropics/claude-code-action template; see
+# ucdavis/win#74). Secrets are passed explicitly rather than via
+# `secrets: inherit`: GitHub only inherits secrets into a reusable workflow
+# owned by the same org/user, so this ucdavis-org repo calling the
+# d-morrison-owned workflow would inherit an empty token.
 name: Claude Code
 
 on:
@@ -12,39 +18,39 @@ on:
 
 jobs:
   claude:
+    # Cheap caller-side gate: only invoke the reusable workflow when an @claude
+    # mention is actually present. The reusable workflow still enforces the
+    # trusted-author gate (OWNER/MEMBER/COLLABORATOR).
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
-    runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pull-requests: read
-      issues: read
+      contents: write
+      pull-requests: write
+      issues: write
       id-token: write
-      actions: read # Required for Claude to read CI results on PRs
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
-      - name: Run Claude Code
-        id: claude
-        uses: anthropics/claude-code-action@v1
-        with:
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-
-          # This is an optional setting that allows Claude to read CI results on PRs
-          additional_permissions: |
-            actions: read
-
-          # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
-          # prompt: 'Update the pull request description to include a summary of changes.'
-
-          # Optional: Add claude_args to customize behavior and configuration
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://code.claude.com/docs/en/cli-reference for available options
-          # claude_args: '--allowed-tools Bash(gh pr *)'
-
+      actions: write       # dispatch the review workflow via `gh workflow run`
+    uses: d-morrison/gha/.github/workflows/claude.yml@v2
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}   # Max-plan OAuth; empty when using API key
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}               # direct API key; empty when using OAuth
+      SUBMODULES_TOKEN: ${{ secrets.SUBMODULES_TOKEN }}   # optional; empty when unset
+      WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}       # optional; for editing .github/workflows
+    with:
+      install-quarto: true
+      use-renv: true
+      checkout-submodules: true
+      reviewer: d-morrison
+      apt-packages: >-
+        libnode-dev libglpk-dev libcurl4-openssl-dev libssl-dev libxml2-dev
+        libgit2-dev libfontconfig1-dev libfreetype6-dev libharfbuzz-dev
+        libfribidi-dev libpng-dev libtiff5-dev libjpeg-dev
+      prompt-addendum: |
+        This is the win (What If? lecture notes) Quarto website, an R
+        project using renv. Before committing, run
+        spelling::spell_check_package() (wordlist: inst/WORDLIST, keep it
+        case-insensitively sorted) and lintr::lint_dir() on changed files
+        (.lintr.R config). LaTeX notation uses the latex-macros submodule's
+        macros (e.g. \E{...}, \hE{...}, \ind) rather than raw equivalents.
