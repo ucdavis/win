@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 1: A Definition of Causal Effect</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -352,14 +352,14 @@
 </table>
 <p>From Table 1.1, we can compute:</p>
 <ul>
-<li>Risk if all treated: <span class="math inline">\(Pr[Y^{a=1} = 1] = 10/20 = 0.5\)</span></li>
-<li>Risk if all untreated: <span class="math inline">\(Pr[Y^{a=0} = 1] = 10/20 = 0.5\)</span></li>
+<li>Risk if all treated: <span class="math inline">\(\Pr[Y^{a=1} = 1] = 10/20 = 0.5\)</span></li>
+<li>Risk if all untreated: <span class="math inline">\(\Pr[Y^{a=0} = 1] = 10/20 = 0.5\)</span></li>
 </ul>
 </section>
 <section id="definition-of-average-causal-effect" class="slide level2">
 <h2>Definition of Average Causal Effect</h2>
 <p>An <strong>average causal effect</strong> of treatment <span class="math inline">\(A\)</span> on outcome <span class="math inline">\(Y\)</span> is present if:</p>
-<p><span class="math display">\[Pr[Y^{a=1} = 1] \neq Pr[Y^{a=0} = 1]\]</span></p>
+<p><span class="math display">\[\Pr[Y^{a=1} = 1] \neq \Pr[Y^{a=0} = 1]\]</span></p>
 <p>or equivalently (using expected values):</p>
 <p><span class="math display">\[\text{E}{\left[Y^{a=1}\right]} \neq \text{E}{\left[Y^{a=0}\right]}\]</span></p>
 <p>In our population, treatment does <em>not</em> have an average causal effect because both risks equal 0.5. The <strong>null hypothesis of no average causal effect</strong> holds. However, this does not mean there are no individual effects.</p>
@@ -390,17 +390,17 @@
 </section>
 <section id="causal-risk-difference" class="slide level2">
 <h2>Causal Risk Difference</h2>
-<p><span class="math display">\[Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]\]</span></p>
+<p><span class="math display">\[\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]\]</span></p>
 <p>This additive measure equals zero under the null hypothesis. It measures the absolute difference in risk.</p>
 </section>
 <section id="causal-risk-ratio" class="slide level2">
 <h2>Causal Risk Ratio</h2>
-<p><span class="math display">\[\frac{Pr[Y^{a=1} = 1]}{Pr[Y^{a=0} = 1]}\]</span></p>
+<p><span class="math display">\[\frac{\Pr[Y^{a=1} = 1]}{\Pr[Y^{a=0} = 1]}\]</span></p>
 <p>This multiplicative measure equals one under the null hypothesis. It measures how many times treatment increases (or decreases) the risk.</p>
 </section>
 <section id="causal-odds-ratio" class="slide level2">
 <h2>Causal Odds Ratio</h2>
-<p><span class="math display">\[\frac{Pr[Y^{a=1} = 1] / Pr[Y^{a=1} = 0]}{Pr[Y^{a=0} = 1] / Pr[Y^{a=0} = 0]}\]</span></p>
+<p><span class="math display">\[\frac{\Pr[Y^{a=1} = 1] / \Pr[Y^{a=1} = 0]}{\Pr[Y^{a=0} = 1] / \Pr[Y^{a=0} = 0]}\]</span></p>
 <p>This also equals one under the null hypothesis.</p>
 <aside class="notes">
 <p>Different effect measures serve different purposes. For example, suppose 3 in a million would develop the outcome if treated, and 1 in a million if untreated:</p>
@@ -440,7 +440,7 @@
 </ol>
 <p>Under the superpopulation perspective, even if the true average causal effect is zero, our sample estimate might not be exactly zero due to <strong>sampling variability</strong>.</p>
 <aside class="notes">
-<p>For example, suppose we randomly sample 20 individuals from a superpopulation where <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} = \text{E}{\left[Y^{a=0}\right]} = 0.5\)</span> (true null effect). We might observe <span class="math inline">\(\hat{E}[Y^{a=1}] = 0.55\)</span> and <span class="math inline">\(\hat{E}[Y^{a=0}] = 0.45\)</span> in our sample just by chance.</p>
+<p>For example, suppose we randomly sample 20 individuals from a superpopulation where <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} = \text{E}{\left[Y^{a=0}\right]} = 0.5\)</span> (true null effect). We might observe <span class="math inline">\(\hat{\text{E}}{\left[Y^{a=1}\right]} = 0.55\)</span> and <span class="math inline">\(\hat{\text{E}}{\left[Y^{a=0}\right]} = 0.45\)</span> in our sample just by chance.</p>
 <p><strong>Statistical inference</strong> helps us determine whether an observed association is due to a true causal effect or random variability. We use:</p>
 <ul>
 <li><strong>Confidence intervals</strong>: Range of plausible values for the causal effect</li>
@@ -606,29 +606,29 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p>The <strong>associational risk</strong> in the treated: <span class="math inline">\(Pr[Y = 1|A = 1] = 7/13\)</span></p>
-<p>The <strong>associational risk</strong> in the untreated: <span class="math inline">\(Pr[Y = 1|A = 0] = 3/7\)</span></p>
+<p>The <strong>associational risk</strong> in the treated: <span class="math inline">\(\Pr[Y = 1|A = 1] = 7/13\)</span></p>
+<p>The <strong>associational risk</strong> in the untreated: <span class="math inline">\(\Pr[Y = 1|A = 0] = 3/7\)</span></p>
 </section>
 <section id="definitions-of-association" class="slide level2">
 <h2>Definitions of Association</h2>
 <p>Treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> are <strong>independent</strong> (not associated) when:</p>
-<p><span class="math display">\[Pr[Y = 1|A = 1] = Pr[Y = 1|A = 0]\]</span></p>
+<p><span class="math display">\[\Pr[Y = 1|A = 1] = \Pr[Y = 1|A = 0]\]</span></p>
 <p>or equivalently: <span class="math inline">\(\text{E}{\left[Y|A = 1\right]} = \text{E}{\left[Y|A = 0\right]}\)</span></p>
 <p>This is denoted <span class="math inline">\(Y \perp\!\!\!\perp A\)</span>.</p>
 <p>When this equality does not hold, <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> or <strong>dependent</strong>. Association measures include:</p>
 <ul>
-<li><strong>Associational risk difference</strong>: <span class="math inline">\(Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]\)</span></li>
-<li><strong>Associational risk ratio</strong>: <span class="math inline">\(Pr[Y = 1|A = 1] / Pr[Y = 1|A = 0]\)</span><br>
+<li><strong>Associational risk difference</strong>: <span class="math inline">\(\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]\)</span></li>
+<li><strong>Associational risk ratio</strong>: <span class="math inline">\(\Pr[Y = 1|A = 1] / \Pr[Y = 1|A = 0]\)</span><br>
 </li>
-<li><strong>Associational odds ratio</strong>: <span class="math inline">\(\frac{Pr[Y = 1|A = 1]/Pr[Y = 0|A = 1]}{Pr[Y = 1|A = 0]/Pr[Y = 0|A = 0]}\)</span></li>
+<li><strong>Associational odds ratio</strong>: <span class="math inline">\(\frac{\Pr[Y = 1|A = 1]/\Pr[Y = 0|A = 1]}{\Pr[Y = 1|A = 0]/\Pr[Y = 0|A = 0]}\)</span></li>
 </ul>
 </section>
 <section id="causation-vs.-association" class="slide level2">
 <h2>Causation vs.&nbsp;Association</h2>
 <p>In our example:</p>
 <ul>
-<li><strong>No causal effect</strong>: <span class="math inline">\(Pr[Y^{a=1} = 1] = Pr[Y^{a=0} = 1] = 0.5\)</span></li>
-<li><strong>Association present</strong>: <span class="math inline">\(Pr[Y = 1|A = 1] = 0.54 \neq 0.43 = Pr[Y = 1|A = 0]\)</span></li>
+<li><strong>No causal effect</strong>: <span class="math inline">\(\Pr[Y^{a=1} = 1] = \Pr[Y^{a=0} = 1] = 0.5\)</span></li>
+<li><strong>Association present</strong>: <span class="math inline">\(\Pr[Y = 1|A = 1] = 0.54 \neq 0.43 = \Pr[Y = 1|A = 0]\)</span></li>
 </ul>
 <aside class="notes">
 <p>This demonstrates the fundamental principle: <strong>Association is not causation</strong>.</p>
@@ -637,12 +637,12 @@
 <li><strong>Causation</strong>: Compares the <em>same</em> population under different treatment values
 <ul>
 <li>“What if everyone had been treated?” vs.&nbsp;“What if everyone had been untreated?”</li>
-<li>Uses counterfactual risks: <span class="math inline">\(Pr[Y^{a=1} = 1]\)</span> vs.&nbsp;<span class="math inline">\(Pr[Y^{a=0} = 1]\)</span></li>
+<li>Uses counterfactual risks: <span class="math inline">\(\Pr[Y^{a=1} = 1]\)</span> vs.&nbsp;<span class="math inline">\(\Pr[Y^{a=0} = 1]\)</span></li>
 </ul></li>
 <li><strong>Association</strong>: Compares <em>different subsets</em> of the population
 <ul>
 <li>“What is the risk in those who were treated?” vs.&nbsp;“What is the risk in those who were untreated?”</li>
-<li>Uses conditional risks: <span class="math inline">\(Pr[Y = 1|A = 1]\)</span> vs.&nbsp;<span class="math inline">\(Pr[Y = 1|A = 0]\)</span></li>
+<li>Uses conditional risks: <span class="math inline">\(\Pr[Y = 1|A = 1]\)</span> vs.&nbsp;<span class="math inline">\(\Pr[Y = 1|A = 0]\)</span></li>
 </ul></li>
 </ul>
 <p>In our example, there’s an association because those who received transplants were sicker on average than those who didn’t. This discrepancy between causation and association is called <strong>confounding</strong> (discussed in Chapter 7).</p>

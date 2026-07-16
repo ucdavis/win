@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 15: Outcome Regression and Propensity Scores</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -319,10 +319,10 @@
 <ol type="1">
 <li>Estimate propensity score <span class="math inline">\(\hat{e}(L_i)\)</span> for all individuals</li>
 <li>Create strata (e.g., quintiles) of the propensity score</li>
-<li>Within each stratum, compute <span class="math inline">\(\hat{E}[Y \mid A = a, \text{stratum } s]\)</span></li>
+<li>Within each stratum, compute <span class="math inline">\(\hat{\text{E}}{\left[Y \mid A = a, \text{stratum } s\right]}\)</span></li>
 <li>Standardize across strata:</li>
 </ol>
-<p><span class="math display">\[\hat{E}[Y^a] = \sum_{s=1}^S \hat{E}[Y \mid A = a, \text{stratum } s] \times \Pr[\text{stratum } s]\]</span></p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^a\right]} = \sum_{s=1}^S \hat{\text{E}}{\left[Y \mid A = a, \text{stratum } s\right]} \times \Pr[\text{stratum } s]\]</span></p>
 </section>
 <section id="checking-balance" class="slide level2 scrollable">
 <h2>Checking Balance</h2>
@@ -513,8 +513,8 @@
 <section id="augmented-ip-weighting-aipw" class="slide level2 scrollable">
 <h2>Augmented IP Weighting (AIPW)</h2>
 <p><strong>Advanced approach</strong>: Combine IP weighting with outcome modeling:</p>
-<p><span class="math display">\[\hat{E}[Y^a] = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right]\]</span></p>
-<p>where <span class="math inline">\(m(a, L) = \hat{E}[Y \mid A = a, L]\)</span> is the outcome model.</p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^a\right]} = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right]\]</span></p>
+<p>where <span class="math inline">\(m(a, L) = \hat{\text{E}}{\left[Y \mid A = a, L\right]}\)</span> is the outcome model.</p>
 <p><strong>Properties</strong>:</p>
 <ul>
 <li>Doubly robust: Consistent if either model is correct</li>

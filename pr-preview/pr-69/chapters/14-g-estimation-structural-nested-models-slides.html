@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 14: G-Estimation of Structural Nested Models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -327,7 +327,7 @@
 <p>This is the mean outcome among the treated when there is no confounding.</p>
 <aside class="notes">
 <p><strong>With confounders</strong>: The estimating equation becomes more complex:</p>
-<p><span class="math display">\[\sum_{i=1}^n [A_i - \hat{E}[A \mid L_i]][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span></p>
+<p><span class="math display">\[\sum_{i=1}^n [A_i - \hat{\text{E}}{\left[A \mid L_i\right]}][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span></p>
 <p>This requires: 1. Estimating <span class="math inline">\(\text{E}{\left[A \mid L\right]}\)</span> (e.g., via logistic regression) 2. Solving for <span class="math inline">\(\psi\)</span> using the estimating equation</p>
 <p>The estimator is <strong>doubly robust</strong> in some cases: consistent if either the effect model or the treatment model is correct.</p>
 <style type="text/css">

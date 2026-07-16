@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 13: Standardization and the Parametric G-Formula</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -203,7 +203,7 @@
 <li>Computing <span class="math inline">\(\text{E}{\left[Y \mid A = a, L = \ell\right]}\)</span> for all levels <span class="math inline">\(\ell\)</span></li>
 <li>Averaging over the population distribution of <span class="math inline">\(L\)</span>:</li>
 </ol>
-<p><span class="math display">\[\hat{E}[Y^a] = \sum_{\ell} \hat{E}[Y \mid A = a, L = \ell] \times \hat{\Pr}[L = \ell]\]</span></p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^a\right]} = \sum_{\ell} \hat{\text{E}}{\left[Y \mid A = a, L = \ell\right]} \times \hat{\Pr}[L = \ell]\]</span></p>
 <p>where <span class="math inline">\(\hat{\Pr}[L = \ell]\)</span> is the observed proportion with <span class="math inline">\(L = \ell\)</span>.</p>
 </div>
 </section>
@@ -212,9 +212,9 @@
 <p><strong>Setting</strong>: Binary <span class="math inline">\(A\)</span>, binary <span class="math inline">\(Y\)</span>, discrete <span class="math inline">\(L\)</span> with <span class="math inline">\(k\)</span> levels</p>
 <p><strong>Step 1</strong>: Compute proportion <span class="math inline">\(Y = 1\)</span> within each stratum <span class="math inline">\((A = a, L = \ell)\)</span></p>
 <p><strong>Step 2</strong>: Standardize to population distribution:</p>
-<p><span class="math display">\[\hat{E}[Y^{a=1}] = \sum_{\ell=1}^k \hat{\Pr}[Y = 1 \mid A = 1, L = \ell] \times \hat{\Pr}[L = \ell]\]</span></p>
-<p><span class="math display">\[\hat{E}[Y^{a=0}] = \sum_{\ell=1}^k \hat{\Pr}[Y = 1 \mid A = 0, L = \ell] \times \hat{\Pr}[L = \ell]\]</span></p>
-<p><strong>Causal effect</strong>: <span class="math inline">\(\hat{E}[Y^{a=1}] - \hat{E}[Y^{a=0}]\)</span></p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^{a=1}\right]} = \sum_{\ell=1}^k \hat{\Pr}[Y = 1 \mid A = 1, L = \ell] \times \hat{\Pr}[L = \ell]\]</span></p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^{a=0}\right]} = \sum_{\ell=1}^k \hat{\Pr}[Y = 1 \mid A = 0, L = \ell] \times \hat{\Pr}[L = \ell]\]</span></p>
+<p><strong>Causal effect</strong>: <span class="math inline">\(\hat{\text{E}}{\left[Y^{a=1}\right]} - \hat{\text{E}}{\left[Y^{a=0}\right]}\)</span></p>
 <aside class="notes">
 <p><strong>Comparison to Chapter 2</strong>: In Part I (Chapter 2), we used <strong>nonparametric standardization</strong> where we directly computed sample proportions within each stratum. This chapter introduces <strong>parametric standardization</strong> using regression models, which is necessary when <span class="math inline">\(L\)</span> is high-dimensional or continuous.</p>
 <style type="text/css">
@@ -248,13 +248,13 @@
 <section id="the-parametric-g-formula" class="slide level2 scrollable">
 <h2>The Parametric G-Formula</h2>
 <div id="def-g-formula" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Parametric G-Formula)</strong></span> Given a model <span class="math inline">\(\hat{E}[Y \mid A, L]\)</span>, the <strong>parametric g-formula</strong> estimates:</p>
-<p><span class="math display">\[\hat{E}[Y^a] = \frac{1}{n} \sum_{i=1}^n \hat{E}[Y \mid A = a, L = L_i]\]</span></p>
+<p><span class="theorem-title"><strong>Definition 2 (Parametric G-Formula)</strong></span> Given a model <span class="math inline">\(\hat{\text{E}}{\left[Y \mid A, L\right]}\)</span>, the <strong>parametric g-formula</strong> estimates:</p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^a\right]} = \frac{1}{n} \sum_{i=1}^n \hat{\text{E}}{\left[Y \mid A = a, L = L_i\right]}\]</span></p>
 <p><strong>Algorithm</strong>:</p>
 <ol type="1">
-<li>Fit outcome model <span class="math inline">\(\hat{E}[Y \mid A, L]\)</span> using all data</li>
-<li>For each individual <span class="math inline">\(i\)</span>, predict <span class="math inline">\(\hat{Y}_i^a = \hat{E}[Y \mid A = a, L = L_i]\)</span></li>
-<li>Average the predictions: <span class="math inline">\(\hat{E}[Y^a] = n^{-1} \sum_i \hat{Y}_i^a\)</span></li>
+<li>Fit outcome model <span class="math inline">\(\hat{\text{E}}{\left[Y \mid A, L\right]}\)</span> using all data</li>
+<li>For each individual <span class="math inline">\(i\)</span>, predict <span class="math inline">\(\hat{Y}_i^a = \hat{\text{E}}{\left[Y \mid A = a, L = L_i\right]}\)</span></li>
+<li>Average the predictions: <span class="math inline">\(\hat{\text{E}}{\left[Y^a\right]} = n^{-1} \sum_i \hat{Y}_i^a\)</span></li>
 <li>Repeat for each treatment level <span class="math inline">\(a\)</span></li>
 </ol>
 </div>
@@ -268,8 +268,8 @@
 <li>Fit model using observed <span class="math inline">\((A, L, Y)\)</span></li>
 <li>Predict <span class="math inline">\(\hat{Y}_i^{a=1}\)</span> for all <span class="math inline">\(i\)</span> by setting <span class="math inline">\(A = 1\)</span>, keeping <span class="math inline">\(L_i\)</span> as observed</li>
 <li>Predict <span class="math inline">\(\hat{Y}_i^{a=0}\)</span> for all <span class="math inline">\(i\)</span> by setting <span class="math inline">\(A = 0\)</span>, keeping <span class="math inline">\(L_i\)</span> as observed</li>
-<li>Average: <span class="math inline">\(\hat{E}[Y^{a=1}] = \bar{\hat{Y}}^{a=1}\)</span>, <span class="math inline">\(\hat{E}[Y^{a=0}] = \bar{\hat{Y}}^{a=0}\)</span></li>
-<li>Estimate causal effect: <span class="math inline">\(\hat{E}[Y^{a=1}] - \hat{E}[Y^{a=0}]\)</span></li>
+<li>Average: <span class="math inline">\(\hat{\text{E}}{\left[Y^{a=1}\right]} = \bar{\hat{Y}}^{a=1}\)</span>, <span class="math inline">\(\hat{\text{E}}{\left[Y^{a=0}\right]} = \bar{\hat{Y}}^{a=0}\)</span></li>
+<li>Estimate causal effect: <span class="math inline">\(\hat{\text{E}}{\left[Y^{a=1}\right]} - \hat{\text{E}}{\left[Y^{a=0}\right]}\)</span></li>
 </ol>
 <aside class="notes">
 <p><strong>Why this works</strong>: Under conditional exchangeability <span class="math inline">\(Y^a \perp\!\!\!\perp A \mid L\)</span>:</p>
@@ -310,7 +310,7 @@
 <h2>ATT vs ATE</h2>
 <p><strong>Average treatment effect (ATE)</strong>: <span class="math display">\[\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\]</span> Standardized to the population (or sample) distribution of <span class="math inline">\(L\)</span>.</p>
 <p><strong>Average treatment effect in the treated (ATT)</strong>: <span class="math display">\[\text{E}{\left[Y^{a=1} \mid A = 1\right]} - \text{E}{\left[Y^{a=0} \mid A = 1\right]}\]</span> Standardized to the distribution of <span class="math inline">\(L\)</span> among the treated.</p>
-<p><strong>G-formula for ATT</strong>: <span class="math display">\[\hat{E}[Y^a \mid A = 1] = \frac{1}{n_1} \sum_{i: A_i = 1} \hat{E}[Y \mid A = a, L = L_i]\]</span> where <span class="math inline">\(n_1 = \sum_i I(A_i = 1)\)</span>.</p>
+<p><strong>G-formula for ATT</strong>: <span class="math display">\[\hat{\text{E}}{\left[Y^a \mid A = 1\right]} = \frac{1}{n_1} \sum_{i: A_i = 1} \hat{\text{E}}{\left[Y \mid A = a, L = L_i\right]}\]</span> where <span class="math inline">\(n_1 = \sum_i I(A_i = 1)\)</span>.</p>
 <aside class="notes">
 <p><strong>When to use ATT vs ATE</strong>:</p>
 <ul>
@@ -478,9 +478,9 @@
 <p>Same as before, but now <span class="math inline">\(a\)</span> can be any value in the continuous range.</p>
 <p><strong>Estimation</strong>:</p>
 <ol type="1">
-<li>Fit outcome model <span class="math inline">\(\hat{E}[Y \mid A, L]\)</span> (e.g., linear regression)</li>
-<li>For chosen dose <span class="math inline">\(a\)</span>, predict <span class="math inline">\(\hat{Y}_i^a = \hat{E}[Y \mid A = a, L = L_i]\)</span> for all <span class="math inline">\(i\)</span></li>
-<li>Average: <span class="math inline">\(\hat{E}[Y^a] = n^{-1} \sum_i \hat{Y}_i^a\)</span></li>
+<li>Fit outcome model <span class="math inline">\(\hat{\text{E}}{\left[Y \mid A, L\right]}\)</span> (e.g., linear regression)</li>
+<li>For chosen dose <span class="math inline">\(a\)</span>, predict <span class="math inline">\(\hat{Y}_i^a = \hat{\text{E}}{\left[Y \mid A = a, L = L_i\right]}\)</span> for all <span class="math inline">\(i\)</span></li>
+<li>Average: <span class="math inline">\(\hat{\text{E}}{\left[Y^a\right]} = n^{-1} \sum_i \hat{Y}_i^a\)</span></li>
 <li>Repeat for different doses to trace out <strong>dose-response curve</strong></li>
 </ol>
 </section>
@@ -492,8 +492,8 @@
 </div>
 <p><strong>Example</strong>: Effect of smoking intensity (cigarettes/day) on lung function</p>
 <ul>
-<li>Estimate <span class="math inline">\(\hat{E}[Y^a]\)</span> for <span class="math inline">\(a = 0, 5, 10, 15, 20, \ldots\)</span> cigarettes/day</li>
-<li>Plot <span class="math inline">\(a\)</span> vs <span class="math inline">\(\hat{E}[Y^a]\)</span> to visualize dose-response</li>
+<li>Estimate <span class="math inline">\(\hat{\text{E}}{\left[Y^a\right]}\)</span> for <span class="math inline">\(a = 0, 5, 10, 15, 20, \ldots\)</span> cigarettes/day</li>
+<li>Plot <span class="math inline">\(a\)</span> vs <span class="math inline">\(\hat{\text{E}}{\left[Y^a\right]}\)</span> to visualize dose-response</li>
 </ul>
 <aside class="notes">
 <p><strong>Modeling considerations</strong> for continuous <span class="math inline">\(A\)</span>:</p>

@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 11: Why Model?</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -279,7 +279,7 @@
 <ul>
 <li>Fit: <span class="math inline">\(\text{E}{\left[Y|A\right]} = \beta_0 + \beta_1 A\)</span></li>
 <li>Obtain estimates: <span class="math inline">\(\hat{\beta}_0 = 70\)</span>, <span class="math inline">\(\hat{\beta}_1 = 1.25\)</span></li>
-<li>Predict for <span class="math inline">\(A = 90\)</span>: <span class="math inline">\(\hat{E}[Y|A = 90] = 70 + 1.25(90) = 182.5\)</span></li>
+<li>Predict for <span class="math inline">\(A = 90\)</span>: <span class="math inline">\(\hat{\text{E}}{\left[Y|A = 90\right]} = 70 + 1.25(90) = 182.5\)</span></li>
 </ul>
 <p>Even though no one received dose 90, the model provides an estimate by <strong>interpolation</strong> from observed doses.</p>
 </div>
@@ -358,7 +358,7 @@
 <section id="kernel-smoothing" class="slide level2">
 <h2>Kernel Smoothing</h2>
 <p><strong>Idea</strong>: Estimate <span class="math inline">\(\text{E}{\left[Y|A = a\right]}\)</span> using a weighted average of nearby observations.</p>
-<p><span class="math display">\[\hat{E}[Y|A = a] = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}\]</span></p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y|A = a\right]} = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}\]</span></p>
 <p>where:</p>
 <ul>
 <li><span class="math inline">\(K(\cdot)\)</span> is a <strong>kernel function</strong> (e.g., Gaussian)</li>

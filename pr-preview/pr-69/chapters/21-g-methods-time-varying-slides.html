@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 21: G-Methods for Time-Varying Treatments</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -285,7 +285,7 @@
 <p>The g-formula and IP weighting each depend on a single set of correctly specified models: the g-formula requires correct models for the outcome and each covariate; IP weighting requires correct models for the treatment (and censoring) mechanism at each time. <strong>Doubly robust estimators</strong> combine both approaches and are consistent if <em>at least one</em> of the two sets of models is correctly specified.</p>
 <div id="def-dr-tv" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4 (Doubly Robust Estimator (Augmented IPW))</strong></span> The augmented inverse probability weighted (AIPW) estimator for the counterfactual mean <span class="math inline">\(\text{E}{\left[Y^{\bar{a}_K}\right]}\)</span> takes the form</p>
-<p><span class="math display">\[\hat{E}[Y^{\bar{a}_K}]_{\text{DR}} =
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^{\bar{a}_K}\right]}_{\text{DR}} =
 \frac{1}{n} \sum_{i=1}^n \left[
   \hat{m}(\bar{A}_{K,i}) +
   \frac{\mathbf{1}(\bar{A}_{K,i} = \bar{a}_K)}{W_i^A}

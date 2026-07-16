@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 23: Causal Mediation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -321,7 +321,7 @@
 <section id="identification-of-interventionist-effects" class="slide level2">
 <h2>Identification of Interventionist Effects</h2>
 <p>The randomized interventional analogue of the indirect effect is identified under conditions that do not require assumption (4) from Section 23.2:</p>
-<p><span class="math display">\[\text{rIIE} = \text{E}{\left[ \int_m \text{E}{\left[Y \mid A = 1, M = m, C\right]}\, dF_{M \mid A=0, C}(m) \right]}
+<p><span class="math display">\[\text{rIIE} = \text{E}{\left[ \int \text{E}{\left[Y \mid A = 1, M = m, C\right]}\, dF_{M \mid A=0, C}(m) \right]}
 - \text{E}{\left[ \text{E}{\left[Y \mid A = 1, M, C\right]} \right]},\]</span></p>
 <p>where <span class="math inline">\(C\)</span> are baseline covariates sufficient to control confounding of both the <span class="math inline">\(A \to Y\)</span> and <span class="math inline">\(M \to Y\)</span> pathways. This expression can be estimated from observed data using outcome regression, IP weighting, or doubly robust methods.</p>
 <aside class="notes">

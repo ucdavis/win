@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 10: Random Variability</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -188,11 +188,11 @@
 </section>
 <section id="key-concepts-in-statistical-estimation" class="slide level2">
 <h2>Key Concepts in Statistical Estimation</h2>
-<p><strong>Estimand</strong>: The population parameter of interest (e.g., <span class="math inline">\(Pr[Y = 1|A = a]\)</span> in the super-population).</p>
+<p><strong>Estimand</strong>: The population parameter of interest (e.g., <span class="math inline">\(\Pr[Y = 1|A = a]\)</span> in the super-population).</p>
 <p><strong>Estimator</strong>: A rule for computing the estimand from sample data.</p>
 <p><strong>Estimate</strong>: The numerical value obtained by applying the estimator to a particular sample (a point estimate).</p>
 <div id="exm-estimator" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Sample Proportion as an Estimator)</strong></span> <strong>Estimand</strong>: Super-population risk <span class="math inline">\(Pr[Y = 1|A = 1]\)</span></p>
+<p><span class="theorem-title"><strong>Example 1 (Sample Proportion as an Estimator)</strong></span> <strong>Estimand</strong>: Super-population risk <span class="math inline">\(\Pr[Y = 1|A = 1]\)</span></p>
 <p><strong>Estimator</strong>: Sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = 1]\)</span></p>
 <p><strong>Estimate</strong>: From our 20-person study, <span class="math inline">\(\widehat{Pr}[Y = 1|A = 1] = 7/13 \approx 0.54\)</span></p>
 </div>
@@ -226,7 +226,7 @@
 <h2>Consistency of Estimators</h2>
 <p>An estimator is <strong>consistent</strong> if estimates get arbitrarily close to the true parameter as sample size increases.</p>
 <p><span class="math display">\[Pr\left[|\hat{\theta}_n - \theta| &gt; \epsilon\right] \rightarrow 0 \text{ as } n \rightarrow \infty, \text{ for all } \epsilon &gt; 0\]</span></p>
-<p>The sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = a]\)</span> is a consistent estimator of <span class="math inline">\(Pr[Y = 1|A = a]\)</span>.</p>
+<p>The sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = a]\)</span> is a consistent estimator of <span class="math inline">\(\Pr[Y = 1|A = a]\)</span>.</p>
 </section>
 <section id="confidence-intervals" class="slide level2 scrollable">
 <h2>Confidence Intervals</h2>
@@ -283,13 +283,13 @@
 <li>Study population is a random sample from a super-population</li>
 <li>Treatment is randomly assigned in the super-population (or in the sample)</li>
 <li>All individuals adhere to assigned treatment</li>
-<li>Exchangeability holds: <span class="math inline">\(Pr[Y^a = 1] = Pr[Y = 1|A = a]\)</span></li>
+<li>Exchangeability holds: <span class="math inline">\(\Pr[Y^a = 1] = \Pr[Y = 1|A = a]\)</span></li>
 </ol>
 </section>
 <section id="causal-inference" class="slide level2 scrollable">
 <h2>Causal Inference</h2>
 <p>Because of exchangeability, the causal risk difference equals the associational risk difference in the super-population:</p>
-<p><span class="math display">\[Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1] = Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]\]</span></p>
+<p><span class="math display">\[\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1] = \Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]\]</span></p>
 <p><strong>Estimators</strong>:</p>
 <ul>
 <li>Causal risk difference: <span class="math inline">\(\widehat{Pr}[Y = 1|A = 1] - \widehat{Pr}[Y = 1|A = 0]\)</span></li>
@@ -369,7 +369,7 @@
 </section>
 <section id="when-are-binomial-confidence-intervals-valid" class="slide level2 scrollable">
 <h2>When Are Binomial Confidence Intervals Valid?</h2>
-<p>The standard binomial confidence interval for <span class="math inline">\(p = Pr[Y = 1|A = a]\)</span> is valid in two scenarios:</p>
+<p>The standard binomial confidence interval for <span class="math inline">\(p = \Pr[Y = 1|A = a]\)</span> is valid in two scenarios:</p>
 <p><strong>Scenario 1: Random sampling from a super-population</strong></p>
 <ul>
 <li>Study participants are randomly sampled from a large super-population</li>
@@ -506,7 +506,7 @@
 <h2>The Solution: Parametric Models</h2>
 <p><strong>Parametric models</strong> make assumptions about the functional form relating variables:</p>
 <ul>
-<li>Logistic regression: <span class="math inline">\(\text{logit} Pr[Y = 1|A, L] = \beta_0 + \beta_1 A + \beta_2 L\)</span></li>
+<li>Logistic regression: <span class="math inline">\(\text{logit} \Pr[Y = 1|A, L] = \beta_0 + \beta_1 A + \beta_2 L\)</span></li>
 <li>Linear regression: <span class="math inline">\(\text{E}{\left[Y|A, L\right]} = \beta_0 + \beta_1 A + \beta_2 L\)</span></li>
 </ul>
 <p><strong>Advantages</strong>:</p>
@@ -541,7 +541,7 @@
 <li>Stratification: Need cells for all covariate combinations</li>
 <li>Standardization: Need to estimate <span class="math inline">\(\text{E}{\left[Y|A, L\right]}\)</span> for all <span class="math inline">\(L\)</span> values<br>
 </li>
-<li>IP weighting: Need to estimate <span class="math inline">\(Pr[A|L]\)</span> for all <span class="math inline">\(L\)</span> values</li>
+<li>IP weighting: Need to estimate <span class="math inline">\(\Pr[A|L]\)</span> for all <span class="math inline">\(L\)</span> values</li>
 <li>Matching: Need to find matches for all covariate patterns</li>
 </ul>
 <style type="text/css">

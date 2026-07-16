@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -93,14 +93,14 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c875dbb4c9335aca9cc352e974a4ec92.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-c875dbb4c9335aca9cc352e974a4ec92.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c875dbb4c9335aca9cc352e974a4ec92.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-c4af9d5cc9560aba4b75f44438dc8e4e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-e0bf5562c0727902ff29b4740d84afe5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-c4af9d5cc9560aba4b75f44438dc8e4e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-267e991a558bfe5afc938522b251b132.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-6b34f01ad2fdd971dcad251a59097f3c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-267e991a558bfe5afc938522b251b132.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -129,6 +129,16 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-def.callout {
+  border-left-color: #1B5E20;
+}
+div.callout-def.callout-style-default .callout-header {
+  background-color: rgba(27, 94, 32, 0.13);
+}
+div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
 div.callout-remark.callout {
   border-left-color: #AD1457;
 }
@@ -138,16 +148,6 @@ div.callout-remark.callout-style-default .callout-header {
 div.callout-remark .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-remark.callout-style-default .callout-icon::before, div.callout-remark.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-cor.callout {
-  border-left-color: #00838F;
-}
-div.callout-cor.callout-style-default .callout-header {
-  background-color: rgba(0, 131, 143, 0.13);
-}
-div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-prp.callout {
   border-left-color: #827717;
@@ -159,6 +159,26 @@ div.callout-prp .callout-toggle::before {  background-image: url('data:image/svg
 div.callout-prp.callout-style-default .callout-icon::before, div.callout-prp.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
+div.callout-proof.callout {
+  border-left-color: #37474F;
+}
+div.callout-proof.callout-style-default .callout-header {
+  background-color: rgba(55, 71, 79, 0.13);
+}
+div.callout-proof .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-lem.callout {
+  border-left-color: #1565C0;
+}
+div.callout-lem.callout-style-default .callout-header {
+  background-color: rgba(21, 101, 192, 0.13);
+}
+div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
 div.callout-solution.callout {
   border-left-color: #4E342E;
 }
@@ -169,15 +189,15 @@ div.callout-solution .callout-toggle::before {  background-image: url('data:imag
 div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-proof.callout {
-  border-left-color: #37474F;
+div.callout-cor.callout {
+  border-left-color: #00838F;
 }
-div.callout-proof.callout-style-default .callout-header {
-  background-color: rgba(55, 71, 79, 0.13);
+div.callout-cor.callout-style-default .callout-header {
+  background-color: rgba(0, 131, 143, 0.13);
 }
-div.callout-proof .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-exm.callout {
   border-left-color: #6A1B9A;
@@ -199,16 +219,6 @@ div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg
 div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-def.callout {
-  border-left-color: #1B5E20;
-}
-div.callout-def.callout-style-default .callout-header {
-  background-color: rgba(27, 94, 32, 0.13);
-}
-div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
 div.callout-cnj.callout {
   border-left-color: #558B2F;
 }
@@ -218,16 +228,6 @@ div.callout-cnj.callout-style-default .callout-header {
 div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-lem.callout {
-  border-left-color: #1565C0;
-}
-div.callout-lem.callout-style-default .callout-header {
-  background-color: rgba(21, 101, 192, 0.13);
-}
-div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 </style>
 
@@ -626,7 +626,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last modified: 2026-05-04 <mark class="preview-text-changed">08:31:42</mark> (UTC)</p>
+      <p class="date">Last modified: <mark class="preview-text-changed">2026-07-16</mark> <mark class="preview-text-changed">18:33:24</mark> (UTC)</p>
     </div>
   </div>
   
@@ -663,7 +663,7 @@ window.Quarto = {
 <p>Up to now, we have focused on <strong>identification</strong>: determining whether causal effects can be computed from observed data under certain assumptions. Now we turn to <strong>estimation</strong>: using finite data to approximate those causal effects.</p>
 <section id="key-concepts-in-statistical-estimation" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="key-concepts-in-statistical-estimation"><span class="header-section-number">1.1</span> Key Concepts in Statistical Estimation</h3>
-<p><strong>Estimand</strong>: The population parameter of interest (e.g., <span class="math inline">\(Pr[Y = 1|A = a]\)</span> in the super-population).</p>
+<p><strong>Estimand</strong>: The population parameter of interest (e.g., <span class="math inline">\(\Pr[Y = 1|A = a]\)</span> in the super-population).</p>
 <p><strong>Estimator</strong>: A rule for computing the estimand from sample data.</p>
 <p><strong>Estimate</strong>: The numerical value obtained by applying the estimator to a particular sample (a point estimate).</p>
 <div class="callout callout-style-simple callout-exm no-icon">
@@ -673,7 +673,7 @@ window.Quarto = {
 </div>
 <div class="callout-body-container">
 <div id="exm-estimator" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Sample Proportion as an Estimator)</strong></span> <strong>Estimand</strong>: Super-population risk <span class="math inline">\(Pr[Y = 1|A = 1]\)</span></p>
+<p><span class="theorem-title"><strong>Example 1 (Sample Proportion as an Estimator)</strong></span> <strong>Estimand</strong>: Super-population risk <span class="math inline">\(\Pr[Y = 1|A = 1]\)</span></p>
 <p><strong>Estimator</strong>: Sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = 1]\)</span></p>
 <p><strong>Estimate</strong>: From our 20-person study, <span class="math inline">\(\widehat{Pr}[Y = 1|A = 1] = 7/13 \approx 0.54\)</span></p>
 </div>
@@ -700,7 +700,7 @@ window.Quarto = {
 <h3 data-number="1.2" class="anchored" data-anchor-id="consistency-of-estimators"><span class="header-section-number">1.2</span> Consistency of Estimators</h3>
 <p>An estimator is <strong>consistent</strong> if estimates get arbitrarily close to the true parameter as sample size increases.</p>
 <p><span class="math display">\[Pr\left[|\hat{\theta}_n - \theta| &gt; \epsilon\right] \rightarrow 0 \text{ as } n \rightarrow \infty, \text{ for all } \epsilon &gt; 0\]</span></p>
-<p>The sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = a]\)</span> is a consistent estimator of <span class="math inline">\(Pr[Y = 1|A = a]\)</span>.</p>
+<p>The sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = a]\)</span> is a consistent estimator of <span class="math inline">\(\Pr[Y = 1|A = a]\)</span>.</p>
 </section>
 <section id="confidence-intervals" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">1.3</span> Confidence Intervals</h3>
@@ -743,13 +743,13 @@ window.Quarto = {
 <li>Study population is a random sample from a super-population</li>
 <li>Treatment is randomly assigned in the super-population (or in the sample)</li>
 <li>All individuals adhere to assigned treatment</li>
-<li>Exchangeability holds: <span class="math inline">\(Pr[Y^a = 1] = Pr[Y = 1|A = a]\)</span></li>
+<li>Exchangeability holds: <span class="math inline"><mark class="preview-text-changed">\(\Pr[Y^a</mark> = 1] = <mark class="preview-text-changed">\Pr[Y</mark> = 1|A = a]\)</span></li>
 </ol>
 </section>
 <section id="causal-inference" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="causal-inference"><span class="header-section-number">2.2</span> Causal Inference</h3>
 <p>Because of exchangeability, the causal risk difference equals the associational risk difference in the super-population:</p>
-<p><span class="math display">\[Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1] = Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]\]</span></p>
+<p><span class="math display"><mark class="preview-text-changed">\[\Pr[Y^{a=1}</mark> = 1] - <mark class="preview-text-changed">\Pr[Y^{a=0}</mark> = 1] = <mark class="preview-text-changed">\Pr[Y</mark> = 1|A = 1] - <mark class="preview-text-changed">\Pr[Y</mark> = 1|A = 0]\]</span></p>
 <p><strong>Estimators</strong>:</p>
 <ul>
 <li>Causal risk difference: <span class="math inline">\(\widehat{Pr}[Y = 1|A = 1] - \widehat{Pr}[Y = 1|A = 0]\)</span></li>
@@ -805,7 +805,7 @@ window.Quarto = {
 </section>
 <section id="when-are-binomial-confidence-intervals-valid" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="when-are-binomial-confidence-intervals-valid"><span class="header-section-number">3.2</span> When Are Binomial Confidence Intervals Valid?</h3>
-<p>The standard binomial confidence interval for <span class="math inline">\(p = Pr[Y = 1|A = a]\)</span> is valid in two scenarios:</p>
+<p>The standard binomial confidence interval for <span class="math inline">\(p = \Pr[Y = 1|A = a]\)</span> is valid in two scenarios:</p>
 <p><strong>Scenario 1: Random sampling from a super-population</strong></p>
 <ul>
 <li>Study participants are randomly sampled from a large super-population</li>
@@ -914,7 +914,7 @@ window.Quarto = {
 <h3 data-number="5.2" class="anchored" data-anchor-id="the-solution-parametric-models"><span class="header-section-number">5.2</span> The Solution: Parametric Models</h3>
 <p><strong>Parametric models</strong> make assumptions about the functional form relating variables:</p>
 <ul>
-<li>Logistic regression: <span class="math inline">\(\text{logit} Pr[Y = 1|A, L] = \beta_0 + \beta_1 A + \beta_2 L\)</span></li>
+<li>Logistic regression: <span class="math inline">\(\text{logit} \Pr[Y = 1|A, L] = \beta_0 + \beta_1 A + \beta_2 L\)</span></li>
 <li>Linear regression: <span class="math inline"><mark class="preview-text-changed">\(\text{E}{\left[Y|A,</mark> <mark class="preview-text-changed">L\right]}</mark> = \beta_0 + \beta_1 A + \beta_2 L\)</span></li>
 </ul>
 <p><strong>Advantages</strong>:</p>
@@ -949,7 +949,7 @@ window.Quarto = {
 <li>Stratification: Need cells for all covariate combinations</li>
 <li>Standardization: Need to estimate <span class="math inline"><mark class="preview-text-changed">\(\text{E}{\left[Y|A,</mark> <mark class="preview-text-changed">L\right]}\)</mark></span> for all <span class="math inline">\(L\)</span> values<br>
 </li>
-<li>IP weighting: Need to estimate <span class="math inline">\(Pr[A|L]\)</span> for all <span class="math inline">\(L\)</span> values</li>
+<li>IP weighting: Need to estimate <span class="math inline">\(\Pr[A|L]\)</span> for all <span class="math inline">\(L\)</span> values</li>
 <li>Matching: Need to find matches for all covariate patterns</li>
 </ul>
 </div>
@@ -1909,7 +1909,7 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">### Key Concepts in Statistical Estimation</span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>**Estimand**: The population parameter of interest (e.g., $Pr<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$ in the super-population).</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>**Estimand**: The population parameter of interest (e.g., $\Pr<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$ in the super-population).</span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>**Estimator**: A rule for computing the estimand from sample data.</span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
@@ -1918,7 +1918,7 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>::: {#exm-estimator}</span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sample Proportion as an Estimator</span></span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>**Estimand**: Super-population risk $Pr<span class="co">[</span><span class="ot">Y = 1|A = 1</span><span class="co">]</span>$</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>**Estimand**: Super-population risk $\Pr<span class="co">[</span><span class="ot">Y = 1|A = 1</span><span class="co">]</span>$</span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>**Estimator**: Sample proportion $\widehat{Pr}<span class="co">[</span><span class="ot">Y = 1|A = 1</span><span class="co">]</span>$</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
@@ -1943,7 +1943,7 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>$$Pr\left<span class="co">[</span><span class="ot">|\hat{\theta}_n - \theta| &gt; \epsilon\right</span><span class="co">]</span> \rightarrow 0 \text{ as } n \rightarrow \infty, \text{ for all } \epsilon &gt; 0$$</span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>The sample proportion $\widehat{Pr}<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$ is a consistent estimator of $Pr<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$.</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>The sample proportion $\widehat{Pr}<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$ is a consistent estimator of $\Pr<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$.</span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">### Confidence Intervals</span></span>
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
@@ -1993,13 +1993,13 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Study population is a random sample from a super-population</span>
 <span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Treatment is randomly assigned in the super-population (or in the sample)</span>
 <span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>All individuals adhere to assigned treatment</span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Exchangeability holds: $Pr<span class="co">[</span><span class="ot">Y^a = 1</span><span class="co">]</span> = Pr<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Exchangeability holds: $\Pr<span class="co">[</span><span class="ot">Y^a = 1</span><span class="co">]</span> = \Pr<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$</span>
 <span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="fu">### Causal Inference</span></span>
 <span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>Because of exchangeability, the causal risk difference equals the associational risk difference in the super-population:</span>
 <span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>$$Pr<span class="co">[</span><span class="ot">Y^{a=1} = 1</span><span class="co">]</span> - Pr<span class="co">[</span><span class="ot">Y^{a=0} = 1</span><span class="co">]</span> = Pr<span class="co">[</span><span class="ot">Y = 1|A = 1</span><span class="co">]</span> - Pr<span class="co">[</span><span class="ot">Y = 1|A = 0</span><span class="co">]</span>$$</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>$$\Pr<span class="co">[</span><span class="ot">Y^{a=1} = 1</span><span class="co">]</span> - \Pr<span class="co">[</span><span class="ot">Y^{a=0} = 1</span><span class="co">]</span> = \Pr<span class="co">[</span><span class="ot">Y = 1|A = 1</span><span class="co">]</span> - \Pr<span class="co">[</span><span class="ot">Y = 1|A = 0</span><span class="co">]</span>$$</span>
 <span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>**Estimators**:</span>
 <span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a></span>
@@ -2054,7 +2054,7 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="fu">### When Are Binomial Confidence Intervals Valid?</span></span>
 <span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>The standard binomial confidence interval for $p = Pr<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$ is valid in two scenarios:</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>The standard binomial confidence interval for $p = \Pr<span class="co">[</span><span class="ot">Y = 1|A = a</span><span class="co">]</span>$ is valid in two scenarios:</span>
 <span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>**Scenario 1: Random sampling from a super-population**</span>
 <span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
@@ -2172,7 +2172,7 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>**Parametric models** make assumptions about the functional form relating variables:</span>
 <span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Logistic regression: $\text{logit} Pr<span class="co">[</span><span class="ot">Y = 1|A, L</span><span class="co">]</span> = \beta_0 + \beta_1 A + \beta_2 L$</span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Logistic regression: $\text{logit} \Pr<span class="co">[</span><span class="ot">Y = 1|A, L</span><span class="co">]</span> = \beta_0 + \beta_1 A + \beta_2 L$</span>
 <span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Linear regression: $\E{Y|A, L} = \beta_0 + \beta_1 A + \beta_2 L$</span>
 <span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>**Advantages**:</span>
@@ -2208,7 +2208,7 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stratification: Need cells for all covariate combinations</span>
 <span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Standardization: Need to estimate $\E{Y|A, L}$ for all $L$ values  </span>
-<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>IP weighting: Need to estimate $Pr<span class="co">[</span><span class="ot">A|L</span><span class="co">]</span>$ for all $L$ values</span>
+<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>IP weighting: Need to estimate $\Pr<span class="co">[</span><span class="ot">A|L</span><span class="co">]</span>$ for all $L$ values</span>
 <span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Matching: Need to find matches for all covariate patterns</span>
 <span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a></span>

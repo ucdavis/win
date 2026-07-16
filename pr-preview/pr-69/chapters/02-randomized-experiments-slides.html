@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>What If? - Lecture Notes – Chapter 2: Randomized Experiments</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -283,8 +283,8 @@
 </table>
 <p>From Table 2.1, we can compute associational measures:</p>
 <ul>
-<li>Risk in the treated: <span class="math inline">\(Pr[Y = 1|A = 1] = 7/13 \approx 0.54\)</span></li>
-<li>Risk in the untreated: <span class="math inline">\(Pr[Y = 1|A = 0] = 3/7 \approx 0.43\)</span></li>
+<li>Risk in the treated: <span class="math inline">\(\Pr[Y = 1|A = 1] = 7/13 \approx 0.54\)</span></li>
+<li>Risk in the untreated: <span class="math inline">\(\Pr[Y = 1|A = 0] = 3/7 \approx 0.43\)</span></li>
 </ul>
 <aside class="notes">
 <p>Unlike Table 1.2 in Chapter 1 (where treatment was not randomized), Table 2.1 shows data from a randomized experiment. The treatment assignment is now determined by chance rather than by pre-existing characteristics.</p>
@@ -305,7 +305,7 @@
 <p>The key feature of a randomized experiment is that treatment assignment is independent of an individual’s baseline characteristics, including their potential outcomes. We say the treated and untreated are <strong>exchangeable</strong> when:</p>
 <p><span class="math display">\[Y^a \perp\!\!\!\perp A \quad \text{for all } a\]</span></p>
 <p>This notation means the counterfactual outcome <span class="math inline">\(Y^a\)</span> is independent of the treatment actually received <span class="math inline">\(A\)</span>. Exchangeability implies:</p>
-<p><span class="math display">\[Pr[Y^a = 1|A = 1] = Pr[Y^a = 1|A = 0] = Pr[Y^a = 1]\]</span></p>
+<p><span class="math display">\[\Pr[Y^a = 1|A = 1] = \Pr[Y^a = 1|A = 0] = \Pr[Y^a = 1]\]</span></p>
 <p>for all values of <span class="math inline">\(a\)</span>.</p>
 <div id="def-exchangeability" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Exchangeability)</strong></span> Treatment groups are <strong>exchangeable</strong> if the distribution of counterfactual outcomes is the same in both groups:</p>
@@ -314,7 +314,7 @@
 </div>
 <aside class="notes">
 <p>Exchangeability is also called <strong>no confounding</strong>. When exchangeability holds, association equals causation. That is:</p>
-<p><span class="math display">\[Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0] = Pr[Y^{a=1} = 1] - Pr[Y^{a=0} = 1]\]</span></p>
+<p><span class="math display">\[\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0] = \Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]\]</span></p>
 <p>The left side is the associational risk difference (observed), and the right side is the causal risk difference (counterfactual). Under exchangeability, we can interpret the observed association as a causal effect.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -332,7 +332,7 @@
 <h2>Why Randomization Achieves Exchangeability</h2>
 <p>In our randomized experiment, each individual had a 0.5 probability of receiving treatment, determined by a fair coin flip. This random assignment ensures that treatment is independent of all variables—whether measured or unmeasured, known or unknown.</p>
 <p>Specifically, randomization ensures:</p>
-<p><span class="math display">\[Pr[A = 1|Y^{a=1} = 1, Y^{a=0} = 1] = Pr[A = 1|Y^{a=1} = 0, Y^{a=0} = 0] = Pr[A = 1] = 0.5\]</span></p>
+<p><span class="math display">\[\Pr[A = 1|Y^{a=1} = 1, Y^{a=0} = 1] = \Pr[A = 1|Y^{a=1} = 0, Y^{a=0} = 0] = \Pr[A = 1] = 0.5\]</span></p>
 <p>The probability of treatment is the same regardless of an individual’s potential outcomes. Therefore, the treated and untreated are exchangeable by design.</p>
 <aside class="notes">
 <p>Randomization is often described as “eliminating confounding” or “balancing baseline covariates.” These are informal ways of saying randomization achieves exchangeability.</p>
@@ -530,7 +530,7 @@
 <p>Within each stratum of <span class="math inline">\(L\)</span>, the treated and untreated are exchangeable.</p>
 </div>
 <p>Conditional exchangeability means:</p>
-<p><span class="math display">\[Pr[Y^a = 1|A = 1, L = l] = Pr[Y^a = 1|A = 0, L = l] = Pr[Y^a = 1|L = l]\]</span></p>
+<p><span class="math display">\[\Pr[Y^a = 1|A = 1, L = l] = \Pr[Y^a = 1|A = 0, L = l] = \Pr[Y^a = 1|L = l]\]</span></p>
 <p>for all values of <span class="math inline">\(a\)</span> and <span class="math inline">\(l\)</span>.</p>
 <aside class="notes">
 <p>Conditional randomization guarantees conditional exchangeability but <strong>not marginal exchangeability</strong> (unconditional exchangeability). That is, <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span> does not imply <span class="math inline">\(Y^a \perp\!\!\!\perp A\)</span>.</p>
@@ -574,16 +574,16 @@
 <section id="the-standardization-formula" class="slide level2">
 <h2>The Standardization Formula</h2>
 <p>Under conditional exchangeability <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span>, the average causal effect can be computed using <strong>standardization</strong>:</p>
-<p><span class="math display">\[\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y|A = a, L = l\right]} \times Pr[L = l]\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y|A = a, L = l\right]} \times \Pr[L = l]\]</span></p>
 <p>This formula weights the stratum-specific mean outcomes by the population distribution of <span class="math inline">\(L\)</span>.</p>
 <div id="def-standardization" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3 (Standardization Formula)</strong></span> Under conditional exchangeability <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span>, the mean counterfactual outcome is:</p>
-<p><span class="math display">\[\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y|A = a, L = l\right]} \times Pr[L = l]\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y|A = a, L = l\right]} \times \Pr[L = l]\]</span></p>
 <p>where the sum is over all values <span class="math inline">\(l\)</span> of the covariate <span class="math inline">\(L\)</span>.</p>
 </div>
 <aside class="notes">
 <p>This formula is sometimes called the <strong>g-formula</strong> (generalized formula). It expresses the counterfactual mean as a weighted average of conditional means.</p>
-<p>The standardization formula requires: 1. <strong>Conditional exchangeability</strong>: <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span> 2. <strong>Positivity</strong>: <span class="math inline">\(Pr[A = a|L = l] &gt; 0\)</span> for all values <span class="math inline">\(l\)</span> with <span class="math inline">\(Pr[L = l] &gt; 0\)</span> 3. <strong>Consistency</strong>: <span class="math inline">\(Y = Y^A\)</span> (the observed outcome equals the counterfactual under treatment received)</p>
+<p>The standardization formula requires: 1. <strong>Conditional exchangeability</strong>: <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span> 2. <strong>Positivity</strong>: <span class="math inline">\(\Pr[A = a|L = l] &gt; 0\)</span> for all values <span class="math inline">\(l\)</span> with <span class="math inline">\(\Pr[L = l] &gt; 0\)</span> 3. <strong>Consistency</strong>: <span class="math inline">\(Y = Y^A\)</span> (the observed outcome equals the counterfactual under treatment received)</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -602,18 +602,18 @@
 <p><strong>Step 1</strong>: Compute stratum-specific risks</p>
 <p><em>Among women (<span class="math inline">\(L = 0\)</span>):</em></p>
 <ul>
-<li><span class="math inline">\(Pr[Y = 1|A = 1, L = 0] = 3/5 = 0.6\)</span> (3 of 5 treated women died)</li>
-<li><span class="math inline">\(Pr[Y = 1|A = 0, L = 0] = 2/5 = 0.4\)</span> (2 of 5 untreated women died)</li>
+<li><span class="math inline">\(\Pr[Y = 1|A = 1, L = 0] = 3/5 = 0.6\)</span> (3 of 5 treated women died)</li>
+<li><span class="math inline">\(\Pr[Y = 1|A = 0, L = 0] = 2/5 = 0.4\)</span> (2 of 5 untreated women died)</li>
 </ul>
 <p><em>Among men (<span class="math inline">\(L = 1\)</span>):</em></p>
 <ul>
-<li><span class="math inline">\(Pr[Y = 1|A = 1, L = 1] = 4/5 = 0.8\)</span> (4 of 5 treated men died)</li>
-<li><span class="math inline">\(Pr[Y = 1|A = 0, L = 1] = 3/5 = 0.6\)</span> (3 of 5 untreated men died)</li>
+<li><span class="math inline">\(\Pr[Y = 1|A = 1, L = 1] = 4/5 = 0.8\)</span> (4 of 5 treated men died)</li>
+<li><span class="math inline">\(\Pr[Y = 1|A = 0, L = 1] = 3/5 = 0.6\)</span> (3 of 5 untreated men died)</li>
 </ul>
 <p><strong>Step 2</strong>: Compute population distribution of <span class="math inline">\(L\)</span></p>
 <ul>
-<li><span class="math inline">\(Pr[L = 0] = 10/20 = 0.5\)</span> (10 women)</li>
-<li><span class="math inline">\(Pr[L = 1] = 10/20 = 0.5\)</span> (10 men)</li>
+<li><span class="math inline">\(\Pr[L = 0] = 10/20 = 0.5\)</span> (10 women)</li>
+<li><span class="math inline">\(\Pr[L = 1] = 10/20 = 0.5\)</span> (10 men)</li>
 </ul>
 <p><strong>Step 3</strong>: Apply standardization formula</p>
 <p><span class="math display">\[\begin{align}
@@ -624,7 +624,7 @@
 <p><span class="math display">\[\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]} = 0.7 - 0.5 = 0.2\]</span></p>
 <p>The standardized causal risk difference is 0.2. In this particular example, this equals the crude (unstandardized) associational difference: <span class="math inline">\((7/10) - (5/10) = 0.2\)</span>.</p>
 <aside class="notes">
-<p>In general, the crude association <span class="math inline">\(Pr[Y = 1|A = 1] - Pr[Y = 1|A = 0]\)</span> does <strong>not</strong> equal the standardized causal effect when conditional randomization is used.</p>
+<p>In general, the crude association <span class="math inline">\(\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]\)</span> does <strong>not</strong> equal the standardized causal effect when conditional randomization is used.</p>
 <p>The standardization formula “adjusts for” or “controls for” <span class="math inline">\(L\)</span> by reweighting each stratum to match the population distribution. This is analogous to direct standardization in epidemiology.</p>
 <p>The standardization formula can be used with continuous outcomes by replacing probabilities with expected values, and can extend to multiple covariates and continuous covariates (by replacing the sum with an integral).</p>
 <style type="text/css">
@@ -658,11 +658,11 @@
 <h2>The IPW Approach</h2>
 <p>The idea of IPW is to create a <strong>pseudo-population</strong> in which treatment is marginally randomized (unconditional). In this pseudo-population, exchangeability holds marginally, so we can estimate the causal effect by a simple comparison of means.</p>
 <p>Each individual is weighted by the inverse of their probability of receiving the treatment they actually received:</p>
-<p><span class="math display">\[W^A = \frac{1}{Pr[A|L]}\]</span></p>
+<p><span class="math display">\[W^A = \frac{1}{\Pr[A|L]}\]</span></p>
 <div id="def-ipw" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4 (Inverse Probability Weights)</strong></span> For an individual who received treatment <span class="math inline">\(A\)</span> and has covariates <span class="math inline">\(L\)</span>, the <strong>inverse probability weight</strong> is:</p>
-<p><span class="math display">\[W^A = \frac{1}{Pr[A|L]}\]</span></p>
-<p>where <span class="math inline">\(Pr[A|L]\)</span> is the probability (propensity) of receiving the treatment actually received, given covariates <span class="math inline">\(L\)</span>.</p>
+<p><span class="math display">\[W^A = \frac{1}{\Pr[A|L]}\]</span></p>
+<p>where <span class="math inline">\(\Pr[A|L]\)</span> is the probability (propensity) of receiving the treatment actually received, given covariates <span class="math inline">\(L\)</span>.</p>
 </div>
 <aside class="notes">
 <p>Individuals whose treatment assignment is unlikely given their covariates receive higher weights. Individuals whose treatment assignment is likely receive lower weights. This reweighting creates balance in the pseudo-population.</p>
@@ -682,15 +682,15 @@
 <section id="ipw-estimation" class="slide level2">
 <h2>IPW Estimation</h2>
 <p>Under conditional exchangeability <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span>, the mean counterfactual outcome can be estimated as:</p>
-<p><span class="math display">\[\text{E}{\left[Y^a\right]} = \text{E}{\left[\frac{I(A = a) \times Y}{Pr[A = a|L]}\right]}\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^a\right]} = \text{E}{\left[\frac{I(A = a) \times Y}{\Pr[A = a|L]}\right]}\]</span></p>
 <p>where <span class="math inline">\(I(A = a)\)</span> is an indicator function equal to 1 if <span class="math inline">\(A = a\)</span> and 0 otherwise.</p>
 <p>The IPW estimator of the causal risk difference is:</p>
-<p><span class="math display">\[\widehat{\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}} = \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 1) \times Y_i}{Pr[A_i = 1|L_i]} - \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 0) \times Y_i}{Pr[A_i = 0|L_i]}\]</span></p>
+<p><span class="math display">\[\widehat{\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}} = \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 1) \times Y_i}{\Pr[A_i = 1|L_i]} - \frac{1}{n}\sum_{i=1}^n \frac{I(A_i = 0) \times Y_i}{\Pr[A_i = 0|L_i]}\]</span></p>
 <aside class="notes">
 <p>This is equivalent to computing a weighted mean in each treatment group:</p>
 <ul>
-<li>Treated: <span class="math inline">\(\frac{\sum_{i:A_i=1} W_i Y_i}{\sum_{i:A_i=1} W_i}\)</span> where <span class="math inline">\(W_i = 1/Pr[A_i = 1|L_i]\)</span></li>
-<li>Untreated: <span class="math inline">\(\frac{\sum_{i:A_i=0} W_i Y_i}{\sum_{i:A_i=0} W_i}\)</span> where <span class="math inline">\(W_i = 1/Pr[A_i = 0|L_i]\)</span></li>
+<li>Treated: <span class="math inline">\(\frac{\sum_{i:A_i=1} W_i Y_i}{\sum_{i:A_i=1} W_i}\)</span> where <span class="math inline">\(W_i = 1/\Pr[A_i = 1|L_i]\)</span></li>
+<li>Untreated: <span class="math inline">\(\frac{\sum_{i:A_i=0} W_i Y_i}{\sum_{i:A_i=0} W_i}\)</span> where <span class="math inline">\(W_i = 1/\Pr[A_i = 0|L_i]\)</span></li>
 </ul>
 <p>Then subtract the two weighted means.</p>
 <style type="text/css">
@@ -711,10 +711,10 @@
 <p><strong>Step 1</strong>: Compute treatment probabilities</p>
 <p>In the stratified randomization:</p>
 <ul>
-<li><span class="math inline">\(Pr[A = 1|L = 0] = 5/10 = 0.5\)</span> (among women)</li>
-<li><span class="math inline">\(Pr[A = 1|L = 1] = 5/10 = 0.5\)</span> (among men)</li>
-<li><span class="math inline">\(Pr[A = 0|L = 0] = 5/10 = 0.5\)</span> (among women)</li>
-<li><span class="math inline">\(Pr[A = 0|L = 1] = 5/10 = 0.5\)</span> (among men)</li>
+<li><span class="math inline">\(\Pr[A = 1|L = 0] = 5/10 = 0.5\)</span> (among women)</li>
+<li><span class="math inline">\(\Pr[A = 1|L = 1] = 5/10 = 0.5\)</span> (among men)</li>
+<li><span class="math inline">\(\Pr[A = 0|L = 0] = 5/10 = 0.5\)</span> (among women)</li>
+<li><span class="math inline">\(\Pr[A = 0|L = 1] = 5/10 = 0.5\)</span> (among men)</li>
 </ul>
 <p><strong>Step 2</strong>: Compute weights</p>
 <p>Since all probabilities equal 0.5, all weights equal <span class="math inline">\(1/0.5 = 2\)</span>.</p>
@@ -770,18 +770,18 @@
 </tr>
 <tr class="even">
 <td><strong>Formula</strong></td>
-<td><span class="math inline">\(\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y \vert A=a,L=l\right]} Pr[L=l]\)</span></td>
-<td><span class="math inline">\(\text{E}{\left[Y^a\right]} = \text{E}{\left[Y \cdot I(A=a) / Pr[A=a \vert L]\right]}\)</span></td>
+<td><span class="math inline">\(\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y \vert A=a,L=l\right]} \Pr[L=l]\)</span></td>
+<td><span class="math inline">\(\text{E}{\left[Y^a\right]} = \text{E}{\left[Y \cdot I(A=a) / \Pr[A=a \vert L]\right]}\)</span></td>
 </tr>
 <tr class="odd">
 <td><strong>Weights</strong></td>
-<td>Stratum probabilities <span class="math inline">\(Pr[L=l]\)</span></td>
-<td>Inverse treatment probabilities <span class="math inline">\(1/Pr[A \vert L]\)</span></td>
+<td>Stratum probabilities <span class="math inline">\(\Pr[L=l]\)</span></td>
+<td>Inverse treatment probabilities <span class="math inline">\(1/\Pr[A \vert L]\)</span></td>
 </tr>
 <tr class="even">
 <td><strong>Model</strong></td>
 <td>Outcome model <span class="math inline">\(\text{E}{\left[Y \vert A,L\right]}\)</span></td>
-<td>Treatment model <span class="math inline">\(Pr[A \vert L]\)</span></td>
+<td>Treatment model <span class="math inline">\(\Pr[A \vert L]\)</span></td>
 </tr>
 <tr class="odd">
 <td><strong>Extensions</strong></td>
@@ -791,8 +791,8 @@
 </tbody>
 </table>
 <aside class="notes">
-<p>In randomized experiments, treatment probabilities <span class="math inline">\(Pr[A|L]\)</span> are known by design. In observational studies, we must estimate them from data, which introduces additional assumptions and potential for bias.</p>
-<p>Standardization requires correctly specifying the outcome model <span class="math inline">\(\text{E}{\left[Y|A,L\right]}\)</span>. IPW requires correctly specifying the treatment model <span class="math inline">\(Pr[A|L]\)</span>. <strong>Doubly robust</strong> methods combine both and remain consistent if <em>either</em> model is correct.</p>
+<p>In randomized experiments, treatment probabilities <span class="math inline">\(\Pr[A|L]\)</span> are known by design. In observational studies, we must estimate them from data, which introduces additional assumptions and potential for bias.</p>
+<p>Standardization requires correctly specifying the outcome model <span class="math inline">\(\text{E}{\left[Y|A,L\right]}\)</span>. IPW requires correctly specifying the treatment model <span class="math inline">\(\Pr[A|L]\)</span>. <strong>Doubly robust</strong> methods combine both and remain consistent if <em>either</em> model is correct.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -808,11 +808,11 @@
 <section id="positivity" class="slide level2">
 <h2>Positivity</h2>
 <p>Both standardization and IPW require the <strong>positivity assumption</strong>: For all values of <span class="math inline">\(L\)</span> that occur in the population, there must be a non-zero probability of receiving each treatment level.</p>
-<p>Formally: If <span class="math inline">\(Pr[L = l] &gt; 0\)</span>, then <span class="math inline">\(0 &lt; Pr[A = a|L = l] &lt; 1\)</span> for all <span class="math inline">\(a\)</span>.</p>
+<p>Formally: If <span class="math inline">\(\Pr[L = l] &gt; 0\)</span>, then <span class="math inline">\(0 &lt; \Pr[A = a|L = l] &lt; 1\)</span> for all <span class="math inline">\(a\)</span>.</p>
 <div id="def-positivity" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 5 (Positivity)</strong></span> The <strong>positivity assumption</strong> (also called <strong>experimental treatment assignment</strong> or <strong>overlap</strong>) requires:</p>
-<p><span class="math display">\[0 &lt; Pr[A = a|L = l] &lt; 1\]</span></p>
-<p>for all values <span class="math inline">\(l\)</span> such that <span class="math inline">\(Pr[L = l] &gt; 0\)</span> and for all treatment levels <span class="math inline">\(a\)</span>.</p>
+<p><span class="math display">\[0 &lt; \Pr[A = a|L = l] &lt; 1\]</span></p>
+<p>for all values <span class="math inline">\(l\)</span> such that <span class="math inline">\(\Pr[L = l] &gt; 0\)</span> and for all treatment levels <span class="math inline">\(a\)</span>.</p>
 </div>
 <aside class="notes">
 <p>Positivity means there are both treated and untreated individuals at every level of <span class="math inline">\(L\)</span> that occurs in the population. Without positivity, we cannot estimate <span class="math inline">\(\text{E}{\left[Y|A = a, L = l\right]}\)</span> for some strata because we have no data.</p>
@@ -840,8 +840,8 @@
 <ol type="1">
 <li><p><strong>Randomization</strong> ensures exchangeability <span class="math inline">\(Y^a \perp\!\!\!\perp A\)</span>, allowing causal effects to be identified from associational contrasts</p></li>
 <li><p><strong>Conditional randomization</strong> achieves conditional exchangeability <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span> within strata, requiring adjustment methods</p></li>
-<li><p><strong>Standardization</strong> computes <span class="math inline">\(\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y|A=a,L=l\right]} Pr[L=l]\)</span> by weighting stratum-specific outcomes</p></li>
-<li><p><strong>Inverse probability weighting</strong> creates a pseudo-population where treatment is marginally randomized by weighting individuals as <span class="math inline">\(W^A = 1/Pr[A|L]\)</span></p></li>
+<li><p><strong>Standardization</strong> computes <span class="math inline">\(\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y|A=a,L=l\right]} \Pr[L=l]\)</span> by weighting stratum-specific outcomes</p></li>
+<li><p><strong>Inverse probability weighting</strong> creates a pseudo-population where treatment is marginally randomized by weighting individuals as <span class="math inline">\(W^A = 1/\Pr[A|L]\)</span></p></li>
 <li><p>Both standardization and IPW require <strong>conditional exchangeability</strong>, <strong>positivity</strong>, and <strong>consistency</strong></p></li>
 </ol>
 <p>In randomized experiments, these assumptions are met by design. In observational studies (Chapters 3-7), these assumptions are less plausible and require careful justification.</p>
@@ -883,10 +883,10 @@
 \text{E}{\left[Y^a\right]} &amp;= \text{E}{\left[\text{E}{\left[Y^a \mid L\right]}\right]} \quad \text{(law of total expectation)} \\
 &amp;= \text{E}{\left[\text{E}{\left[Y^a \mid A=a, L\right]}\right]} \quad \text{(by conditional exchangeability)} \\
 &amp;= \text{E}{\left[\text{E}{\left[Y \mid A=a, L\right]}\right]} \quad \text{(by consistency)} \\
-&amp;= \text{E}{\left[\frac{I(A=a)}{Pr[A=a|L]} \text{E}{\left[Y \mid A=a, L\right]}\right]} \quad \text{(inverse weighting)} \\
-&amp;= \text{E}{\left[\frac{I(A=a) \cdot Y}{Pr[A=a|L]}\right]} \quad \text{(by law of total expectation)}
+&amp;= \text{E}{\left[\frac{I(A=a)}{\Pr[A=a|L]} \text{E}{\left[Y \mid A=a, L\right]}\right]} \quad \text{(inverse weighting)} \\
+&amp;= \text{E}{\left[\frac{I(A=a) \cdot Y}{\Pr[A=a|L]}\right]} \quad \text{(by law of total expectation)}
 \end{align}\]</span></p>
-<p>The key step is the third equality, which uses the fact that <span class="math inline">\(\text{E}{\left[I(A=a)/Pr[A=a|L]\right]} = 1\)</span>.</p>
+<p>The key step is the third equality, which uses the fact that <span class="math inline">\(\text{E}{\left[I(A=a)/\Pr[A=a|L]\right]} = 1\)</span>.</p>
 </section></section>
 <section>
 <section id="references" class="title-slide slide level1 center" data-number="8">
