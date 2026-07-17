@@ -1,44 +1,99 @@
+# Caller stub for d-morrison/gha's reusable Claude PR-review workflow
+# (replaces the stock anthropics/claude-code-action template; see
+# ucdavis/win#74). Secrets are passed explicitly rather than via
+# `secrets: inherit`: GitHub only inherits secrets into a reusable workflow
+# owned by the same org/user, so this ucdavis-org repo calling the
+# d-morrison-owned workflow would inherit an empty token.
+# The workflow_dispatch path lets claude.yml re-dispatch a review after an
+# @claude run pushes commits. The issue_comment path lets a trusted
+# collaborator start a review on demand by commenting `/review` on a PR.
 name: Claude Code Review
 
 on:
   pull_request:
     types: [opened, synchronize, ready_for_review, reopened]
-    # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number to review'
+        required: true
+        type: string
 
 jobs:
-  claude-review:
-    # Optional: Filter by PR author
-    # if: |
-    #   github.event.pull_request.user.login == 'external-contributor' ||
-    #   github.event.pull_request.user.login == 'new-developer' ||
-    #   github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR'
-
+  # `/review` at the start of a PR comment (from an OWNER/MEMBER/COLLABORATOR)
+  # dispatches an on-demand review of that PR. It's a slash command, not an
+  # `@claude ...` mention, on purpose: any `@claude` also wakes claude.yml.
+  dispatch-on-comment:
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/review') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pull-requests: read
-      issues: read
-      id-token: write
-
+      actions: write        # dispatch this workflow via `gh workflow run`
+      issues: write         # acknowledge the /review comment
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Parse this workflow's ref
+        id: this-wf
+        uses: d-morrison/gha/.github/actions/parse-workflow-ref@v2
         with:
-          fetch-depth: 1
+          workflow-ref: ${{ github.workflow_ref }}
 
-      - name: Run Claude Code Review
-        id: claude-review
-        uses: anthropics/claude-code-action@v1
-        with:
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
-          plugins: 'code-review@claude-code-plugins'
-          prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://code.claude.com/docs/en/cli-reference for available options
+      - name: Dispatch a review for the commented PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          WF_PATH: ${{ steps.this-wf.outputs.path }}
+          # Passed via env (not inlined) so the comment body is a shell value,
+          # never interpreted as script — avoids injection.
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          # The job-level `if:` only does a cheap startsWith('/review') pre-filter;
+          # enforce the real match here: the body must begin with a standalone
+          # '/review' token, followed by whitespace or end-of-string.
+          if [[ ! "$COMMENT_BODY" =~ ^/review([[:space:]]|$) ]]; then
+            echo "Comment does not start with a standalone '/review' command; skipping dispatch."
+            exit 0
+          fi
+          WF_FILE=$(basename "$WF_PATH")
+          echo "Dispatching $WF_FILE to review PR #$PR_NUMBER (/review comment)."
+          gh workflow run "$WF_FILE" --repo "$REPO" -f pr_number="$PR_NUMBER"
+          gh issue comment "$PR_NUMBER" --repo "$REPO" \
+            --body ":mag: \`/review\` received — dispatched a Claude review of this PR (see the [dispatch run]($RUN_URL)). The review posts as its own comment when it finishes." \
+            || echo "::warning::Could not acknowledge the /review comment."
 
+  review:
+    # pull_request and workflow_dispatch only; the issue_comment path is handled
+    # by dispatch-on-comment above (which re-enters via workflow_dispatch).
+    if: github.event_name != 'issue_comment'
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read   # lets the reviewer read CI status
+    uses: d-morrison/gha/.github/workflows/claude-code-review.yml@v2
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}   # Max-plan OAuth; empty when using API key
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}               # direct API key; empty when using OAuth
+      SUBMODULES_TOKEN: ${{ secrets.SUBMODULES_TOKEN }}   # optional; empty when unset
+    with:
+      # Wires the workflow_dispatch input through so claude.yml can re-dispatch
+      # a review on Claude's commits; empty (and ignored) for pull_request runs.
+      pr-number: ${{ inputs.pr_number }}
+      checkout-submodules: true
+      # win's LaTeX notation comes from the d-morrison/macros submodule; flag
+      # raw LaTeX the macros already cover (e.g. E[...] instead of \E{...}).
+      check-latex-macros: true
+      prompt-addendum: |
+        This is the win (What If? lecture notes) Quarto website. Repo
+        conventions: inst/WORDLIST stays case-insensitively sorted; LaTeX
+        uses the latex-macros submodule's macros (\E{...}, \hE{...}, \ind,
+        \Pr[...]) rather than raw equivalents; chapters cite the textbook as
+        @hernan2020causal [Chapter N, pp. X-Y].
