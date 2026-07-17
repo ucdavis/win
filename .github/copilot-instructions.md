@@ -261,7 +261,7 @@ win/
 │   │   ├── check-spelling.yaml # Spell checking
 │   │   ├── lint-changed-files.yaml # R code linting (uses .lintr.R)
 │   │   ├── preview.yml         # PR preview deployment
-│   │   └── publish.yml         # GitHub Pages publishing
+│   │   └── quarto-publish.yml  # GitHub Pages publishing (d-morrison/gha reusable workflow)
 │   └── copilot-instructions.md # This file
 ├── chapters/
 │   ├── 01-introduction.qmd     # Chapter 1: Introduction
@@ -566,11 +566,13 @@ See [Quarto Theorems and Proofs documentation](https://quarto.org/docs/authoring
 
 The repository uses GitHub Actions for continuous integration:
 
-1. **publish.yml**: Builds and publishes the Quarto website to GitHub Pages
+1. **quarto-publish.yml**: Builds and publishes the Quarto website to GitHub Pages (via the d-morrison/gha reusable workflow)
    - Runs on push to main branch
-   - Uses Quarto actions to render and deploy
+   - Renders with Quarto (Quarto actions handle setup), then deploys
+     `_site/` to the `gh-pages` branch with
+     JamesIves/github-pages-deploy-action, preserving the `pr-preview/`
+     subtree
    - Installs TinyTeX for PDF rendering
-   - Outputs to `_site/` directory
 2. **preview.yml**: Generates preview of the website for pull requests
    - Uses PR preview action to deploy to separate preview URL
    - Allows reviewers to see rendered changes
@@ -761,7 +763,7 @@ Additional guidelines:
 - Review the generated output in the `_site/` directory to ensure quality
 - Fix any rendering issues before requesting review
 - This practice helps maintain the quality of rendered outputs and streamlines the contribution process
-- Note: The CI/CD workflows (preview.yml and publish.yml) will also render the website, but catching issues locally saves time
+- Note: The CI/CD workflows (preview.yml and quarto-publish.yml) will also render the website, but catching issues locally saves time
 
 ### Dependencies
 
