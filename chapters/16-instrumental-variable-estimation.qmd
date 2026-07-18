@@ -32,7 +32,7 @@ An **instrumental variable** $Z$ must satisfy three conditions to identify causa
 A variable $Z$ is an **instrumental variable** for the effect of $A$ on $Y$ if:
 
 1. **Relevance**: $Z$ is associated with $A$
-2. **Exchangeability**: $Z$ is independent of unmeasured confounders $U$ (i.e., $Y^{a,z} \perp\!\!\!\perp Z$)
+2. **Exchangeability**: $Z$ is independent of unmeasured confounders $U$ (i.e., $Y^{a,z} \ind Z$)
 3. **Exclusion restriction**: $Z$ affects $Y$ only through $A$ (i.e., $Y^{a,z} = Y^a$ for all $a, z$)
 
 Where $Y^{a,z}$ denotes the potential outcome under treatment $A = a$ and instrument $Z = z$.
@@ -62,14 +62,14 @@ Common rule of thumb: F-statistic > 10 in first-stage regression (for continuous
 
 ### Condition 2: Exchangeability
 
-**Statement**: $Y^{a,z} \perp\!\!\!\perp Z$ (or $Y^a \perp\!\!\!\perp Z$ under exclusion)
+**Statement**: $Y^{a,z} \ind Z$ (or $Y^a \ind Z$ under exclusion)
 
 **Meaning**: The instrument is "as good as randomly assigned" with respect to potential outcomes.
 
 **Example**: Randomized encouragement
 
 - If encouragement is randomized, exchangeability holds by design
-- $Z \perp\!\!\!\perp U$ where $U$ are unmeasured confounders
+- $Z \ind U$ where $U$ are unmeasured confounders
 
 **Testing**: Exchangeability generally **cannot** be tested (involves unmeasured confounders)
 
@@ -107,7 +107,7 @@ Under the three IV conditions, we can identify a causal effect.
 
 **IV estimand**:
 
-$$\frac{E[Y \mid Z = 1] - E[Y \mid Z = 0]}{E[A \mid Z = 1] - E[A \mid Z = 0]}$$
+$$\frac{\E{Y \mid Z = 1} - \E{Y \mid Z = 0}}{\E{A \mid Z = 1} - \E{A \mid Z = 0}}$$
 
 This is the **Wald estimator** or **ratio estimator**.
 
@@ -115,12 +115,12 @@ This is the **Wald estimator** or **ratio estimator**.
 
 ### Why This Works
 
-**Numerator**: $E[Y \mid Z = 1] - E[Y \mid Z = 0]$
+**Numerator**: $\E{Y \mid Z = 1} - \E{Y \mid Z = 0}$
 
-- By exchangeability: equals $E[Y^{z=1}] - E[Y^{z=0}]$
-- By exclusion: equals $E[Y^{A^{z=1}}] - E[Y^{A^{z=0}}]$
+- By exchangeability: equals $\E{Y^{z=1}} - \E{Y^{z=0}}$
+- By exclusion: equals $\E{Y^{A^{z=1}}} - \E{Y^{A^{z=0}}}$
 
-**Denominator**: $E[A \mid Z = 1] - E[A \mid Z = 0]$
+**Denominator**: $\E{A \mid Z = 1} - \E{A \mid Z = 0}$
 
 - By exchangeability: equals $\Pr[A^{z=1} = 1] - \Pr[A^{z=0} = 1]$
 
@@ -205,7 +205,7 @@ The IV estimand identifies the causal effect in **compliers only** (LATE = local
 
 Under IV conditions plus monotonicity:
 
-$$\text{IV estimand} = E[Y^{a=1} - Y^{a=0} \mid \text{Complier}]$$
+$$\text{IV estimand} = \E{Y^{a=1} - Y^{a=0} \mid \text{Complier}}$$
 
 This is the **average causal effect in compliers**, not in the full population.
 
@@ -280,15 +280,15 @@ IV estimation can be combined with adjustment for measured confounders.
 **Scenario 2**: Confounders of $Z \to Y$
 
 - More problematic - threatens IV exchangeability assumption
-- Need $Y^a \perp\!\!\!\perp Z \mid L$ (conditional exchangeability of instrument)
+- Need $Y^a \ind Z \mid L$ (conditional exchangeability of instrument)
 - Use conditional IV methods
 
 ### Conditional IV Estimation
 
 **Modified IV conditions**:
 
-1. **Conditional relevance**: $Z \not\perp\!\!\!\perp A \mid L$
-2. **Conditional exchangeability**: $Y^a \perp\!\!\!\perp Z \mid L$
+1. **Conditional relevance**: $Z \not\ind A \mid L$
+2. **Conditional exchangeability**: $Y^a \ind Z \mid L$
 3. **Exclusion restriction**: $Y^{a,z} = Y^a$ (still unconditional)
 
 **Estimation**: Use 2SLS with $L$ as covariates, then standardize over $L$.
@@ -313,15 +313,15 @@ How do IV estimates compare to regression-based estimates?
 
 **Regression** (e.g., outcome regression or IP weighting):
 
-- Assumes no unmeasured confounding: $Y^a \perp\!\!\!\perp A \mid L$
-- Identifies average causal effect: $E[Y^{a=1}] - E[Y^{a=0}]$
+- Assumes no unmeasured confounding: $Y^a \ind A \mid L$
+- Identifies average causal effect: $\E{Y^{a=1}} - \E{Y^{a=0}}$
 - Efficient when assumptions hold
 
 **IV estimation**:
 
 - Allows unmeasured confounding of $A \to Y$
 - Assumes valid instrument with IV conditions
-- Identifies LATE: $E[Y^{a=1} - Y^{a=0} \mid \text{Complier}]$
+- Identifies LATE: $\E{Y^{a=1} - Y^{a=0} \mid \text{Complier}}$
 - Less efficient (larger standard errors)
 
 ### When Estimates Differ
@@ -368,7 +368,7 @@ IV methods can be extended to handle **survival outcomes** and **time-to-event d
 
 The **survivor average causal effect (SACE)** is:
 
-$$E[Y^{a=1} - Y^{a=0} \mid S^{a=1} = 1, S^{a=0} = 1]$$
+$$\E{Y^{a=1} - Y^{a=0} \mid S^{a=1} = 1, S^{a=0} = 1}$$
 
 where $S^a$ is an indicator for surviving (or remaining uncensored) under treatment $a$.
 
@@ -407,7 +407,7 @@ These are often hard to justify.
 
 1. **Instrumental variable**: A variable $Z$ that affects treatment but not the outcome directly
 2. **IV conditions**: Relevance, exchangeability, exclusion restriction
-3. **Wald estimator**: $\frac{E[Y \mid Z=1] - E[Y \mid Z=0]}{E[A \mid Z=1] - E[A \mid Z=0]}$ for binary $Z, A$
+3. **Wald estimator**: $\frac{\E{Y \mid Z=1} - \E{Y \mid Z=0}}{\E{A \mid Z=1} - \E{A \mid Z=0}}$ for binary $Z, A$
 4. **Principal strata**: Compliers, always-takers, never-takers, defiers
 5. **LATE**: Local average treatment effect in compliers
 6. **2SLS**: Two-stage least squares for continuous outcomes

@@ -66,6 +66,16 @@ website:
             href: chapters/17-causal-survival-analysis.qmd
           - text: "Chapter 18: Variable Selection for Causal Inference"
             href: chapters/18-variable-selection-causal-inference.qmd
+          - text: "Chapter 19: Time-Varying Treatments"
+            href: chapters/19-time-varying-treatments.qmd
+          - text: "Chapter 20: Treatment-Confounder Feedback"
+            href: chapters/20-treatment-confounder-feedback.qmd
+          - text: "Chapter 21: G-Methods for Time-Varying Treatments"
+            href: chapters/21-g-methods-time-varying.qmd
+          - text: "Chapter 22: Target Trial Emulation"
+            href: chapters/22-target-trial-emulation.qmd
+          - text: "Chapter 23: Causal Mediation"
+            href: chapters/23-causal-mediation.qmd
 
 callouty-theorem:
   thm:

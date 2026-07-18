@@ -34,7 +34,7 @@ Traditional variable selection methods are designed for **prediction**, not caus
 - Use criteria like AIC, BIC, cross-validation
 - More variables (if not overfitting) → better prediction
 
-**Causal inference goal**: Estimate $E[Y^a]$ or $E[Y^{a=1}] - E[Y^{a=0}]$
+**Causal inference goal**: Estimate $\E{Y^a}$ or $\E{Y^{a=1}} - \E{Y^{a=0}}$
 
 - Include variables that remove confounding
 - Exclude variables that introduce bias
@@ -98,7 +98,7 @@ Such paths create non-causal association between $A$ and $Y$.
 
 A set of variables $L$ is **sufficient for confounding adjustment** if conditioning on $L$ blocks all backdoor paths from $A$ to $Y$.
 
-Equivalently: $(Y^a \perp\!\!\!\perp A \mid L)$ for all $a$ (conditional exchangeability).
+Equivalently: $(Y^a \ind A \mid L)$ for all $a$ (conditional exchangeability).
 :::
 
 **Multiple sufficient sets**: There may be many sufficient adjustment sets. We want to choose one that:

@@ -143,7 +143,7 @@ The **intention-to-treat (ITT)** principle is commonly used in randomized trials
 
 An **intention-to-treat analysis** compares outcomes by assigned treatment $Z$, regardless of actual treatment received $A$.
 
-$$\text{ITT effect} = E[Y | Z = 1] - E[Y | Z = 0]$$
+$$\text{ITT effect} = \E{Y | Z = 1} - \E{Y | Z = 0}$$
 
 ::: {.notes}
 **Why use ITT?**
