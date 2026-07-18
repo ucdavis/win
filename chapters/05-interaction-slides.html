@@ -227,11 +227,11 @@
 <h2>Definition of Interaction</h2>
 <div id="def-interaction-additive" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Additive Interaction)</strong></span> There is <strong>additive interaction</strong> (on the risk difference scale) between treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> if:</p>
-<p><span class="math display">\[E[Y^{a=1,e=1}] - E[Y^{a=0,e=0}] \neq \bigl(E[Y^{a=1,e=0}] - E[Y^{a=0,e=0}]\bigr) + \bigl(E[Y^{a=0,e=1}] - E[Y^{a=0,e=0}]\bigr)\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]} \neq \bigl(\text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]}\bigr) + \bigl(\text{E}{\left[Y^{a=0,e=1}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]}\bigr)\]</span></p>
 <p>In words: the joint effect of both treatments differs from the sum of the individual effects.</p>
 </div>
 <p>Equivalently, we can define additive interaction using the <strong>interaction contrast</strong>:</p>
-<p><span class="math display">\[\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}]\]</span></p>
+<p><span class="math display">\[\text{IC} = \text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=1}\right]} + \text{E}{\left[Y^{a=0,e=0}\right]}\]</span></p>
 <p>If <span class="math inline">\(\text{IC} \neq 0\)</span>, there is additive interaction.</p>
 <aside class="notes">
 <p><strong>Interpretation of IC</strong>:</p>
@@ -271,19 +271,19 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>No aspirin, no exercise: <span class="math inline">\(E[Y^{a=0,e=0}]\)</span></td>
+<td>No aspirin, no exercise: <span class="math inline">\(\text{E}{\left[Y^{a=0,e=0}\right]}\)</span></td>
 <td>0.30</td>
 </tr>
 <tr class="even">
-<td>Aspirin only: <span class="math inline">\(E[Y^{a=1,e=0}]\)</span></td>
+<td>Aspirin only: <span class="math inline">\(\text{E}{\left[Y^{a=1,e=0}\right]}\)</span></td>
 <td>0.25</td>
 </tr>
 <tr class="odd">
-<td>Exercise only: <span class="math inline">\(E[Y^{a=0,e=1}]\)</span></td>
+<td>Exercise only: <span class="math inline">\(\text{E}{\left[Y^{a=0,e=1}\right]}\)</span></td>
 <td>0.20</td>
 </tr>
 <tr class="even">
-<td>Both aspirin and exercise: <span class="math inline">\(E[Y^{a=1,e=1}]\)</span></td>
+<td>Both aspirin and exercise: <span class="math inline">\(\text{E}{\left[Y^{a=1,e=1}\right]}\)</span></td>
 <td>0.10</td>
 </tr>
 </tbody>
@@ -342,8 +342,8 @@
 <section id="identifiability-conditions-for-interaction" class="slide level2 scrollable">
 <h2>Identifiability Conditions for Interaction</h2>
 <ol type="1">
-<li><p><strong>Exchangeability</strong> for the joint treatment <span class="math inline">\((A, E)\)</span>: <span class="math display">\[Y^{a,e} \perp\!\!\!\perp (A, E) \quad \text{for all } (a,e)\]</span></p></li>
-<li><p><strong>Positivity</strong> for the joint treatment: <span class="math display">\[Pr[A = a, E = e] &gt; 0 \quad \text{for all } (a,e)\]</span></p></li>
+<li><p><strong>Exchangeability</strong> for the joint treatment <span class="math inline">\((A, E)\)</span>: <span class="math display">\[Y^{a,e} \perp\!\!\!\perp(A, E) \quad \text{for all } (a,e)\]</span></p></li>
+<li><p><strong>Positivity</strong> for the joint treatment: <span class="math display">\[\Pr[A = a, E = e] &gt; 0 \quad \text{for all } (a,e)\]</span></p></li>
 <li><p><strong>Consistency</strong>: <span class="math display">\[Y = Y^{A,E}\]</span> No interference, well-defined treatments</p></li>
 </ol>
 <aside class="notes">
@@ -446,10 +446,10 @@
 </ul>
 <p>Then:</p>
 <ul>
-<li><span class="math inline">\(E[Y^{0,0}] = 0.30 + 0.20 + 0.10 = 0.60\)</span></li>
-<li><span class="math inline">\(E[Y^{1,0}] = 0.20 + 0.10 = 0.30\)</span> (the 30% prevented by <span class="math inline">\(A\)</span> no longer get disease)</li>
-<li><span class="math inline">\(E[Y^{0,1}] = 0.30 + 0.10 = 0.40\)</span> (the 20% prevented by <span class="math inline">\(E\)</span> no longer get disease)</li>
-<li><span class="math inline">\(E[Y^{1,1}] = 0.10\)</span> (only the synergistic group still gets disease)</li>
+<li><span class="math inline">\(\text{E}{\left[Y^{0,0}\right]} = 0.30 + 0.20 + 0.10 = 0.60\)</span></li>
+<li><span class="math inline">\(\text{E}{\left[Y^{1,0}\right]} = 0.20 + 0.10 = 0.30\)</span> (the 30% prevented by <span class="math inline">\(A\)</span> no longer get disease)</li>
+<li><span class="math inline">\(\text{E}{\left[Y^{0,1}\right]} = 0.30 + 0.10 = 0.40\)</span> (the 20% prevented by <span class="math inline">\(E\)</span> no longer get disease)</li>
+<li><span class="math inline">\(\text{E}{\left[Y^{1,1}\right]} = 0.10\)</span> (only the synergistic group still gets disease)</li>
 </ul>
 <p><strong>Interaction contrast</strong>: <span class="math display">\[\text{IC} = 0.10 - 0.30 - 0.40 + 0.60 = 0\]</span></p>
 <p>Despite the synergistic response type existing, there is no interaction on the additive scale because the effects balance out.</p>
@@ -639,7 +639,7 @@
 <p>This chapter introduced <strong>interaction</strong> between two treatments.</p>
 <p><strong>Key concepts</strong>:</p>
 <ol type="1">
-<li><p><strong>Definition</strong>: Interaction exists when the joint effect of two treatments differs from the sum of their individual effects: <span class="math display">\[\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}] \neq 0\]</span></p></li>
+<li><p><strong>Definition</strong>: Interaction exists when the joint effect of two treatments differs from the sum of their individual effects: <span class="math display">\[\text{IC} = \text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=1}\right]} + \text{E}{\left[Y^{a=0,e=0}\right]} \neq 0\]</span></p></li>
 <li><p><strong>Identification</strong>: Requires exchangeability, positivity, and consistency for the joint treatment <span class="math inline">\((A, E)\)</span></p></li>
 <li><p><strong>Response types</strong>: Interaction can be understood through the distribution of counterfactual response types in the population</p></li>
 <li><p><strong>Sufficient causes</strong>: The sufficient cause model provides a mechanistic framework where interaction corresponds to synergism</p></li>

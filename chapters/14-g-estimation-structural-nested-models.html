@@ -129,6 +129,16 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-cor.callout {
+  border-left-color: #00838F;
+}
+div.callout-cor.callout-style-default .callout-header {
+  background-color: rgba(0, 131, 143, 0.13);
+}
+div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
 div.callout-remark.callout {
   border-left-color: #AD1457;
 }
@@ -139,25 +149,15 @@ div.callout-remark .callout-toggle::before {  background-image: url('data:image/
 div.callout-remark.callout-style-default .callout-icon::before, div.callout-remark.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-exm.callout {
-  border-left-color: #6A1B9A;
+div.callout-prp.callout {
+  border-left-color: #827717;
 }
-div.callout-exm.callout-style-default .callout-header {
-  background-color: rgba(106, 27, 154, 0.13);
+div.callout-prp.callout-style-default .callout-header {
+  background-color: rgba(130, 119, 23, 0.13);
 }
-div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-def.callout {
-  border-left-color: #1B5E20;
-}
-div.callout-def.callout-style-default .callout-header {
-  background-color: rgba(27, 94, 32, 0.13);
-}
-div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-prp .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-prp.callout-style-default .callout-icon::before, div.callout-prp.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-cnj.callout {
   border-left-color: #558B2F;
@@ -169,25 +169,25 @@ div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg
 div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-solution.callout {
-  border-left-color: #4E342E;
+div.callout-proof.callout {
+  border-left-color: #37474F;
 }
-div.callout-solution.callout-style-default .callout-header {
-  background-color: rgba(78, 52, 46, 0.13);
+div.callout-proof.callout-style-default .callout-header {
+  background-color: rgba(55, 71, 79, 0.13);
 }
-div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-proof .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-cor.callout {
-  border-left-color: #00838F;
+div.callout-exm.callout {
+  border-left-color: #6A1B9A;
 }
-div.callout-cor.callout-style-default .callout-header {
-  background-color: rgba(0, 131, 143, 0.13);
+div.callout-exm.callout-style-default .callout-header {
+  background-color: rgba(106, 27, 154, 0.13);
 }
-div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-exr.callout {
   border-left-color: #FFA500;
@@ -199,15 +199,25 @@ div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg
 div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-proof.callout {
-  border-left-color: #37474F;
+div.callout-def.callout {
+  border-left-color: #1B5E20;
 }
-div.callout-proof.callout-style-default .callout-header {
-  background-color: rgba(55, 71, 79, 0.13);
+div.callout-def.callout-style-default .callout-header {
+  background-color: rgba(27, 94, 32, 0.13);
 }
-div.callout-proof .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-solution.callout {
+  border-left-color: #4E342E;
+}
+div.callout-solution.callout-style-default .callout-header {
+  background-color: rgba(78, 52, 46, 0.13);
+}
+div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-lem.callout {
   border-left-color: #1565C0;
@@ -218,16 +228,6 @@ div.callout-lem.callout-style-default .callout-header {
 div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-prp.callout {
-  border-left-color: #827717;
-}
-div.callout-prp.callout-style-default .callout-header {
-  background-color: rgba(130, 119, 23, 0.13);
-}
-div.callout-prp .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-prp.callout-style-default .callout-icon::before, div.callout-prp.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 </style>
 
@@ -524,6 +524,26 @@ window.Quarto = {
     <a class="dropdown-item" href="../chapters/18-variable-selection-causal-inference.html">
  <span class="dropdown-text">Chapter 18: Variable Selection for Causal Inference</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/19-time-varying-treatments.html">
+ <span class="dropdown-text">Chapter 19: Time-Varying Treatments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/20-treatment-confounder-feedback.html">
+ <span class="dropdown-text">Chapter 20: Treatment-Confounder Feedback</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/21-g-methods-time-varying.html">
+ <span class="dropdown-text">Chapter 21: G-Methods for Time-Varying Treatments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/22-target-trial-emulation.html">
+ <span class="dropdown-text">Chapter 22: Target Trial Emulation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/23-causal-mediation.html">
+ <span class="dropdown-text">Chapter 23: Causal Mediation</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -619,7 +639,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last modified: 2026-07-17 23:09:30 (UTC)</p>
+      <p class="date">Last modified: 2026-07-18 00:13:18 (UTC)</p>
     </div>
   </div>
   
@@ -651,9 +671,9 @@ window.Quarto = {
 <div class="callout-body-container">
 <div id="def-snm" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Structural Nested Mean Model)</strong></span> A <strong>structural nested mean model (SNMM)</strong> specifies how the mean of <span class="math inline">\(Y^a\)</span> differs from the mean of <span class="math inline">\(Y^{a'}\)</span> as a function of treatment and covariates:</p>
-<p><span class="math display">\[E[Y^a - Y^{a'} \mid L] = \gamma(a, a'; \psi, L)\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^a - Y^{a'} \mid L\right]} = \gamma(a, a'; \psi, L)\]</span></p>
 <p>For dichotomous treatment with <span class="math inline">\(a = 1\)</span> and <span class="math inline">\(a' = 0\)</span>:</p>
-<p><span class="math display">\[E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\]</span></p>
 <p>where <span class="math inline">\(\psi = (\psi_0, \psi_1)\)</span> are the parameters of interest.</p>
 </div>
 </div>
@@ -661,9 +681,9 @@ window.Quarto = {
 </div>
 <section id="comparison-to-previous-approaches" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="comparison-to-previous-approaches"><span class="header-section-number">1.1</span> Comparison to Previous Approaches</h3>
-<p><strong>Marginal structural model</strong> (IP weighting): <span class="math display">\[E[Y^a] = \beta_0 + \beta_1 a\]</span> Models the mean outcome under treatment <span class="math inline">\(a\)</span>.</p>
-<p><strong>Outcome regression</strong> (standardization): <span class="math display">\[E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)\]</span> Models the conditional mean outcome given treatment and confounders.</p>
-<p><strong>Structural nested model</strong> (G-estimation): <span class="math display">\[E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L\]</span> Models the conditional causal effect directly.</p>
+<p><strong>Marginal structural model</strong> (IP weighting): <span class="math display">\[\text{E}{\left[Y^a\right]} = \beta_0 + \beta_1 a\]</span> Models the mean outcome under treatment <span class="math inline">\(a\)</span>.</p>
+<p><strong>Outcome regression</strong> (standardization): <span class="math display">\[\text{E}{\left[Y \mid A, L\right]} = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)\]</span> Models the conditional mean outcome given treatment and confounders.</p>
+<p><strong>Structural nested model</strong> (G-estimation): <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\]</span> Models the conditional causal effect directly.</p>
 <div class="notes">
 <p><strong>Interpretation</strong>:</p>
 <ul>
@@ -704,7 +724,7 @@ window.Quarto = {
 <p><strong>Violation</strong>: - Some people gain weight when quitting, others lose weight when quitting</p>
 <div class="notes">
 <p><strong>Why this matters</strong>:</p>
-<p>Rank preservation is stronger than the average null hypothesis <span class="math inline">\(E[Y^1] = E[Y^0]\)</span>. It’s closer to the sharp null hypothesis <span class="math inline">\(Y_i^1 = Y_i^0\)</span> for all <span class="math inline">\(i\)</span>.</p>
+<p>Rank preservation is stronger than the average null hypothesis <span class="math inline">\(\text{E}{\left[Y^1\right]} = \text{E}{\left[Y^0\right]}\)</span>. It’s closer to the sharp null hypothesis <span class="math inline">\(Y_i^1 = Y_i^0\)</span> for all <span class="math inline">\(i\)</span>.</p>
 <p>While strong, rank preservation is often plausible for outcomes where we expect treatment to affect everyone in the same direction (even if by different amounts).</p>
 </div>
 </section>
@@ -754,22 +774,22 @@ window.Quarto = {
 <p>G-estimation finds the value of <span class="math inline">\(\psi\)</span> that makes <span class="math inline">\(H(\psi)\)</span> independent of <span class="math inline">\(A\)</span> conditional on <span class="math inline">\(L\)</span>.</p>
 <section id="g-estimation-algorithm" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="g-estimation-algorithm"><span class="header-section-number">4.1</span> G-Estimation Algorithm</h3>
-<p><strong>Step 1</strong>: Specify a structural nested model <span class="math display">\[E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L\]</span></p>
+<p><strong>Step 1</strong>: Specify a structural nested model <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\]</span></p>
 <p><strong>Step 2</strong>: For a candidate value <span class="math inline">\(\psi\)</span>, compute pseudo-outcome <span class="math display">\[H(\psi) = Y - A(\psi_0 + \psi_1^{\top} L)\]</span></p>
-<p><strong>Step 3</strong>: Test whether <span class="math inline">\(H(\psi) \perp\!\!\!\perp A \mid L\)</span> by fitting <span class="math display">\[E[H(\psi) \mid A, L] = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L\]</span></p>
+<p><strong>Step 3</strong>: Test whether <span class="math inline">\(H(\psi) \perp\!\!\!\perp A \mid L\)</span> by fitting <span class="math display">\[\text{E}{\left[H(\psi) \mid A, L\right]} = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L\]</span></p>
 <p><strong>Step 4</strong>: The correct <span class="math inline">\(\psi\)</span> is the one that makes <span class="math inline">\(\alpha_1 = 0\)</span></p>
 <p><strong>Step 5</strong>: In practice, solve the estimating equation: <span class="math display">\[\sum_{i=1}^n A_i[Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span> or more generally: <span class="math display">\[\sum_{i=1}^n U_i(\psi)[Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span> where <span class="math inline">\(U_i(\psi)\)</span> is an appropriate function (often <span class="math inline">\(U_i = A_i\)</span> or <span class="math inline">\(U_i = A_i(1, L_i)^{\top}\)</span>).</p>
 </section>
 <section id="example-simple-model" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="example-simple-model"><span class="header-section-number">4.2</span> Example: Simple Model</h3>
-<p><strong>SNMM</strong>: <span class="math inline">\(E[Y^1 - Y^0] = \psi_0\)</span> (constant effect)</p>
+<p><strong>SNMM</strong>: <span class="math inline">\(\text{E}{\left[Y^1 - Y^0\right]} = \psi_0\)</span> (constant effect)</p>
 <p><strong>Estimating equation</strong>: <span class="math display">\[\sum_{i=1}^n A_i(Y_i - A_i \psi_0) = 0\]</span></p>
 <p><strong>Solution</strong>: <span class="math display">\[\hat{\psi}_0 = \frac{\sum_i A_i Y_i}{\sum_i A_i^2} = \frac{\sum_i A_i Y_i}{n_1}\]</span> where <span class="math inline">\(n_1 = \sum_i A_i\)</span> is the number of treated individuals.</p>
 <p>This is the mean outcome among the treated when there is no confounding.</p>
 <div class="notes">
 <p><strong>With confounders</strong>: The estimating equation becomes more complex:</p>
-<p><span class="math display">\[\sum_{i=1}^n [A_i - \hat{E}[A \mid L_i]][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span></p>
-<p>This requires: 1. Estimating <span class="math inline">\(E[A \mid L]\)</span> (e.g., via logistic regression) 2. Solving for <span class="math inline">\(\psi\)</span> using the estimating equation</p>
+<p><span class="math display">\[\sum_{i=1}^n [A_i - \hat{\text{E}}{\left[A \mid L_i\right]}][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span></p>
+<p>This requires: 1. Estimating <span class="math inline">\(\text{E}{\left[A \mid L\right]}\)</span> (e.g., via logistic regression) 2. Solving for <span class="math inline">\(\psi\)</span> using the estimating equation</p>
 <p>The estimator is <strong>doubly robust</strong> in some cases: consistent if either the effect model or the treatment model is correct.</p>
 </div>
 </section>
@@ -780,9 +800,9 @@ window.Quarto = {
 <p>G-estimation has robustness properties that differ from IP weighting and standardization.</p>
 <section id="robustness-properties" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="robustness-properties"><span class="header-section-number">5.1</span> Robustness Properties</h3>
-<p><strong>When SNMM is correctly specified</strong>: - G-estimation is consistent even if <span class="math inline">\(E[A \mid L]\)</span> is misspecified - Need to correctly model the effect <span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span>, not the full outcome model <span class="math inline">\(E[Y \mid A, L]\)</span></p>
+<p><strong>When SNMM is correctly specified</strong>: - G-estimation is consistent even if <span class="math inline">\(\text{E}{\left[A \mid L\right]}\)</span> is misspecified - Need to correctly model the effect <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span>, not the full outcome model <span class="math inline">\(\text{E}{\left[Y \mid A, L\right]}\)</span></p>
 <p><strong>When treatment model is correctly specified</strong>: - G-estimation is consistent even if the effect model is misspecified in certain ways - Specific robustness depends on the choice of estimating function <span class="math inline">\(U(\psi)\)</span></p>
-<p><strong>Double robustness</strong>: - Some G-estimators are doubly robust: consistent if either the effect model or a working model for <span class="math inline">\(E[H(\psi) \mid A, L]\)</span> is correct - This is similar to doubly robust IP weighted estimators</p>
+<p><strong>Double robustness</strong>: - Some G-estimators are doubly robust: consistent if either the effect model or a working model for <span class="math inline">\(\text{E}{\left[H(\psi) \mid A, L\right]}\)</span> is correct - This is similar to doubly robust IP weighted estimators</p>
 </section>
 <section id="comparison-to-other-methods" class="level3" data-number="5.2">
 <h3 data-number="5.2" class="anchored" data-anchor-id="comparison-to-other-methods"><span class="header-section-number">5.2</span> Comparison to Other Methods</h3>
@@ -807,12 +827,12 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><strong>Standardization</strong></td>
-<td><span class="math inline">\(E[Y \mid A, L]\)</span></td>
+<td><span class="math inline">\(\text{E}{\left[Y \mid A, L\right]}\)</span></td>
 <td>Treatment model misspec.</td>
 </tr>
 <tr class="odd">
 <td><strong>G-estimation</strong></td>
-<td><span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span></td>
+<td><span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span></td>
 <td>Full outcome model misspec.</td>
 </tr>
 <tr class="even">
@@ -835,21 +855,21 @@ window.Quarto = {
 <p>From the SNMM, we can compute the average causal effect.</p>
 <section id="from-conditional-to-marginal-effects" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="from-conditional-to-marginal-effects"><span class="header-section-number">6.1</span> From Conditional to Marginal Effects</h3>
-<p><strong>SNMM</strong>: <span class="math inline">\(E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L\)</span></p>
-<p><strong>Average causal effect</strong>: <span class="math display">\[E[Y^1 - Y^0] = E_L[E[Y^1 - Y^0 \mid L]] = E_L[\psi_0 + \psi_1^{\top} L] = \psi_0 + \psi_1^{\top} E[L]\]</span></p>
-<p><strong>Estimator</strong>: <span class="math display">\[\widehat{E[Y^1 - Y^0]} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}\]</span></p>
+<p><strong>SNMM</strong>: <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\)</span></p>
+<p><strong>Average causal effect</strong>: <span class="math display">\[\text{E}{\left[Y^1 - Y^0\right]} = E_L[\text{E}{\left[Y^1 - Y^0 \mid L\right]}] = E_L[\psi_0 + \psi_1^{\top} L] = \psi_0 + \psi_1^{\top} \text{E}{\left[L\right]}\]</span></p>
+<p><strong>Estimator</strong>: <span class="math display">\[\widehat{\text{E}{\left[Y^1 - Y^0\right]}} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}\]</span></p>
 <p>where <span class="math inline">\(\bar{L} = n^{-1} \sum_i L_i\)</span> is the sample mean of <span class="math inline">\(L\)</span>.</p>
 </section>
 <section id="effect-in-specific-subgroups" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="effect-in-specific-subgroups"><span class="header-section-number">6.2</span> Effect in Specific Subgroups</h3>
-<p><strong>Effect at <span class="math inline">\(L = \ell\)</span></strong>: <span class="math display">\[E[Y^1 - Y^0 \mid L = \ell] = \psi_0 + \psi_1^{\top} \ell\]</span></p>
-<p><strong>Effect in the treated</strong> (ATT): <span class="math display">\[E[Y^1 - Y^0 \mid A = 1] = \psi_0 + \psi_1^{\top} E[L \mid A = 1]\]</span></p>
-<p><strong>Estimator for ATT</strong>: <span class="math display">\[\widehat{E[Y^1 - Y^0 \mid A = 1]} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}_{A=1}\]</span></p>
+<p><strong>Effect at <span class="math inline">\(L = \ell\)</span></strong>: <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L = \ell\right]} = \psi_0 + \psi_1^{\top} \ell\]</span></p>
+<p><strong>Effect in the treated</strong> (ATT): <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid A = 1\right]} = \psi_0 + \psi_1^{\top} \text{E}{\left[L \mid A = 1\right]}\]</span></p>
+<p><strong>Estimator for ATT</strong>: <span class="math display">\[\widehat{\text{E}{\left[Y^1 - Y^0 \mid A = 1\right]}} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}_{A=1}\]</span></p>
 <p>where <span class="math inline">\(\bar{L}_{A=1}\)</span> is the mean of <span class="math inline">\(L\)</span> among the treated.</p>
 <div class="notes">
-<p><strong>Flexibility</strong>: The SNMM <span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span> describes effect modification. From this, we can compute:</p>
+<p><strong>Flexibility</strong>: The SNMM <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span> describes effect modification. From this, we can compute:</p>
 <ul>
-<li>Overall average effect <span class="math inline">\(E[Y^1 - Y^0]\)</span></li>
+<li>Overall average effect <span class="math inline">\(\text{E}{\left[Y^1 - Y^0\right]}\)</span></li>
 <li>Effects in subgroups defined by <span class="math inline">\(L\)</span></li>
 <li>ATT or ATU (average treatment effect in the untreated)</li>
 </ul>
@@ -863,7 +883,7 @@ window.Quarto = {
 <p>SNMMs can include multiple effect modifiers.</p>
 <section id="general-snmm" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="general-snmm"><span class="header-section-number">7.1</span> General SNMM</h3>
-<p><span class="math display">\[E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1 L_1 + \psi_2 L_2 + \psi_3 L_1 L_2 + \ldots\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1 L_1 + \psi_2 L_2 + \psi_3 L_1 L_2 + \ldots\]</span></p>
 <p><strong>Parameters</strong>: <span class="math inline">\(\psi = (\psi_0, \psi_1, \psi_2, \psi_3, \ldots)\)</span></p>
 <p><strong>Estimating equations</strong>: Need as many equations as parameters</p>
 <p><span class="math display">\[\sum_{i=1}^n U_{ij}(\psi)[Y_i - A_i(\psi_0 + \psi_1 L_{i1} + \psi_2 L_{i2} + \ldots)] = 0\]</span></p>
@@ -874,7 +894,7 @@ window.Quarto = {
 <p>Common choices for <span class="math inline">\(U_{ij}\)</span>:</p>
 <ol type="1">
 <li><strong>Simple</strong>: <span class="math inline">\(U_i = (A_i, A_i L_{i1}, A_i L_{i2}, \ldots)^{\top}\)</span></li>
-<li><strong>Optimal</strong>: <span class="math inline">\(U_i = (A_i - E[A \mid L_i])(1, L_{i1}, L_{i2}, \ldots)^{\top}\)</span></li>
+<li><strong>Optimal</strong>: <span class="math inline">\(U_i = (A_i - \text{E}{\left[A \mid L_i\right]})(1, L_{i1}, L_{i2}, \ldots)^{\top}\)</span></li>
 <li><strong>Doubly robust</strong>: More complex functions that achieve double robustness</li>
 </ol>
 <p>The choice affects: - Efficiency (variance of estimator) - Robustness properties - Computational complexity</p>
@@ -917,11 +937,11 @@ window.Quarto = {
 <section id="marginal-vs-conditional-effects-pp.-206" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="marginal-vs-conditional-effects-pp.-206"><span class="header-section-number">9</span> 14.9 Marginal vs Conditional Effects (pp.&nbsp;206)</h2>
 <hr>
-<p>G-estimation naturally estimates conditional effects <span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span>. We can average to get marginal effects.</p>
+<p>G-estimation naturally estimates conditional effects <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span>. We can average to get marginal effects.</p>
 <section id="three-types-of-effects" class="level3" data-number="9.1">
 <h3 data-number="9.1" class="anchored" data-anchor-id="three-types-of-effects"><span class="header-section-number">9.1</span> Three Types of Effects</h3>
-<p><strong>Marginal effect</strong> (population average): <span class="math display">\[E[Y^1 - Y^0]\]</span></p>
-<p><strong>Conditional effect</strong> (within levels of <span class="math inline">\(L\)</span>): <span class="math display">\[E[Y^1 - Y^0 \mid L]\]</span></p>
+<p><strong>Marginal effect</strong> (population average): <span class="math display">\[\text{E}{\left[Y^1 - Y^0\right]}\]</span></p>
+<p><strong>Conditional effect</strong> (within levels of <span class="math inline">\(L\)</span>): <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]}\]</span></p>
 <p><strong>Individual effect</strong>: <span class="math display">\[Y_i^1 - Y_i^0\]</span></p>
 </section>
 <section id="methods-and-natural-estimands" class="level3" data-number="9.2">
@@ -943,7 +963,7 @@ window.Quarto = {
 <tr class="odd">
 <td><strong>IP weighting</strong></td>
 <td>Marginal effect</td>
-<td>Model <span class="math inline">\(E[Y^a \mid V]\)</span> for conditional</td>
+<td>Model <span class="math inline">\(\text{E}{\left[Y^a \mid V\right]}\)</span> for conditional</td>
 </tr>
 <tr class="even">
 <td><strong>Standardization</strong></td>
@@ -957,7 +977,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p><strong>Advantage of SNMMs</strong>: By modeling <span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span> directly, G-estimation provides natural inference for effect modification while still allowing marginal effect estimation.</p>
+<p><strong>Advantage of SNMMs</strong>: By modeling <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span> directly, G-estimation provides natural inference for effect modification while still allowing marginal effect estimation.</p>
 <div class="notes">
 <p><strong>Choosing a method</strong>:</p>
 <ul>
@@ -1943,11 +1963,11 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>A **structural nested mean model (SNMM)** specifies how the mean of $Y^a$ differs from the mean of $Y^{a'}$ as a function of treatment and covariates:</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^a - Y^{a'} \mid L</span><span class="co">]</span> = \gamma(a, a'; \psi, L)$$</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>$$\E{Y^a - Y^{a'} \mid L} = \gamma(a, a'; \psi, L)$$</span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>For dichotomous treatment with $a = 1$ and $a' = 0$:</span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span> = \psi_0 + \psi_1^{\top} L$$</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$$</span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>where $\psi = (\psi_0, \psi_1)$ are the parameters of interest.</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>:::</span>
@@ -1955,15 +1975,15 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparison to Previous Approaches</span></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>**Marginal structural model** (IP weighting):</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^a</span><span class="co">]</span> = \beta_0 + \beta_1 a$$</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>$$\E{Y^a} = \beta_0 + \beta_1 a$$</span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>Models the mean outcome under treatment $a$.</span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>**Outcome regression** (standardization):</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y \mid A, L</span><span class="co">]</span> = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)$$</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>$$\E{Y \mid A, L} = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)$$</span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>Models the conditional mean outcome given treatment and confounders.</span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>**Structural nested model** (G-estimation):</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span> = \psi_0 + \psi_1^{\top} L$$</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$$</span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>Models the conditional causal effect directly.</span>
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
@@ -2015,7 +2035,7 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
 <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>**Why this matters**: </span>
 <span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>Rank preservation is stronger than the average null hypothesis $E<span class="co">[</span><span class="ot">Y^1</span><span class="co">]</span> = E<span class="co">[</span><span class="ot">Y^0</span><span class="co">]</span>$. It's closer to the sharp null hypothesis $Y_i^1 = Y_i^0$ for all $i$.</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>Rank preservation is stronger than the average null hypothesis $\E{Y^1} = \E{Y^0}$. It's closer to the sharp null hypothesis $Y_i^1 = Y_i^0$ for all $i$.</span>
 <span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>While strong, rank preservation is often plausible for outcomes where we expect treatment to affect everyone in the same direction (even if by different amounts).</span>
 <span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>:::</span>
@@ -2050,17 +2070,17 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>Since $Y^0$ is the potential outcome under no treatment, it should be independent of actual treatment $A$ given confounders $L$:</span>
 <span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>$$H(\psi) \perp<span class="sc">\!\!\!</span>\perp A \mid L$$</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>$$H(\psi) \ind A \mid L$$</span>
 <span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
 <span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>**Intuition**: </span>
 <span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>$H(\psi)$ "removes" the effect of treatment from $Y$ using parameter $\psi$</span>
 <span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>If we remove the correct effect, what remains is the untreated potential outcome $Y^0$</span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Under conditional exchangeability, $Y^0 \perp<span class="sc">\!\!\!</span>\perp A \mid L$</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Under conditional exchangeability, $Y^0 \ind A \mid L$</span>
 <span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>So the correct $\psi$ makes $H(\psi)$ independent of $A$ conditional on $L$</span>
 <span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>This is the **estimating principle**: Find $\psi$ such that $H(\psi) \perp<span class="sc">\!\!\!</span>\perp A \mid L$.</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>This is the **estimating principle**: Find $\psi$ such that $H(\psi) \ind A \mid L$.</span>
 <span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## 14.4 Estimating the Causal Effect (pp. 196-199)</span></span>
@@ -2072,13 +2092,13 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="fu">### G-Estimation Algorithm</span></span>
 <span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>**Step 1**: Specify a structural nested model</span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span> = \psi_0 + \psi_1^{\top} L$$</span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$$</span>
 <span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>**Step 2**: For a candidate value $\psi$, compute pseudo-outcome</span>
 <span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>$$H(\psi) = Y - A(\psi_0 + \psi_1^{\top} L)$$</span>
 <span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>**Step 3**: Test whether $H(\psi) \perp<span class="sc">\!\!\!</span>\perp A \mid L$ by fitting</span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">H(\psi) \mid A, L</span><span class="co">]</span> = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L$$</span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>**Step 3**: Test whether $H(\psi) \ind A \mid L$ by fitting</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>$$\E{H(\psi) \mid A, L} = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L$$</span>
 <span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>**Step 4**: The correct $\psi$ is the one that makes $\alpha_1 = 0$</span>
 <span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a></span>
@@ -2090,7 +2110,7 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Simple Model</span></span>
 <span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>**SNMM**: $E<span class="co">[</span><span class="ot">Y^1 - Y^0</span><span class="co">]</span> = \psi_0$ (constant effect)</span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>**SNMM**: $\E{Y^1 - Y^0} = \psi_0$ (constant effect)</span>
 <span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>**Estimating equation**:</span>
 <span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>$$\sum_{i=1}^n A_i(Y_i - A_i \psi_0) = 0$$</span>
@@ -2104,10 +2124,10 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
 <span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>**With confounders**: The estimating equation becomes more complex:</span>
 <span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>$$\sum_{i=1}^n <span class="co">[</span><span class="ot">A_i - \hat{E}[A \mid L_i]</span><span class="co">][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)]</span> = 0$$</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>$$\sum_{i=1}^n <span class="co">[</span><span class="ot">A_i - \hE{A \mid L_i}</span><span class="co">][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)]</span> = 0$$</span>
 <span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>This requires:</span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Estimating $E<span class="co">[</span><span class="ot">A \mid L</span><span class="co">]</span>$ (e.g., via logistic regression)</span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Estimating $\E{A \mid L}$ (e.g., via logistic regression)</span>
 <span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Solving for $\psi$ using the estimating equation</span>
 <span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>The estimator is **doubly robust** in some cases: consistent if either the effect model or the treatment model is correct.</span>
@@ -2122,15 +2142,15 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="fu">### Robustness Properties</span></span>
 <span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>**When SNMM is correctly specified**:</span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>G-estimation is consistent even if $E<span class="co">[</span><span class="ot">A \mid L</span><span class="co">]</span>$ is misspecified</span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Need to correctly model the effect $E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span>$, not the full outcome model $E<span class="co">[</span><span class="ot">Y \mid A, L</span><span class="co">]</span>$</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>G-estimation is consistent even if $\E{A \mid L}$ is misspecified</span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Need to correctly model the effect $\E{Y^1 - Y^0 \mid L}$, not the full outcome model $\E{Y \mid A, L}$</span>
 <span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>**When treatment model is correctly specified**:</span>
 <span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>G-estimation is consistent even if the effect model is misspecified in certain ways</span>
 <span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Specific robustness depends on the choice of estimating function $U(\psi)$</span>
 <span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>**Double robustness**:</span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some G-estimators are doubly robust: consistent if either the effect model or a working model for $E<span class="co">[</span><span class="ot">H(\psi) \mid A, L</span><span class="co">]</span>$ is correct</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some G-estimators are doubly robust: consistent if either the effect model or a working model for $\E{H(\psi) \mid A, L}$ is correct</span>
 <span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>This is similar to doubly robust IP weighted estimators</span>
 <span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparison to Other Methods</span></span>
@@ -2138,8 +2158,8 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Method <span class="pp">|</span> Requires Correct <span class="pp">|</span> Robust To <span class="pp">|</span></span>
 <span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|-----------------|-----------|</span></span>
 <span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **IP weighting** <span class="pp">|</span> $\Pr<span class="co">[</span><span class="ot">A \mid L</span><span class="co">]</span>$ <span class="pp">|</span> Outcome model misspec. <span class="pp">|</span></span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Standardization** <span class="pp">|</span> $E<span class="co">[</span><span class="ot">Y \mid A, L</span><span class="co">]</span>$ <span class="pp">|</span> Treatment model misspec. <span class="pp">|</span></span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **G-estimation** <span class="pp">|</span> $E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span>$ <span class="pp">|</span> Full outcome model misspec. <span class="pp">|</span></span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Standardization** <span class="pp">|</span> $\E{Y \mid A, L}$ <span class="pp">|</span> Treatment model misspec. <span class="pp">|</span></span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **G-estimation** <span class="pp">|</span> $\E{Y^1 - Y^0 \mid L}$ <span class="pp">|</span> Full outcome model misspec. <span class="pp">|</span></span>
 <span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Doubly robust** <span class="pp">|</span> Either model <span class="pp">|</span> One model misspecification <span class="pp">|</span></span>
 <span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
@@ -2158,33 +2178,33 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a><span class="fu">### From Conditional to Marginal Effects</span></span>
 <span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>**SNMM**: $E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span> = \psi_0 + \psi_1^{\top} L$</span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>**SNMM**: $\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$</span>
 <span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>**Average causal effect**:</span>
-<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0</span><span class="co">]</span> = E_L<span class="co">[</span><span class="ot">E[Y^1 - Y^0 \mid L]</span><span class="co">]</span> = E_L<span class="co">[</span><span class="ot">\psi_0 + \psi_1^{\top} L</span><span class="co">]</span> = \psi_0 + \psi_1^{\top} E<span class="co">[</span><span class="ot">L</span><span class="co">]</span>$$</span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0} = E_L<span class="co">[</span><span class="ot">\E{Y^1 - Y^0 \mid L}</span><span class="co">]</span> = E_L<span class="co">[</span><span class="ot">\psi_0 + \psi_1^{\top} L</span><span class="co">]</span> = \psi_0 + \psi_1^{\top} \E{L}$$</span>
 <span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>**Estimator**:</span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>$$\widehat{E<span class="co">[</span><span class="ot">Y^1 - Y^0</span><span class="co">]</span>} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}$$</span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>$$\widehat{\E{Y^1 - Y^0}} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}$$</span>
 <span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>where $\bar{L} = n^{-1} \sum_i L_i$ is the sample mean of $L$.</span>
 <span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a><span class="fu">### Effect in Specific Subgroups</span></span>
 <span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>**Effect at $L = \ell$**:</span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L = \ell</span><span class="co">]</span> = \psi_0 + \psi_1^{\top} \ell$$</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0 \mid L = \ell} = \psi_0 + \psi_1^{\top} \ell$$</span>
 <span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>**Effect in the treated** (ATT):</span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid A = 1</span><span class="co">]</span> = \psi_0 + \psi_1^{\top} E<span class="co">[</span><span class="ot">L \mid A = 1</span><span class="co">]</span>$$</span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0 \mid A = 1} = \psi_0 + \psi_1^{\top} \E{L \mid A = 1}$$</span>
 <span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>**Estimator for ATT**:</span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>$$\widehat{E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid A = 1</span><span class="co">]</span>} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}_{A=1}$$</span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>$$\widehat{\E{Y^1 - Y^0 \mid A = 1}} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}_{A=1}$$</span>
 <span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>where $\bar{L}_{A=1}$ is the mean of $L$ among the treated.</span>
 <span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>**Flexibility**: The SNMM $E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span>$ describes effect modification. From this, we can compute:</span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>**Flexibility**: The SNMM $\E{Y^1 - Y^0 \mid L}$ describes effect modification. From this, we can compute:</span>
 <span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Overall average effect $E<span class="co">[</span><span class="ot">Y^1 - Y^0</span><span class="co">]</span>$</span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Overall average effect $\E{Y^1 - Y^0}$</span>
 <span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Effects in subgroups defined by $L$</span>
 <span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ATT or ATU (average treatment effect in the untreated)</span>
 <span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a></span>
@@ -2199,7 +2219,7 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### General SNMM</span></span>
 <span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span> = \psi_0 + \psi_1 L_1 + \psi_2 L_2 + \psi_3 L_1 L_2 + \ldots$$</span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1 L_1 + \psi_2 L_2 + \psi_3 L_1 L_2 + \ldots$$</span>
 <span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>**Parameters**: $\psi = (\psi_0, \psi_1, \psi_2, \psi_3, \ldots)$</span>
 <span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a></span>
@@ -2214,7 +2234,7 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a>Common choices for $U_{ij}$:</span>
 <span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Simple**: $U_i = (A_i, A_i L_{i1}, A_i L_{i2}, \ldots)^{\top}$</span>
-<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Optimal**: $U_i = (A_i - E[A \mid L_i])(1, L_{i1}, L_{i2}, \ldots)^{\top}$</span>
+<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Optimal**: $U_i = (A_i - \E{A \mid L_i})(1, L_{i1}, L_{i2}, \ldots)^{\top}$</span>
 <span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Doubly robust**: More complex functions that achieve double robustness</span>
 <span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>The choice affects:</span>
@@ -2240,7 +2260,7 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>Let $C = 1$ if censored, $C = 0$ if observed.</span>
 <span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a>**Assumption**: $C \perp<span class="sc">\!\!\!</span>\perp Y^a \mid A, L$ (censoring independent of potential outcomes given treatment and covariates)</span>
+<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a>**Assumption**: $C \ind Y^a \mid A, L$ (censoring independent of potential outcomes given treatment and covariates)</span>
 <span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a>**Weighted estimating equation**:</span>
 <span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a></span>
@@ -2272,15 +2292,15 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a>G-estimation naturally estimates conditional effects $E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span>$. We can average to get marginal effects.</span>
+<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a>G-estimation naturally estimates conditional effects $\E{Y^1 - Y^0 \mid L}$. We can average to get marginal effects.</span>
 <span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a><span class="fu">### Three Types of Effects</span></span>
 <span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a>**Marginal effect** (population average):</span>
-<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0</span><span class="co">]</span>$$</span>
+<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0}$$</span>
 <span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a>**Conditional effect** (within levels of $L$):</span>
-<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span>$$</span>
+<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a>$$\E{Y^1 - Y^0 \mid L}$$</span>
 <span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a>**Individual effect**:</span>
 <span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a>$$Y_i^1 - Y_i^0$$</span>
@@ -2289,11 +2309,11 @@ Hernán, Miguel A, and James M Robins. 2020. <em>Causal Inference: What If</em>.
 <span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Method <span class="pp">|</span> Natural Estimand <span class="pp">|</span> To Get Other Estimands <span class="pp">|</span></span>
 <span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|-----------------|------------------------|</span></span>
-<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **IP weighting** <span class="pp">|</span> Marginal effect <span class="pp">|</span> Model $E<span class="co">[</span><span class="ot">Y^a \mid V</span><span class="co">]</span>$ for conditional <span class="pp">|</span></span>
+<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **IP weighting** <span class="pp">|</span> Marginal effect <span class="pp">|</span> Model $\E{Y^a \mid V}$ for conditional <span class="pp">|</span></span>
 <span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Standardization** <span class="pp">|</span> Conditional effect <span class="pp">|</span> Average over $L$ for marginal <span class="pp">|</span></span>
 <span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **G-estimation** <span class="pp">|</span> Conditional effect <span class="pp">|</span> Average over $L$ for marginal <span class="pp">|</span></span>
 <span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a>**Advantage of SNMMs**: By modeling $E<span class="co">[</span><span class="ot">Y^1 - Y^0 \mid L</span><span class="co">]</span>$ directly, G-estimation provides natural inference for effect modification while still allowing marginal effect estimation.</span>
+<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a>**Advantage of SNMMs**: By modeling $\E{Y^1 - Y^0 \mid L}$ directly, G-estimation provides natural inference for effect modification while still allowing marginal effect estimation.</span>
 <span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a>::: {.notes}</span>
 <span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a>**Choosing a method**:</span>

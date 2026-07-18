@@ -600,12 +600,12 @@
 <p>Because DAGs cannot directly represent effect modification, we must assess it empirically:</p>
 <ol type="1">
 <li>First, ensure the causal effect is identified within each stratum of <span class="math inline">\(V\)</span> (using the backdoor criterion or other identification strategies)</li>
-<li>Estimate stratum-specific causal effects <span class="math inline">\(E[Y^{a=1} - Y^{a=0} \mid V = v]\)</span> for each level <span class="math inline">\(v\)</span>
+<li>Estimate stratum-specific causal effects <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0} \mid V = v\right]}\)</span> for each level <span class="math inline">\(v\)</span>
 </li>
 <li>Compare effect estimates across strata: if they differ, effect modification is present</li>
 </ol>
 <aside class="notes"><p><strong>Effect modification and interaction:</strong></p>
-<p>Chapter 5 defined additive interaction between two treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> using the interaction contrast <span class="math inline">\(\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}]\)</span>. Effect modification of the <span class="math inline">\(A \to Y\)</span> effect by <span class="math inline">\(V\)</span> corresponds to the case where <span class="math inline">\(V\)</span> plays the role of <span class="math inline">\(E\)</span>, but one where <span class="math inline">\(V\)</span> is not itself a treatment under consideration — it simply describes a subgroup characteristic.</p>
+<p>Chapter 5 defined additive interaction between two treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> using the interaction contrast <span class="math inline">\(\text{IC} = \text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=1}\right]} + \text{E}{\left[Y^{a=0,e=0}\right]}\)</span>. Effect modification of the <span class="math inline">\(A \to Y\)</span> effect by <span class="math inline">\(V\)</span> corresponds to the case where <span class="math inline">\(V\)</span> plays the role of <span class="math inline">\(E\)</span>, but one where <span class="math inline">\(V\)</span> is not itself a treatment under consideration — it simply describes a subgroup characteristic.</p>
 <p><strong>Scale-dependence:</strong></p>
 <p>Effect modification is scale-dependent (Chapter 4). The <span class="math inline">\(A \to Y\)</span> effect may be modified by <span class="math inline">\(V\)</span> on the risk difference scale but not on the risk ratio scale. The DAG cannot distinguish between these cases; the scale of modification must be specified separately.</p>
 <style type="text/css">

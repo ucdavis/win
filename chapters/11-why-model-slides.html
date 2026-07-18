@@ -190,7 +190,7 @@
 <section id="example-hiv-treatment-and-cd4-count" class="slide level2">
 <h2>Example: HIV Treatment and CD4 Count</h2>
 <p>Consider a study of 16 HIV-positive individuals randomly sampled from a super-population. Each receives treatment <span class="math inline">\(A\)</span> (antiretroviral therapy), and we measure outcome <span class="math inline">\(Y\)</span> (CD4 cell count, cells/mm³).</p>
-<p><strong>Goal</strong>: Estimate the population mean <span class="math inline">\(E[Y|A = a]\)</span> for each treatment level <span class="math inline">\(a\)</span>.</p>
+<p><strong>Goal</strong>: Estimate the population mean <span class="math inline">\(\text{E}{\left[Y|A = a\right]}\)</span> for each treatment level <span class="math inline">\(a\)</span>.</p>
 </section>
 <section id="scenario-1-binary-treatment" class="slide level2">
 <h2>Scenario 1: Binary Treatment</h2>
@@ -241,7 +241,7 @@
 <li>Cannot compute sample average for unobserved treatment levels</li>
 <li><strong>The nonparametric estimator is undefined</strong> for <span class="math inline">\(A\)</span> values with no data</li>
 </ul>
-<p><strong>Question</strong>: How do we estimate <span class="math inline">\(E[Y|A = 90]\)</span> when no one received dose 90?</p>
+<p><strong>Question</strong>: How do we estimate <span class="math inline">\(\text{E}{\left[Y|A = 90\right]}\)</span> when no one received dose 90?</p>
 <aside class="notes">
 <p><strong>This is the fundamental motivation for modeling</strong>:</p>
 <p>When data are sparse relative to the dimension of covariates, nonparametric estimation fails or becomes imprecise. We need to <strong>borrow strength</strong> across treatment levels by making assumptions about the relationship between treatment and outcome.</p>
@@ -270,16 +270,16 @@
 <section id="linear-regression-model" class="slide level2 scrollable">
 <h2>Linear Regression Model</h2>
 <p>Assume the conditional mean follows a linear function:</p>
-<p><span class="math display">\[E[Y|A = a] = \beta_0 + \beta_1 a\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y|A = a\right]} = \beta_0 + \beta_1 a\]</span></p>
 <p><strong>Parameters</strong>: <span class="math inline">\((\beta_0, \beta_1)\)</span> define the line.</p>
 <p><strong>Estimation</strong>: Fit the model using least squares to estimate <span class="math inline">\((\hat{\beta}_0, \hat{\beta}_1)\)</span>.</p>
-<p><strong>Prediction</strong>: For any value <span class="math inline">\(a\)</span>, estimate <span class="math inline">\(E[Y|A = a] = \hat{\beta}_0 + \hat{\beta}_1 a\)</span>.</p>
+<p><strong>Prediction</strong>: For any value <span class="math inline">\(a\)</span>, estimate <span class="math inline">\(\text{E}{\left[Y|A = a\right]} = \hat{\beta}_0 + \hat{\beta}_1 a\)</span>.</p>
 <div id="exm-linear-model" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Linear Model for Continuous Treatment)</strong></span> With the HIV data and continuous treatment dose:</p>
 <ul>
-<li>Fit: <span class="math inline">\(E[Y|A] = \beta_0 + \beta_1 A\)</span></li>
+<li>Fit: <span class="math inline">\(\text{E}{\left[Y|A\right]} = \beta_0 + \beta_1 A\)</span></li>
 <li>Obtain estimates: <span class="math inline">\(\hat{\beta}_0 = 70\)</span>, <span class="math inline">\(\hat{\beta}_1 = 1.25\)</span></li>
-<li>Predict for <span class="math inline">\(A = 90\)</span>: <span class="math inline">\(\hat{E}[Y|A = 90] = 70 + 1.25(90) = 182.5\)</span></li>
+<li>Predict for <span class="math inline">\(A = 90\)</span>: <span class="math inline">\(\hat{\text{E}}{\left[Y|A = 90\right]} = 70 + 1.25(90) = 182.5\)</span></li>
 </ul>
 <p>Even though no one received dose 90, the model provides an estimate by <strong>interpolation</strong> from observed doses.</p>
 </div>
@@ -310,8 +310,8 @@
 </section>
 <section id="other-parametric-models" class="slide level2">
 <h2>Other Parametric Models</h2>
-<p><strong>Quadratic model</strong>: <span class="math display">\[E[Y|A = a] = \beta_0 + \beta_1 a + \beta_2 a^2\]</span></p>
-<p><strong>Logarithmic model</strong>: <span class="math display">\[E[Y|A = a] = \beta_0 + \beta_1 \log(a)\]</span></p>
+<p><strong>Quadratic model</strong>: <span class="math display">\[\text{E}{\left[Y|A = a\right]} = \beta_0 + \beta_1 a + \beta_2 a^2\]</span></p>
+<p><strong>Logarithmic model</strong>: <span class="math display">\[\text{E}{\left[Y|A = a\right]} = \beta_0 + \beta_1 \log(a)\]</span></p>
 <p><strong>Piecewise linear (splines)</strong>: Different linear relationships in different ranges of <span class="math inline">\(A\)</span>.</p>
 <p>Each model makes different assumptions about the shape of the dose-response curve.</p>
 </section></section>
@@ -331,7 +331,7 @@
 <p><strong>Semiparametric</strong> (intermediate smoothing): - Methods that smooth but make weaker assumptions - Examples: kernel smoothing, local regression, splines - Balance bias and variance</p>
 <aside class="notes">
 <p><strong>Smoothing intuition</strong>:</p>
-<p>When estimating <span class="math inline">\(E[Y|A = 90]\)</span> with no observations at <span class="math inline">\(A = 90\)</span>:</p>
+<p>When estimating <span class="math inline">\(\text{E}{\left[Y|A = 90\right]}\)</span> with no observations at <span class="math inline">\(A = 90\)</span>:</p>
 <ul>
 <li><strong>No smoothing</strong>: Cannot estimate (undefined)</li>
 <li><strong>Weak smoothing</strong>: Use nearby observations (e.g., <span class="math inline">\(A = 85, 95\)</span>) with weights decreasing by distance</li>
@@ -357,8 +357,8 @@
 </section>
 <section id="kernel-smoothing" class="slide level2">
 <h2>Kernel Smoothing</h2>
-<p><strong>Idea</strong>: Estimate <span class="math inline">\(E[Y|A = a]\)</span> using a weighted average of nearby observations.</p>
-<p><span class="math display">\[\hat{E}[Y|A = a] = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}\]</span></p>
+<p><strong>Idea</strong>: Estimate <span class="math inline">\(\text{E}{\left[Y|A = a\right]}\)</span> using a weighted average of nearby observations.</p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y|A = a\right]} = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}\]</span></p>
 <p>where:</p>
 <ul>
 <li><span class="math inline">\(K(\cdot)\)</span> is a <strong>kernel function</strong> (e.g., Gaussian)</li>
@@ -382,9 +382,9 @@
 <section id="definitions" class="slide level2">
 <h2>Definitions</h2>
 <p><strong>Bias</strong>: Systematic error, the difference between the expected value of the estimator and the true parameter.</p>
-<p><span class="math display">\[\text{Bias}(\hat{\theta}) = E[\hat{\theta}] - \theta\]</span></p>
+<p><span class="math display">\[\text{Bias}(\hat{\theta}) = \text{E}{\left[\hat{\theta}\right]} - \theta\]</span></p>
 <p><strong>Variance</strong>: Random error, the variability of the estimator across repeated samples.</p>
-<p><span class="math display">\[\text{Var}(\hat{\theta}) = E[(\hat{\theta} - E[\hat{\theta}])^2]\]</span></p>
+<p><span class="math display">\[\text{Var}(\hat{\theta}) = \text{E}{\left[(\hat{\theta} - \text{E}{\left[\hat{\theta}\right]})^2\right]}\]</span></p>
 <p><strong>Mean squared error (MSE)</strong>: Combines both sources of error.</p>
 <p><span class="math display">\[MSE(\hat{\theta}) = \text{Bias}^2(\hat{\theta}) + \text{Var}(\hat{\theta})\]</span></p>
 </section>
@@ -403,14 +403,14 @@
 <li>Works with sparse data, but relies on correct specification</li>
 </ul>
 <aside class="notes">
-<p><strong>Example: Estimating <span class="math inline">\(E[Y|A = 90]\)</span></strong></p>
+<p><strong>Example: Estimating <span class="math inline">\(\text{E}{\left[Y|A = 90\right]}\)</span></strong></p>
 <p><strong>Nonparametric</strong> (sample mean of individuals with <span class="math inline">\(A = 90\)</span>):</p>
 <ul>
 <li>If <span class="math inline">\(n_{A=90} = 0\)</span>: Undefined (infinite variance)</li>
 <li>If <span class="math inline">\(n_{A=90} = 1\)</span>: Unbiased but very high variance</li>
 <li>If <span class="math inline">\(n_{A=90} = 100\)</span>: Unbiased and low variance</li>
 </ul>
-<p><strong>Linear model</strong> (<span class="math inline">\(E[Y|A] = \beta_0 + \beta_1 A\)</span>):</p>
+<p><strong>Linear model</strong> (<span class="math inline">\(\text{E}{\left[Y|A\right]} = \beta_0 + \beta_1 A\)</span>):</p>
 <ul>
 <li>Uses all 16 observations to estimate 2 parameters</li>
 <li>Low variance estimate for any <span class="math inline">\(A\)</span></li>
@@ -446,7 +446,7 @@
 <section id="simulation-setup" class="slide level2 scrollable">
 <h2>Simulation Setup</h2>
 <ol type="1">
-<li>Specify a true data-generating process (e.g., <span class="math inline">\(E[Y|A] = \beta_0 + \beta_1 A + \beta_2 A^2\)</span>)</li>
+<li>Specify a true data-generating process (e.g., <span class="math inline">\(\text{E}{\left[Y|A\right]} = \beta_0 + \beta_1 A + \beta_2 A^2\)</span>)</li>
 <li>Generate many datasets of size <span class="math inline">\(n\)</span> from this process</li>
 <li>Fit different models to each dataset</li>
 <li>Compute bias, variance, and MSE of each estimator</li>

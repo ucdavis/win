@@ -258,7 +258,7 @@
 <p><strong>Population</strong>: 1,566 cigarette smokers from NHEFS who had a baseline visit and were seen again approximately 10 years later.</p>
 <p><strong>Treatment</strong>: <span class="math inline">\(A = 1\)</span> if quit smoking between visits, <span class="math inline">\(A = 0\)</span> if continued smoking</p>
 <p><strong>Outcome</strong>: <span class="math inline">\(Y\)</span> = weight change in kg between visits</p>
-<p><strong>Causal estimand</strong>: <span class="math display">\[E[Y^{a=1}] - E[Y^{a=0}]\]</span></p>
+<p><strong>Causal estimand</strong>: <span class="math display">\[\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\]</span></p>
 <p>The average treatment effect of smoking cessation on weight gain.</p>
 </section>
 <section id="measured-confounders" class="slide level2">
@@ -401,9 +401,9 @@
 <p>IP weighting is used to fit <strong>marginal structural models</strong> - models for the marginal distribution of the potential outcomes.</p>
 <div id="def-msm" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3 (Marginal Structural Model)</strong></span> A <strong>marginal structural model (MSM)</strong> is a model for the marginal mean of the potential outcome <span class="math inline">\(Y^a\)</span> as a function of treatment <span class="math inline">\(a\)</span> (and possibly other variables):</p>
-<p><span class="math display">\[E[Y^a] = \beta_0 + \beta_1 a\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^a\right]} = \beta_0 + \beta_1 a\]</span></p>
 <p>For dichotomous <span class="math inline">\(A\)</span>, parameter <span class="math inline">\(\beta_1\)</span> equals the average causal effect:</p>
-<p><span class="math display">\[\beta_1 = E[Y^{a=1}] - E[Y^{a=0}]\]</span></p>
+<p><span class="math display">\[\beta_1 = \text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\]</span></p>
 </div>
 </section>
 <section id="fitting-marginal-structural-models" class="slide level2 scrollable">
@@ -423,7 +423,7 @@
 </section>
 <section id="example-nhefs-study" class="slide level2">
 <h2>Example: NHEFS Study</h2>
-<p><strong>MSM</strong>: <span class="math display">\[E[Y^a] = \beta_0 + \beta_1 a\]</span></p>
+<p><strong>MSM</strong>: <span class="math display">\[\text{E}{\left[Y^a\right]} = \beta_0 + \beta_1 a\]</span></p>
 <p><strong>Weighted linear regression</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># Pseudo-code</span></span>
 <span id="cb1-2"><a></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight_change <span class="sc">~</span> quit_smoking, </span>
@@ -433,7 +433,7 @@
 <aside class="notes">
 <p><strong>Comparison to stratification</strong>:</p>
 <ul>
-<li>IP weighting estimates the marginal effect: <span class="math inline">\(E[Y^{a=1}] - E[Y^{a=0}]\)</span></li>
+<li>IP weighting estimates the marginal effect: <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\)</span></li>
 <li>Stratification + standardization can estimate the same quantity</li>
 <li>IP weighting and standardization are mathematically equivalent under certain conditions</li>
 <li>IP weighting is often more convenient, especially for continuous confounders or time-varying treatments</li>
@@ -463,7 +463,7 @@
 <h2>MSM with Effect Modification</h2>
 <div id="def-msm-effect-modification" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4 (MSM with Effect Modifier)</strong></span> To assess effect modification by variable <span class="math inline">\(V\)</span>:</p>
-<p><span class="math display">\[E[Y^a \mid V] = \beta_0 + \beta_1 a + \beta_2 V + \beta_3 a \times V\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^a \mid V\right]} = \beta_0 + \beta_1 a + \beta_2 V + \beta_3 a \times V\]</span></p>
 <p>where <span class="math inline">\(\beta_3\)</span> quantifies effect modification:</p>
 <ul>
 <li>If <span class="math inline">\(\beta_3 \neq 0\)</span>, the causal effect differs across levels of <span class="math inline">\(V\)</span></li>
@@ -482,12 +482,12 @@
 </section>
 <section id="example-effect-modification-by-sex" class="slide level2">
 <h2>Example: Effect Modification by Sex</h2>
-<p><strong>MSM</strong>: <span class="math display">\[E[Y^a \mid \text{Sex}] = \beta_0 + \beta_1 a + \beta_2 \text{Sex} + \beta_3 a \times \text{Sex}\]</span></p>
+<p><strong>MSM</strong>: <span class="math display">\[\text{E}{\left[Y^a \mid \text{Sex}\right]} = \beta_0 + \beta_1 a + \beta_2 \text{Sex} + \beta_3 a \times \text{Sex}\]</span></p>
 <p><strong>Results</strong> (hypothetical): - <span class="math inline">\(\hat{\beta}_1 = 2.5\)</span> kg (effect in men) - <span class="math inline">\(\hat{\beta}_3 = 1.8\)</span> kg (additional effect in women) - Effect in women: <span class="math inline">\(2.5 + 1.8 = 4.3\)</span> kg</p>
 <aside class="notes">
 <p><strong>Important distinction</strong>:</p>
 <ul>
-<li>The MSM <span class="math inline">\(E[Y^a \mid V]\)</span> models the mean of the potential outcome within levels of <span class="math inline">\(V\)</span></li>
+<li>The MSM <span class="math inline">\(\text{E}{\left[Y^a \mid V\right]}\)</span> models the mean of the potential outcome within levels of <span class="math inline">\(V\)</span></li>
 <li>This is a <strong>conditional causal effect</strong> (conditional on <span class="math inline">\(V\)</span>)</li>
 <li><span class="math inline">\(V\)</span> appears in the model, but we still adjust for confounders <span class="math inline">\(L\)</span> through IP weighting</li>
 <li><span class="math inline">\(V\)</span> must not be affected by treatment (must be a pre-treatment variable)</li>
@@ -577,8 +577,8 @@
 </section>
 <section id="connection-to-maximum-likelihood" class="slide level2 scrollable">
 <h2>Connection to Maximum Likelihood</h2>
-<p><strong>Without confounding</strong>: Standard MLE of <span class="math inline">\(\beta\)</span> in model <span class="math inline">\(E[Y \mid A] = g(A; \beta)\)</span></p>
-<p><strong>With confounding</strong>: IP weighted MLE of <span class="math inline">\(\beta\)</span> in MSM <span class="math inline">\(E[Y^a] = g(a; \beta)\)</span></p>
+<p><strong>Without confounding</strong>: Standard MLE of <span class="math inline">\(\beta\)</span> in model <span class="math inline">\(\text{E}{\left[Y \mid A\right]} = g(A; \beta)\)</span></p>
+<p><strong>With confounding</strong>: IP weighted MLE of <span class="math inline">\(\beta\)</span> in MSM <span class="math inline">\(\text{E}{\left[Y^a\right]} = g(a; \beta)\)</span></p>
 <p>The IP weights “adjust” the likelihood to account for confounding.</p>
 <aside class="notes">
 <p><strong>Theoretical advantages</strong>:</p>

@@ -278,18 +278,18 @@
 <h2>IV Estimand for Binary <span class="math inline">\(Z\)</span> and <span class="math inline">\(A\)</span></h2>
 <p><strong>Setting</strong>: Binary instrument <span class="math inline">\(Z\)</span>, binary treatment <span class="math inline">\(A\)</span>, outcome <span class="math inline">\(Y\)</span></p>
 <p><strong>IV estimand</strong>:</p>
-<p><span class="math display">\[\frac{E[Y \mid Z = 1] - E[Y \mid Z = 0]}{E[A \mid Z = 1] - E[A \mid Z = 0]}\]</span></p>
+<p><span class="math display">\[\frac{\text{E}{\left[Y \mid Z = 1\right]} - \text{E}{\left[Y \mid Z = 0\right]}}{\text{E}{\left[A \mid Z = 1\right]} - \text{E}{\left[A \mid Z = 0\right]}}\]</span></p>
 <p>This is the <strong>Wald estimator</strong> or <strong>ratio estimator</strong>.</p>
 <p><strong>Interpretation</strong>: The effect of <span class="math inline">\(Z\)</span> on <span class="math inline">\(Y\)</span>, divided by the effect of <span class="math inline">\(Z\)</span> on <span class="math inline">\(A\)</span>.</p>
 </section>
 <section id="why-this-works" class="slide level2 scrollable">
 <h2>Why This Works</h2>
-<p><strong>Numerator</strong>: <span class="math inline">\(E[Y \mid Z = 1] - E[Y \mid Z = 0]\)</span></p>
+<p><strong>Numerator</strong>: <span class="math inline">\(\text{E}{\left[Y \mid Z = 1\right]} - \text{E}{\left[Y \mid Z = 0\right]}\)</span></p>
 <ul>
-<li>By exchangeability: equals <span class="math inline">\(E[Y^{z=1}] - E[Y^{z=0}]\)</span></li>
-<li>By exclusion: equals <span class="math inline">\(E[Y^{A^{z=1}}] - E[Y^{A^{z=0}}]\)</span></li>
+<li>By exchangeability: equals <span class="math inline">\(\text{E}{\left[Y^{z=1}\right]} - \text{E}{\left[Y^{z=0}\right]}\)</span></li>
+<li>By exclusion: equals <span class="math inline">\(\text{E}{\left[Y^{A^{z=1}}\right]} - \text{E}{\left[Y^{A^{z=0}}\right]}\)</span></li>
 </ul>
-<p><strong>Denominator</strong>: <span class="math inline">\(E[A \mid Z = 1] - E[A \mid Z = 0]\)</span></p>
+<p><strong>Denominator</strong>: <span class="math inline">\(\text{E}{\left[A \mid Z = 1\right]} - \text{E}{\left[A \mid Z = 0\right]}\)</span></p>
 <ul>
 <li>By exchangeability: equals <span class="math inline">\(\Pr[A^{z=1} = 1] - \Pr[A^{z=0} = 1]\)</span></li>
 </ul>
@@ -388,7 +388,7 @@
 <section id="local-average-treatment-effect-late" class="slide level2">
 <h2>Local Average Treatment Effect (LATE)</h2>
 <p>Under IV conditions plus monotonicity:</p>
-<p><span class="math display">\[\text{IV estimand} = E[Y^{a=1} - Y^{a=0} \mid \text{Complier}]\]</span></p>
+<p><span class="math display">\[\text{IV estimand} = \text{E}{\left[Y^{a=1} - Y^{a=0} \mid \text{Complier}\right]}\]</span></p>
 <p>This is the <strong>average causal effect in compliers</strong>, not in the full population.</p>
 <p><strong>Interpretation</strong>: IV tells us the effect of treatment for those who would comply with the instrument.</p>
 <p><strong>Limitation</strong>: We don’t know who the compliers are (unobservable principal stratum).</p>
@@ -513,14 +513,14 @@
 <p><strong>Regression</strong> (e.g., outcome regression or IP weighting):</p>
 <ul>
 <li>Assumes no unmeasured confounding: <span class="math inline">\(Y^a \perp\!\!\!\perp A \mid L\)</span></li>
-<li>Identifies average causal effect: <span class="math inline">\(E[Y^{a=1}] - E[Y^{a=0}]\)</span></li>
+<li>Identifies average causal effect: <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\)</span></li>
 <li>Efficient when assumptions hold</li>
 </ul>
 <p><strong>IV estimation</strong>:</p>
 <ul>
 <li>Allows unmeasured confounding of <span class="math inline">\(A \to Y\)</span></li>
 <li>Assumes valid instrument with IV conditions</li>
-<li>Identifies LATE: <span class="math inline">\(E[Y^{a=1} - Y^{a=0} \mid \text{Complier}]\)</span></li>
+<li>Identifies LATE: <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0} \mid \text{Complier}\right]}\)</span></li>
 <li>Less efficient (larger standard errors)</li>
 </ul>
 </section>
@@ -577,7 +577,7 @@
 <h2>Survivor Average Causal Effect (SACE)</h2>
 <div id="def-sace" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3 (Survivor Average Causal Effect)</strong></span> The <strong>survivor average causal effect (SACE)</strong> is:</p>
-<p><span class="math display">\[E[Y^{a=1} - Y^{a=0} \mid S^{a=1} = 1, S^{a=0} = 1]\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^{a=1} - Y^{a=0} \mid S^{a=1} = 1, S^{a=0} = 1\right]}\]</span></p>
 <p>where <span class="math inline">\(S^a\)</span> is an indicator for surviving (or remaining uncensored) under treatment <span class="math inline">\(a\)</span>.</p>
 <p>This is the effect in <strong>always-survivors</strong> - those who would survive under both treatment and control.</p>
 </div>
@@ -623,7 +623,7 @@
 <ol type="1">
 <li><strong>Instrumental variable</strong>: A variable <span class="math inline">\(Z\)</span> that affects treatment but not the outcome directly</li>
 <li><strong>IV conditions</strong>: Relevance, exchangeability, exclusion restriction</li>
-<li><strong>Wald estimator</strong>: <span class="math inline">\(\frac{E[Y \mid Z=1] - E[Y \mid Z=0]}{E[A \mid Z=1] - E[A \mid Z=0]}\)</span> for binary <span class="math inline">\(Z, A\)</span></li>
+<li><strong>Wald estimator</strong>: <span class="math inline">\(\frac{\text{E}{\left[Y \mid Z=1\right]} - \text{E}{\left[Y \mid Z=0\right]}}{\text{E}{\left[A \mid Z=1\right]} - \text{E}{\left[A \mid Z=0\right]}}\)</span> for binary <span class="math inline">\(Z, A\)</span></li>
 <li><strong>Principal strata</strong>: Compliers, always-takers, never-takers, defiers</li>
 <li><strong>LATE</strong>: Local average treatment effect in compliers</li>
 <li><strong>2SLS</strong>: Two-stage least squares for continuous outcomes</li>

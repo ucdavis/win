@@ -569,8 +569,8 @@ Table&nbsp;1: Survival times under treatment and no treatment for each individua
 <p><span class="math display">\[U^*_i(\psi) = \min\!\bigl(U_i(\psi),\; K \text{exp}{\left\{(\right\}}-\psi A_i)\bigr)\]</span></p>
 <p>with corresponding artificial censoring indicator <span class="math inline">\(\Delta^*_i(\psi) = \mathbf{1}[U_i(\psi) \leq K \text{exp}{\left\{(\right\}}-\psi A_i)]\)</span>.</p>
 <p>The g-estimator solves the estimating equation</p>
-<p><span class="math display">\[\sum_i \bigl(A_i - \hat{E}[A_i \mid L_i]\bigr) \cdot h\!\bigl(U^*_i(\psi), \Delta^*_i(\psi)\bigr) = 0\]</span></p>
-<p>where <span class="math inline">\(h(\cdot)\)</span> is a score function (e.g., from a rank-based or weighted log-rank statistic) and <span class="math inline">\(\hat{E}[A_i \mid L_i]\)</span> is the estimated propensity score. By searching over <span class="math inline">\(\psi\)</span>, we find the value that makes treated and untreated individuals comparable in terms of their blipped-down survival times.</p>
+<p><span class="math display">\[\sum_i \bigl(A_i - \hat{\text{E}}{\left[A_i \mid L_i\right]}\bigr) \cdot h\!\bigl(U^*_i(\psi), \Delta^*_i(\psi)\bigr) = 0\]</span></p>
+<p>where <span class="math inline">\(h(\cdot)\)</span> is a score function (e.g., from a rank-based or weighted log-rank statistic) and <span class="math inline">\(\hat{\text{E}}{\left[A_i \mid L_i\right]}\)</span> is the estimated propensity score. By searching over <span class="math inline">\(\psi\)</span>, we find the value that makes treated and untreated individuals comparable in terms of their blipped-down survival times.</p>
 </div>
 </div>
 </div>

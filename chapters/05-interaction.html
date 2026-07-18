@@ -129,6 +129,46 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-solution.callout {
+  border-left-color: #4E342E;
+}
+div.callout-solution.callout-style-default .callout-header {
+  background-color: rgba(78, 52, 46, 0.13);
+}
+div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-remark.callout {
+  border-left-color: #AD1457;
+}
+div.callout-remark.callout-style-default .callout-header {
+  background-color: rgba(173, 20, 87, 0.13);
+}
+div.callout-remark .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-remark.callout-style-default .callout-icon::before, div.callout-remark.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-def.callout {
+  border-left-color: #1B5E20;
+}
+div.callout-def.callout-style-default .callout-header {
+  background-color: rgba(27, 94, 32, 0.13);
+}
+div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-cnj.callout {
+  border-left-color: #558B2F;
+}
+div.callout-cnj.callout-style-default .callout-header {
+  background-color: rgba(85, 139, 47, 0.13);
+}
+div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
 div.callout-cor.callout {
   border-left-color: #00838F;
 }
@@ -149,26 +189,6 @@ div.callout-prp .callout-toggle::before {  background-image: url('data:image/svg
 div.callout-prp.callout-style-default .callout-icon::before, div.callout-prp.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-solution.callout {
-  border-left-color: #4E342E;
-}
-div.callout-solution.callout-style-default .callout-header {
-  background-color: rgba(78, 52, 46, 0.13);
-}
-div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-cnj.callout {
-  border-left-color: #558B2F;
-}
-div.callout-cnj.callout-style-default .callout-header {
-  background-color: rgba(85, 139, 47, 0.13);
-}
-div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
 div.callout-proof.callout {
   border-left-color: #37474F;
 }
@@ -178,36 +198,6 @@ div.callout-proof.callout-style-default .callout-header {
 div.callout-proof .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-exr.callout {
-  border-left-color: #FFA500;
-}
-div.callout-exr.callout-style-default .callout-header {
-  background-color: rgba(255, 165, 0, 0.13);
-}
-div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-exm.callout {
-  border-left-color: #6A1B9A;
-}
-div.callout-exm.callout-style-default .callout-header {
-  background-color: rgba(106, 27, 154, 0.13);
-}
-div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-def.callout {
-  border-left-color: #1B5E20;
-}
-div.callout-def.callout-style-default .callout-header {
-  background-color: rgba(27, 94, 32, 0.13);
-}
-div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-lem.callout {
   border-left-color: #1565C0;
@@ -219,15 +209,25 @@ div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg
 div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-remark.callout {
-  border-left-color: #AD1457;
+div.callout-exm.callout {
+  border-left-color: #6A1B9A;
 }
-div.callout-remark.callout-style-default .callout-header {
-  background-color: rgba(173, 20, 87, 0.13);
+div.callout-exm.callout-style-default .callout-header {
+  background-color: rgba(106, 27, 154, 0.13);
 }
-div.callout-remark .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-remark.callout-style-default .callout-icon::before, div.callout-remark.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-exr.callout {
+  border-left-color: #FFA500;
+}
+div.callout-exr.callout-style-default .callout-header {
+  background-color: rgba(255, 165, 0, 0.13);
+}
+div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 </style>
 
@@ -524,6 +524,26 @@ window.Quarto = {
     <a class="dropdown-item" href="../chapters/18-variable-selection-causal-inference.html">
  <span class="dropdown-text">Chapter 18: Variable Selection for Causal Inference</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/19-time-varying-treatments.html">
+ <span class="dropdown-text">Chapter 19: Time-Varying Treatments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/20-treatment-confounder-feedback.html">
+ <span class="dropdown-text">Chapter 20: Treatment-Confounder Feedback</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/21-g-methods-time-varying.html">
+ <span class="dropdown-text">Chapter 21: G-Methods for Time-Varying Treatments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/22-target-trial-emulation.html">
+ <span class="dropdown-text">Chapter 22: Target Trial Emulation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../chapters/23-causal-mediation.html">
+ <span class="dropdown-text">Chapter 23: Causal Mediation</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -606,7 +626,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last modified: 2026-07-17 23:09:30 (UTC)</p>
+      <p class="date">Last modified: 2026-07-18 00:13:18 (UTC)</p>
     </div>
   </div>
   
@@ -666,14 +686,14 @@ window.Quarto = {
 <div class="callout-body-container">
 <div id="def-interaction-additive" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Additive Interaction)</strong></span> There is <strong>additive interaction</strong> (on the risk difference scale) between treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> if:</p>
-<p><span class="math display">\[E[Y^{a=1,e=1}] - E[Y^{a=0,e=0}] \neq \bigl(E[Y^{a=1,e=0}] - E[Y^{a=0,e=0}]\bigr) + \bigl(E[Y^{a=0,e=1}] - E[Y^{a=0,e=0}]\bigr)\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]} \neq \bigl(\text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]}\bigr) + \bigl(\text{E}{\left[Y^{a=0,e=1}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]}\bigr)\]</span></p>
 <p>In words: the joint effect of both treatments differs from the sum of the individual effects.</p>
 </div>
 </div>
 </div>
 </div>
 <p>Equivalently, we can define additive interaction using the <strong>interaction contrast</strong>:</p>
-<p><span class="math display">\[\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}]\]</span></p>
+<p><span class="math display">\[\text{IC} = \text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=1}\right]} + \text{E}{\left[Y^{a=0,e=0}\right]}\]</span></p>
 <p>If <span class="math inline">\(\text{IC} \neq 0\)</span>, there is additive interaction.</p>
 <div class="notes">
 <p><strong>Interpretation of IC</strong>:</p>
@@ -709,19 +729,19 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td>No aspirin, no exercise: <span class="math inline">\(E[Y^{a=0,e=0}]\)</span></td>
+<td>No aspirin, no exercise: <span class="math inline">\(\text{E}{\left[Y^{a=0,e=0}\right]}\)</span></td>
 <td>0.30</td>
 </tr>
 <tr class="even">
-<td>Aspirin only: <span class="math inline">\(E[Y^{a=1,e=0}]\)</span></td>
+<td>Aspirin only: <span class="math inline">\(\text{E}{\left[Y^{a=1,e=0}\right]}\)</span></td>
 <td>0.25</td>
 </tr>
 <tr class="odd">
-<td>Exercise only: <span class="math inline">\(E[Y^{a=0,e=1}]\)</span></td>
+<td>Exercise only: <span class="math inline">\(\text{E}{\left[Y^{a=0,e=1}\right]}\)</span></td>
 <td>0.20</td>
 </tr>
 <tr class="even">
-<td>Both aspirin and exercise: <span class="math inline">\(E[Y^{a=1,e=1}]\)</span></td>
+<td>Both aspirin and exercise: <span class="math inline">\(\text{E}{\left[Y^{a=1,e=1}\right]}\)</span></td>
 <td>0.10</td>
 </tr>
 </tbody>
@@ -769,8 +789,8 @@ window.Quarto = {
 <section id="identifiability-conditions-for-interaction" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="identifiability-conditions-for-interaction"><span class="header-section-number">2.1</span> Identifiability Conditions for Interaction</h3>
 <ol type="1">
-<li><p><strong>Exchangeability</strong> for the joint treatment <span class="math inline">\((A, E)\)</span>: <span class="math display">\[Y^{a,e} \perp\!\!\!\perp (A, E) \quad \text{for all } (a,e)\]</span></p></li>
-<li><p><strong>Positivity</strong> for the joint treatment: <span class="math display">\[Pr[A = a, E = e] &gt; 0 \quad \text{for all } (a,e)\]</span></p></li>
+<li><p><strong>Exchangeability</strong> for the joint treatment <span class="math inline">\((A, E)\)</span>: <span class="math display">\[Y^{a,e} \perp\!\!\!\perp(A, E) \quad \text{for all } (a,e)\]</span></p></li>
+<li><p><strong>Positivity</strong> for the joint treatment: <span class="math display">\[\Pr[A = a, E = e] &gt; 0 \quad \text{for all } (a,e)\]</span></p></li>
 <li><p><strong>Consistency</strong>: <span class="math display">\[Y = Y^{A,E}\]</span> No interference, well-defined treatments</p></li>
 </ol>
 <div class="notes">
@@ -845,10 +865,10 @@ window.Quarto = {
 </ul>
 <p>Then:</p>
 <ul>
-<li><span class="math inline">\(E[Y^{0,0}] = 0.30 + 0.20 + 0.10 = 0.60\)</span></li>
-<li><span class="math inline">\(E[Y^{1,0}] = 0.20 + 0.10 = 0.30\)</span> (the 30% prevented by <span class="math inline">\(A\)</span> no longer get disease)</li>
-<li><span class="math inline">\(E[Y^{0,1}] = 0.30 + 0.10 = 0.40\)</span> (the 20% prevented by <span class="math inline">\(E\)</span> no longer get disease)</li>
-<li><span class="math inline">\(E[Y^{1,1}] = 0.10\)</span> (only the synergistic group still gets disease)</li>
+<li><span class="math inline">\(\text{E}{\left[Y^{0,0}\right]} = 0.30 + 0.20 + 0.10 = 0.60\)</span></li>
+<li><span class="math inline">\(\text{E}{\left[Y^{1,0}\right]} = 0.20 + 0.10 = 0.30\)</span> (the 30% prevented by <span class="math inline">\(A\)</span> no longer get disease)</li>
+<li><span class="math inline">\(\text{E}{\left[Y^{0,1}\right]} = 0.30 + 0.10 = 0.40\)</span> (the 20% prevented by <span class="math inline">\(E\)</span> no longer get disease)</li>
+<li><span class="math inline">\(\text{E}{\left[Y^{1,1}\right]} = 0.10\)</span> (only the synergistic group still gets disease)</li>
 </ul>
 <p><strong>Interaction contrast</strong>: <span class="math display">\[\text{IC} = 0.10 - 0.30 - 0.40 + 0.60 = 0\]</span></p>
 <p>Despite the synergistic response type existing, there is no interaction on the additive scale because the effects balance out.</p>
@@ -1022,7 +1042,7 @@ window.Quarto = {
 <p>This chapter introduced <strong>interaction</strong> between two treatments.</p>
 <p><strong>Key concepts</strong>:</p>
 <ol type="1">
-<li><p><strong>Definition</strong>: Interaction exists when the joint effect of two treatments differs from the sum of their individual effects: <span class="math display">\[\text{IC} = E[Y^{a=1,e=1}] - E[Y^{a=1,e=0}] - E[Y^{a=0,e=1}] + E[Y^{a=0,e=0}] \neq 0\]</span></p></li>
+<li><p><strong>Definition</strong>: Interaction exists when the joint effect of two treatments differs from the sum of their individual effects: <span class="math display">\[\text{IC} = \text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=1}\right]} + \text{E}{\left[Y^{a=0,e=0}\right]} \neq 0\]</span></p></li>
 <li><p><strong>Identification</strong>: Requires exchangeability, positivity, and consistency for the joint treatment <span class="math inline">\((A, E)\)</span></p></li>
 <li><p><strong>Response types</strong>: Interaction can be understood through the distribution of counterfactual response types in the population</p></li>
 <li><p><strong>Sufficient causes</strong>: The sufficient cause model provides a mechanistic framework where interaction corresponds to synergism</p></li>
@@ -1979,14 +1999,14 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>There is **additive interaction** (on the risk difference scale) between treatments $A$ and $E$ if:</span>
 <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">Y^{a=1,e=1}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=0,e=0}</span><span class="co">]</span> \neq \bigl(E<span class="co">[</span><span class="ot">Y^{a=1,e=0}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=0,e=0}</span><span class="co">]</span>\bigr) + \bigl(E<span class="co">[</span><span class="ot">Y^{a=0,e=1}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=0,e=0}</span><span class="co">]</span>\bigr)$$</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>$$\E{Y^{a=1,e=1}} - \E{Y^{a=0,e=0}} \neq \bigl(\E{Y^{a=1,e=0}} - \E{Y^{a=0,e=0}}\bigr) + \bigl(\E{Y^{a=0,e=1}} - \E{Y^{a=0,e=0}}\bigr)$$</span>
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>In words: the joint effect of both treatments differs from the sum of the individual effects.</span>
 <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>Equivalently, we can define additive interaction using the **interaction contrast**:</span>
 <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>$$\text{IC} = E<span class="co">[</span><span class="ot">Y^{a=1,e=1}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=1,e=0}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=0,e=1}</span><span class="co">]</span> + E<span class="co">[</span><span class="ot">Y^{a=0,e=0}</span><span class="co">]</span>$$</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>$$\text{IC} = \E{Y^{a=1,e=1}} - \E{Y^{a=1,e=0}} - \E{Y^{a=0,e=1}} + \E{Y^{a=0,e=0}}$$</span>
 <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>If $\text{IC} \neq 0$, there is additive interaction.</span>
 <span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
@@ -2014,10 +2034,10 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Treatment Combination <span class="pp">|</span> Risk <span class="pp">|</span></span>
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----------------------|------|</span></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> No aspirin, no exercise: $E<span class="co">[</span><span class="ot">Y^{a=0,e=0}</span><span class="co">]</span>$ <span class="pp">|</span> 0.30 <span class="pp">|</span></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aspirin only: $E<span class="co">[</span><span class="ot">Y^{a=1,e=0}</span><span class="co">]</span>$ <span class="pp">|</span> 0.25 <span class="pp">|</span></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Exercise only: $E<span class="co">[</span><span class="ot">Y^{a=0,e=1}</span><span class="co">]</span>$ <span class="pp">|</span> 0.20 <span class="pp">|</span></span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Both aspirin and exercise: $E<span class="co">[</span><span class="ot">Y^{a=1,e=1}</span><span class="co">]</span>$ <span class="pp">|</span> 0.10 <span class="pp">|</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> No aspirin, no exercise: $\E{Y^{a=0,e=0}}$ <span class="pp">|</span> 0.30 <span class="pp">|</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aspirin only: $\E{Y^{a=1,e=0}}$ <span class="pp">|</span> 0.25 <span class="pp">|</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Exercise only: $\E{Y^{a=0,e=1}}$ <span class="pp">|</span> 0.20 <span class="pp">|</span></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Both aspirin and exercise: $\E{Y^{a=1,e=1}}$ <span class="pp">|</span> 0.10 <span class="pp">|</span></span>
 <span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>**Individual effects**:</span>
 <span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
@@ -2063,10 +2083,10 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Identifiability Conditions for Interaction</span></span>
 <span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Exchangeability** for the joint treatment $(A, E)$:</span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>   $$Y^{a,e} \perp<span class="sc">\!\!\!</span>\perp (A, E) \quad \text{for all } (a,e)$$</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>   $$Y^{a,e} \ind (A, E) \quad \text{for all } (a,e)$$</span>
 <span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>   </span>
 <span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Positivity** for the joint treatment:</span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>   $$Pr<span class="co">[</span><span class="ot">A = a, E = e</span><span class="co">]</span> &gt; 0 \quad \text{for all } (a,e)$$</span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>   $$\Pr<span class="co">[</span><span class="ot">A = a, E = e</span><span class="co">]</span> &gt; 0 \quad \text{for all } (a,e)$$</span>
 <span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>   </span>
 <span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Consistency**:</span>
 <span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>   $$Y = Y^{A,E}$$</span>
@@ -2151,10 +2171,10 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a>Then:</span>
 <span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$E<span class="co">[</span><span class="ot">Y^{0,0}</span><span class="co">]</span> = 0.30 + 0.20 + 0.10 = 0.60$</span>
-<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$E<span class="co">[</span><span class="ot">Y^{1,0}</span><span class="co">]</span> = 0.20 + 0.10 = 0.30$ (the 30% prevented by $A$ no longer get disease)</span>
-<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$E<span class="co">[</span><span class="ot">Y^{0,1}</span><span class="co">]</span> = 0.30 + 0.10 = 0.40$ (the 20% prevented by $E$ no longer get disease)</span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$E<span class="co">[</span><span class="ot">Y^{1,1}</span><span class="co">]</span> = 0.10$ (only the synergistic group still gets disease)</span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\E{Y^{0,0}} = 0.30 + 0.20 + 0.10 = 0.60$</span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\E{Y^{1,0}} = 0.20 + 0.10 = 0.30$ (the 30% prevented by $A$ no longer get disease)</span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\E{Y^{0,1}} = 0.30 + 0.10 = 0.40$ (the 20% prevented by $E$ no longer get disease)</span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\E{Y^{1,1}} = 0.10$ (only the synergistic group still gets disease)</span>
 <span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>**Interaction contrast**:</span>
 <span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>$$\text{IC} = 0.10 - 0.30 - 0.40 + 0.60 = 0$$</span>
@@ -2320,7 +2340,7 @@ window.addEventListener("load", alignEquationAnchorsWithDefault);
 <span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a>**Key concepts**:</span>
 <span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Definition**: Interaction exists when the joint effect of two treatments differs from the sum of their individual effects:</span>
-<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a>   $$\text{IC} = E<span class="co">[</span><span class="ot">Y^{a=1,e=1}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=1,e=0}</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y^{a=0,e=1}</span><span class="co">]</span> + E<span class="co">[</span><span class="ot">Y^{a=0,e=0}</span><span class="co">]</span> \neq 0$$</span>
+<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a>   $$\text{IC} = \E{Y^{a=1,e=1}} - \E{Y^{a=1,e=0}} - \E{Y^{a=0,e=1}} + \E{Y^{a=0,e=0}} \neq 0$$</span>
 <span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Identification**: Requires exchangeability, positivity, and consistency for the joint treatment $(A, E)$</span>
 <span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a></span>

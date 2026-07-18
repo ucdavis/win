@@ -192,7 +192,7 @@
 <div id="def-outcome-regression" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Outcome Regression)</strong></span> <strong>Outcome regression</strong> for causal inference:</p>
 <ol type="1">
-<li>Fit a model for <span class="math inline">\(E[Y \mid A, L]\)</span></li>
+<li>Fit a model for <span class="math inline">\(\text{E}{\left[Y \mid A, L\right]}\)</span></li>
 <li>Use the model to compute standardized means (g-formula)</li>
 <li>Estimate causal effects as contrasts of standardized means</li>
 </ol>
@@ -201,8 +201,8 @@
 </section>
 <section id="when-does-the-treatment-coefficient-equal-the-causal-effect" class="slide level2 scrollable">
 <h2>When Does the Treatment Coefficient Equal the Causal Effect?</h2>
-<p><strong>Model</strong>: <span class="math inline">\(E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L\)</span></p>
-<p><strong>Question</strong>: When does <span class="math inline">\(\beta_1 = E[Y^{a=1}] - E[Y^{a=0}]\)</span>?</p>
+<p><strong>Model</strong>: <span class="math inline">\(\text{E}{\left[Y \mid A, L\right]} = \beta_0 + \beta_1 A + \beta_2^{\top} L\)</span></p>
+<p><strong>Question</strong>: When does <span class="math inline">\(\beta_1 = \text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\)</span>?</p>
 <p><strong>Answer</strong>: Only under restrictive conditions:</p>
 <ol type="1">
 <li><strong>No confounding</strong>: <span class="math inline">\(Y^a \perp\!\!\!\perp A\)</span> (conditional exchangeability not needed)</li>
@@ -233,14 +233,14 @@
 </section>
 <section id="example-nhefs-study" class="slide level2">
 <h2>Example: NHEFS Study</h2>
-<p><strong>Simple model</strong>: <span class="math display">\[E[\text{Weight Change} \mid A, L] = \beta_0 + \beta_1 \text{Quit} + \beta_2 \text{Age} + \beta_3 \text{Sex} + \ldots\]</span></p>
+<p><strong>Simple model</strong>: <span class="math display">\[\text{E}{\left[\text{Weight Change} \mid A, L\right]} = \beta_0 + \beta_1 \text{Quit} + \beta_2 \text{Age} + \beta_3 \text{Sex} + \ldots\]</span></p>
 <p><strong>Issues</strong>:</p>
 <ul>
 <li>Assumes effect of quitting is the same for all individuals</li>
 <li>If the effect varies by age, sex, or other factors, <span class="math inline">\(\beta_1\)</span> doesn’t equal the marginal causal effect</li>
 <li>Need to add interactions or use g-formula</li>
 </ul>
-<p><strong>Better approach</strong>: <span class="math display">\[E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)\]</span></p>
+<p><strong>Better approach</strong>: <span class="math display">\[\text{E}{\left[Y \mid A, L\right]} = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)\]</span></p>
 <p>Then use g-formula to compute marginal effect.</p>
 </section></section>
 <section>
@@ -319,10 +319,10 @@
 <ol type="1">
 <li>Estimate propensity score <span class="math inline">\(\hat{e}(L_i)\)</span> for all individuals</li>
 <li>Create strata (e.g., quintiles) of the propensity score</li>
-<li>Within each stratum, compute <span class="math inline">\(\hat{E}[Y \mid A = a, \text{stratum } s]\)</span></li>
+<li>Within each stratum, compute <span class="math inline">\(\hat{\text{E}}{\left[Y \mid A = a, \text{stratum } s\right]}\)</span></li>
 <li>Standardize across strata:</li>
 </ol>
-<p><span class="math display">\[\hat{E}[Y^a] = \sum_{s=1}^S \hat{E}[Y \mid A = a, \text{stratum } s] \times \Pr[\text{stratum } s]\]</span></p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^a\right]} = \sum_{s=1}^S \hat{\text{E}}{\left[Y \mid A = a, \text{stratum } s\right]} \times \Pr[\text{stratum } s]\]</span></p>
 </section>
 <section id="checking-balance" class="slide level2 scrollable">
 <h2>Checking Balance</h2>
@@ -454,7 +454,7 @@
 <h2>Definitions</h2>
 <p><strong>Propensity score</strong>: <span class="math inline">\(e(L) = \Pr[A = 1 \mid L]\)</span></p>
 <p><strong>Treatment model</strong>: Any model for <span class="math inline">\(\Pr[A \mid L]\)</span> (or <span class="math inline">\(f(A \mid L)\)</span> for non-binary <span class="math inline">\(A\)</span>)</p>
-<p><strong>Marginal structural model (MSM)</strong>: Model for <span class="math inline">\(E[Y^a]\)</span> or <span class="math inline">\(E[Y^a \mid V]\)</span></p>
+<p><strong>Marginal structural model (MSM)</strong>: Model for <span class="math inline">\(\text{E}{\left[Y^a\right]}\)</span> or <span class="math inline">\(\text{E}{\left[Y^a \mid V\right]}\)</span></p>
 </section>
 <section id="relationship" class="slide level2 scrollable">
 <h2>Relationship</h2>
@@ -463,7 +463,7 @@
 <p>For binary <span class="math inline">\(A\)</span>, this uses the propensity score:</p>
 <p><span class="math display">\[W^A = \frac{1}{e(L)} \text{ if } A = 1, \quad W^A = \frac{1}{1 - e(L)} \text{ if } A = 0\]</span></p>
 <p><strong>MSM</strong> is then fit using IP weights:</p>
-<p><span class="math display">\[E[Y^a] = \beta_0 + \beta_1 a\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^a\right]} = \beta_0 + \beta_1 a\]</span></p>
 <aside class="notes">
 <p><strong>Distinction</strong>:</p>
 <ul>
@@ -513,8 +513,8 @@
 <section id="augmented-ip-weighting-aipw" class="slide level2 scrollable">
 <h2>Augmented IP Weighting (AIPW)</h2>
 <p><strong>Advanced approach</strong>: Combine IP weighting with outcome modeling:</p>
-<p><span class="math display">\[\hat{E}[Y^a] = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right]\]</span></p>
-<p>where <span class="math inline">\(m(a, L) = \hat{E}[Y \mid A = a, L]\)</span> is the outcome model.</p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^a\right]} = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right]\]</span></p>
+<p>where <span class="math inline">\(m(a, L) = \hat{\text{E}}{\left[Y \mid A = a, L\right]}\)</span> is the outcome model.</p>
 <p><strong>Properties</strong>:</p>
 <ul>
 <li>Doubly robust: Consistent if either model is correct</li>
@@ -602,7 +602,7 @@
 
 <p><strong>Key concepts</strong>:</p>
 <ol type="1">
-<li><strong>Outcome regression</strong>: Models <span class="math inline">\(E[Y \mid A, L]\)</span> to estimate causal effects via g-formula</li>
+<li><strong>Outcome regression</strong>: Models <span class="math inline">\(\text{E}{\left[Y \mid A, L\right]}\)</span> to estimate causal effects via g-formula</li>
 <li><strong>Propensity score</strong>: <span class="math inline">\(e(L) = \Pr[A = 1 \mid L]\)</span>, reduces confounding adjustment to a single dimension</li>
 <li><strong>Balancing property</strong>: Conditioning on propensity score achieves conditional exchangeability</li>
 <li><strong>Propensity stratification</strong>: Create strata by propensity score and standardize</li>
@@ -629,7 +629,7 @@
 <tbody>
 <tr class="odd">
 <td><strong>Outcome regression</strong></td>
-<td><span class="math inline">\(E[Y \mid A, L]\)</span></td>
+<td><span class="math inline">\(\text{E}{\left[Y \mid A, L\right]}\)</span></td>
 <td>Natural, efficient when correct</td>
 <td>Requires correct outcome model</td>
 </tr>

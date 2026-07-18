@@ -195,15 +195,15 @@
 <div id="def-effect-modification" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Effect Modification)</strong></span> <strong>Effect modification</strong> (also called <strong>heterogeneity of treatment effects</strong>) is present when the average causal effect of treatment differs across levels of another variable <span class="math inline">\(V\)</span>.</p>
 <p>For a binary modifier <span class="math inline">\(V\)</span>, effect modification exists when:</p>
-<p><span class="math display">\[E[Y^{a=1} - Y^{a=0} | V = 1] \neq E[Y^{a=1} - Y^{a=0} | V = 0]\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^{a=1} - Y^{a=0} | V = 1\right]} \neq \text{E}{\left[Y^{a=1} - Y^{a=0} | V = 0\right]}\]</span></p>
 </div>
 </section>
 <section id="example-effect-modification-by-sex" class="slide level2">
 <h2>Example: Effect Modification by Sex</h2>
 <p>Suppose in Zeus’s family:</p>
 <ul>
-<li>Among males: <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{male}] = -0.3\)</span> (benefit from transplant)</li>
-<li>Among females: <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{female}] = +0.3\)</span> (harm from transplant)</li>
+<li>Among males: <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{male}\right]} = -0.3\)</span> (benefit from transplant)</li>
+<li>Among females: <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0} | \text{Sex} = \text{female}\right]} = +0.3\)</span> (harm from transplant)</li>
 </ul>
 <p>The average effect across the whole family is zero, but there is strong effect modification by sex. The treatment has opposite effects in males and females.</p>
 <aside class="notes">
@@ -213,7 +213,7 @@
 <li>The causal effect <strong>varies</strong> or is <strong>heterogeneous</strong> across levels of <span class="math inline">\(V\)</span></li>
 <li>Effect modification is a <strong>property of the population</strong>, not of individuals</li>
 </ul>
-<p><strong>Notation</strong>: We write <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | V = v]\)</span> to denote the average causal effect in the subpopulation with <span class="math inline">\(V = v\)</span>. This is a <strong>conditional average treatment effect</strong>.</p>
+<p><strong>Notation</strong>: We write <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0} | V = v\right]}\)</span> to denote the average causal effect in the subpopulation with <span class="math inline">\(V = v\)</span>. This is a <strong>conditional average treatment effect</strong>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -230,14 +230,14 @@
 <h2>Effect Modification Depends on the Scale</h2>
 <p>Whether effect modification exists can depend on the <strong>scale</strong> (measure) used:</p>
 <ul>
-<li><strong>Risk difference scale</strong>: <span class="math inline">\(E[Y^{a=1} | V] - E[Y^{a=0} | V]\)</span></li>
-<li><strong>Risk ratio scale</strong>: <span class="math inline">\(E[Y^{a=1} | V] / E[Y^{a=0} | V]\)</span></li>
+<li><strong>Risk difference scale</strong>: <span class="math inline">\(\text{E}{\left[Y^{a=1} | V\right]} - \text{E}{\left[Y^{a=0} | V\right]}\)</span></li>
+<li><strong>Risk ratio scale</strong>: <span class="math inline">\(\text{E}{\left[Y^{a=1} | V\right]} / \text{E}{\left[Y^{a=0} | V\right]}\)</span></li>
 </ul>
 <div id="exm-scale-dependent" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Scale-Dependent Effect Modification)</strong></span> Suppose:</p>
 <ul>
-<li>When <span class="math inline">\(V = 0\)</span>: <span class="math inline">\(E[Y^{a=1}] = 0.2\)</span>, <span class="math inline">\(E[Y^{a=0}] = 0.1\)</span></li>
-<li>When <span class="math inline">\(V = 1\)</span>: <span class="math inline">\(E[Y^{a=1}] = 0.4\)</span>, <span class="math inline">\(E[Y^{a=0}] = 0.2\)</span></li>
+<li>When <span class="math inline">\(V = 0\)</span>: <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} = 0.2\)</span>, <span class="math inline">\(\text{E}{\left[Y^{a=0}\right]} = 0.1\)</span></li>
+<li>When <span class="math inline">\(V = 1\)</span>: <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} = 0.4\)</span>, <span class="math inline">\(\text{E}{\left[Y^{a=0}\right]} = 0.2\)</span></li>
 </ul>
 <p><strong>Risk difference</strong>:</p>
 <ul>
@@ -299,14 +299,14 @@
 <p><span class="theorem-title"><strong>Example 2 (Stratified Analysis Example)</strong></span> Using data from a randomized trial of heart transplant in Zeus’s family:</p>
 <p><strong>Stratum 1 (Males)</strong>:</p>
 <ul>
-<li>Risk in treated: <span class="math inline">\(Pr[Y = 1 | A = 1, V = \text{male}] = 0.40\)</span></li>
-<li>Risk in untreated: <span class="math inline">\(Pr[Y = 1 | A = 0, V = \text{male}] = 0.70\)</span></li>
+<li>Risk in treated: <span class="math inline">\(\Pr[Y = 1 | A = 1, V = \text{male}] = 0.40\)</span></li>
+<li>Risk in untreated: <span class="math inline">\(\Pr[Y = 1 | A = 0, V = \text{male}] = 0.70\)</span></li>
 <li>Risk difference: <span class="math inline">\(0.40 - 0.70 = -0.30\)</span> (benefit)</li>
 </ul>
 <p><strong>Stratum 2 (Females)</strong>:</p>
 <ul>
-<li>Risk in treated: <span class="math inline">\(Pr[Y = 1 | A = 1, V = \text{female}] = 0.65\)</span></li>
-<li>Risk in untreated: <span class="math inline">\(Pr[Y = 1 | A = 0, V = \text{female}] = 0.35\)</span></li>
+<li>Risk in treated: <span class="math inline">\(\Pr[Y = 1 | A = 1, V = \text{female}] = 0.65\)</span></li>
+<li>Risk in untreated: <span class="math inline">\(\Pr[Y = 1 | A = 0, V = \text{female}] = 0.35\)</span></li>
 <li>Risk difference: <span class="math inline">\(0.65 - 0.35 = +0.30\)</span> (harm)</li>
 </ul>
 <p>Since <span class="math inline">\(-0.30 \neq +0.30\)</span>, there is effect modification by sex.</p>
@@ -565,7 +565,7 @@
 <section id="regression-models-for-effect-modification" class="slide level2">
 <h2>Regression Models for Effect Modification</h2>
 <p>Regression models provide a flexible framework for handling effect modification:</p>
-<p><strong>Model with effect modification</strong>: <span class="math display">\[E[Y | A, V, L] = \beta_0 + \beta_1 A + \beta_2 V + \beta_3 A \times V + \beta_4^T L\]</span></p>
+<p><strong>Model with effect modification</strong>: <span class="math display">\[\text{E}{\left[Y | A, V, L\right]} = \beta_0 + \beta_1 A + \beta_2 V + \beta_3 A \times V + \beta_4^T L\]</span></p>
 <p>The <strong>interaction term</strong> <span class="math inline">\(\beta_3 A \times V\)</span> captures effect modification:</p>
 <ul>
 <li>If <span class="math inline">\(\beta_3 = 0\)</span>: No effect modification by <span class="math inline">\(V\)</span></li>
@@ -614,7 +614,7 @@
 <p>This chapter introduced <strong>effect modification</strong>: the phenomenon where causal effects differ across levels of another variable.</p>
 <p><strong>Key concepts</strong>:</p>
 <ol type="1">
-<li><p><strong>Definition</strong>: Effect modification exists when <span class="math inline">\(E[Y^{a=1} - Y^{a=0} | V]\)</span> differs across levels of <span class="math inline">\(V\)</span></p></li>
+<li><p><strong>Definition</strong>: Effect modification exists when <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0} | V\right]}\)</span> differs across levels of <span class="math inline">\(V\)</span></p></li>
 <li><p><strong>Scale dependence</strong>: Whether effect modification exists depends on the scale (risk difference, risk ratio, etc.)</p></li>
 <li><p><strong>Identification</strong>: Stratification and matching can identify effect modification by estimating effects separately in subgroups</p></li>
 <li><p><strong>Importance</strong>: Effect modification is crucial for:</p>

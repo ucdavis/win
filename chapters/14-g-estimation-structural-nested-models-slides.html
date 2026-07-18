@@ -188,17 +188,17 @@
 <p>Structural nested models directly parameterize the causal effect rather than the mean outcome or treatment probability.</p>
 <div id="def-snm" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Structural Nested Mean Model)</strong></span> A <strong>structural nested mean model (SNMM)</strong> specifies how the mean of <span class="math inline">\(Y^a\)</span> differs from the mean of <span class="math inline">\(Y^{a'}\)</span> as a function of treatment and covariates:</p>
-<p><span class="math display">\[E[Y^a - Y^{a'} \mid L] = \gamma(a, a'; \psi, L)\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^a - Y^{a'} \mid L\right]} = \gamma(a, a'; \psi, L)\]</span></p>
 <p>For dichotomous treatment with <span class="math inline">\(a = 1\)</span> and <span class="math inline">\(a' = 0\)</span>:</p>
-<p><span class="math display">\[E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\]</span></p>
 <p>where <span class="math inline">\(\psi = (\psi_0, \psi_1)\)</span> are the parameters of interest.</p>
 </div>
 </section>
 <section id="comparison-to-previous-approaches" class="slide level2">
 <h2>Comparison to Previous Approaches</h2>
-<p><strong>Marginal structural model</strong> (IP weighting): <span class="math display">\[E[Y^a] = \beta_0 + \beta_1 a\]</span> Models the mean outcome under treatment <span class="math inline">\(a\)</span>.</p>
-<p><strong>Outcome regression</strong> (standardization): <span class="math display">\[E[Y \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)\]</span> Models the conditional mean outcome given treatment and confounders.</p>
-<p><strong>Structural nested model</strong> (G-estimation): <span class="math display">\[E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L\]</span> Models the conditional causal effect directly.</p>
+<p><strong>Marginal structural model</strong> (IP weighting): <span class="math display">\[\text{E}{\left[Y^a\right]} = \beta_0 + \beta_1 a\]</span> Models the mean outcome under treatment <span class="math inline">\(a\)</span>.</p>
+<p><strong>Outcome regression</strong> (standardization): <span class="math display">\[\text{E}{\left[Y \mid A, L\right]} = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)\]</span> Models the conditional mean outcome given treatment and confounders.</p>
+<p><strong>Structural nested model</strong> (G-estimation): <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\]</span> Models the conditional causal effect directly.</p>
 <aside class="notes">
 <p><strong>Interpretation</strong>:</p>
 <ul>
@@ -244,7 +244,7 @@
 <p><strong>Violation</strong>: - Some people gain weight when quitting, others lose weight when quitting</p>
 <aside class="notes">
 <p><strong>Why this matters</strong>:</p>
-<p>Rank preservation is stronger than the average null hypothesis <span class="math inline">\(E[Y^1] = E[Y^0]\)</span>. It’s closer to the sharp null hypothesis <span class="math inline">\(Y_i^1 = Y_i^0\)</span> for all <span class="math inline">\(i\)</span>.</p>
+<p>Rank preservation is stronger than the average null hypothesis <span class="math inline">\(\text{E}{\left[Y^1\right]} = \text{E}{\left[Y^0\right]}\)</span>. It’s closer to the sharp null hypothesis <span class="math inline">\(Y_i^1 = Y_i^0\)</span> for all <span class="math inline">\(i\)</span>.</p>
 <p>While strong, rank preservation is often plausible for outcomes where we expect treatment to affect everyone in the same direction (even if by different amounts).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -313,22 +313,22 @@
 </section>
 <section id="g-estimation-algorithm" class="slide level2">
 <h2>G-Estimation Algorithm</h2>
-<p><strong>Step 1</strong>: Specify a structural nested model <span class="math display">\[E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L\]</span></p>
+<p><strong>Step 1</strong>: Specify a structural nested model <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\]</span></p>
 <p><strong>Step 2</strong>: For a candidate value <span class="math inline">\(\psi\)</span>, compute pseudo-outcome <span class="math display">\[H(\psi) = Y - A(\psi_0 + \psi_1^{\top} L)\]</span></p>
-<p><strong>Step 3</strong>: Test whether <span class="math inline">\(H(\psi) \perp\!\!\!\perp A \mid L\)</span> by fitting <span class="math display">\[E[H(\psi) \mid A, L] = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L\]</span></p>
+<p><strong>Step 3</strong>: Test whether <span class="math inline">\(H(\psi) \perp\!\!\!\perp A \mid L\)</span> by fitting <span class="math display">\[\text{E}{\left[H(\psi) \mid A, L\right]} = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L\]</span></p>
 <p><strong>Step 4</strong>: The correct <span class="math inline">\(\psi\)</span> is the one that makes <span class="math inline">\(\alpha_1 = 0\)</span></p>
 <p><strong>Step 5</strong>: In practice, solve the estimating equation: <span class="math display">\[\sum_{i=1}^n A_i[Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span> or more generally: <span class="math display">\[\sum_{i=1}^n U_i(\psi)[Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span> where <span class="math inline">\(U_i(\psi)\)</span> is an appropriate function (often <span class="math inline">\(U_i = A_i\)</span> or <span class="math inline">\(U_i = A_i(1, L_i)^{\top}\)</span>).</p>
 </section>
 <section id="example-simple-model" class="slide level2">
 <h2>Example: Simple Model</h2>
-<p><strong>SNMM</strong>: <span class="math inline">\(E[Y^1 - Y^0] = \psi_0\)</span> (constant effect)</p>
+<p><strong>SNMM</strong>: <span class="math inline">\(\text{E}{\left[Y^1 - Y^0\right]} = \psi_0\)</span> (constant effect)</p>
 <p><strong>Estimating equation</strong>: <span class="math display">\[\sum_{i=1}^n A_i(Y_i - A_i \psi_0) = 0\]</span></p>
 <p><strong>Solution</strong>: <span class="math display">\[\hat{\psi}_0 = \frac{\sum_i A_i Y_i}{\sum_i A_i^2} = \frac{\sum_i A_i Y_i}{n_1}\]</span> where <span class="math inline">\(n_1 = \sum_i A_i\)</span> is the number of treated individuals.</p>
 <p>This is the mean outcome among the treated when there is no confounding.</p>
 <aside class="notes">
 <p><strong>With confounders</strong>: The estimating equation becomes more complex:</p>
-<p><span class="math display">\[\sum_{i=1}^n [A_i - \hat{E}[A \mid L_i]][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span></p>
-<p>This requires: 1. Estimating <span class="math inline">\(E[A \mid L]\)</span> (e.g., via logistic regression) 2. Solving for <span class="math inline">\(\psi\)</span> using the estimating equation</p>
+<p><span class="math display">\[\sum_{i=1}^n [A_i - \hat{\text{E}}{\left[A \mid L_i\right]}][Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span></p>
+<p>This requires: 1. Estimating <span class="math inline">\(\text{E}{\left[A \mid L\right]}\)</span> (e.g., via logistic regression) 2. Solving for <span class="math inline">\(\psi\)</span> using the estimating equation</p>
 <p>The estimator is <strong>doubly robust</strong> in some cases: consistent if either the effect model or the treatment model is correct.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -353,9 +353,9 @@
 </section>
 <section id="robustness-properties" class="slide level2">
 <h2>Robustness Properties</h2>
-<p><strong>When SNMM is correctly specified</strong>: - G-estimation is consistent even if <span class="math inline">\(E[A \mid L]\)</span> is misspecified - Need to correctly model the effect <span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span>, not the full outcome model <span class="math inline">\(E[Y \mid A, L]\)</span></p>
+<p><strong>When SNMM is correctly specified</strong>: - G-estimation is consistent even if <span class="math inline">\(\text{E}{\left[A \mid L\right]}\)</span> is misspecified - Need to correctly model the effect <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span>, not the full outcome model <span class="math inline">\(\text{E}{\left[Y \mid A, L\right]}\)</span></p>
 <p><strong>When treatment model is correctly specified</strong>: - G-estimation is consistent even if the effect model is misspecified in certain ways - Specific robustness depends on the choice of estimating function <span class="math inline">\(U(\psi)\)</span></p>
-<p><strong>Double robustness</strong>: - Some G-estimators are doubly robust: consistent if either the effect model or a working model for <span class="math inline">\(E[H(\psi) \mid A, L]\)</span> is correct - This is similar to doubly robust IP weighted estimators</p>
+<p><strong>Double robustness</strong>: - Some G-estimators are doubly robust: consistent if either the effect model or a working model for <span class="math inline">\(\text{E}{\left[H(\psi) \mid A, L\right]}\)</span> is correct - This is similar to doubly robust IP weighted estimators</p>
 </section>
 <section id="comparison-to-other-methods" class="slide level2">
 <h2>Comparison to Other Methods</h2>
@@ -380,12 +380,12 @@
 </tr>
 <tr class="even">
 <td><strong>Standardization</strong></td>
-<td><span class="math inline">\(E[Y \mid A, L]\)</span></td>
+<td><span class="math inline">\(\text{E}{\left[Y \mid A, L\right]}\)</span></td>
 <td>Treatment model misspec.</td>
 </tr>
 <tr class="odd">
 <td><strong>G-estimation</strong></td>
-<td><span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span></td>
+<td><span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span></td>
 <td>Full outcome model misspec.</td>
 </tr>
 <tr class="even">
@@ -422,21 +422,21 @@
 </section>
 <section id="from-conditional-to-marginal-effects" class="slide level2">
 <h2>From Conditional to Marginal Effects</h2>
-<p><strong>SNMM</strong>: <span class="math inline">\(E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1^{\top} L\)</span></p>
-<p><strong>Average causal effect</strong>: <span class="math display">\[E[Y^1 - Y^0] = E_L[E[Y^1 - Y^0 \mid L]] = E_L[\psi_0 + \psi_1^{\top} L] = \psi_0 + \psi_1^{\top} E[L]\]</span></p>
-<p><strong>Estimator</strong>: <span class="math display">\[\widehat{E[Y^1 - Y^0]} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}\]</span></p>
+<p><strong>SNMM</strong>: <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\)</span></p>
+<p><strong>Average causal effect</strong>: <span class="math display">\[\text{E}{\left[Y^1 - Y^0\right]} = E_L[\text{E}{\left[Y^1 - Y^0 \mid L\right]}] = E_L[\psi_0 + \psi_1^{\top} L] = \psi_0 + \psi_1^{\top} \text{E}{\left[L\right]}\]</span></p>
+<p><strong>Estimator</strong>: <span class="math display">\[\widehat{\text{E}{\left[Y^1 - Y^0\right]}} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}\]</span></p>
 <p>where <span class="math inline">\(\bar{L} = n^{-1} \sum_i L_i\)</span> is the sample mean of <span class="math inline">\(L\)</span>.</p>
 </section>
 <section id="effect-in-specific-subgroups" class="slide level2">
 <h2>Effect in Specific Subgroups</h2>
-<p><strong>Effect at <span class="math inline">\(L = \ell\)</span></strong>: <span class="math display">\[E[Y^1 - Y^0 \mid L = \ell] = \psi_0 + \psi_1^{\top} \ell\]</span></p>
-<p><strong>Effect in the treated</strong> (ATT): <span class="math display">\[E[Y^1 - Y^0 \mid A = 1] = \psi_0 + \psi_1^{\top} E[L \mid A = 1]\]</span></p>
-<p><strong>Estimator for ATT</strong>: <span class="math display">\[\widehat{E[Y^1 - Y^0 \mid A = 1]} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}_{A=1}\]</span></p>
+<p><strong>Effect at <span class="math inline">\(L = \ell\)</span></strong>: <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L = \ell\right]} = \psi_0 + \psi_1^{\top} \ell\]</span></p>
+<p><strong>Effect in the treated</strong> (ATT): <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid A = 1\right]} = \psi_0 + \psi_1^{\top} \text{E}{\left[L \mid A = 1\right]}\]</span></p>
+<p><strong>Estimator for ATT</strong>: <span class="math display">\[\widehat{\text{E}{\left[Y^1 - Y^0 \mid A = 1\right]}} = \hat{\psi}_0 + \hat{\psi}_1^{\top} \bar{L}_{A=1}\]</span></p>
 <p>where <span class="math inline">\(\bar{L}_{A=1}\)</span> is the mean of <span class="math inline">\(L\)</span> among the treated.</p>
 <aside class="notes">
-<p><strong>Flexibility</strong>: The SNMM <span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span> describes effect modification. From this, we can compute:</p>
+<p><strong>Flexibility</strong>: The SNMM <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span> describes effect modification. From this, we can compute:</p>
 <ul>
-<li>Overall average effect <span class="math inline">\(E[Y^1 - Y^0]\)</span></li>
+<li>Overall average effect <span class="math inline">\(\text{E}{\left[Y^1 - Y^0\right]}\)</span></li>
 <li>Effects in subgroups defined by <span class="math inline">\(L\)</span></li>
 <li>ATT or ATU (average treatment effect in the untreated)</li>
 </ul>
@@ -464,7 +464,7 @@
 </section>
 <section id="general-snmm" class="slide level2">
 <h2>General SNMM</h2>
-<p><span class="math display">\[E[Y^1 - Y^0 \mid L] = \psi_0 + \psi_1 L_1 + \psi_2 L_2 + \psi_3 L_1 L_2 + \ldots\]</span></p>
+<p><span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1 L_1 + \psi_2 L_2 + \psi_3 L_1 L_2 + \ldots\]</span></p>
 <p><strong>Parameters</strong>: <span class="math inline">\(\psi = (\psi_0, \psi_1, \psi_2, \psi_3, \ldots)\)</span></p>
 <p><strong>Estimating equations</strong>: Need as many equations as parameters</p>
 <p><span class="math display">\[\sum_{i=1}^n U_{ij}(\psi)[Y_i - A_i(\psi_0 + \psi_1 L_{i1} + \psi_2 L_{i2} + \ldots)] = 0\]</span></p>
@@ -475,7 +475,7 @@
 <p>Common choices for <span class="math inline">\(U_{ij}\)</span>:</p>
 <ol type="1">
 <li><strong>Simple</strong>: <span class="math inline">\(U_i = (A_i, A_i L_{i1}, A_i L_{i2}, \ldots)^{\top}\)</span></li>
-<li><strong>Optimal</strong>: <span class="math inline">\(U_i = (A_i - E[A \mid L_i])(1, L_{i1}, L_{i2}, \ldots)^{\top}\)</span></li>
+<li><strong>Optimal</strong>: <span class="math inline">\(U_i = (A_i - \text{E}{\left[A \mid L_i\right]})(1, L_{i1}, L_{i2}, \ldots)^{\top}\)</span></li>
 <li><strong>Doubly robust</strong>: More complex functions that achieve double robustness</li>
 </ol>
 <p>The choice affects: - Efficiency (variance of estimator) - Robustness properties - Computational complexity</p>
@@ -545,12 +545,12 @@
 </section>
 <section class="slide level2">
 
-<p>G-estimation naturally estimates conditional effects <span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span>. We can average to get marginal effects.</p>
+<p>G-estimation naturally estimates conditional effects <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span>. We can average to get marginal effects.</p>
 </section>
 <section id="three-types-of-effects" class="slide level2">
 <h2>Three Types of Effects</h2>
-<p><strong>Marginal effect</strong> (population average): <span class="math display">\[E[Y^1 - Y^0]\]</span></p>
-<p><strong>Conditional effect</strong> (within levels of <span class="math inline">\(L\)</span>): <span class="math display">\[E[Y^1 - Y^0 \mid L]\]</span></p>
+<p><strong>Marginal effect</strong> (population average): <span class="math display">\[\text{E}{\left[Y^1 - Y^0\right]}\]</span></p>
+<p><strong>Conditional effect</strong> (within levels of <span class="math inline">\(L\)</span>): <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]}\]</span></p>
 <p><strong>Individual effect</strong>: <span class="math display">\[Y_i^1 - Y_i^0\]</span></p>
 </section>
 <section id="methods-and-natural-estimands" class="slide level2">
@@ -572,7 +572,7 @@
 <tr class="odd">
 <td><strong>IP weighting</strong></td>
 <td>Marginal effect</td>
-<td>Model <span class="math inline">\(E[Y^a \mid V]\)</span> for conditional</td>
+<td>Model <span class="math inline">\(\text{E}{\left[Y^a \mid V\right]}\)</span> for conditional</td>
 </tr>
 <tr class="even">
 <td><strong>Standardization</strong></td>
@@ -586,7 +586,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Advantage of SNMMs</strong>: By modeling <span class="math inline">\(E[Y^1 - Y^0 \mid L]\)</span> directly, G-estimation provides natural inference for effect modification while still allowing marginal effect estimation.</p>
+<p><strong>Advantage of SNMMs</strong>: By modeling <span class="math inline">\(\text{E}{\left[Y^1 - Y^0 \mid L\right]}\)</span> directly, G-estimation provides natural inference for effect modification while still allowing marginal effect estimation.</p>
 <aside class="notes">
 <p><strong>Choosing a method</strong>:</p>
 <ul>
