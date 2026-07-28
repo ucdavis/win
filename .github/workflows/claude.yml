@@ -1,4 +1,4 @@
-# Caller stub for d-morrison/gha's reusable @claude agent workflow
+# Caller stub for Morrison-Lab/gha's reusable @claude agent workflow
 # (replaces the stock anthropics/claude-code-action template; see
 # ucdavis/win#74). Secrets are passed explicitly rather than via
 # `secrets: inherit`: GitHub only inherits secrets into a reusable workflow
@@ -23,7 +23,7 @@ jobs:
     # enforces the same trusted-author gate (OWNER/MEMBER/COLLABORATOR); the
     # caller-side copy stops untrusted mentions from spawning runs at all
     # (saves runner minutes, and keeps secrets out of the picture if the
-    # reusable workflow's gate ever regresses) — see d-morrison/gha#259.
+    # reusable workflow's gate ever regresses) — see Morrison-Lab/gha#259.
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') &&
         contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
@@ -39,7 +39,7 @@ jobs:
       issues: write
       id-token: write
       actions: write       # dispatch the review workflow via `gh workflow run`
-    uses: d-morrison/gha/.github/workflows/claude.yml@v2
+    uses: Morrison-Lab/gha/.github/workflows/claude.yml@v2
     secrets:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}   # Max-plan OAuth; empty when using API key
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}               # direct API key; empty when using OAuth
