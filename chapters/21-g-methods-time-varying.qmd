@@ -139,11 +139,18 @@ under sequential exchangeability.
 ### Marginal Structural Models
 
 IP weighting for time-varying treatments is typically embedded in
-a **marginal structural model** (MSM) for the counterfactual mean:
+a marginal structural model (MSM) for the counterfactual mean.
+
+::: {#def-msm-tv}
+## Marginal Structural Model for Time-Varying Treatments
+
+A marginal structural model for the counterfactual mean $\E{Y^{\bar{a}_K}}$ takes the form
 
 $$\E{Y^{\bar{a}_K}} = m(\bar{a}_K; \beta),$$
 
 where $m$ is a parametric model (e.g., logistic or linear) indexed by $\beta$.
+:::
+
 The MSM parameters are estimated by solving weighted estimating equations:
 
 $$\sum_i SW_i^A \cdot \frac{\partial}{\partial \beta} m(\bar{A}_{K,i}; \beta) = 0.$$
@@ -327,9 +334,15 @@ $$\sum_i \sum_k R_{k,i} \cdot \frac{\partial}{\partial \psi} H_{k,i}(\psi) = 0.$
 
 A related family of models, **rank-preserving structural failure time models** (RP-SFTMs),
 extends g-estimation to survival outcomes.
-The RP-SFTM posits that treatment $a_k$ accelerates or decelerates the failure time
-by a multiplicable factor $\exp(\psi a_k)$,
-and g-estimation proceeds by finding the $\psi$ that makes
+
+::: {#def-rp-sftm}
+## Rank-Preserving Structural Failure Time Model (RP-SFTM)
+
+An RP-SFTM posits that treatment $a_k$ accelerates or decelerates the failure time
+by a multiplicative factor $\exp(\psi a_k)$.
+:::
+
+G-estimation proceeds by finding the $\psi$ that makes
 the "counterfactual failure time under no treatment" independent of $A_k$
 given past history.
 
@@ -358,11 +371,15 @@ An individual who is uncensored despite having covariate values
 that typically lead to censoring receives a high weight,
 making them represent themselves and those who were censored.
 
-Under **sequential censoring exchangeability**:
+::: {#def-seq-censoring-exchangeability}
+## Sequential Censoring Exchangeability
 
-$$C_k \ind Y^{\bar{a}_K, \bar{c}=\bar{0}} \mid \bar{C}_{k-1} = \bar{0}, \bar{A}_{k-1}, \bar{L}_k,$$
+Sequential censoring exchangeability holds if, for every time $k$,
 
-the combined weight $SW^{A,C} = SW^A \cdot SW^C$ consistently estimates
+$$C_k \ind Y^{\bar{a}_K, \bar{c}=\bar{0}} \mid \bar{C}_{k-1} = \bar{0}, \bar{A}_{k-1}, \bar{L}_k.$$
+:::
+
+Under this condition, the combined weight $SW^{A,C} = SW^A \cdot SW^C$ consistently estimates
 the counterfactual mean in the uncensored pseudo-population.
 
 ::: {.notes}

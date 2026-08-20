@@ -26,11 +26,15 @@ Up to now, we have focused on **identification**: determining whether causal eff
 
 ### Key Concepts in Statistical Estimation
 
+::: {#def-estimand-estimator-estimate}
+## Estimand, Estimator, and Estimate
+
 **Estimand**: The population parameter of interest (e.g., $\Pr[Y = 1|A = a]$ in the super-population).
 
 **Estimator**: A rule for computing the estimand from sample data.
 
 **Estimate**: The numerical value obtained by applying the estimator to a particular sample (a point estimate).
+:::
 
 ::: {#exm-estimator}
 ## Sample Proportion as an Estimator
@@ -56,15 +60,23 @@ Up to now, we have focused on **identification**: determining whether causal eff
 
 ### Consistency of Estimators
 
+::: {#def-consistent-estimator}
+## Consistent Estimator
+
 An estimator is **consistent** if estimates get arbitrarily close to the true parameter as sample size increases.
 
 $$Pr\left[|\hat{\theta}_n - \theta| > \epsilon\right] \rightarrow 0 \text{ as } n \rightarrow \infty, \text{ for all } \epsilon > 0$$
+:::
 
 The sample proportion $\widehat{Pr}[Y = 1|A = a]$ is a consistent estimator of $\Pr[Y = 1|A = a]$.
 
 ### Confidence Intervals
 
+::: {#def-confidence-interval}
+## Confidence Interval
+
 A **95% confidence interval** quantifies uncertainty due to random sampling.
+:::
 
 **Construction (Wald interval)**:
 
@@ -225,7 +237,11 @@ When should we condition on variables when computing causal effects and their st
 
 ### The Principle
 
+::: {#def-conditionality-principle}
+## Conditionality Principle
+
 **Conditionality principle**: If a variable $L$ is independent of treatment $A$ and outcome $Y$ under the intervention, we may condition on $L$ when computing estimates and standard errors without affecting validity.
+:::
 
 ### Applications
 
@@ -269,7 +285,11 @@ In randomized trials, pre-specify baseline covariates to adjust for. This improv
 
 ---
 
+::: {#def-curse-of-dimensionality}
+## Curse of Dimensionality
+
 As the number of confounders or effect modifiers increases, nonparametric estimation becomes increasingly difficult. This is the **curse of dimensionality**.
+:::
 
 ### The Problem
 

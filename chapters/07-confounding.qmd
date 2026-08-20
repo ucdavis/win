@@ -330,6 +330,9 @@ The term **confounder** is commonly used in epidemiology to refer to a variable 
 
 ### The Traditional Epidemiological Criteria
 
+::: {#def-traditional-confounder-criteria}
+## Traditional Epidemiological Criteria for a Confounder
+
 In the traditional approach, a variable $C$ is labeled a confounder of the $A$â€“$Y$ association if it satisfies three criteria:
 
 1. $C$ is associated with treatment $A$
@@ -337,6 +340,7 @@ In the traditional approach, a variable $C$ is labeled a confounder of the $A$â€
 3. $C$ is not on the causal pathway from $A$ to $Y$ (i.e., $C$ is not a mediator)
 
 These criteria are assessed from the data (criteria 1 and 2) and from prior knowledge (criterion 3).
+:::
 
 ### Limitations of the Traditional Criteria
 
@@ -418,6 +422,9 @@ The causal diagrams introduced in Chapter 6 represent relationships among **obse
 
 ### Constructing a SWIG
 
+::: {#def-swig}
+## Single-World Intervention Graph (SWIG)
+
 A SWIG for the intervention $A = a$ is obtained from the original causal diagram by the following operation:
 
 - **Split each treatment node $A$** into two parts:
@@ -427,6 +434,7 @@ A SWIG for the intervention $A = a$ is obtained from the original causal diagram
 - Each child of $A$ in the original DAG becomes a counterfactual variable (e.g., $Y$ becomes $Y^a$).
 
 The key result is that in the SWIG, **counterfactual independence can be read off using d-separation**, just as ordinary independence is read from a standard DAG.
+:::
 
 ::: {#exm-swig}
 ## SWIG for the Standard Confounding Structure

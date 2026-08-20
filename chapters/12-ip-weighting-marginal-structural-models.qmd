@@ -280,9 +280,13 @@ IP weighting can also handle censoring and missing data under appropriate assump
 
 Let $C = 1$ if censored (data missing), $C = 0$ if uncensored (data observed).
 
-**IP weight for censoring**:
+::: {#def-ip-weights-censoring}
+## IP Weight for Censoring
+
+The **IP weight for censoring** is
 
 $$W^C = \frac{1}{\Pr[C = 0 \mid A, L]}$$
+:::
 
 These weights create a pseudo-population of only uncensored individuals.
 
@@ -329,6 +333,9 @@ IP weighting can be viewed through the lens of likelihood theory.
 
 ### Weighted Likelihood
 
+::: {#def-weighted-likelihood}
+## Weighted Estimating Equations and Weighted Likelihood
+
 The IP weighted estimator solves the **weighted estimating equations**:
 
 $$\sum_{i=1}^n W^A_i \times \frac{\partial \log f(Y_i \mid A_i; \beta)}{\partial \beta} = 0$$
@@ -336,6 +343,7 @@ $$\sum_{i=1}^n W^A_i \times \frac{\partial \log f(Y_i \mid A_i; \beta)}{\partial
 This is equivalent to maximizing a **weighted likelihood**:
 
 $$L_W(\beta) = \prod_{i=1}^n [f(Y_i \mid A_i; \beta)]^{W^A_i}$$
+:::
 
 ### Connection to Maximum Likelihood
 

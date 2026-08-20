@@ -22,7 +22,11 @@ This chapter is based on @hernan2020causal [Chapter 9, pp. 117-130].
 
 ---
 
+::: {#def-measurement-error}
+## Measurement Error
+
 **Measurement error** occurs when the recorded value of a variable differs from its true value.
+:::
 
 ### Types of Variables Subject to Measurement Error
 

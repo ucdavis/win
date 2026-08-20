@@ -96,7 +96,11 @@ The notation $\ind$ denotes statistical independence.
 
 ### Exchangeability and Confounding
 
+::: {#def-confounding-ch3}
+## Confounding
+
 **Confounding** is the absence of exchangeability. When exchangeability fails, comparing treated and untreated groups yields a biased estimate of the causal effect.
+:::
 
 ::: {#exm-confounding}
 ## Confounding Example
@@ -230,13 +234,15 @@ This is sometimes called the **Stable Unit Treatment Value Assumption (SUTVA)**.
 
 The consistency assumption also requires that there is no **interference** between individuals.
 
-### No Interference
+::: {#def-no-interference}
+## No Interference
 
 **Interference** occurs when one individual's treatment affects another individual's outcome. For consistency to hold, we need:
 
 $$Y_i = Y_i^{A_i}$$
 
 The outcome for individual $i$ depends only on individual $i$'s treatment, not on other individuals' treatments.
+:::
 
 ::: {#exm-interference}
 ## Interference Example

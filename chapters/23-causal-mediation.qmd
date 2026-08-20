@@ -46,13 +46,17 @@ decomposes the total effect of $A$ on $Y$ into:
 - A **direct effect**: the effect of $A$ on $Y$ not through $M$.
 - An **indirect effect** (mediated effect): the effect of $A$ on $Y$ through $M$.
 
-In a linear structural equation model, this decomposition is:
+::: {#def-classical-mediation-decomposition}
+## Classical Mediation Decomposition
 
-$$Y = \beta_0 + \beta_1 A + \beta_2 M + \varepsilon_Y, \quad M = \alpha_0 + \alpha_1 A + \varepsilon_M.$$
+In a linear structural equation model,
 
-The indirect effect is $\alpha_1 \cdot \beta_2$ (the "product of coefficients")
-and the direct effect is $\beta_1$.
-The total effect is $\beta_1 + \alpha_1 \cdot \beta_2$.
+$$Y = \beta_0 + \beta_1 A + \beta_2 M + \varepsilon_Y, \quad M = \alpha_0 + \alpha_1 A + \varepsilon_M,$$
+
+the indirect effect is $\alpha_1 \cdot \beta_2$ (the "product of coefficients"),
+the direct effect is $\beta_1$,
+and the total effect is $\beta_1 + \alpha_1 \cdot \beta_2$.
+:::
 
 ### Criticisms of the Classical Approach
 
@@ -132,11 +136,14 @@ The NIE asks: how much of the treatment effect is attributable to the change in 
 
 ### The Decomposition
 
-The **total effect** decomposes as:
+::: {#thm-mediation-decomposition}
+## Additive Decomposition of the Total Effect
+
+On the additive (difference) scale, the total effect decomposes as
 
 $$\E{Y^{a=1}} - \E{Y^{a=0}} = \text{NDE} + \text{NIE}.$$
+:::
 
-This decomposition always holds on the additive (difference) scale.
 On other scales (ratio, odds ratio), decompositions exist but are more complex.
 
 ::: {.notes}

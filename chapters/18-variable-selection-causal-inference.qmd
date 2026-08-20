@@ -191,6 +191,9 @@ Some variables should not be adjusted for even if they're associated with both t
 
 ### M-bias (Butterfly Bias)
 
+::: {#def-m-bias}
+## M-Bias (Butterfly Bias)
+
 **DAG structure**:
 
 ```
@@ -207,6 +210,7 @@ Some variables should not be adjusted for even if they're associated with both t
 - But if we adjust for $L$, we **open** this path!
 
 **Result**: Adjusting for $L$ introduces bias even though $L$ is associated with both $A$ and $Y$.
+:::
 
 ::: {.notes}
 **Practical example**:
@@ -302,6 +306,9 @@ After ensuring confounding is addressed, can we include additional variables to 
 
 ### Precision Variables
 
+::: {#def-precision-variable}
+## Precision Variable
+
 **Definition**: Variables associated with the outcome but not with treatment (after accounting for confounders).
 
 **Example DAG**:
@@ -311,10 +318,11 @@ A → Y ← V
 
 $V$ is associated with $Y$ but not with $A$ (no arrow from $V$ to $A$ or shared causes).
 
-**Effect of adjustment**: 
+**Effect of adjustment**:
 
 - Does NOT affect bias (no confounding)
 - DOES improve precision (reduces residual variance)
+:::
 
 **Recommendation**: Include precision variables to improve efficiency.
 

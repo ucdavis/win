@@ -100,9 +100,13 @@ For individual $i$ with covariates $L_i$, the propensity score is $e(L_i) = \Pr[
 
 ### Balancing Property
 
-**Key theorem**: If $Y^a \ind A \mid L$, then:
+::: {#thm-propensity-balancing}
+## Propensity Score Balancing Property
 
-$$Y^a \ind A \mid e(L)$$
+If $Y^a \ind A \mid L$, then
+
+$$Y^a \ind A \mid e(L).$$
+:::
 
 **Interpretation**: Conditional on the propensity score, treatment assignment is independent of potential outcomes.
 
@@ -320,11 +324,17 @@ Can we combine propensity scores with outcome regression?
 
 ### Augmented IP Weighting (AIPW)
 
-**Advanced approach**: Combine IP weighting with outcome modeling:
+**Advanced approach**: Combine IP weighting with outcome modeling.
 
-$$\hE{Y^a} = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right]$$
+::: {#def-aipw}
+## Augmented IP Weighting (AIPW)
+
+The **augmented inverse-probability-weighted (AIPW) estimator** is
+
+$$\hE{Y^a} = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right],$$
 
 where $m(a, L) = \hE{Y \mid A = a, L}$ is the outcome model.
+:::
 
 **Properties**:
 
@@ -352,9 +362,13 @@ Propensity scores extend to **continuous treatments**, though with additional co
 
 ### Generalized Propensity Score
 
+::: {#def-generalized-propensity-score}
+## Generalized Propensity Score
+
 For continuous treatment $A$, the **generalized propensity score** is the conditional density:
 
 $$f(A \mid L)$$
+:::
 
 **Balancing property**: Under conditional exchangeability,
 

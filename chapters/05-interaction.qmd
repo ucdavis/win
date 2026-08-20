@@ -68,11 +68,17 @@ $$\E{Y^{a=1,e=1}} - \E{Y^{a=0,e=0}} \neq \bigl(\E{Y^{a=1,e=0}} - \E{Y^{a=0,e=0}}
 In words: the joint effect of both treatments differs from the sum of the individual effects.
 :::
 
-Equivalently, we can define additive interaction using the **interaction contrast**:
+Equivalently, we can define additive interaction using the interaction contrast.
+
+::: {#def-interaction-contrast}
+## Interaction Contrast
+
+The **interaction contrast** is defined as:
 
 $$\text{IC} = \E{Y^{a=1,e=1}} - \E{Y^{a=1,e=0}} - \E{Y^{a=0,e=1}} + \E{Y^{a=0,e=0}}$$
 
 If $\text{IC} \neq 0$, there is additive interaction.
+:::
 
 ::: {.notes}
 **Interpretation of IC**:
@@ -270,7 +276,11 @@ A **sufficient cause** is a set of conditions that inevitably produces the outco
 
 ### Components of Sufficient Causes
 
+::: {#def-component-cause}
+## Component Cause
+
 Each sufficient cause consists of **component causes**—individual factors that, together, are sufficient to produce the outcome.
+:::
 
 ::: {#exm-sufficient-cause}
 ## Sufficient Cause Example

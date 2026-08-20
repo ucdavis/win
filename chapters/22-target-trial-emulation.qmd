@@ -128,9 +128,14 @@ The **target trial** for this question would specify:
 | Analysis plan | ITT and PP (adjusted for non-adherence via IP weighting) |
 :::
 
-The treatment strategies are **sustained strategies**:
-they specify a sequence of treatment decisions over the follow-up period,
-not just a single decision at baseline.
+::: {#def-sustained-strategies}
+## Sustained Treatment Strategies
+
+A **sustained strategy** specifies a sequence of treatment decisions
+over the entire follow-up period, not just a single decision at baseline.
+:::
+
+The treatment strategies in the target trial above are sustained strategies.
 Strategy 1 is "always treat" ($\bar{a} = \bar{1}$);
 strategy 2 is the dynamic strategy "do not treat until CD4 < 350, then treat."
 
@@ -254,9 +259,14 @@ All three conditions must be satisfied simultaneously at time zero.
 
 ### Immortal Time Bias
 
-**Immortal time bias** arises when there is a period of follow-up before time zero
+::: {#def-immortal-time-bias}
+## Immortal Time Bias
+
+Immortal time bias arises when there is a period of follow-up before time zero
 during which individuals cannot experience the outcome by design
 (because they must survive to meet the eligibility criterion or to be "assigned").
+:::
+
 If this immortal time is misclassified — for example, attributed to the treated group
 when it actually preceded treatment initiation — the treated group appears to have
 better outcomes simply because they could not have died during the immortal period.
@@ -279,12 +289,17 @@ is misattributed to the treated group, inducing a spurious survival advantage.
 ### Sequential Trials
 
 One practical approach to correct time zero assignment in observational databases
-is the **sequential trials** design:
-for each calendar time $t$ at which individuals satisfy the eligibility criteria,
-we create a separate "trial" with time zero at $t$.
-Individuals can appear in multiple such trials (each with a different time zero)
+is the sequential trials design.
+
+::: {#def-sequential-trials}
+## Sequential Trials Design
+
+For each calendar time $t$ at which individuals satisfy the eligibility criteria,
+create a separate "trial" with time zero at $t$.
+Individuals can appear in multiple such trials (each with a different time zero),
 and their data are then pooled across all trials with appropriate adjustment
 for the time-varying covariates at each trial's time zero.
+:::
 
 This design ensures that each participant's follow-up genuinely begins
 at the moment of eligibility and strategy assignment,

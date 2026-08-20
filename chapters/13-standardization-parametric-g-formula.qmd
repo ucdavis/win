@@ -148,13 +148,20 @@ The g-formula standardizes to the **observed distribution** of confounders. We c
 $$\E{Y^{a=1}} - \E{Y^{a=0}}$$
 Standardized to the population (or sample) distribution of $L$.
 
-**Average treatment effect in the treated (ATT)**:
-$$\E{Y^{a=1} \mid A = 1} - \E{Y^{a=0} \mid A = 1}$$
-Standardized to the distribution of $L$ among the treated.
+::: {#def-att}
+## Average Treatment Effect in the Treated (ATT)
 
-**G-formula for ATT**:
-$$\hE{Y^a \mid A = 1} = \frac{1}{n_1} \sum_{i: A_i = 1} \hE{Y \mid A = a, L = L_i}$$
+The **average treatment effect in the treated (ATT)** is
+
+$$\E{Y^{a=1} \mid A = 1} - \E{Y^{a=0} \mid A = 1},$$
+
+standardized to the distribution of $L$ among the treated.
+The g-formula estimator for the ATT is
+
+$$\hE{Y^a \mid A = 1} = \frac{1}{n_1} \sum_{i: A_i = 1} \hE{Y \mid A = a, L = L_i},$$
+
 where $n_1 = \sum_i I(A_i = 1)$.
+:::
 
 ::: {.notes}
 **When to use ATT vs ATE**:

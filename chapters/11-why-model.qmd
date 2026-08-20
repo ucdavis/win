@@ -89,7 +89,11 @@ When data are sparse relative to the dimension of covariates, nonparametric esti
 
 ---
 
+::: {#def-parametric-models}
+## Parametric Models
+
 **Parametric models** make assumptions about the functional form relating treatment to outcome, allowing estimation even with sparse data.
+:::
 
 ### Linear Regression Model
 
@@ -147,7 +151,11 @@ Each model makes different assumptions about the shape of the dose-response curv
 
 ---
 
+::: {#def-smoothing}
+## Smoothing
+
 **Smoothing** refers to techniques that estimate the conditional mean as a smooth function, balancing between nonparametric flexibility and parametric smoothness.
+:::
 
 ### The Smoothing Spectrum
 
@@ -206,6 +214,9 @@ Every statistical estimator involves a trade-off between **bias** and **variance
 
 ### Definitions
 
+::: {#def-bias-variance-mse}
+## Bias, Variance, and Mean Squared Error
+
 **Bias**: Systematic error, the difference between the expected value of the estimator and the true parameter.
 
 $$\text{Bias}(\hat{\theta}) = \E{\hat{\theta}} - \theta$$
@@ -217,6 +228,7 @@ $$\text{Var}(\hat{\theta}) = \E{(\hat{\theta} - \E{\hat{\theta}})^2}$$
 **Mean squared error (MSE)**: Combines both sources of error.
 
 $$MSE(\hat{\theta}) = \text{Bias}^2(\hat{\theta}) + \text{Var}(\hat{\theta})$$
+:::
 
 ### The Trade-Off
 

@@ -165,9 +165,13 @@ The backdoor criterion says that adjustment for the causal effect of censoring $
 
 The causal contrast of interest needs to be modified in the presence of censoring. Because selection bias would not exist if everybody had been uncensored, we want to consider a causal contrast that reflects what would have happened in the absence of censoring.
 
+::: {#def-censoring-causal-contrast}
+## Causal Contrast Under Censoring
+
 Let $Y^{a=1,c=0}$ be an individual's counterfactual outcome if they had received treatment $A = 1$ and had remained uncensored $C = 0$. Similarly, let $Y^{a=0,c=0}$ be an individual's counterfactual outcome if they had not received treatment $A = 0$ and had remained uncensored $C = 0$. Our causal contrast of interest is:
 
 $$\Pr[Y^{a=1,c=0} = 1] \quad \text{versus} \quad \Pr[Y^{a=0,c=0} = 1]$$
+:::
 
 ::: {.notes}
 By conceptualizing the causal contrast of interest in terms of $Y^{a,c=0}$, we can think of censoring $C$ as just another treatment. The goal of the analysis is to compute the causal effect of a joint intervention on $A$ and $C$. To eliminate selection bias for the effect of treatment $A$, we need to adjust for confounding for the effect of treatment $C$.
