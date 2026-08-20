@@ -189,15 +189,19 @@
 <section class="slide level2">
 
 <p>Let time be indexed by <span class="math inline">\(k = 0, 1, \ldots, K\)</span>, where <span class="math inline">\(k = 0\)</span> is the baseline and <span class="math inline">\(K\)</span> is the end of the study period. The <strong>time-varying treatment</strong> at time <span class="math inline">\(k\)</span> is denoted <span class="math inline">\(A_k\)</span>, which may be binary (e.g., <span class="math inline">\(A_k = 1\)</span> if the individual is on treatment at time <span class="math inline">\(k\)</span>, 0 otherwise) or take more general values.</p>
-<p>The observed treatment <strong>history</strong> up to time <span class="math inline">\(k\)</span> is the vector</p>
+<div id="def-treatment-history" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Treatment History)</strong></span> The observed treatment <strong>history</strong> up to time <span class="math inline">\(k\)</span> is the vector</p>
 <p><span class="math display">\[\bar{A}_k = (A_0, A_1, \ldots, A_k).\]</span></p>
-<p>Similarly, define the <strong>covariate history</strong> up to time <span class="math inline">\(k\)</span> as</p>
+</div>
+<div id="def-covariate-history" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Covariate History)</strong></span> The <strong>covariate history</strong> up to time <span class="math inline">\(k\)</span> is</p>
 <p><span class="math display">\[\bar{L}_k = (L_0, L_1, \ldots, L_k),\]</span></p>
 <p>where <span class="math inline">\(L_k\)</span> represents all measured covariates recorded at time <span class="math inline">\(k\)</span> (e.g., clinical measurements, lab values, questionnaire responses).</p>
+</div>
 <p>The outcome <span class="math inline">\(Y\)</span> is measured at the end of follow-up, after <span class="math inline">\(A_K\)</span>. A common data structure in person-time format is therefore:</p>
 <p><span class="math display">\[L_0 \to A_0 \to L_1 \to A_1 \to \cdots \to L_K \to A_K \to Y.\]</span></p>
 <div id="def-potential-outcome-tv" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Potential Outcome Under a Treatment History)</strong></span> For a fully specified treatment history <span class="math inline">\(\bar{a}_K = (a_0, a_1, \ldots, a_K)\)</span>, the <strong>potential outcome</strong> <span class="math inline">\(Y^{\bar{a}_K}\)</span> is the outcome that would have been observed had the individual’s treatment been set to <span class="math inline">\(\bar{a}_K\)</span> throughout the follow-up, regardless of what treatment they actually received.</p>
+<p><span class="theorem-title"><strong>Definition 3 (Potential Outcome Under a Treatment History)</strong></span> For a fully specified treatment history <span class="math inline">\(\bar{a}_K = (a_0, a_1, \ldots, a_K)\)</span>, the <strong>potential outcome</strong> <span class="math inline">\(Y^{\bar{a}_K}\)</span> is the outcome that would have been observed had the individual’s treatment been set to <span class="math inline">\(\bar{a}_K\)</span> throughout the follow-up, regardless of what treatment they actually received.</p>
 </div>
 <p>When <span class="math inline">\(K = 0\)</span> this reduces to the familiar time-fixed potential outcome <span class="math inline">\(Y^a\)</span>. With <span class="math inline">\(K\)</span> time points, the number of distinct potential outcomes grows exponentially with <span class="math inline">\(K\)</span>, which motivates the use of treatment <strong>strategies</strong> rather than enumerating all histories.</p>
 <aside class="notes">
@@ -230,12 +234,12 @@
 
 <p>A <strong>treatment strategy</strong> (also called a <strong>treatment regime</strong> or <strong>dynamic treatment regime</strong>) is a rule <span class="math inline">\(g\)</span> that specifies, at each time <span class="math inline">\(k\)</span>, what treatment value <span class="math inline">\(a_k\)</span> should be assigned, possibly as a function of the individual’s past treatment and covariate history.</p>
 <div id="def-treatment-strategy" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Treatment Strategy)</strong></span> A treatment strategy <span class="math inline">\(g = (g_0, g_1, \ldots, g_K)\)</span> is a collection of decision functions where each <span class="math inline">\(g_k\)</span> maps the observed history <span class="math inline">\((\bar{a}_{k-1}, \bar{l}_k)\)</span> to a treatment value:</p>
+<p><span class="theorem-title"><strong>Definition 4 (Treatment Strategy)</strong></span> A treatment strategy <span class="math inline">\(g = (g_0, g_1, \ldots, g_K)\)</span> is a collection of decision functions where each <span class="math inline">\(g_k\)</span> maps the observed history <span class="math inline">\((\bar{a}_{k-1}, \bar{l}_k)\)</span> to a treatment value:</p>
 <p><span class="math display">\[g_k : (\bar{a}_{k-1}, \bar{l}_k) \mapsto a_k.\]</span></p>
 <p>The counterfactual outcome under strategy <span class="math inline">\(g\)</span> is denoted <span class="math inline">\(Y^g\)</span>.</p>
 </div>
 <div id="def-static-strategy" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Static Strategies)</strong></span> A <strong>static strategy</strong> assigns the same treatment value at every time point regardless of the evolving covariate history.</p>
+<p><span class="theorem-title"><strong>Definition 5 (Static Strategies)</strong></span> A <strong>static strategy</strong> assigns the same treatment value at every time point regardless of the evolving covariate history.</p>
 </div>
 <p>Examples:</p>
 <ul>
@@ -245,7 +249,7 @@
 </ul>
 <p>The potential outcome under “always treat” is <span class="math inline">\(Y^{\bar{a}_K = (1,1,\ldots,1)}\)</span>, often written <span class="math inline">\(Y^{\bar{1}}\)</span>, and under “never treat” it is <span class="math inline">\(Y^{\bar{0}}\)</span>.</p>
 <div id="def-dynamic-strategy" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Dynamic Strategies)</strong></span> A <strong>dynamic strategy</strong> adapts treatment decisions based on the individual’s evolving history. The counterfactual <span class="math inline">\(Y^g\)</span> under a dynamic strategy <span class="math inline">\(g\)</span> is defined analogously to the static case — it is the outcome that would have been observed if, at every time <span class="math inline">\(k\)</span>, treatment had been set according to <span class="math inline">\(g_k\)</span> applied to the individual’s <em>counterfactual</em> covariate history under <span class="math inline">\(g\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 6 (Dynamic Strategies)</strong></span> A <strong>dynamic strategy</strong> adapts treatment decisions based on the individual’s evolving history. The counterfactual <span class="math inline">\(Y^g\)</span> under a dynamic strategy <span class="math inline">\(g\)</span> is defined analogously to the static case — it is the outcome that would have been observed if, at every time <span class="math inline">\(k\)</span>, treatment had been set according to <span class="math inline">\(g_k\)</span> applied to the individual’s <em>counterfactual</em> covariate history under <span class="math inline">\(g\)</span>.</p>
 </div>
 <p>For example:</p>
 <ul>
@@ -277,7 +281,7 @@
 
 <p>The conceptual benchmark for estimating the effects of time-varying treatments is the <strong>sequentially randomized experiment</strong>.</p>
 <div id="def-seq-randomized" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Sequentially Randomized Experiment)</strong></span> A sequentially randomized experiment is a longitudinal study in which, at each time <span class="math inline">\(k\)</span>, the treatment <span class="math inline">\(A_k\)</span> is randomly assigned with probabilities that may depend on the observed past <span class="math inline">\((\bar{A}_{k-1}, \bar{L}_k)\)</span>, but not on any unmeasured variables.</p>
+<p><span class="theorem-title"><strong>Definition 7 (Sequentially Randomized Experiment)</strong></span> A sequentially randomized experiment is a longitudinal study in which, at each time <span class="math inline">\(k\)</span>, the treatment <span class="math inline">\(A_k\)</span> is randomly assigned with probabilities that may depend on the observed past <span class="math inline">\((\bar{A}_{k-1}, \bar{L}_k)\)</span>, but not on any unmeasured variables.</p>
 </div>
 <p>In a sequentially randomized experiment, at each time <span class="math inline">\(k\)</span> the treatment probability satisfies</p>
 <p><span class="math display">\[\Pr[A_k = a_k \mid \bar{A}_{k-1} = \bar{a}_{k-1}, \bar{L}_k = \bar{l}_k, U] =
@@ -315,7 +319,7 @@
 
 <p>In observational studies we cannot guarantee randomization at any time point. The identifying assumption that replaces sequential randomization is <strong>sequential (or time-varying) exchangeability</strong>.</p>
 <div id="def-seq-exchangeability" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Sequential Exchangeability)</strong></span> Sequential exchangeability holds if, for every time <span class="math inline">\(k\)</span> and every strategy <span class="math inline">\(g\)</span>,</p>
+<p><span class="theorem-title"><strong>Definition 8 (Sequential Exchangeability)</strong></span> Sequential exchangeability holds if, for every time <span class="math inline">\(k\)</span> and every strategy <span class="math inline">\(g\)</span>,</p>
 <p><span class="math display">\[Y^g \perp\!\!\!\perp A_k \mid \bar{A}_{k-1} = \bar{g}_{k-1}(\bar{L}_{k-1}), \bar{L}_k,\]</span></p>
 <p>where <span class="math inline">\(\bar{g}_{k-1}\)</span> denotes the treatment history up to <span class="math inline">\(k-1\)</span> as dictated by <span class="math inline">\(g\)</span>.</p>
 </div>
@@ -357,7 +361,7 @@
 <p>An important subtlety in the time-varying setting is that sequential exchangeability and positivity may hold for some strategies but not for others.</p>
 <p>Consider a study in which patients are treated based on their measured covariate history. The strategy “treat if <span class="math inline">\(L_k &gt; c\)</span>” respects the observed treatment assignment mechanism, so positivity holds by construction. By contrast, the strategy “treat if <span class="math inline">\(L_k &gt; c\)</span> <em>and</em> the patient’s unmeasured frailty is low” cannot be evaluated because the unmeasured component violates exchangeability.</p>
 <div id="def-identifiable-strategy" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Identifiable Strategy)</strong></span> A strategy <span class="math inline">\(g\)</span> is <strong>identifiable</strong> from the observed data if:</p>
+<p><span class="theorem-title"><strong>Definition 9 (Identifiable Strategy)</strong></span> A strategy <span class="math inline">\(g\)</span> is <strong>identifiable</strong> from the observed data if:</p>
 <ol type="1">
 <li>Sequential exchangeability holds for <span class="math inline">\(g\)</span> at every time <span class="math inline">\(k\)</span>.</li>
 <li>Sequential positivity holds for <span class="math inline">\(g\)</span> at every time <span class="math inline">\(k\)</span>.</li>
@@ -399,7 +403,7 @@
 
 <p>A central complication in the analysis of time-varying treatments is the presence of <strong>time-varying confounders</strong> — covariates that change over time and that are <strong>causally affected by past treatment</strong> while simultaneously confounding future treatment assignments.</p>
 <div id="def-tv-confounder" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8 (Time-Varying Confounder)</strong></span> A variable <span class="math inline">\(L_k\)</span> (<span class="math inline">\(k \geq 1\)</span>) is a <strong>time-varying confounder</strong> for the effect of <span class="math inline">\(A_k\)</span> on <span class="math inline">\(Y\)</span> if it simultaneously satisfies:</p>
+<p><span class="theorem-title"><strong>Definition 10 (Time-Varying Confounder)</strong></span> A variable <span class="math inline">\(L_k\)</span> (<span class="math inline">\(k \geq 1\)</span>) is a <strong>time-varying confounder</strong> for the effect of <span class="math inline">\(A_k\)</span> on <span class="math inline">\(Y\)</span> if it simultaneously satisfies:</p>
 <ol type="1">
 <li><span class="math inline">\(L_k\)</span> is a common cause of <span class="math inline">\(A_k\)</span> and <span class="math inline">\(Y\)</span> (or future treatment–outcome paths).</li>
 <li><span class="math inline">\(L_k\)</span> is itself caused by past treatment <span class="math inline">\(A_{k-1}\)</span> (or earlier treatments).</li>
