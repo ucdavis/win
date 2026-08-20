@@ -233,9 +233,12 @@
 <p><span class="math display">\[\text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]} \neq \bigl(\text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]}\bigr) + \bigl(\text{E}{\left[Y^{a=0,e=1}\right]} - \text{E}{\left[Y^{a=0,e=0}\right]}\bigr)\]</span></p>
 <p>In words: the joint effect of both treatments differs from the sum of the individual effects.</p>
 </div>
-<p>Equivalently, we can define additive interaction using the <strong>interaction contrast</strong>:</p>
+<p>Equivalently, we can define additive interaction using the interaction contrast.</p>
+<div id="def-interaction-contrast" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Interaction Contrast)</strong></span> The <strong>interaction contrast</strong> is defined as:</p>
 <p><span class="math display">\[\text{IC} = \text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=1}\right]} + \text{E}{\left[Y^{a=0,e=0}\right]}\]</span></p>
 <p>If <span class="math inline">\(\text{IC} \neq 0\)</span>, there is additive interaction.</p>
+</div>
 <aside class="notes">
 <p><strong>Interpretation of IC</strong>:</p>
 <ul>
@@ -486,12 +489,14 @@
 
 <p>An alternative framework for thinking about interaction is the <strong>sufficient cause model</strong>, developed by Kenneth Rothman.</p>
 <div id="def-sufficient-cause" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Sufficient Cause)</strong></span> A <strong>sufficient cause</strong> is a set of conditions that inevitably produces the outcome. Once all components of a sufficient cause are present, the outcome occurs.</p>
+<p><span class="theorem-title"><strong>Definition 3 (Sufficient Cause)</strong></span> A <strong>sufficient cause</strong> is a set of conditions that inevitably produces the outcome. Once all components of a sufficient cause are present, the outcome occurs.</p>
 </div>
 </section>
 <section id="components-of-sufficient-causes" class="slide level2 scrollable">
 <h2>Components of Sufficient Causes</h2>
-<p>Each sufficient cause consists of <strong>component causes</strong>—individual factors that, together, are sufficient to produce the outcome.</p>
+<div id="def-component-cause" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Component Cause)</strong></span> Each sufficient cause consists of <strong>component causes</strong>—individual factors that, together, are sufficient to produce the outcome.</p>
+</div>
 <div id="exm-sufficient-cause" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3 (Sufficient Cause Example)</strong></span> Consider lung cancer. Possible sufficient causes:</p>
 <p><strong>Sufficient Cause I</strong>: Smoking + Genetic variant A + Occupational asbestos exposure</p>
@@ -529,7 +534,7 @@
 
 <p>Within the sufficient cause framework, we can define a specific type of interaction:</p>
 <div id="def-sufficient-cause-interaction" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Sufficient Cause Interaction)</strong></span> There is <strong>sufficient cause interaction</strong> between <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> if they are both component causes of the same sufficient cause.</p>
+<p><span class="theorem-title"><strong>Definition 5 (Sufficient Cause Interaction)</strong></span> There is <strong>sufficient cause interaction</strong> between <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> if they are both component causes of the same sufficient cause.</p>
 <p>In other words, <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> interact if there exists some sufficient cause containing both <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> as components.</p>
 </div>
 </section>

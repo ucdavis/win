@@ -280,9 +280,10 @@
 <section id="iv-estimand-for-binary-z-and-a" class="slide level2">
 <h2>IV Estimand for Binary <span class="math inline">\(Z\)</span> and <span class="math inline">\(A\)</span></h2>
 <p><strong>Setting</strong>: Binary instrument <span class="math inline">\(Z\)</span>, binary treatment <span class="math inline">\(A\)</span>, outcome <span class="math inline">\(Y\)</span></p>
-<p><strong>IV estimand</strong>:</p>
-<p><span class="math display">\[\frac{\text{E}{\left[Y \mid Z = 1\right]} - \text{E}{\left[Y \mid Z = 0\right]}}{\text{E}{\left[A \mid Z = 1\right]} - \text{E}{\left[A \mid Z = 0\right]}}\]</span></p>
-<p>This is the <strong>Wald estimator</strong> or <strong>ratio estimator</strong>.</p>
+<div id="def-wald-estimator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Wald Estimator)</strong></span> For a binary instrument <span class="math inline">\(Z\)</span> and binary treatment <span class="math inline">\(A\)</span>, the <strong>Wald estimator</strong> (also called the <strong>ratio estimator</strong>) is</p>
+<p><span class="math display">\[\frac{\text{E}{\left[Y \mid Z = 1\right]} - \text{E}{\left[Y \mid Z = 0\right]}}{\text{E}{\left[A \mid Z = 1\right]} - \text{E}{\left[A \mid Z = 0\right]}}.\]</span></p>
+</div>
 <p><strong>Interpretation</strong>: The effect of <span class="math inline">\(Z\)</span> on <span class="math inline">\(Y\)</span>, divided by the effect of <span class="math inline">\(Z\)</span> on <span class="math inline">\(A\)</span>.</p>
 </section>
 <section id="why-this-works" class="slide level2 scrollable">
@@ -358,7 +359,7 @@
 <section id="compliance-types" class="slide level2 scrollable">
 <h2>Compliance Types</h2>
 <div id="def-compliance-types" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Principal Strata)</strong></span> Individuals can be classified into <strong>principal strata</strong> based on potential treatments <span class="math inline">\(A^{z=1}\)</span> and <span class="math inline">\(A^{z=0}\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 3 (Principal Strata)</strong></span> Individuals can be classified into <strong>principal strata</strong> based on potential treatments <span class="math inline">\(A^{z=1}\)</span> and <span class="math inline">\(A^{z=0}\)</span>:</p>
 <ol type="1">
 <li><strong>Compliers</strong>: <span class="math inline">\(A^{z=1} = 1, A^{z=0} = 0\)</span> (take treatment if and only if <span class="math inline">\(Z = 1\)</span>)</li>
 <li><strong>Always-takers</strong>: <span class="math inline">\(A^{z=1} = 1, A^{z=0} = 1\)</span> (always take treatment)</li>
@@ -390,9 +391,11 @@
 </section>
 <section id="local-average-treatment-effect-late" class="slide level2">
 <h2>Local Average Treatment Effect (LATE)</h2>
-<p>Under IV conditions plus monotonicity:</p>
-<p><span class="math display">\[\text{IV estimand} = \text{E}{\left[Y^{a=1} - Y^{a=0} \mid \text{Complier}\right]}\]</span></p>
-<p>This is the <strong>average causal effect in compliers</strong>, not in the full population.</p>
+<div id="def-late" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Local Average Treatment Effect (LATE))</strong></span> Under the IV conditions plus monotonicity, the IV estimand equals</p>
+<p><span class="math display">\[\text{E}{\left[Y^{a=1} - Y^{a=0} \mid \text{Complier}\right]},\]</span></p>
+<p>the <strong>local average treatment effect (LATE)</strong> — the average causal effect in compliers, not in the full population.</p>
+</div>
 <p><strong>Interpretation</strong>: IV tells us the effect of treatment for those who would comply with the instrument.</p>
 <p><strong>Limitation</strong>: We don’t know who the compliers are (unobservable principal stratum).</p>
 </section></section>
@@ -404,15 +407,14 @@
 <section class="slide level2">
 
 <p><strong>Two-stage least squares (2SLS)</strong> is the most common IV method for continuous outcomes.</p>
-</section>
-<section id="sls-algorithm" class="slide level2">
-<h2>2SLS Algorithm</h2>
-<p><strong>Stage 1</strong>: Regress treatment on instrument (and covariates if present)</p>
+<div id="alg-2sls" class="theorem algorithm">
+<p><span class="theorem-title"><strong>Algorithm 1 (Two-Stage Least Squares (2SLS))</strong></span> <strong>Stage 1</strong>: Regress treatment on instrument (and covariates if present)</p>
 <p><span class="math display">\[A_i = \alpha_0 + \alpha_1 Z_i + \epsilon_i\]</span></p>
 <p>Obtain predicted treatment: <span class="math inline">\(\hat{A}_i = \hat{\alpha}_0 + \hat{\alpha}_1 Z_i\)</span></p>
 <p><strong>Stage 2</strong>: Regress outcome on predicted treatment</p>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 \hat{A}_i + \eta_i\]</span></p>
 <p>The coefficient <span class="math inline">\(\hat{\beta}_1\)</span> is the 2SLS estimate of the causal effect.</p>
+</div>
 </section>
 <section id="why-this-works-1" class="slide level2">
 <h2>Why This Works</h2>
@@ -475,12 +477,14 @@
 </section>
 <section id="conditional-iv-estimation" class="slide level2 scrollable">
 <h2>Conditional IV Estimation</h2>
-<p><strong>Modified IV conditions</strong>:</p>
+<div id="def-conditional-iv" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Conditional Instrumental Variable)</strong></span> Given measured covariates <span class="math inline">\(L\)</span>, <span class="math inline">\(Z\)</span> is a <strong>conditional instrumental variable</strong> for the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if:</p>
 <ol type="1">
 <li><strong>Conditional relevance</strong>: <span class="math inline">\(Z \not\perp\!\!\!\perp A \mid L\)</span></li>
 <li><strong>Conditional exchangeability</strong>: <span class="math inline">\(Y^a \perp\!\!\!\perp Z \mid L\)</span></li>
 <li><strong>Exclusion restriction</strong>: <span class="math inline">\(Y^{a,z} = Y^a\)</span> (still unconditional)</li>
 </ol>
+</div>
 <p><strong>Estimation</strong>: Use 2SLS with <span class="math inline">\(L\)</span> as covariates, then standardize over <span class="math inline">\(L\)</span>.</p>
 <aside class="notes">
 <p><strong>When to adjust for <span class="math inline">\(L\)</span></strong>:</p>
@@ -579,7 +583,7 @@
 <section id="survivor-average-causal-effect-sace" class="slide level2">
 <h2>Survivor Average Causal Effect (SACE)</h2>
 <div id="def-sace" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Survivor Average Causal Effect)</strong></span> The <strong>survivor average causal effect (SACE)</strong> is:</p>
+<p><span class="theorem-title"><strong>Definition 6 (Survivor Average Causal Effect)</strong></span> The <strong>survivor average causal effect (SACE)</strong> is:</p>
 <p><span class="math display">\[\text{E}{\left[Y^{a=1} - Y^{a=0} \mid S^{a=1} = 1, S^{a=0} = 1\right]}\]</span></p>
 <p>where <span class="math inline">\(S^a\)</span> is an indicator for surviving (or remaining uncensored) under treatment <span class="math inline">\(a\)</span>.</p>
 <p>This is the effect in <strong>always-survivors</strong> - those who would survive under both treatment and control.</p>

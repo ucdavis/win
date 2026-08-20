@@ -434,7 +434,8 @@
 </section>
 <section id="m-bias-butterfly-bias" class="slide level2">
 <h2>M-bias (Butterfly Bias)</h2>
-<p><strong>DAG structure</strong>:</p>
+<div id="def-m-bias" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (M-Bias (Butterfly Bias))</strong></span> <strong>DAG structure</strong>:</p>
 <pre><code>    U1 → L ← U2
      ↓         ↓
      A         Y</code></pre>
@@ -446,6 +447,7 @@
 <li>But if we adjust for <span class="math inline">\(L\)</span>, we <strong>open</strong> this path!</li>
 </ul>
 <p><strong>Result</strong>: Adjusting for <span class="math inline">\(L\)</span> introduces bias even though <span class="math inline">\(L\)</span> is associated with both <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>.</p>
+</div>
 <aside class="notes">
 <p><strong>Practical example</strong>:</p>
 <ul>
@@ -503,7 +505,7 @@
 <section id="intermediate-confounder" class="slide level2 scrollable">
 <h2>Intermediate Confounder</h2>
 <div id="def-intermediate-confounder" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Intermediate Confounder (Time-Dependent Confounder Affected by Prior Treatment))</strong></span> A variable <span class="math inline">\(L_1\)</span> is an <strong>intermediate confounder</strong> if:</p>
+<p><span class="theorem-title"><strong>Definition 5 (Intermediate Confounder (Time-Dependent Confounder Affected by Prior Treatment))</strong></span> A variable <span class="math inline">\(L_1\)</span> is an <strong>intermediate confounder</strong> if:</p>
 <ol type="1">
 <li><span class="math inline">\(L_1\)</span> is a confounder for the effect of <span class="math inline">\(A_1\)</span> on <span class="math inline">\(Y\)</span></li>
 <li><span class="math inline">\(L_1\)</span> is affected by prior treatment <span class="math inline">\(A_0\)</span></li>
@@ -552,7 +554,8 @@
 </section>
 <section id="precision-variables" class="slide level2">
 <h2>Precision Variables</h2>
-<p><strong>Definition</strong>: Variables associated with the outcome but not with treatment (after accounting for confounders).</p>
+<div id="def-precision-variable" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Precision Variable)</strong></span> <strong>Definition</strong>: Variables associated with the outcome but not with treatment (after accounting for confounders).</p>
 <p><strong>Example DAG</strong>:</p>
 <pre><code>A → Y ← V</code></pre>
 <p><span class="math inline">\(V\)</span> is associated with <span class="math inline">\(Y\)</span> but not with <span class="math inline">\(A\)</span> (no arrow from <span class="math inline">\(V\)</span> to <span class="math inline">\(A\)</span> or shared causes).</p>
@@ -561,6 +564,7 @@
 <li>Does NOT affect bias (no confounding)</li>
 <li>DOES improve precision (reduces residual variance)</li>
 </ul>
+</div>
 <p><strong>Recommendation</strong>: Include precision variables to improve efficiency.</p>
 </section>
 <section id="instruments-as-precision-variables" class="slide level2">

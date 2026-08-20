@@ -455,7 +455,8 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 
 </section><section class="slide level2"><p>The term <strong>confounder</strong> is commonly used in epidemiology to refer to a variable that should be adjusted for to eliminate confounding. However, the traditional criteria used to identify confounders differ from the structural (DAG-based) definition—and the two do not always agree.</p>
 </section><section id="the-traditional-epidemiological-criteria" class="slide level2 scrollable"><h2>The Traditional Epidemiological Criteria</h2>
-<p>In the traditional approach, a variable <span class="math inline">\(C\)</span> is labeled a confounder of the <span class="math inline">\(A\)</span>–<span class="math inline">\(Y\)</span> association if it satisfies three criteria:</p>
+<div id="def-traditional-confounder-criteria" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Traditional Epidemiological Criteria for a Confounder)</strong></span> In the traditional approach, a variable <span class="math inline">\(C\)</span> is labeled a confounder of the <span class="math inline">\(A\)</span>–<span class="math inline">\(Y\)</span> association if it satisfies three criteria:</p>
 <ol type="1">
 <li>
 <span class="math inline">\(C\)</span> is associated with treatment <span class="math inline">\(A\)</span>
@@ -466,6 +467,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 <span class="math inline">\(C\)</span> is not on the causal pathway from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> (i.e., <span class="math inline">\(C\)</span> is not a mediator)</li>
 </ol>
 <p>These criteria are assessed from the data (criteria 1 and 2) and from prior knowledge (criterion 3).</p>
+</div>
 </section><section id="limitations-of-the-traditional-criteria" class="slide level2 scrollable"><h2>Limitations of the Traditional Criteria</h2>
 <p>The traditional criteria have two important limitations:</p>
 <p><strong>Problem 1: A variable can satisfy all three criteria without being a structural confounder.</strong></p>
@@ -481,7 +483,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 </div>
 </div>
 <div id="def-structural-confounder" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Structural Confounder vs.&nbsp;Traditional Confounder)</strong></span> A variable <span class="math inline">\(L\)</span> is a <strong>structural confounder</strong> of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if it opens at least one backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> in the causal diagram. The structural definition depends on the causal structure, not on observed associations.</p>
+<p><span class="theorem-title"><strong>Definition 4 (Structural Confounder vs.&nbsp;Traditional Confounder)</strong></span> A variable <span class="math inline">\(L\)</span> is a <strong>structural confounder</strong> of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if it opens at least one backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> in the causal diagram. The structural definition depends on the causal structure, not on observed associations.</p>
 <p>The traditional epidemiological definition of confounder depends on observed associations (criteria 1 and 2) and may disagree with the structural definition in specific populations.</p>
 <p><strong>Best practice</strong>: Use the causal diagram (DAG) to identify the structural confounders and the appropriate adjustment set via the backdoor criterion.</p>
 </div>
@@ -529,7 +531,8 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 
 </section><section class="slide level2"><p>The causal diagrams introduced in Chapter 6 represent relationships among <strong>observed</strong> variables (<span class="math inline">\(A\)</span>, <span class="math inline">\(L\)</span>, <span class="math inline">\(Y\)</span>, etc.). They do not directly represent counterfactual variables (<span class="math inline">\(Y^a\)</span>, <span class="math inline">\(L^a\)</span>, etc.). <strong>Single-World Intervention Graphs (SWIGs)</strong>, developed by Richardson and Robins (2014), extend causal diagrams to include counterfactual variables explicitly.</p>
 </section><section id="constructing-a-swig" class="slide level2"><h2>Constructing a SWIG</h2>
-<p>A SWIG for the intervention <span class="math inline">\(A = a\)</span> is obtained from the original causal diagram by the following operation:</p>
+<div id="def-swig" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Single-World Intervention Graph (SWIG))</strong></span> A SWIG for the intervention <span class="math inline">\(A = a\)</span> is obtained from the original causal diagram by the following operation:</p>
 <ul>
 <li>
 <strong>Split each treatment node <span class="math inline">\(A\)</span></strong> into two parts:
@@ -542,6 +545,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 <li>Each child of <span class="math inline">\(A\)</span> in the original DAG becomes a counterfactual variable (e.g., <span class="math inline">\(Y\)</span> becomes <span class="math inline">\(Y^a\)</span>).</li>
 </ul>
 <p>The key result is that in the SWIG, <strong>counterfactual independence can be read off using d-separation</strong>, just as ordinary independence is read from a standard DAG.</p>
+</div>
 <div id="exm-swig" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (SWIG for the Standard Confounding Structure)</strong></span> Consider the original DAG: <span class="math inline">\(L \to A \to Y\)</span>, <span class="math inline">\(L \to Y\)</span>.</p>
 <p>The SWIG for the intervention <span class="math inline">\(do(A = a)\)</span> has nodes <span class="math inline">\(\{L,\; a \mid A,\; Y^a\}\)</span>:</p>

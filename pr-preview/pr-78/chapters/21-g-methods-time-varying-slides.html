@@ -246,9 +246,13 @@
 </section>
 <section id="marginal-structural-models" class="slide level2">
 <h2>Marginal Structural Models</h2>
-<p>IP weighting for time-varying treatments is typically embedded in a <strong>marginal structural model</strong> (MSM) for the counterfactual mean:</p>
+<p>IP weighting for time-varying treatments is typically embedded in a marginal structural model (MSM) for the counterfactual mean.</p>
+<div id="def-msm-tv" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Marginal Structural Model for Time-Varying Treatments)</strong></span> A marginal structural model for the counterfactual mean <span class="math inline">\(\text{E}{\left[Y^{\bar{a}_K}\right]}\)</span> takes the form</p>
 <p><span class="math display">\[\text{E}{\left[Y^{\bar{a}_K}\right]} = m(\bar{a}_K; \beta),\]</span></p>
-<p>where <span class="math inline">\(m\)</span> is a parametric model (e.g., logistic or linear) indexed by <span class="math inline">\(\beta\)</span>. The MSM parameters are estimated by solving weighted estimating equations:</p>
+<p>where <span class="math inline">\(m\)</span> is a parametric model (e.g., logistic or linear) indexed by <span class="math inline">\(\beta\)</span>.</p>
+</div>
+<p>The MSM parameters are estimated by solving weighted estimating equations:</p>
 <p><span class="math display">\[\sum_i SW_i^A \cdot \frac{\partial}{\partial \beta} m(\bar{A}_{K,i}; \beta) = 0.\]</span></p>
 <p>Standard software for linear or logistic regression can be used simply by supplying <span class="math inline">\(SW^A\)</span> as an observation weight.</p>
 <aside class="notes">
@@ -272,7 +276,7 @@
 <h2>Censoring Weights</h2>
 <p>When follow-up is incomplete due to loss to follow-up or other forms of censoring, a second set of weights is needed to correct for selection bias introduced by censoring.</p>
 <div id="def-censoring-weights" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Stabilized Censoring IP Weights)</strong></span> Let <span class="math inline">\(C_k\)</span> be an indicator of censoring at time <span class="math inline">\(k\)</span> (1 = censored, 0 = not censored). The stabilized censoring IP weight is</p>
+<p><span class="theorem-title"><strong>Definition 4 (Stabilized Censoring IP Weights)</strong></span> Let <span class="math inline">\(C_k\)</span> be an indicator of censoring at time <span class="math inline">\(k\)</span> (1 = censored, 0 = not censored). The stabilized censoring IP weight is</p>
 <p><span class="math display">\[SW^C = \prod_{k=0}^{K} \frac{\Pr[C_k = 0 \mid \bar{C}_{k-1} = 0, \bar{A}_{k-1}]}
 {\Pr[C_k = 0 \mid \bar{C}_{k-1} = 0, \bar{A}_{k-1}, \bar{L}_k]}.\]</span></p>
 </div>
@@ -287,7 +291,7 @@
 
 <p>The g-formula and IP weighting each depend on a single set of correctly specified models: the g-formula requires correct models for the outcome and each covariate; IP weighting requires correct models for the treatment (and censoring) mechanism at each time. <strong>Doubly robust estimators</strong> combine both approaches and are consistent if <em>at least one</em> of the two sets of models is correctly specified.</p>
 <div id="def-dr-tv" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Doubly Robust Estimator (Augmented IPW))</strong></span> The augmented inverse probability weighted (AIPW) estimator for the counterfactual mean <span class="math inline">\(\text{E}{\left[Y^{\bar{a}_K}\right]}\)</span> takes the form</p>
+<p><span class="theorem-title"><strong>Definition 5 (Doubly Robust Estimator (Augmented IPW))</strong></span> The augmented inverse probability weighted (AIPW) estimator for the counterfactual mean <span class="math inline">\(\text{E}{\left[Y^{\bar{a}_K}\right]}\)</span> takes the form</p>
 <p><span class="math display">\[\hat{\text{E}}{\left[Y^{\bar{a}_K}\right]}_{\text{DR}} =
 \frac{1}{n} \sum_{i=1}^n \left[
   \hat{m}(\bar{A}_{K,i}) +
@@ -327,7 +331,7 @@
 
 <p><strong>G-estimation</strong> — the third g-method — focuses on directly modeling the <strong>structural nested mean model</strong> (SNMM), which describes how treatment at each time <span class="math inline">\(k\)</span> modifies the counterfactual mean outcome, conditional on the history up to <span class="math inline">\(k\)</span>.</p>
 <div id="def-snmm" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Structural Nested Mean Model (SNMM))</strong></span> A structural nested mean model specifies the <strong>blip-down function</strong> <span class="math inline">\(\gamma_k(\bar{a}_k, \bar{l}_k; \psi)\)</span>, which represents the effect on the outcome of setting treatment at time <span class="math inline">\(k\)</span> from <span class="math inline">\(a_k\)</span> to <span class="math inline">\(0\)</span>, given the past history <span class="math inline">\((\bar{a}_{k-1}, \bar{l}_k)\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 6 (Structural Nested Mean Model (SNMM))</strong></span> A structural nested mean model specifies the <strong>blip-down function</strong> <span class="math inline">\(\gamma_k(\bar{a}_k, \bar{l}_k; \psi)\)</span>, which represents the effect on the outcome of setting treatment at time <span class="math inline">\(k\)</span> from <span class="math inline">\(a_k\)</span> to <span class="math inline">\(0\)</span>, given the past history <span class="math inline">\((\bar{a}_{k-1}, \bar{l}_k)\)</span>:</p>
 <p><span class="math display">\[\text{E}{\left[Y^{\bar{a}_k, \bar{0}_{k+1}} - Y^{\bar{a}_{k-1}, \bar{0}_k} \mid \bar{A}_{k-1} = \bar{a}_{k-1}, \bar{L}_k = \bar{l}_k\right]}
 = \gamma_k(\bar{a}_k, \bar{l}_k; \psi),\]</span></p>
 <p>where <span class="math inline">\(\bar{0}_j\)</span> denotes no treatment from time <span class="math inline">\(j\)</span> onward.</p>
@@ -375,7 +379,11 @@
 </section>
 <section id="rank-preserving-structural-failure-time-models" class="slide level2">
 <h2>Rank-Preserving Structural Failure Time Models</h2>
-<p>A related family of models, <strong>rank-preserving structural failure time models</strong> (RP-SFTMs), extends g-estimation to survival outcomes. The RP-SFTM posits that treatment <span class="math inline">\(a_k\)</span> accelerates or decelerates the failure time by a multiplicable factor <span class="math inline">\(\text{exp}{\left\{(\right\}}\psi a_k)\)</span>, and g-estimation proceeds by finding the <span class="math inline">\(\psi\)</span> that makes the “counterfactual failure time under no treatment” independent of <span class="math inline">\(A_k\)</span> given past history.</p>
+<p>A related family of models, <strong>rank-preserving structural failure time models</strong> (RP-SFTMs), extends g-estimation to survival outcomes.</p>
+<div id="def-rp-sftm" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Rank-Preserving Structural Failure Time Model (RP-SFTM))</strong></span> An RP-SFTM posits that treatment <span class="math inline">\(a_k\)</span> accelerates or decelerates the failure time by a multiplicative factor <span class="math inline">\(\text{exp}{\left\{(\right\}}\psi a_k)\)</span>.</p>
+</div>
+<p>G-estimation proceeds by finding the <span class="math inline">\(\psi\)</span> that makes the “counterfactual failure time under no treatment” independent of <span class="math inline">\(A_k\)</span> given past history.</p>
 </section></section>
 <section>
 <section id="censoring-is-a-time-varying-treatment-p.-297" class="title-slide slide level1 center" data-number="5">
@@ -391,9 +399,11 @@
 <section id="handling-censoring-via-ip-weighting" class="slide level2">
 <h2>Handling Censoring via IP Weighting</h2>
 <p>The censoring IP weight <span class="math inline">\(SW^C\)</span> (defined in Section 21.2) addresses this by upweighting uncensored individuals whose counterparts in the same covariate stratum were censored. An individual who is uncensored despite having covariate values that typically lead to censoring receives a high weight, making them represent themselves and those who were censored.</p>
-<p>Under <strong>sequential censoring exchangeability</strong>:</p>
-<p><span class="math display">\[C_k \perp\!\!\!\perp Y^{\bar{a}_K, \bar{c}=\bar{0}} \mid \bar{C}_{k-1} = \bar{0}, \bar{A}_{k-1}, \bar{L}_k,\]</span></p>
-<p>the combined weight <span class="math inline">\(SW^{A,C} = SW^A \cdot SW^C\)</span> consistently estimates the counterfactual mean in the uncensored pseudo-population.</p>
+<div id="def-seq-censoring-exchangeability" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8 (Sequential Censoring Exchangeability)</strong></span> Sequential censoring exchangeability holds if, for every time <span class="math inline">\(k\)</span>,</p>
+<p><span class="math display">\[C_k \perp\!\!\!\perp Y^{\bar{a}_K, \bar{c}=\bar{0}} \mid \bar{C}_{k-1} = \bar{0}, \bar{A}_{k-1}, \bar{L}_k.\]</span></p>
+</div>
+<p>Under this condition, the combined weight <span class="math inline">\(SW^{A,C} = SW^A \cdot SW^C\)</span> consistently estimates the counterfactual mean in the uncensored pseudo-population.</p>
 <aside class="notes">
 <p><strong>Why censoring is “just” a time-varying treatment</strong>:</p>
 <p>Both treatment <span class="math inline">\(A_k\)</span> and censoring <span class="math inline">\(C_k\)</span> are time-varying binary variables whose assignment at each time depends on past history. Both can be confounded by time-varying covariates. The same sequential exchangeability and positivity conditions are needed for identification in both cases. The IP weight framework handles both simultaneously through a product of time-specific weights, one for each treatment and censoring event.</p>
@@ -423,7 +433,7 @@
 
 <p>The most general form of the g-formula — sometimes called the <strong>big g-formula</strong> — encompasses all time-varying treatments, time-varying covariates, time-varying censoring, and time-varying outcomes within a single unified expression.</p>
 <div id="def-big-g-formula" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (The Big G-Formula)</strong></span> Under sequential exchangeability (for both treatment and censoring), positivity, and consistency, the counterfactual mean under joint strategy <span class="math inline">\((\bar{g}, \bar{c}=\bar{0})\)</span> is</p>
+<p><span class="theorem-title"><strong>Definition 9 (The Big G-Formula)</strong></span> Under sequential exchangeability (for both treatment and censoring), positivity, and consistency, the counterfactual mean under joint strategy <span class="math inline">\((\bar{g}, \bar{c}=\bar{0})\)</span> is</p>
 <p><span class="math display">\[\text{E}{\left[Y^{g, \bar{c}=\bar{0}}\right]} = \sum_{\bar{l}_K}
 \text{E}{\left[Y \mid \bar{A}_K = \bar{g}(\bar{l}_K), \bar{C}_K = \bar{0}, \bar{L}_K = \bar{l}_K\right]}
 \prod_{k=0}^K f(l_k \mid \bar{A}_{k-1} = \bar{g}_{k-1}, \bar{C}_{k-1} = \bar{0}, \bar{L}_{k-1} = \bar{l}_{k-1}),\]</span></p>

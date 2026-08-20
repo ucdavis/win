@@ -191,9 +191,11 @@
 </section>
 <section id="key-concepts-in-statistical-estimation" class="slide level2">
 <h2>Key Concepts in Statistical Estimation</h2>
-<p><strong>Estimand</strong>: The population parameter of interest (e.g., <span class="math inline">\(\Pr[Y = 1|A = a]\)</span> in the super-population).</p>
+<div id="def-estimand-estimator-estimate" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Estimand, Estimator, and Estimate)</strong></span> <strong>Estimand</strong>: The population parameter of interest (e.g., <span class="math inline">\(\Pr[Y = 1|A = a]\)</span> in the super-population).</p>
 <p><strong>Estimator</strong>: A rule for computing the estimand from sample data.</p>
 <p><strong>Estimate</strong>: The numerical value obtained by applying the estimator to a particular sample (a point estimate).</p>
+</div>
 <div id="exm-estimator" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Sample Proportion as an Estimator)</strong></span> <strong>Estimand</strong>: Super-population risk <span class="math inline">\(\Pr[Y = 1|A = 1]\)</span></p>
 <p><strong>Estimator</strong>: Sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = 1]\)</span></p>
@@ -227,13 +229,17 @@
 </section>
 <section id="consistency-of-estimators" class="slide level2">
 <h2>Consistency of Estimators</h2>
-<p>An estimator is <strong>consistent</strong> if estimates get arbitrarily close to the true parameter as sample size increases.</p>
+<div id="def-consistent-estimator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Consistent Estimator)</strong></span> An estimator is <strong>consistent</strong> if estimates get arbitrarily close to the true parameter as sample size increases.</p>
 <p><span class="math display">\[Pr\left[|\hat{\theta}_n - \theta| &gt; \epsilon\right] \rightarrow 0 \text{ as } n \rightarrow \infty, \text{ for all } \epsilon &gt; 0\]</span></p>
+</div>
 <p>The sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = a]\)</span> is a consistent estimator of <span class="math inline">\(\Pr[Y = 1|A = a]\)</span>.</p>
 </section>
 <section id="confidence-intervals" class="slide level2 scrollable">
 <h2>Confidence Intervals</h2>
-<p>A <strong>95% confidence interval</strong> quantifies uncertainty due to random sampling.</p>
+<div id="def-confidence-interval" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Confidence Interval)</strong></span> A <strong>95% confidence interval</strong> quantifies uncertainty due to random sampling.</p>
+</div>
 <p><strong>Construction (Wald interval)</strong>:</p>
 <ol type="1">
 <li>Compute point estimate <span class="math inline">\(\hat{p}\)</span></li>
@@ -435,7 +441,9 @@
 </section>
 <section id="the-principle" class="slide level2">
 <h2>The Principle</h2>
-<p><strong>Conditionality principle</strong>: If a variable <span class="math inline">\(L\)</span> is independent of treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> under the intervention, we may condition on <span class="math inline">\(L\)</span> when computing estimates and standard errors without affecting validity.</p>
+<div id="def-conditionality-principle" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Conditionality Principle)</strong></span> <strong>Conditionality principle</strong>: If a variable <span class="math inline">\(L\)</span> is independent of treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> under the intervention, we may condition on <span class="math inline">\(L\)</span> when computing estimates and standard errors without affecting validity.</p>
+</div>
 </section>
 <section id="applications" class="slide level2">
 <h2>Applications</h2>
@@ -488,7 +496,9 @@
 </section>
 <section class="slide level2">
 
-<p>As the number of confounders or effect modifiers increases, nonparametric estimation becomes increasingly difficult. This is the <strong>curse of dimensionality</strong>.</p>
+<div id="def-curse-of-dimensionality" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Curse of Dimensionality)</strong></span> As the number of confounders or effect modifiers increases, nonparametric estimation becomes increasingly difficult. This is the <strong>curse of dimensionality</strong>.</p>
+</div>
 </section>
 <section id="the-problem" class="slide level2 scrollable">
 <h2>The Problem</h2>

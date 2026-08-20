@@ -276,7 +276,9 @@
 </section>
 <section id="exchangeability-and-confounding" class="slide level2">
 <h2>Exchangeability and Confounding</h2>
-<p><strong>Confounding</strong> is the absence of exchangeability. When exchangeability fails, comparing treated and untreated groups yields a biased estimate of the causal effect.</p>
+<div id="def-confounding-ch3" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Confounding)</strong></span> <strong>Confounding</strong> is the absence of exchangeability. When exchangeability fails, comparing treated and untreated groups yields a biased estimate of the causal effect.</p>
+</div>
 <div id="exm-confounding" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Confounding Example)</strong></span> Suppose we want to estimate the causal effect of smoking on lung cancer using observational data. If smokers differ from non-smokers in other ways that affect lung cancer risk (e.g., occupational exposures, genetic factors), then:</p>
 <p><span class="math display">\[\Pr[Y^{a=1} = 1 | A = 1] \neq \Pr[Y^{a=1} = 1 | A = 0]\]</span></p>
@@ -324,7 +326,7 @@
 
 <p>The second identifiability condition is <strong>positivity</strong>, also called the experimental treatment assignment assumption.</p>
 <div id="def-positivity" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Positivity)</strong></span> <strong>Positivity</strong> requires that, for every combination of values of <span class="math inline">\(L\)</span> for which <span class="math inline">\(\Pr[L] &gt; 0\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 4 (Positivity)</strong></span> <strong>Positivity</strong> requires that, for every combination of values of <span class="math inline">\(L\)</span> for which <span class="math inline">\(\Pr[L] &gt; 0\)</span>:</p>
 <p><span class="math display">\[\Pr[A = a | L] &gt; 0 \quad \text{for all } a\]</span></p>
 <p>In words: every individual has a non-zero probability of receiving every level of treatment, conditional on their measured covariates.</p>
 </div>
@@ -372,7 +374,7 @@
 
 <p>The third identifiability condition is <strong>consistency</strong>. Unlike exchangeability and positivity, consistency is not about the relationship between treatment and outcome. Instead, it concerns the definition of the counterfactual outcome itself.</p>
 <div id="def-consistency" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Consistency)</strong></span> The <strong>consistency assumption</strong> states that:</p>
+<p><span class="theorem-title"><strong>Definition 5 (Consistency)</strong></span> The <strong>consistency assumption</strong> states that:</p>
 <p><span class="math display">\[Y = Y^A\]</span></p>
 <p>In words: the observed outcome <span class="math inline">\(Y\)</span> for an individual equals their counterfactual outcome <span class="math inline">\(Y^a\)</span> under the treatment level <span class="math inline">\(a\)</span> that they actually received.</p>
 </div>
@@ -416,12 +418,11 @@
 <section class="slide level2">
 
 <p>The consistency assumption also requires that there is no <strong>interference</strong> between individuals.</p>
-</section>
-<section id="no-interference" class="slide level2">
-<h2>No Interference</h2>
-<p><strong>Interference</strong> occurs when one individual’s treatment affects another individual’s outcome. For consistency to hold, we need:</p>
+<div id="def-no-interference" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (No Interference)</strong></span> <strong>Interference</strong> occurs when one individual’s treatment affects another individual’s outcome. For consistency to hold, we need:</p>
 <p><span class="math display">\[Y_i = Y_i^{A_i}\]</span></p>
 <p>The outcome for individual <span class="math inline">\(i\)</span> depends only on individual <span class="math inline">\(i\)</span>’s treatment, not on other individuals’ treatments.</p>
+</div>
 <div id="exm-interference" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4 (Interference Example)</strong></span> Consider a vaccine study. If vaccinating person A reduces person B’s risk of disease (through herd immunity), then:</p>
 <p><span class="math display">\[Y_B \neq Y_B^{A_B}\]</span></p>
@@ -483,7 +484,7 @@
 
 <p>A useful framework for thinking about identifiability conditions in observational studies is the <strong>target trial</strong>.</p>
 <div id="def-target-trial" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Target Trial)</strong></span> The <strong>target trial</strong> is the (hypothetical) randomized experiment we would conduct if we could. By specifying the target trial, we clarify:</p>
+<p><span class="theorem-title"><strong>Definition 7 (Target Trial)</strong></span> The <strong>target trial</strong> is the (hypothetical) randomized experiment we would conduct if we could. By specifying the target trial, we clarify:</p>
 <ol type="1">
 <li>The causal question we are trying to answer</li>
 <li>The treatment comparison of interest</li>

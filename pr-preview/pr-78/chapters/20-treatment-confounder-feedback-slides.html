@@ -188,12 +188,14 @@
 </section>
 <section class="slide level2 scrollable">
 
-<p><strong>Treatment-confounder feedback</strong> arises whenever a time-varying covariate <span class="math inline">\(L_k\)</span> satisfies all of the following:</p>
+<div id="def-treatment-confounder-feedback" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Treatment-Confounder Feedback)</strong></span> <strong>Treatment-confounder feedback</strong> arises whenever a time-varying covariate <span class="math inline">\(L_k\)</span> satisfies all of the following:</p>
 <ol type="1">
 <li><strong><span class="math inline">\(L_k\)</span> is a confounder</strong>: <span class="math inline">\(L_k\)</span> is an independent predictor of both future treatment <span class="math inline">\(A_k\)</span> and the outcome <span class="math inline">\(Y\)</span>, creating a backdoor path <span class="math inline">\(A_k \leftarrow L_k \to Y\)</span>.</li>
 <li><strong><span class="math inline">\(L_k\)</span> is affected by prior treatment</strong>: past treatment <span class="math inline">\(A_{k-1}\)</span> (or any <span class="math inline">\(A_j\)</span> with <span class="math inline">\(j &lt; k\)</span>) is a cause of <span class="math inline">\(L_k\)</span>, so <span class="math inline">\(A_{k-1} \to L_k\)</span> is a causal arrow in the DAG.</li>
 <li><strong>Feedback continues</strong>: the adjusted value of <span class="math inline">\(L_k\)</span> can influence the next treatment decision <span class="math inline">\(A_k\)</span>, which in turn affects <span class="math inline">\(L_{k+1}\)</span>, and so on.</li>
 </ol>
+</div>
 <p>The causal diagram capturing two time points of feedback is:</p>
 <p><span class="math display">\[A_0 \to L_1 \to A_1 \to Y, \quad A_0 \to Y, \quad L_0 \to A_0, \quad L_0 \to Y, \quad L_1 \to Y.\]</span></p>
 <p>The arrow <span class="math inline">\(A_0 \to L_1\)</span> is the feedback arrow: prior treatment changes the confounder.</p>

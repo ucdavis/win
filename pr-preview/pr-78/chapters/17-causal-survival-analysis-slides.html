@@ -190,7 +190,10 @@
 <section class="slide level2">
 
 <p>Suppose we want to estimate the average causal effect of smoking cessation <span class="math inline">\(A\)</span> (1: yes, 0: no) on the time to death <span class="math inline">\(T\)</span> with time measured from the start of follow-up. This is an example of a survival analysis: the outcome is time to an event of interest that can occur at any time after the start of follow-up.</p>
-<p>In most follow-up studies, the event of interest is not observed to happen for all, or even the majority of, individuals in the study. This is so because most follow-up studies have a date after which there is no information on any individuals: the <strong>administrative end of follow-up</strong>. Individuals who do not develop the event of interest before the administrative end of follow-up have their survival time <strong>administratively censored</strong>.</p>
+<p>In most follow-up studies, the event of interest is not observed to happen for all, or even the majority of, individuals in the study.</p>
+<div id="def-administrative-censoring" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Administrative End of Follow-Up and Administrative Censoring)</strong></span> Most follow-up studies have a date after which there is no information on any individuals: the <strong>administrative end of follow-up</strong>. Individuals who do not develop the event of interest before the administrative end of follow-up have their survival time <strong>administratively censored</strong>.</p>
+</div>
 <p>We conduct the above survival analysis among the 1629 cigarette smokers from the NHEFS who were aged 25–74 years at baseline and who were alive through 1982. For all individuals, the start of follow-up is January 1, 1983 and the administrative end of follow-up is December 31, 1992. The administrative censoring time is the same—120 months—for all individuals. Of the 1629 individuals, only 318 died before the end of 1992, so the survival time of the remaining 1311 individuals is administratively censored.</p>
 <aside class="notes">
 <p>Administrative censoring is a problem intrinsic to survival analyses. In a study with staggered entry (i.e., with a variable start of follow-up date) different individuals will have different administrative censoring times, even when the administrative end of follow-up date is common to all.</p>
@@ -270,14 +273,17 @@
 
 <p>In survival analyses, there are two main ways to arrange the analytic dataset.</p>
 <p>In the first data arrangement each row of the database corresponds to one person. This data format—often referred to as the “wide” format when there are time-varying treatments and confounders—is the one we have used so far in this book. In the analyses of the previous section, the dataset had 1629 rows, one per individual.</p>
-<p>In the second data arrangement each row of the database corresponds to a <strong>person-time</strong>. That is, the first row contains the information for person 1 at <span class="math inline">\(k = 0\)</span>, the second row the information for person 1 at <span class="math inline">\(k = 1\)</span>, and so on until the follow-up of person 1 ends. This person-time (or “long”) data format is the one we will use in most survival analyses in this chapter and in all analyses with time-varying treatments in Part III. In our smoking cessation example, the person-time dataset has 176,764 rows, one per person-month.</p>
+<div id="def-person-time-format" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Person-Time Data Format)</strong></span> In the second data arrangement each row of the database corresponds to a <strong>person-time</strong>. That is, the first row contains the information for person 1 at <span class="math inline">\(k = 0\)</span>, the second row the information for person 1 at <span class="math inline">\(k = 1\)</span>, and so on until the follow-up of person 1 ends. This person-time (or “long”) data format is the one we will use in most survival analyses in this chapter and in all analyses with time-varying treatments in Part III.</p>
+</div>
+<p>In our smoking cessation example, the person-time dataset has 176,764 rows, one per person-month.</p>
 </section>
 <section id="the-event-indicator-d_k" class="slide level2">
 <h2>The Event Indicator <span class="math inline">\(D_k\)</span></h2>
 <p>To encode survival information through <span class="math inline">\(k\)</span> in the person-time data format, it is helpful to define a <strong>time-varying indicator of event</strong> <span class="math inline">\(D_k\)</span>. For each person at each month <span class="math inline">\(k\)</span>, the indicator <span class="math inline">\(D_k\)</span> takes value 1 if <span class="math inline">\(T \leq k\)</span> and value 0 if <span class="math inline">\(T &gt; k\)</span>.</p>
 <p>Using the time-varying outcome variable <span class="math inline">\(D_k\)</span>, we can define:</p>
 <div id="def-survival-risk-hazard" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Survival, Risk, and Hazard)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Definition 3 (Survival, Risk, and Hazard)</strong></span> &nbsp;</p>
 <ul>
 <li><strong>Survival</strong> at <span class="math inline">\(k\)</span>: <span class="math inline">\(\Pr[D_k = 0] = \Pr[T &gt; k]\)</span></li>
 <li><strong>Risk</strong> at <span class="math inline">\(k\)</span>: <span class="math inline">\(\Pr[D_k = 1] = \Pr[T \leq k]\)</span></li>
@@ -490,9 +496,12 @@
 </section>
 <section id="structural-nested-aft-models" class="slide level2">
 <h2>Structural Nested AFT Models</h2>
-<p>We can, however, model the ratio of survival times under different treatment levels. Let <span class="math inline">\(T^a_i\)</span> be the counterfactual time of survival for individual <span class="math inline">\(i\)</span> under treatment level <span class="math inline">\(a\)</span>. Suppose the effect of treatment is the same for every individual. We can then consider the <strong>structural nested accelerated failure time (AFT) model</strong>:</p>
+<p>We can, however, model the ratio of survival times under different treatment levels.</p>
+<div id="def-structural-nested-aft-model" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Structural Nested Accelerated Failure Time (AFT) Model)</strong></span> Let <span class="math inline">\(T^a_i\)</span> be the counterfactual time of survival for individual <span class="math inline">\(i\)</span> under treatment level <span class="math inline">\(a\)</span>. Suppose the effect of treatment is the same for every individual. We can then consider the <strong>structural nested accelerated failure time (AFT) model</strong>:</p>
 <p><span class="math display">\[T^a_i / T^{a=0}_i = \text{exp}{\left\{(\right\}}-\psi_1 a)\]</span></p>
-<p>where <span class="math inline">\(\psi_1\)</span> measures the expansion (or contraction) of each individual’s survival time attributable to treatment:</p>
+<p>where <span class="math inline">\(\psi_1\)</span> measures the expansion (or contraction) of each individual’s survival time attributable to treatment.</p>
+</div>
 <ul>
 <li><span class="math inline">\(\psi_1 &lt; 0\)</span>: treatment increases survival time</li>
 <li><span class="math inline">\(\psi_1 &gt; 0\)</span>: treatment decreases survival time</li>

@@ -194,12 +194,18 @@
 <li>Let <span class="math inline">\(A = 1\)</span> if the individual receives a heart transplant, <span class="math inline">\(A = 0\)</span> if not</li>
 <li>Let <span class="math inline">\(Y = 1\)</span> if the individual dies within 5 years, <span class="math inline">\(Y = 0\)</span> if survives</li>
 </ul>
-<p>To define a causal effect, we need to compare two <strong>counterfactual outcomes</strong> (also called <strong>potential outcomes</strong>) for each individual:</p>
+<p>To define a causal effect, we need to compare two counterfactual outcomes for each individual.</p>
+<div id="def-potential-outcome" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Counterfactual (Potential) Outcomes)</strong></span> For each individual, the <strong>counterfactual outcomes</strong> (also called <strong>potential outcomes</strong>) are:</p>
 <ul>
 <li><span class="math inline">\(Y^{a=1}\)</span>: The outcome if the individual receives treatment (<span class="math inline">\(a = 1\)</span>)</li>
 <li><span class="math inline">\(Y^{a=0}\)</span>: The outcome if the individual does not receive treatment (<span class="math inline">\(a = 0\)</span>)</li>
 </ul>
-<p>An <strong>individual causal effect</strong> exists when <span class="math inline">\(Y^{a=1} \neq Y^{a=0}\)</span> for an individual. For example, if Zeus would die if transplanted (<span class="math inline">\(Y^{a=1} = 1\)</span>) but survive if not transplanted (<span class="math inline">\(Y^{a=0} = 0\)</span>), then heart transplant has a causal effect on Zeus’s outcome.</p>
+</div>
+<div id="def-individual-causal-effect" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Individual Causal Effect)</strong></span> An <strong>individual causal effect</strong> exists when <span class="math inline">\(Y^{a=1} \neq Y^{a=0}\)</span> for an individual.</p>
+</div>
+<p>For example, if Zeus would die if transplanted (<span class="math inline">\(Y^{a=1} = 1\)</span>) but survive if not transplanted (<span class="math inline">\(Y^{a=0} = 0\)</span>), then heart transplant has a causal effect on Zeus’s outcome.</p>
 <aside class="notes">
 <p>These counterfactual outcomes represent what <em>would</em> happen under each treatment condition. The notation <span class="math inline">\(Y^a\)</span> denotes the counterfactual outcome under treatment level <span class="math inline">\(a\)</span>. This framework was formally developed in the statistical literature and is fundamental to causal inference.</p>
 <style type="text/css">
@@ -217,7 +223,11 @@
 <section id="the-fundamental-problem" class="slide level2">
 <h2>The Fundamental Problem</h2>
 <p>The fundamental problem of causal inference is that we can only observe one of the two counterfactual outcomes for each individual. If Zeus receives a heart transplant, we observe <span class="math inline">\(Y^{a=1}\)</span> but not <span class="math inline">\(Y^{a=0}\)</span>. The unobserved counterfactual outcome remains unknown.</p>
-<p>Formally, for each individual, the observed outcome <span class="math inline">\(Y\)</span> equals the counterfactual outcome <span class="math inline">\(Y^a\)</span> corresponding to the treatment actually received: <span class="math inline">\(Y = Y^A\)</span>. This equality is called <strong>consistency</strong>.</p>
+<div id="def-consistency-ch1" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Consistency)</strong></span> Formally, for each individual, the observed outcome <span class="math inline">\(Y\)</span> equals the counterfactual outcome <span class="math inline">\(Y^a\)</span> corresponding to the treatment actually received:</p>
+<p><span class="math display">\[Y = Y^A.\]</span></p>
+<p>This equality is called <strong>consistency</strong>.</p>
+</div>
 <aside class="notes">
 <p>Because of this missing data problem, individual causal effects cannot generally be identified (i.e., computed from observed data). We can never simultaneously observe both <span class="math inline">\(Y^{a=1}\)</span> and <span class="math inline">\(Y^{a=0}\)</span> for the same individual. This is why causal inference is fundamentally a missing data problem.</p>
 <p>However, we can define and sometimes estimate <strong>average causal effects</strong> in populations, which is the focus of the next section.</p>
@@ -358,13 +368,12 @@
 <li>Risk if all treated: <span class="math inline">\(\Pr[Y^{a=1} = 1] = 10/20 = 0.5\)</span></li>
 <li>Risk if all untreated: <span class="math inline">\(\Pr[Y^{a=0} = 1] = 10/20 = 0.5\)</span></li>
 </ul>
-</section>
-<section id="definition-of-average-causal-effect" class="slide level2">
-<h2>Definition of Average Causal Effect</h2>
-<p>An <strong>average causal effect</strong> of treatment <span class="math inline">\(A\)</span> on outcome <span class="math inline">\(Y\)</span> is present if:</p>
+<div id="def-average-causal-effect" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Average Causal Effect)</strong></span> An <strong>average causal effect</strong> of treatment <span class="math inline">\(A\)</span> on outcome <span class="math inline">\(Y\)</span> is present if:</p>
 <p><span class="math display">\[\Pr[Y^{a=1} = 1] \neq \Pr[Y^{a=0} = 1]\]</span></p>
 <p>or equivalently (using expected values):</p>
 <p><span class="math display">\[\text{E}{\left[Y^{a=1}\right]} \neq \text{E}{\left[Y^{a=0}\right]}\]</span></p>
+</div>
 <p>In our population, treatment does <em>not</em> have an average causal effect because both risks equal 0.5. The <strong>null hypothesis of no average causal effect</strong> holds. However, this does not mean there are no individual effects.</p>
 <aside class="notes">
 <p>Even though the average causal effect is null, 12 individuals in Table 1.1 have individual causal effects. Six were harmed by treatment (<span class="math inline">\(Y^{a=1} - Y^{a=0} = 1\)</span>), including Zeus, and six were helped (<span class="math inline">\(Y^{a=1} - Y^{a=0} = -1\)</span>). The harmful and beneficial effects cancel out in the average.</p>
@@ -390,20 +399,17 @@
 <section class="slide level2">
 
 <p>When a causal effect exists, we can quantify its magnitude using different <strong>effect measures</strong>. The three most common for binary outcomes are:</p>
-</section>
-<section id="causal-risk-difference" class="slide level2">
-<h2>Causal Risk Difference</h2>
-<p><span class="math display">\[\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]\]</span></p>
+<div id="def-causal-risk-difference" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Causal Risk Difference)</strong></span> <span class="math display">\[\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]\]</span></p>
+</div>
 <p>This additive measure equals zero under the null hypothesis. It measures the absolute difference in risk.</p>
-</section>
-<section id="causal-risk-ratio" class="slide level2">
-<h2>Causal Risk Ratio</h2>
-<p><span class="math display">\[\frac{\Pr[Y^{a=1} = 1]}{\Pr[Y^{a=0} = 1]}\]</span></p>
+<div id="def-causal-risk-ratio" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Causal Risk Ratio)</strong></span> <span class="math display">\[\frac{\Pr[Y^{a=1} = 1]}{\Pr[Y^{a=0} = 1]}\]</span></p>
+</div>
 <p>This multiplicative measure equals one under the null hypothesis. It measures how many times treatment increases (or decreases) the risk.</p>
-</section>
-<section id="causal-odds-ratio" class="slide level2">
-<h2>Causal Odds Ratio</h2>
-<p><span class="math display">\[\frac{\Pr[Y^{a=1} = 1] / \Pr[Y^{a=1} = 0]}{\Pr[Y^{a=0} = 1] / \Pr[Y^{a=0} = 0]}\]</span></p>
+<div id="def-causal-odds-ratio" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Causal Odds Ratio)</strong></span> <span class="math display">\[\frac{\Pr[Y^{a=1} = 1] / \Pr[Y^{a=1} = 0]}{\Pr[Y^{a=0} = 1] / \Pr[Y^{a=0} = 0]}\]</span></p>
+</div>
 <p>This also equals one under the null hypothesis.</p>
 <aside class="notes">
 <p>Different effect measures serve different purposes. For example, suppose 3 in a million would develop the outcome if treated, and 1 in a million if untreated:</p>
@@ -614,11 +620,14 @@
 </section>
 <section id="definitions-of-association" class="slide level2">
 <h2>Definitions of Association</h2>
-<p>Treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> are <strong>independent</strong> (not associated) when:</p>
+<div id="def-independence-ch1" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8 (Independence and Association)</strong></span> Treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> are <strong>independent</strong> (not associated) when:</p>
 <p><span class="math display">\[\Pr[Y = 1|A = 1] = \Pr[Y = 1|A = 0]\]</span></p>
 <p>or equivalently: <span class="math inline">\(\text{E}{\left[Y|A = 1\right]} = \text{E}{\left[Y|A = 0\right]}\)</span></p>
 <p>This is denoted <span class="math inline">\(Y \perp\!\!\!\perp A\)</span>.</p>
-<p>When this equality does not hold, <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> or <strong>dependent</strong>. Association measures include:</p>
+<p>When this equality does not hold, <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> or <strong>dependent</strong>.</p>
+</div>
+<p>Association measures include:</p>
 <ul>
 <li><strong>Associational risk difference</strong>: <span class="math inline">\(\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]\)</span></li>
 <li><strong>Associational risk ratio</strong>: <span class="math inline">\(\Pr[Y = 1|A = 1] / \Pr[Y = 1|A = 0]\)</span><br>

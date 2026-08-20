@@ -277,7 +277,10 @@
 </tbody>
 </table>
 </div>
-<p>The treatment strategies are <strong>sustained strategies</strong>: they specify a sequence of treatment decisions over the follow-up period, not just a single decision at baseline. Strategy 1 is “always treat” (<span class="math inline">\(\bar{a} = \bar{1}\)</span>); strategy 2 is the dynamic strategy “do not treat until CD4 &lt; 350, then treat.”</p>
+<div id="def-sustained-strategies" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Sustained Treatment Strategies)</strong></span> A <strong>sustained strategy</strong> specifies a sequence of treatment decisions over the entire follow-up period, not just a single decision at baseline.</p>
+</div>
+<p>The treatment strategies in the target trial above are sustained strategies. Strategy 1 is “always treat” (<span class="math inline">\(\bar{a} = \bar{1}\)</span>); strategy 2 is the dynamic strategy “do not treat until CD4 &lt; 350, then treat.”</p>
 </section>
 <section id="why-sustained-strategies-are-important" class="slide level2">
 <h2>Why Sustained Strategies Are Important</h2>
@@ -354,7 +357,7 @@
 
 <p><strong>Time zero</strong> — the moment at which follow-up begins for each individual — is one of the most consequential choices in any observational study. Errors in defining time zero are responsible for a large class of systematic biases in the observational literature.</p>
 <div id="def-time-zero" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Time Zero)</strong></span> Time zero for an individual is the point in calendar time at which:</p>
+<p><span class="theorem-title"><strong>Definition 4 (Time Zero)</strong></span> Time zero for an individual is the point in calendar time at which:</p>
 <ol type="1">
 <li>The individual meets the eligibility criteria of the target trial.</li>
 <li>The individual’s treatment strategy is assigned (or, in the emulation, observed).</li>
@@ -365,7 +368,10 @@
 </section>
 <section id="immortal-time-bias" class="slide level2">
 <h2>Immortal Time Bias</h2>
-<p><strong>Immortal time bias</strong> arises when there is a period of follow-up before time zero during which individuals cannot experience the outcome by design (because they must survive to meet the eligibility criterion or to be “assigned”). If this immortal time is misclassified — for example, attributed to the treated group when it actually preceded treatment initiation — the treated group appears to have better outcomes simply because they could not have died during the immortal period.</p>
+<div id="def-immortal-time-bias" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Immortal Time Bias)</strong></span> Immortal time bias arises when there is a period of follow-up before time zero during which individuals cannot experience the outcome by design (because they must survive to meet the eligibility criterion or to be “assigned”).</p>
+</div>
+<p>If this immortal time is misclassified — for example, attributed to the treated group when it actually preceded treatment initiation — the treated group appears to have better outcomes simply because they could not have died during the immortal period.</p>
 <div id="exm-immortal-time" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Immortal Time Bias: Statin and Mortality)</strong></span> Suppose we study whether statin use reduces mortality using an insurance claims database. We define “statin users” as individuals who filled a statin prescription at any point during a one-year observation window, and we compare their mortality during that year to “non-users.”</p>
 <p>Individuals who died in the first week cannot fill a prescription, so they are automatically in the non-user group. Statin users, by definition, survived long enough to fill a prescription. This immortal time — the gap between study entry and first prescription — is misattributed to the treated group, inducing a spurious survival advantage.</p>
@@ -373,7 +379,10 @@
 </section>
 <section id="sequential-trials" class="slide level2">
 <h2>Sequential Trials</h2>
-<p>One practical approach to correct time zero assignment in observational databases is the <strong>sequential trials</strong> design: for each calendar time <span class="math inline">\(t\)</span> at which individuals satisfy the eligibility criteria, we create a separate “trial” with time zero at <span class="math inline">\(t\)</span>. Individuals can appear in multiple such trials (each with a different time zero) and their data are then pooled across all trials with appropriate adjustment for the time-varying covariates at each trial’s time zero.</p>
+<p>One practical approach to correct time zero assignment in observational databases is the sequential trials design.</p>
+<div id="def-sequential-trials" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Sequential Trials Design)</strong></span> For each calendar time <span class="math inline">\(t\)</span> at which individuals satisfy the eligibility criteria, create a separate “trial” with time zero at <span class="math inline">\(t\)</span>. Individuals can appear in multiple such trials (each with a different time zero), and their data are then pooled across all trials with appropriate adjustment for the time-varying covariates at each trial’s time zero.</p>
+</div>
 <p>This design ensures that each participant’s follow-up genuinely begins at the moment of eligibility and strategy assignment, eliminating immortal time bias by construction.</p>
 <aside class="notes">
 <p><strong>Prevalent user bias</strong>:</p>

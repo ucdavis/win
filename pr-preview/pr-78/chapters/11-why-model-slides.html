@@ -268,7 +268,9 @@
 </section>
 <section class="slide level2">
 
-<p><strong>Parametric models</strong> make assumptions about the functional form relating treatment to outcome, allowing estimation even with sparse data.</p>
+<div id="def-parametric-models" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Parametric Models)</strong></span> <strong>Parametric models</strong> make assumptions about the functional form relating treatment to outcome, allowing estimation even with sparse data.</p>
+</div>
 </section>
 <section id="linear-regression-model" class="slide level2 scrollable">
 <h2>Linear Regression Model</h2>
@@ -325,7 +327,9 @@
 </section>
 <section class="slide level2">
 
-<p><strong>Smoothing</strong> refers to techniques that estimate the conditional mean as a smooth function, balancing between nonparametric flexibility and parametric smoothness.</p>
+<div id="def-smoothing" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Smoothing)</strong></span> <strong>Smoothing</strong> refers to techniques that estimate the conditional mean as a smooth function, balancing between nonparametric flexibility and parametric smoothness.</p>
+</div>
 </section>
 <section id="the-smoothing-spectrum" class="slide level2">
 <h2>The Smoothing Spectrum</h2>
@@ -384,12 +388,14 @@
 </section>
 <section id="definitions" class="slide level2">
 <h2>Definitions</h2>
-<p><strong>Bias</strong>: Systematic error, the difference between the expected value of the estimator and the true parameter.</p>
+<div id="def-bias-variance-mse" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Bias, Variance, and Mean Squared Error)</strong></span> <strong>Bias</strong>: Systematic error, the difference between the expected value of the estimator and the true parameter.</p>
 <p><span class="math display">\[\text{Bias}(\hat{\theta}) = \text{E}{\left[\hat{\theta}\right]} - \theta\]</span></p>
 <p><strong>Variance</strong>: Random error, the variability of the estimator across repeated samples.</p>
 <p><span class="math display">\[\text{Var}(\hat{\theta}) = \text{E}{\left[(\hat{\theta} - \text{E}{\left[\hat{\theta}\right]})^2\right]}\]</span></p>
 <p><strong>Mean squared error (MSE)</strong>: Combines both sources of error.</p>
 <p><span class="math display">\[MSE(\hat{\theta}) = \text{Bias}^2(\hat{\theta}) + \text{Var}(\hat{\theta})\]</span></p>
+</div>
 </section>
 <section id="the-trade-off" class="slide level2 scrollable">
 <h2>The Trade-Off</h2>

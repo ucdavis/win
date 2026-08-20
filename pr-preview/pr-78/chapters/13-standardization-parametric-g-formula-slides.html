@@ -312,8 +312,13 @@
 <section id="att-vs-ate" class="slide level2">
 <h2>ATT vs ATE</h2>
 <p><strong>Average treatment effect (ATE)</strong>: <span class="math display">\[\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\]</span> Standardized to the population (or sample) distribution of <span class="math inline">\(L\)</span>.</p>
-<p><strong>Average treatment effect in the treated (ATT)</strong>: <span class="math display">\[\text{E}{\left[Y^{a=1} \mid A = 1\right]} - \text{E}{\left[Y^{a=0} \mid A = 1\right]}\]</span> Standardized to the distribution of <span class="math inline">\(L\)</span> among the treated.</p>
-<p><strong>G-formula for ATT</strong>: <span class="math display">\[\hat{\text{E}}{\left[Y^a \mid A = 1\right]} = \frac{1}{n_1} \sum_{i: A_i = 1} \hat{\text{E}}{\left[Y \mid A = a, L = L_i\right]}\]</span> where <span class="math inline">\(n_1 = \sum_i I(A_i = 1)\)</span>.</p>
+<div id="def-att" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Average Treatment Effect in the Treated (ATT))</strong></span> The <strong>average treatment effect in the treated (ATT)</strong> is</p>
+<p><span class="math display">\[\text{E}{\left[Y^{a=1} \mid A = 1\right]} - \text{E}{\left[Y^{a=0} \mid A = 1\right]},\]</span></p>
+<p>standardized to the distribution of <span class="math inline">\(L\)</span> among the treated. The g-formula estimator for the ATT is</p>
+<p><span class="math display">\[\hat{\text{E}}{\left[Y^a \mid A = 1\right]} = \frac{1}{n_1} \sum_{i: A_i = 1} \hat{\text{E}}{\left[Y \mid A = a, L = L_i\right]},\]</span></p>
+<p>where <span class="math inline">\(n_1 = \sum_i I(A_i = 1)\)</span>.</p>
+</div>
 <aside class="notes">
 <p><strong>When to use ATT vs ATE</strong>:</p>
 <ul>
@@ -490,7 +495,7 @@
 <section id="dose-response-curve" class="slide level2 scrollable">
 <h2>Dose-Response Curve</h2>
 <div id="def-dose-response" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Dose-Response Curve)</strong></span> The <strong>dose-response curve</strong> is the function <span class="math inline">\(a \mapsto \text{E}{\left[Y^a\right]}\)</span> showing how the mean potential outcome varies with treatment level <span class="math inline">\(a\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 4 (Dose-Response Curve)</strong></span> The <strong>dose-response curve</strong> is the function <span class="math inline">\(a \mapsto \text{E}{\left[Y^a\right]}\)</span> showing how the mean potential outcome varies with treatment level <span class="math inline">\(a\)</span>.</p>
 <p>For continuous treatment, this is a smooth curve rather than discrete points.</p>
 </div>
 <p><strong>Example</strong>: Effect of smoking intensity (cigarettes/day) on lung function</p>

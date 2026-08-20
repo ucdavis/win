@@ -519,8 +519,10 @@
 <section id="ip-weights-for-censoring" class="slide level2">
 <h2>IP Weights for Censoring</h2>
 <p>Let <span class="math inline">\(C = 1\)</span> if censored (data missing), <span class="math inline">\(C = 0\)</span> if uncensored (data observed).</p>
-<p><strong>IP weight for censoring</strong>:</p>
+<div id="def-ip-weights-censoring" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (IP Weight for Censoring)</strong></span> The <strong>IP weight for censoring</strong> is</p>
 <p><span class="math display">\[W^C = \frac{1}{\Pr[C = 0 \mid A, L]}\]</span></p>
+</div>
 <p>These weights create a pseudo-population of only uncensored individuals.</p>
 </section>
 <section id="joint-weights-for-treatment-and-censoring" class="slide level2">
@@ -573,10 +575,12 @@
 </section>
 <section id="weighted-likelihood" class="slide level2">
 <h2>Weighted Likelihood</h2>
-<p>The IP weighted estimator solves the <strong>weighted estimating equations</strong>:</p>
+<div id="def-weighted-likelihood" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Weighted Estimating Equations and Weighted Likelihood)</strong></span> The IP weighted estimator solves the <strong>weighted estimating equations</strong>:</p>
 <p><span class="math display">\[\sum_{i=1}^n W^A_i \times \frac{\partial \log f(Y_i \mid A_i; \beta)}{\partial \beta} = 0\]</span></p>
 <p>This is equivalent to maximizing a <strong>weighted likelihood</strong>:</p>
 <p><span class="math display">\[L_W(\beta) = \prod_{i=1}^n [f(Y_i \mid A_i; \beta)]^{W^A_i}\]</span></p>
+</div>
 </section>
 <section id="connection-to-maximum-likelihood" class="slide level2 scrollable">
 <h2>Connection to Maximum Likelihood</h2>
