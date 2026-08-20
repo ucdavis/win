@@ -128,17 +128,21 @@ $$H_0(\psi): Y_i^1 - Y_i^0 = \psi_0 + \psi_1^{\top} L_i \text{ for all } i$$
 
 ### Creating the Pseudo-Outcome
 
-Under $H_0(\psi)$, we can construct:
+::: {#def-pseudo-outcome}
+## Pseudo-Outcome
+
+Under $H_0(\psi)$, the **pseudo-outcome** is
 
 $$H(\psi) = Y - A(\psi_0 + \psi_1^{\top} L)$$
 
-**Key property**: If $H_0(\psi)$ is true, then:
+**Key property**: If $H_0(\psi)$ is true, then
 
 $$H(\psi) = Y^0 \text{ for all individuals}$$
 
 Since $Y^0$ is the potential outcome under no treatment, it should be independent of actual treatment $A$ given confounders $L$:
 
 $$H(\psi) \ind A \mid L$$
+:::
 
 ::: {.notes}
 **Intuition**: 
@@ -159,6 +163,9 @@ G-estimation finds the value of $\psi$ that makes $H(\psi)$ independent of $A$ c
 
 ### G-Estimation Algorithm
 
+::: {#alg-g-estimation}
+## G-Estimation Algorithm
+
 **Step 1**: Specify a structural nested model
 $$\E{Y^1 - Y^0 \mid L} = \psi_0 + \psi_1^{\top} L$$
 
@@ -175,6 +182,7 @@ $$\sum_{i=1}^n A_i[Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0$$
 or more generally:
 $$\sum_{i=1}^n U_i(\psi)[Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0$$
 where $U_i(\psi)$ is an appropriate function (often $U_i = A_i$ or $U_i = A_i(1, L_i)^{\top}$).
+:::
 
 ### Example: Simple Model
 
@@ -299,11 +307,15 @@ for $j = 1, 2, \ldots, p$ where $p$ is the number of parameters.
 
 ### Choice of Estimating Functions
 
+::: {#def-g-estimation-functions}
+## Choice of Estimating Functions for G-Estimation
+
 Common choices for $U_{ij}$:
 
 1. **Simple**: $U_i = (A_i, A_i L_{i1}, A_i L_{i2}, \ldots)^{\top}$
 2. **Optimal**: $U_i = (A_i - \E{A \mid L_i})(1, L_{i1}, L_{i2}, \ldots)^{\top}$
 3. **Doubly robust**: More complex functions that achieve double robustness
+:::
 
 The choice affects:
 - Efficiency (variance of estimator)
@@ -328,11 +340,13 @@ G-estimation extends to handle censoring and missing outcomes.
 
 Let $C = 1$ if censored, $C = 0$ if observed.
 
-**Assumption**: $C \ind Y^a \mid A, L$ (censoring independent of potential outcomes given treatment and covariates)
+::: {#def-g-estimation-censoring}
+## G-Estimation with Censoring Weights
 
-**Weighted estimating equation**:
+Under the assumption $C \ind Y^a \mid A, L$ (censoring independent of potential outcomes given treatment and covariates), the **weighted estimating equation** is
 
 $$\sum_{i: C_i = 0} \frac{1}{\Pr[C_i = 0 \mid A_i, L_i]} U_i(\psi)[Y_i - A_i \gamma(A_i, 0; \psi, L_i)] = 0$$
+:::
 
 This weights each uncensored observation by the inverse probability of being uncensored.
 

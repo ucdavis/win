@@ -58,7 +58,12 @@ The average effect across the whole family is zero, but there is strong effect m
 - The causal effect **varies** or is **heterogeneous** across levels of $V$
 - Effect modification is a **property of the population**, not of individuals
 
-**Notation**: We write $\E{Y^{a=1} - Y^{a=0} | V = v}$ to denote the average causal effect in the subpopulation with $V = v$. This is a **conditional average treatment effect**.
+:::
+
+::: {#def-cate}
+## Conditional Average Treatment Effect
+
+The **conditional average treatment effect** (CATE) in the subpopulation with $V = v$ is $\E{Y^{a=1} - Y^{a=0} | V = v}$.
 :::
 
 ### Effect Modification Depends on the Scale
@@ -250,12 +255,14 @@ A variable can be:
 - We must adjust for age
 - We should report age-specific effects
 
+::: {#def-confounding-vs-modification-distinction}
+## Confounding as Bias, Effect Modification as Finding
+
+- **Confounding is a bias** to be removed through adjustment.
+- **Effect modification is a finding** to be reported and understood.
+:::
+
 ::: {.notes}
-**Key distinction**:
-
-- **Confounding is a bias** to be removed through adjustment
-- **Effect modification is a finding** to be reported and understood
-
 When a variable is both a confounder and an effect modifier:
 1. We must adjust for it to eliminate bias
 2. We should present stratum-specific effects (not just an overall adjusted effect)
@@ -271,7 +278,13 @@ In addition to stratification, **matching** is another method for adjustment tha
 
 ### Matching Methods
 
-**Matching** creates treatment and control groups that are similar with respect to measured covariates $L$. Common approaches:
+::: {#def-matching}
+## Matching
+
+**Matching** creates treatment and control groups that are similar with respect to measured covariates $L$.
+:::
+
+Common approaches:
 
 1. **Individual matching**: For each treated individual, find one (or more) untreated individuals with similar values of $L$
 2. **Caliper matching**: Match treated and untreated individuals whose $L$ values are within some distance threshold
@@ -363,13 +376,17 @@ Regression models provide a flexible framework for handling effect modification:
 **Model with effect modification**:
 $$\E{Y | A, V, L} = \beta_0 + \beta_1 A + \beta_2 V + \beta_3 A \times V + \beta_4^T L$$
 
+::: {#def-interaction-term}
+## Interaction Term (Regression)
+
 The **interaction term** $\beta_3 A \times V$ captures effect modification:
 
-- If $\beta_3 = 0$: No effect modification by $V$
-- If $\beta_3 \neq 0$: Effect of $A$ differs by $V$
+- If $\beta_3 = 0$: No effect modification by $V$.
+- If $\beta_3 \neq 0$: Effect of $A$ differs by $V$.
+:::
 
-::: {.notes}
-**Important distinctions**:
+::: {#def-statistical-interaction-vs-effect-modification}
+## Statistical Interaction vs. Effect Modification
 
 **Statistical interaction** (in regression models):
 
@@ -388,7 +405,9 @@ These concepts are related but not identical:
 - Effect modification on the risk difference scale corresponds to interaction in a linear model
 - Effect modification on the risk ratio scale corresponds to interaction in a log-linear model
 - Absence of statistical interaction does NOT guarantee absence of effect modification (it depends on the model and scale)
+:::
 
+::: {.notes}
 **Best practice**: Report stratum-specific effects directly rather than relying solely on interaction terms. This makes the findings more transparent and interpretable.
 :::
 

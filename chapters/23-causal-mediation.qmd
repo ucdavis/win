@@ -41,18 +41,26 @@ and suggests estimation strategies that parallel those developed for total effec
 ---
 
 Classical mediation analysis, as popularized by Baron and Kenny (1986),
-decomposes the total effect of $A$ on $Y$ into:
+decomposes the total effect of $A$ on $Y$ into a direct and an indirect effect.
 
-- A **direct effect**: the effect of $A$ on $Y$ not through $M$.
-- An **indirect effect** (mediated effect): the effect of $A$ on $Y$ through $M$.
+::: {#def-direct-indirect-effect}
+## Direct and Indirect Effect
 
-In a linear structural equation model, this decomposition is:
+The **direct effect** is the effect of $A$ on $Y$ not through $M$.
+The **indirect effect** (or mediated effect) is the effect of $A$ on $Y$ through $M$.
+:::
 
-$$Y = \beta_0 + \beta_1 A + \beta_2 M + \varepsilon_Y, \quad M = \alpha_0 + \alpha_1 A + \varepsilon_M.$$
+::: {#def-classical-mediation-decomposition}
+## Classical Mediation Decomposition
 
-The indirect effect is $\alpha_1 \cdot \beta_2$ (the "product of coefficients")
-and the direct effect is $\beta_1$.
-The total effect is $\beta_1 + \alpha_1 \cdot \beta_2$.
+In a linear structural equation model,
+
+$$Y = \beta_0 + \beta_1 A + \beta_2 M + \varepsilon_Y, \quad M = \alpha_0 + \alpha_1 A + \varepsilon_M,$$
+
+the indirect effect is $\alpha_1 \cdot \beta_2$ (the "product of coefficients"),
+the direct effect is $\beta_1$,
+and the total effect is $\beta_1 + \alpha_1 \cdot \beta_2$.
+:::
 
 ### Criticisms of the Classical Approach
 
@@ -132,29 +140,39 @@ The NIE asks: how much of the treatment effect is attributable to the change in 
 
 ### The Decomposition
 
-The **total effect** decomposes as:
+::: {#thm-mediation-decomposition}
+## Additive Decomposition of the Total Effect
+
+On the additive (difference) scale, the total effect decomposes as
 
 $$\E{Y^{a=1}} - \E{Y^{a=0}} = \text{NDE} + \text{NIE}.$$
+:::
 
-This decomposition always holds on the additive (difference) scale.
 On other scales (ratio, odds ratio), decompositions exist but are more complex.
 
-::: {.notes}
-**Nested counterfactuals**: The quantity $Y^{a=1, M^{a=0}}$ is a **cross-world** counterfactual:
+::: {#def-cross-world-counterfactual}
+## Cross-World Counterfactual
+
+The quantity $Y^{a=1, M^{a=0}}$ is a **cross-world** counterfactual:
 it asks about the outcome when treatment is set to 1 but the mediator takes the value
 it would have taken if treatment had been set to 0.
 This requires simultaneously imagining two different treatment worlds,
 which cannot be directly observed.
+:::
 
-**Identification**: The NDE and NIE are identified under four conditions:
+::: {#def-nde-nie-identification}
+## Identification of the NDE and NIE
+
+The NDE and NIE are identified under four conditions:
 (1) no unmeasured $A$–$Y$ confounders,
 (2) no unmeasured $M$–$Y$ confounders,
 (3) no unmeasured $A$–$M$ confounders, and
 (4) no $M$–$Y$ confounder that is itself caused by $A$.
+:::
+
 Condition (4) is particularly restrictive:
 if treatment affects a common cause of $M$ and $Y$,
 the cross-world counterfactuals are not identified from observed data.
-:::
 
 ## 23.3 Empirically Verifiable Mediation (p. 327)
 
@@ -198,23 +216,29 @@ The limitation of the CDE is that it does not provide a single measure
 of the "indirect effect"; rather, the CDE at $m$ captures the direct effect
 when the mediator is fixed at $m$, and one obtains a different CDE for each value of $m$.
 
-::: {.notes}
-**Relationship between CDE and NDE**:
+::: {#thm-cde-nde-equivalence}
+## CDE–NDE Equivalence under No Interaction
 
 When there is no $A \times M$ interaction on the additive scale
 (i.e., $\E{Y^{1,m}} - \E{Y^{0,m}}$ does not depend on $m$),
 the CDE equals the NDE for any value of $m$.
+:::
+
 In this case, both estimands agree and the choice is immaterial.
 When interaction is present, they differ, and the analyst must decide which is of interest.
 
-**Four-way decomposition**: VanderWeele (2014) proposed a four-way decomposition of the total effect
+::: {#thm-four-way-decomposition}
+## Four-Way Decomposition of the Total Effect
+
+VanderWeele (2014) proposed a four-way decomposition of the total effect
 into components due to:
 (1) the controlled direct effect (CDE at $m = 0$),
 (2) a pure indirect effect (no interaction),
 (3) an interaction component attributable to the mediator,
 (4) an interaction component attributable to treatment.
-This decomposition is especially useful when $A \times M$ interaction is present and of scientific interest.
 :::
+
+This decomposition is especially useful when $A \times M$ interaction is present and of scientific interest.
 
 ## 23.4 An Interventionist Theory of Mediation (p. 329)
 
@@ -252,11 +276,16 @@ it would have under $A = 0$?" — which is an intervention that could be impleme
 The randomized interventional analogue of the indirect effect is identified
 under conditions that do not require assumption (4) from Section 23.2:
 
+::: {#thm-riie-identification}
+## Identification of the Randomized Interventional Indirect Effect
+
 $$\text{rIIE} = \E{ \int \E{Y \mid A = 1, M = m, C}\, dF_{M \mid A=0, C}(m) }
 - \E{ \E{Y \mid A = 1, M, C} },$$
 
 where $C$ are baseline covariates sufficient to control confounding of both
 the $A \to Y$ and $M \to Y$ pathways.
+:::
+
 This expression can be estimated from observed data
 using outcome regression, IP weighting, or doubly robust methods.
 
@@ -283,9 +312,15 @@ and is identifiable.
 ### The Do-Operator and Mediation
 
 In the structural causal model (SCM) framework of Pearl (2000),
-mediation is analyzed using the **do-operator** $\text{do}(M = m)$,
-which represents an intervention that sets $M$ to a fixed value $m$
-by removing all arrows into $M$ in the causal DAG.
+mediation is analyzed using the do-operator.
+
+::: {#def-do-operator}
+## The Do-Operator
+
+Pearl's **do-operator** $\text{do}(M = m)$ represents an intervention
+that sets $M$ to a fixed value $m$ by removing all arrows into $M$
+in the causal DAG.
+:::
 
 ::: {#def-do-mediation}
 ## Direct Effect via the Do-Operator

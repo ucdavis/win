@@ -96,7 +96,11 @@ The notation $\ind$ denotes statistical independence.
 
 ### Exchangeability and Confounding
 
+::: {#def-confounding-ch3}
+## Confounding
+
 **Confounding** is the absence of exchangeability. When exchangeability fails, comparing treated and untreated groups yields a biased estimate of the causal effect.
+:::
 
 ::: {#exm-confounding}
 ## Confounding Example
@@ -127,8 +131,12 @@ This is why subject-matter knowledge is essential in causal inference. We must u
 - Expert opinion
 
 to identify the set of confounders $L$ that, if measured and adjusted for, would render the treated and untreated exchangeable.
+:::
 
-If there exist **unmeasured confounders**—variables that affect both treatment and outcome but are not in $L$—then conditional exchangeability fails, and our causal effect estimates will be biased.
+::: {#def-unmeasured-confounders}
+## Unmeasured Confounders
+
+**Unmeasured confounders** are variables that affect both treatment and outcome but are not included in the measured covariates $L$. If unmeasured confounders exist, conditional exchangeability fails, and causal effect estimates will be biased.
 :::
 
 ## 3.3 Positivity (pp. 29-30)
@@ -161,20 +169,24 @@ $$\Pr[A = 1 | \text{Age} = 90] = 0$$
 We cannot estimate $\E{Y^{a=1} | \text{Age} = 90}$ from the data because we have no treated 90-year-olds to observe.
 :::
 
-::: {.notes}
+::: {#def-positivity-violation-types}
+## Types of Positivity Violations
+
 **Positivity violations** can occur due to:
 
-1. **Structural violations**: Some individuals cannot receive treatment (e.g., males cannot receive a pregnancy intervention)
-2. **Random violations**: By chance, no individuals with certain covariate values received treatment in our sample
-3. **Practical violations**: Treatment is theoretically possible but extremely rare for certain subgroups
+- **Structural violations**: Some individuals cannot receive treatment (e.g., males cannot receive a pregnancy intervention).
+- **Random violations**: By chance, no individuals with certain covariate values received treatment in the sample.
+- **Practical violations**: Treatment is theoretically possible but extremely rare for certain subgroups.
 
+**Near-violations** occur when $\Pr[A = a | L]$ is very close to 0 or 1, which can also cause problems, leading to unstable estimates with large variance.
+:::
+
+::: {.notes}
 When positivity is violated, we must either:
 
 - Restrict our causal question to the subpopulation where positivity holds
 - Make additional modeling assumptions (with their own limitations)
 - Accept that we cannot answer the original causal question with the available data
-
-In practice, **near-violations** of positivity (where $\Pr[A = a | L]$ is very close to 0 or 1) can also cause problems, leading to unstable estimates with large variance.
 :::
 
 ## 3.4 Consistency: First, Define the Counterfactual Outcome (pp. 30-32)
@@ -195,7 +207,11 @@ In words: the observed outcome $Y$ for an individual equals their counterfactual
 
 ### Well-Defined Interventions
 
-For consistency to hold, the treatment must be **well-defined**. This means we must be able to precisely specify what it means to receive treatment level $a$.
+::: {#def-well-defined-treatment}
+## Well-Defined Treatment
+
+For consistency to hold, the treatment must be **well-defined**: we must be able to precisely specify what it means to receive treatment level $a$.
+:::
 
 ::: {#exm-ill-defined-treatment}
 ## Ill-Defined Treatment Example
@@ -216,12 +232,17 @@ When treatment is not well-defined, we have **treatment variation irrelevance**.
 $$Y = Y^{A,K}$$
 
 where $K$ represents the specific version of treatment received.
+:::
+
+::: {#def-sutva}
+## Stable Unit Treatment Value Assumption (SUTVA)
 
 For consistency to hold, we need either:
-1. **No treatment variation**: All individuals who receive $A = a$ receive exactly the same intervention
-2. **Treatment variation irrelevance**: Different versions of treatment have the same effect on the outcome (which is often implausible)
 
-This is sometimes called the **Stable Unit Treatment Value Assumption (SUTVA)**.
+- **No treatment variation**: All individuals who receive $A = a$ receive exactly the same intervention.
+- **Treatment variation irrelevance**: Different versions of treatment have the same effect on the outcome (often implausible).
+
+This requirement is sometimes called the **Stable Unit Treatment Value Assumption (SUTVA)**.
 :::
 
 ## 3.5 Consistency: Second, Link Counterfactuals to Observed Data (pp. 32-34)
@@ -230,13 +251,15 @@ This is sometimes called the **Stable Unit Treatment Value Assumption (SUTVA)**.
 
 The consistency assumption also requires that there is no **interference** between individuals.
 
-### No Interference
+::: {#def-no-interference}
+## No Interference
 
 **Interference** occurs when one individual's treatment affects another individual's outcome. For consistency to hold, we need:
 
 $$Y_i = Y_i^{A_i}$$
 
 The outcome for individual $i$ depends only on individual $i$'s treatment, not on other individuals' treatments.
+:::
 
 ::: {#exm-interference}
 ## Interference Example
@@ -267,7 +290,11 @@ Special methods are needed to handle interference, which is beyond the scope of 
 
 ### Temporal Consistency
 
-Consistency also requires that the **timing** of treatment and outcome measurement is well-defined.
+::: {#def-temporal-consistency}
+## Temporal Consistency
+
+Consistency also requires that the **timing** of treatment and outcome measurement is well-defined: we must specify when treatment is received and when the outcome is measured.
+:::
 
 ::: {.notes}
 If we ask "What is the effect of treatment on the outcome?", we must specify:

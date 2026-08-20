@@ -68,20 +68,30 @@ $$\E{Y^{a=1,e=1}} - \E{Y^{a=0,e=0}} \neq \bigl(\E{Y^{a=1,e=0}} - \E{Y^{a=0,e=0}}
 In words: the joint effect of both treatments differs from the sum of the individual effects.
 :::
 
-Equivalently, we can define additive interaction using the **interaction contrast**:
+Equivalently, we can define additive interaction using the interaction contrast.
+
+::: {#def-interaction-contrast}
+## Interaction Contrast
+
+The **interaction contrast** is defined as:
 
 $$\text{IC} = \E{Y^{a=1,e=1}} - \E{Y^{a=1,e=0}} - \E{Y^{a=0,e=1}} + \E{Y^{a=0,e=0}}$$
 
 If $\text{IC} \neq 0$, there is additive interaction.
+:::
+
+::: {#def-synergism-antagonism}
+## Synergism and Antagonism
+
+Based on the sign of the interaction contrast:
+
+- If $\text{IC} > 0$: **synergism** or **superadditivity** (combined effect exceeds sum of individual effects)
+- If $\text{IC} < 0$: **antagonism** or **subadditivity** (combined effect is less than sum of individual effects)
+- If $\text{IC} = 0$: **no interaction** or **additivity** (combined effect equals sum of individual effects)
+:::
 
 ::: {.notes}
-**Interpretation of IC**:
-
-- If $\text{IC} > 0$: **Synergism** or **superadditivity** (combined effect exceeds sum of individual effects)
-- If $\text{IC} < 0$: **Antagonism** or **subadditivity** (combined effect is less than sum of individual effects)
-- If $\text{IC} = 0$: **No interaction** or **additivity** (combined effect equals sum of individual effects)
-
-**Important distinction**: 
+**Important distinction**:
 
 - **Effect modification** (Chapter 4): Effect of $A$ varies across levels of a baseline variable $V$
 - **Interaction** (Chapter 5): Joint effect of two treatments $A$ and $E$ differs from sum of individual effects
@@ -199,23 +209,31 @@ Another way to understand interaction is through **counterfactual response types
 
 ### Four Response Types (Binary Outcome)
 
+::: {#def-response-types}
+## Counterfactual Response Types
+
 For a binary outcome, individuals can be classified into one of four types based on their four potential outcomes:
 
 1. **Doomed**: $Y^{0,0} = Y^{1,0} = Y^{0,1} = Y^{1,1} = 1$ (outcome occurs regardless of treatment)
-2. **Preventive via $A$ only**: $Y^{0,0} = Y^{0,1} = 1$, but $Y^{1,0} = Y^{1,1} = 0$ 
+2. **Preventive via $A$ only**: $Y^{0,0} = Y^{0,1} = 1$, but $Y^{1,0} = Y^{1,1} = 0$
 3. **Preventive via $E$ only**: $Y^{0,0} = Y^{1,0} = 1$, but $Y^{0,1} = Y^{1,1} = 0$
 4. **Preventive via both**: $Y^{0,0} = 1$, but $Y^{1,0} = Y^{0,1} = Y^{1,1} = 0$
 5. **Immune**: $Y^{0,0} = Y^{1,0} = Y^{0,1} = Y^{1,1} = 0$ (outcome never occurs)
+:::
 
-And several other combinations...
+With four binary potential outcomes there are, more generally, $2^4 = 16$ possible response types; the five listed above are only a subset.
+
+::: {#def-response-type-patterns}
+## Synergistic, Redundant, and Antagonistic Response Types
+
+Many of the 16 possible response types correspond to various patterns of interaction:
+
+- **Synergistic** types: individuals for whom the outcome is prevented only by the combination of both treatments
+- **Redundant** types: individuals who benefit from either treatment alone (treatments are substitutes)
+- **Antagonistic** types: individuals who benefit from one treatment alone but not from the combination
+:::
 
 ::: {.notes}
-Actually, with four binary potential outcomes, there are $2^4 = 16$ possible response types. Many of these correspond to various patterns of interaction:
-
-- **Synergistic** types: Individuals for whom the outcome is prevented only by the combination of both treatments
-- **Redundant** types: Individuals who benefit from either treatment alone (treatments are substitutes)
-- **Antagonistic** types: Individuals who benefit from one treatment alone but not from the combination
-
 These response types are **unobservable**—we can never know which type an individual is because we only observe one potential outcome. However, the *distribution* of response types in the population determines whether interaction exists.
 :::
 
@@ -270,7 +288,11 @@ A **sufficient cause** is a set of conditions that inevitably produces the outco
 
 ### Components of Sufficient Causes
 
+::: {#def-component-cause}
+## Component Cause
+
 Each sufficient cause consists of **component causes**—individual factors that, together, are sufficient to produce the outcome.
+:::
 
 ::: {#exm-sufficient-cause}
 ## Sufficient Cause Example

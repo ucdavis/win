@@ -74,15 +74,35 @@ An important difference between confounding and selection bias: randomization pr
 
 The causal diagrams in Figures 8.3–8.6 can represent several types of selection bias:
 
-- **Differential loss to follow-up** (also called bias due to informative censoring): The variable $C$ in Figures 8.3–8.6 represents censoring, and the bias is precisely as described in the previous section.
+::: {#def-differential-loss-to-follow-up}
+## Differential Loss to Follow-Up
 
-- **Missing data bias, nonresponse bias**: The variable $C$ in Figures 8.3–8.6 can represent missing data on the outcome for any reason, not just as a result of loss to follow-up. Individuals could have missing data because they are reluctant to provide information or because they miss study visits. Restricting the analysis to individuals with complete data ($C = 0$) may result in bias.
+**Differential loss to follow-up**, also called bias due to **informative censoring**, arises when the variable $C$ in Figures 8.3–8.6 represents censoring: restricting the analysis to individuals who remain uncensored ($C = 0$) induces the selection bias described in the previous section.
+:::
 
-- **Healthy worker bias**: Figures 8.3–8.6 can also describe a bias that arises when estimating the effect of an occupational exposure $A$ (e.g., a chemical) on mortality $Y$ in a cohort of factory workers. The underlying unmeasured true health status $U$ is a determinant of both death $Y$ and of being at work $C$ (1: not at work, 0: at work). The study is restricted to individuals who are at work ($C = 0$) at the time of outcome ascertainment. Being exposed to the chemical reduces the probability of being at work in the near future, either directly (e.g., exposure can cause disabling asthma) like in Figures 8.3 and 8.4, or through a common cause $W$ like in Figures 8.5 and 8.6.
+::: {#def-missing-data-bias}
+## Missing Data Bias / Nonresponse Bias
 
-- **Self-selection bias, volunteer bias**: Figures 8.3–8.6 can also represent a study in which $C$ is agreement to participate (1: no, 0: yes), $A$ is cigarette smoking, $Y$ is coronary heart disease, $U$ is family history of heart disease, and $W$ is healthy lifestyle. Under any of these structures, selection bias may be present if the study is restricted to those who volunteered or elected to participate ($C = 0$).
+**Missing data bias**, also called **nonresponse bias**, arises when the variable $C$ in Figures 8.3–8.6 represents missing data on the outcome for any reason, not just as a result of loss to follow-up—for example, because individuals are reluctant to provide information or because they miss study visits. Restricting the analysis to individuals with complete data ($C = 0$) may result in bias.
+:::
 
-- **Selection affected by treatment received before study entry**: If treatment $A$ took place before the study started and affects the probability of being selected into the study, selection bias is expected. This bias may be present in any study that attempts to estimate the causal effect of a treatment that occurred before the study started or in which treatment includes a pre-study component.
+::: {#def-healthy-worker-bias}
+## Healthy Worker Bias
+
+**Healthy worker bias** arises when estimating the effect of an occupational exposure $A$ (e.g., a chemical) on mortality $Y$ in a cohort of factory workers. The underlying unmeasured true health status $U$ is a determinant of both death $Y$ and of being at work $C$ (1: not at work, 0: at work), and the study is restricted to individuals who are at work ($C = 0$) at the time of outcome ascertainment. Being exposed to the chemical reduces the probability of being at work in the near future, either directly (e.g., exposure can cause disabling asthma) like in Figures 8.3 and 8.4, or through a common cause $W$ like in Figures 8.5 and 8.6.
+:::
+
+::: {#def-self-selection-bias}
+## Self-Selection Bias / Volunteer Bias
+
+**Self-selection bias**, also called **volunteer bias**, arises in a study in which $C$ is agreement to participate (1: no, 0: yes)—for example, a study in which $A$ is cigarette smoking, $Y$ is coronary heart disease, $U$ is family history of heart disease, and $W$ is healthy lifestyle. Under any of the structures in Figures 8.3–8.6, selection bias may be present if the study is restricted to those who volunteered or elected to participate ($C = 0$).
+:::
+
+::: {#def-selection-pre-study-treatment}
+## Selection Affected by Treatment Received Before Study Entry
+
+If treatment $A$ took place before the study started and affects the probability of being selected into the study, selection bias is expected. This bias may be present in any study that attempts to estimate the causal effect of a treatment that occurred before the study started or in which treatment includes a pre-study component.
+:::
 
 ::: {.notes}
 These examples show that selection bias may occur in retrospective studies—those in which data on treatment $A$ are collected after the outcome $Y$ occurs—and in prospective studies—those in which data on treatment $A$ are collected before the outcome $Y$ occurs. Further, selection bias may occur both in observational studies and in randomized experiments (when selection happens after randomization).
@@ -165,9 +185,13 @@ The backdoor criterion says that adjustment for the causal effect of censoring $
 
 The causal contrast of interest needs to be modified in the presence of censoring. Because selection bias would not exist if everybody had been uncensored, we want to consider a causal contrast that reflects what would have happened in the absence of censoring.
 
+::: {#def-censoring-causal-contrast}
+## Causal Contrast Under Censoring
+
 Let $Y^{a=1,c=0}$ be an individual's counterfactual outcome if they had received treatment $A = 1$ and had remained uncensored $C = 0$. Similarly, let $Y^{a=0,c=0}$ be an individual's counterfactual outcome if they had not received treatment $A = 0$ and had remained uncensored $C = 0$. Our causal contrast of interest is:
 
 $$\Pr[Y^{a=1,c=0} = 1] \quad \text{versus} \quad \Pr[Y^{a=0,c=0} = 1]$$
+:::
 
 ::: {.notes}
 By conceptualizing the causal contrast of interest in terms of $Y^{a,c=0}$, we can think of censoring $C$ as just another treatment. The goal of the analysis is to compute the causal effect of a joint intervention on $A$ and $C$. To eliminate selection bias for the effect of treatment $A$, we need to adjust for confounding for the effect of treatment $C$.
@@ -245,7 +269,17 @@ We can consider three cause-specific mortality variables: death from tumor $Y_A$
 
 The causal diagram in Figure 8.13 (an expansion of Figure 8.12) represents this causal structure. Because the arrows from $Y_A$, $Y_E$, and $Y_O$ to $Y$ are deterministic, conditioning on observed survival ($Y = 0$) is equivalent to simultaneously conditioning on $Y_A = 0$, $Y_E = 0$, and $Y_O = 0$. As a consequence, $A$ and $E$ are conditionally independent given $Y = 0$: conditioning on collider $Y = 0$, the path between $A$ and $E$ through $Y$ is blocked by conditioning on the non-colliders $Y_A$, $Y_E$, and $Y_O$.
 
-When the data can be summarized by Figure 8.13, we say that the data follow a **multiplicative survival model** (see Technical Point 8.2). In other words, collider stratification is not always a source of selection bias.
+When the data can be summarized by Figure 8.13, we say that the data follow a multiplicative survival model (see Technical Point 8.2). In other words, collider stratification is not always a source of selection bias.
+
+::: {#def-multiplicative-survival-model}
+## Multiplicative Survival Model
+
+When the conditional probability of survival $\Pr[Y = 0 | E = e, A = a]$ given $A$ and $E$ is equal to a product $g(e) h(a)$ of functions of $e$ and $a$, we say that a **multiplicative survival model** holds:
+
+$$\Pr[Y = 0 | E = e, A = a] = g(e) h(a)$$
+
+This is equivalent to a model that assumes the survival ratio $\Pr[Y = 0 | E = e, A = a] / \Pr[Y = 0 | E = e, A = 0]$ does not depend on $e$ and is equal to $h(a)$. The data follow a multiplicative survival model when there is no interaction between $A$ and $E$ for $Y = 0$ on the multiplicative scale.
+:::
 
 ::: {.notes}
 In contrast, $A$ and $E$ will not be independent conditionally on $Y = 0$ when any of the following situations occur (Figures 8.14–8.16):
@@ -258,13 +292,7 @@ In summary, conditioning on a collider always induces an association between its
 :::
 
 ::: {.callout-note title="Technical Point 8.2: Multiplicative Survival Model"}
-When the conditional probability of survival $\Pr[Y = 0 | E = e, A = a]$ given $A$ and $E$ is equal to a product $g(e) h(a)$ of functions of $e$ and $a$, we say that a **multiplicative survival model** holds:
-
-$$\Pr[Y = 0 | E = e, A = a] = g(e) h(a)$$
-
-This is equivalent to a model that assumes the survival ratio $\Pr[Y = 0 | E = e, A = a] / \Pr[Y = 0 | E = e, A = 0]$ does not depend on $e$ and is equal to $h(a)$. The data follow a multiplicative survival model when there is no interaction between $A$ and $E$ for $Y = 0$ on the multiplicative scale.
-
-A proof that Figure 8.13 represents a multiplicative survival model:
+A proof that Figure 8.13 represents a multiplicative survival model (defined in the main text):
 
 $$\Pr[Y = 0 | E = e, A = a] = \Pr[Y_A = 0, Y_E = 0, Y_O = 0 | E = e, A = a] = \Pr[Y_O = 0] \Pr[Y_A = 0 | A = a] \Pr[Y_E = 0 | E = e]$$
 

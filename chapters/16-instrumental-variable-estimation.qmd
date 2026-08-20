@@ -105,11 +105,13 @@ Under the three IV conditions, we can identify a causal effect.
 
 **Setting**: Binary instrument $Z$, binary treatment $A$, outcome $Y$
 
-**IV estimand**:
+::: {#def-wald-estimator}
+## Wald Estimator
 
-$$\frac{\E{Y \mid Z = 1} - \E{Y \mid Z = 0}}{\E{A \mid Z = 1} - \E{A \mid Z = 0}}$$
+For a binary instrument $Z$ and binary treatment $A$, the **Wald estimator** (also called the **ratio estimator**) is
 
-This is the **Wald estimator** or **ratio estimator**.
+$$\frac{\E{Y \mid Z = 1} - \E{Y \mid Z = 0}}{\E{A \mid Z = 1} - \E{A \mid Z = 0}}.$$
+:::
 
 **Interpretation**: The effect of $Z$ on $Y$, divided by the effect of $Z$ on $A$.
 
@@ -187,7 +189,11 @@ Individuals can be classified into **principal strata** based on potential treat
 4. **Defiers**: $A^{z=1} = 0, A^{z=0} = 1$ (do opposite of instrument)
 :::
 
-**Monotonicity assumption**: No defiers exist.
+::: {#def-iv-monotonicity}
+## Monotonicity Assumption
+
+The **monotonicity assumption** states that no defiers exist in the population.
+:::
 
 ::: {.notes}
 **Why monotonicity**:
@@ -203,11 +209,15 @@ The IV estimand identifies the causal effect in **compliers only** (LATE = local
 
 ### Local Average Treatment Effect (LATE)
 
-Under IV conditions plus monotonicity:
+::: {#def-late}
+## Local Average Treatment Effect (LATE)
 
-$$\text{IV estimand} = \E{Y^{a=1} - Y^{a=0} \mid \text{Complier}}$$
+Under the IV conditions plus monotonicity, the IV estimand equals
 
-This is the **average causal effect in compliers**, not in the full population.
+$$\E{Y^{a=1} - Y^{a=0} \mid \text{Complier}},$$
+
+the **local average treatment effect (LATE)** — the average causal effect in compliers, not in the full population.
+:::
 
 **Interpretation**: IV tells us the effect of treatment for those who would comply with the instrument.
 
@@ -219,7 +229,8 @@ This is the **average causal effect in compliers**, not in the full population.
 
 **Two-stage least squares (2SLS)** is the most common IV method for continuous outcomes.
 
-### 2SLS Algorithm
+::: {#alg-2sls}
+## Two-Stage Least Squares (2SLS)
 
 **Stage 1**: Regress treatment on instrument (and covariates if present)
 
@@ -232,6 +243,7 @@ Obtain predicted treatment: $\hat{A}_i = \hat{\alpha}_0 + \hat{\alpha}_1 Z_i$
 $$Y_i = \beta_0 + \beta_1 \hat{A}_i + \eta_i$$
 
 The coefficient $\hat{\beta}_1$ is the 2SLS estimate of the causal effect.
+:::
 
 ### Why This Works
 
@@ -285,11 +297,15 @@ IV estimation can be combined with adjustment for measured confounders.
 
 ### Conditional IV Estimation
 
-**Modified IV conditions**:
+::: {#def-conditional-iv}
+## Conditional Instrumental Variable
+
+Given measured covariates $L$, $Z$ is a **conditional instrumental variable** for the effect of $A$ on $Y$ if:
 
 1. **Conditional relevance**: $Z \not\ind A \mid L$
 2. **Conditional exchangeability**: $Y^a \ind Z \mid L$
 3. **Exclusion restriction**: $Y^{a,z} = Y^a$ (still unconditional)
+:::
 
 **Estimation**: Use 2SLS with $L$ as covariates, then standardize over $L$.
 

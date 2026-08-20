@@ -22,15 +22,27 @@ This chapter is based on @hernan2020causal [Chapter 10, pp. 131-142]. It marks t
 
 ---
 
-Up to now, we have focused on **identification**: determining whether causal effects can be computed from observed data under certain assumptions. Now we turn to **estimation**: using finite data to approximate those causal effects.
+Up to now, we have focused on identification. Now we turn to estimation.
+
+::: {#def-identification-vs-estimation}
+## Identification and Estimation
+
+**Identification**: determining whether causal effects can be computed from observed data under certain assumptions.
+
+**Estimation**: using finite data to approximate those causal effects.
+:::
 
 ### Key Concepts in Statistical Estimation
+
+::: {#def-estimand-estimator-estimate}
+## Estimand, Estimator, and Estimate
 
 **Estimand**: The population parameter of interest (e.g., $\Pr[Y = 1|A = a]$ in the super-population).
 
 **Estimator**: A rule for computing the estimand from sample data.
 
 **Estimate**: The numerical value obtained by applying the estimator to a particular sample (a point estimate).
+:::
 
 ::: {#exm-estimator}
 ## Sample Proportion as an Estimator
@@ -56,21 +68,31 @@ Up to now, we have focused on **identification**: determining whether causal eff
 
 ### Consistency of Estimators
 
+::: {#def-consistent-estimator}
+## Consistent Estimator
+
 An estimator is **consistent** if estimates get arbitrarily close to the true parameter as sample size increases.
 
 $$Pr\left[|\hat{\theta}_n - \theta| > \epsilon\right] \rightarrow 0 \text{ as } n \rightarrow \infty, \text{ for all } \epsilon > 0$$
+:::
 
 The sample proportion $\widehat{Pr}[Y = 1|A = a]$ is a consistent estimator of $\Pr[Y = 1|A = a]$.
 
 ### Confidence Intervals
 
-A **95% confidence interval** quantifies uncertainty due to random sampling.
+::: {#def-confidence-interval}
+## Confidence Interval
 
-**Construction (Wald interval)**:
+A **95% confidence interval** quantifies uncertainty due to random sampling.
+:::
+
+::: {#alg-wald-interval}
+## Wald Interval Construction
 
 1. Compute point estimate $\hat{p}$
 2. Estimate standard error: $\widehat{SE} = \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$
 3. Compute interval: $\hat{p} \pm 1.96 \times \widehat{SE}$
+:::
 
 **Example**: For $\hat{p} = 7/13 \approx 0.54$ with $n = 13$:
 
@@ -87,15 +109,19 @@ In repeated sampling, 95% of such intervals will contain the true parameter.
 "There is a 95% probability that the true parameter is in this interval."
 
 The parameter is fixed (though unknown). The interval either contains it (probability 1) or doesn't (probability 0).
+:::
 
-**Calibrated vs. valid intervals**:
+::: {#def-calibrated-valid-intervals}
+## Calibrated, Conservative, and Valid Intervals
 
-- **Calibrated**: Contains the true parameter in exactly 95% of samples
-- **Conservative**: Contains the true parameter in >95% of samples  
-- **Valid**: Calibrated or conservative (at least 95% coverage)
+**Calibrated**: Contains the true parameter in exactly 95% of samples.
+
+**Conservative**: Contains the true parameter in >95% of samples.
+
+**Valid**: Calibrated or conservative (at least 95% coverage).
+:::
 
 Most commonly used intervals (like Wald intervals) are **large-sample valid**: guaranteed to be valid only in large samples.
-:::
 
 ## 10.2 Estimation of Causal Effects (pp. 134-136)
 
@@ -166,8 +192,13 @@ The concept of a "super-population" is a useful fiction that allows us to apply 
 
 ### Two Sources of Randomness
 
-1. **Sampling variability**: Random selection of individuals from a super-population
-2. **Nondeterministic counterfactuals**: Intrinsic randomness in outcomes even with fixed treatment and covariates
+::: {#def-sources-of-randomness}
+## Two Sources of Randomness
+
+**Sampling variability**: Random selection of individuals from a super-population.
+
+**Nondeterministic counterfactuals**: Intrinsic randomness in outcomes even with fixed treatment and covariates.
+:::
 
 ### When Are Binomial Confidence Intervals Valid?
 
@@ -225,7 +256,11 @@ When should we condition on variables when computing causal effects and their st
 
 ### The Principle
 
+::: {#def-conditionality-principle}
+## Conditionality Principle
+
 **Conditionality principle**: If a variable $L$ is independent of treatment $A$ and outcome $Y$ under the intervention, we may condition on $L$ when computing estimates and standard errors without affecting validity.
+:::
 
 ### Applications
 
@@ -269,7 +304,11 @@ In randomized trials, pre-specify baseline covariates to adjust for. This improv
 
 ---
 
+::: {#def-curse-of-dimensionality}
+## Curse of Dimensionality
+
 As the number of confounders or effect modifiers increases, nonparametric estimation becomes increasingly difficult. This is the **curse of dimensionality**.
+:::
 
 ### The Problem
 

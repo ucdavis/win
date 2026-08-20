@@ -119,14 +119,24 @@ $$\Pr[Y = 1 \mid A = 1] - \Pr[Y = 1 \mid A = 0] \neq \Pr[Y^{a=1} = 1] - \Pr[Y^{a
 In structural terms, confounding exists when there is at least one open backdoor path from $A$ to $Y$ in the causal diagram.
 :::
 
+::: {#def-confounding-direction}
+## Positive and Negative Confounding
+
+**Positive confounding**: the crude estimate overstates the causal effect (or makes a harmful treatment look beneficial, or a beneficial treatment look even more beneficial).
+
+**Negative confounding**: the crude estimate understates the causal effect (or makes a beneficial treatment look harmful).
+
+The direction depends on the signs of the associations $L \to A$ and $L \to Y$.
+:::
+
+::: {#def-confounding-by-indication}
+## Confounding by Indication (Channeling Bias)
+
+**Confounding by indication**, also called **channeling bias**, occurs when the indication for treatment (e.g., higher disease severity) is itself a risk factor for the outcome, so that patients selected for treatment differ systematically in prognosis from those who are not.
+:::
+
 ::: {.notes}
-**Confounding can operate in any direction:**
-
-- **Positive confounding**: the crude estimate overstates the causal effect (or makes a harmful treatment look beneficial, or a beneficial treatment look even more beneficial)
-- **Negative confounding**: the crude estimate understates the causal effect (or makes a beneficial treatment look harmful)
-- The direction depends on the signs of the associations $L \to A$ and $L \to Y$
-
-In the drug example above, sicker patients (males) were more likely to receive treatment and had worse outcomes, so the drug appears harmful even though it has no effect. This is **confounding by indication** or **channeling bias**—the indication for treatment (higher disease severity) is itself a risk factor for the outcome.
+In the drug example above, sicker patients (males) were more likely to receive treatment and had worse outcomes, so the drug appears harmful even though it has no effect. This is an instance of confounding by indication.
 :::
 
 ## 7.2 Confounding and Exchangeability (pp. 80–82)
@@ -330,6 +340,9 @@ The term **confounder** is commonly used in epidemiology to refer to a variable 
 
 ### The Traditional Epidemiological Criteria
 
+::: {#def-traditional-confounder-criteria}
+## Traditional Epidemiological Criteria for a Confounder
+
 In the traditional approach, a variable $C$ is labeled a confounder of the $A$–$Y$ association if it satisfies three criteria:
 
 1. $C$ is associated with treatment $A$
@@ -337,6 +350,7 @@ In the traditional approach, a variable $C$ is labeled a confounder of the $A$�
 3. $C$ is not on the causal pathway from $A$ to $Y$ (i.e., $C$ is not a mediator)
 
 These criteria are assessed from the data (criteria 1 and 2) and from prior knowledge (criterion 3).
+:::
 
 ### Limitations of the Traditional Criteria
 
@@ -418,6 +432,9 @@ The causal diagrams introduced in Chapter 6 represent relationships among **obse
 
 ### Constructing a SWIG
 
+::: {#def-swig}
+## Single-World Intervention Graph (SWIG)
+
 A SWIG for the intervention $A = a$ is obtained from the original causal diagram by the following operation:
 
 - **Split each treatment node $A$** into two parts:
@@ -427,6 +444,7 @@ A SWIG for the intervention $A = a$ is obtained from the original causal diagram
 - Each child of $A$ in the original DAG becomes a counterfactual variable (e.g., $Y$ becomes $Y^a$).
 
 The key result is that in the SWIG, **counterfactual independence can be read off using d-separation**, just as ordinary independence is read from a standard DAG.
+:::
 
 ::: {#exm-swig}
 ## SWIG for the Standard Confounding Structure

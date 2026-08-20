@@ -103,7 +103,13 @@ In practice, we cannot verify exchangeability directly because we don't observe 
 
 When exchangeability holds, we can identify the average causal effect from observed data:
 
-$$\E{Y^{a=1}} - \E{Y^{a=0}} = \E{Y|A = 1} - \E{Y|A = 0}$$
+::: {#thm-association-equals-causation}
+## Association Equals Causation Under Exchangeability
+
+Under exchangeability,
+
+$$\E{Y^{a=1}} - \E{Y^{a=0}} = \E{Y|A = 1} - \E{Y|A = 0}.$$
+:::
 
 The right side is the observed associational difference, which we can compute from Table 2.1. Under the exchangeability guaranteed by randomization, this associational difference equals the causal effect.
 
@@ -194,9 +200,13 @@ Conditional randomization serves several purposes:
 
 Common forms include:
 
-- **Stratified randomization**: Randomize within strata defined by covariates
-- **Block randomization**: Randomize in blocks to ensure balanced sample sizes
-- **Matched-pair randomization**: Match individuals on covariates, then randomize within pairs
+::: {#def-randomization-types}
+## Types of Conditional Randomization
+
+- **Stratified randomization**: Randomize within strata defined by covariates.
+- **Block randomization**: Randomize in blocks to ensure balanced sample sizes.
+- **Matched-pair randomization**: Match individuals on covariates, then randomize within pairs.
+:::
 
 ## 2.3 Standardization (pp. 18-21)
 
@@ -442,9 +452,21 @@ In randomized experiments, these assumptions are met by design. In observational
 
 ### 2.1 The intention-to-treat effect
 
-In randomized experiments, individuals may not receive or adhere to their assigned treatment. For example, someone randomized to receive a transplant may refuse it. The **intention-to-treat (ITT) effect** is the causal effect of treatment *assignment* (not treatment received).
+In randomized experiments, individuals may not receive or adhere to their assigned treatment. For example, someone randomized to receive a transplant may refuse it.
 
-Let $Z$ denote random assignment and $A$ denote treatment actually received. The ITT effect is $\E{Y^{z=1}} - \E{Y^{z=0}}$, while the **per-protocol effect** is $\E{Y^{a=1}} - \E{Y^{a=0}}$.
+Let $Z$ denote random assignment and $A$ denote treatment actually received.
+
+::: {#def-itt-ch2}
+## Intention-to-Treat (ITT) Effect
+
+The **intention-to-treat (ITT) effect** is the causal effect of treatment *assignment* (not treatment received): $\E{Y^{z=1}} - \E{Y^{z=0}}$.
+:::
+
+::: {#def-pp-ch2}
+## Per-Protocol Effect
+
+The **per-protocol effect** is the causal effect of treatment actually received: $\E{Y^{a=1}} - \E{Y^{a=0}}$.
+:::
 
 ITT effects are always identified in randomized experiments (because $Y^z \ind Z$ by randomization). Per-protocol effects require additional assumptions about non-adherence.
 
@@ -452,7 +474,11 @@ ITT effects are always identified in randomized experiments (because $Y^z \ind Z
 
 Chapter 1 distinguished the **average causal null hypothesis** ($\E{Y^{a=1}} = \E{Y^{a=0}}$) from the **sharp causal null hypothesis** ($Y^{a=1} = Y^{a=0}$ for all individuals).
 
-In randomized experiments, the sharp null allows for **exact inference** using permutation tests (Fisher's randomization test). These tests are valid in finite samples without distributional assumptions.
+::: {#def-permutation-test}
+## Permutation Test (Fisher's Randomization Test)
+
+Under the sharp causal null hypothesis, **exact inference** can be performed using a **permutation test** (also called **Fisher's randomization test**), which is valid in finite samples without distributional assumptions.
+:::
 
 Under the average null (but not the sharp null), standard large-sample inference (normal approximation, t-tests) is typically used.
 
@@ -462,7 +488,13 @@ Under the average null (but not the sharp null), standard large-sample inference
 
 ### 2.1 Identification and exchangeability
 
-A causal quantity is **identified** if it can be expressed as a function of the observed data distribution. Exchangeability is a sufficient condition for identifying average causal effects.
+::: {#def-identified-ch2}
+## Identified
+
+A causal quantity is **identified** if it can be expressed as a function of the observed data distribution.
+:::
+
+Exchangeability is a sufficient condition for identifying average causal effects.
 
 Under $Y^a \ind A$, we have:
 $$\E{Y^a} = \E{Y|A=a}$$

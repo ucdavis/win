@@ -34,6 +34,9 @@ There is no allocation of weight to these two errors that corrects both simultan
 
 ---
 
+::: {#def-treatment-confounder-feedback}
+## Treatment-Confounder Feedback
+
 **Treatment-confounder feedback** arises whenever a time-varying covariate $L_k$
 satisfies all of the following:
 
@@ -45,6 +48,7 @@ satisfies all of the following:
 3. **Feedback continues**: the adjusted value of $L_k$
    can influence the next treatment decision $A_k$,
    which in turn affects $L_{k+1}$, and so on.
+:::
 
 The causal diagram capturing two time points of feedback is:
 

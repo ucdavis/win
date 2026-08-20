@@ -31,12 +31,24 @@ We represent treatment and outcome as binary variables:
 - Let $A = 1$ if the individual receives a heart transplant, $A = 0$ if not
 - Let $Y = 1$ if the individual dies within 5 years, $Y = 0$ if survives
 
-To define a causal effect, we need to compare two **counterfactual outcomes** (also called **potential outcomes**) for each individual:
+To define a causal effect, we need to compare two counterfactual outcomes for each individual.
+
+::: {#def-potential-outcome}
+## Counterfactual (Potential) Outcomes
+
+For each individual, the **counterfactual outcomes** (also called **potential outcomes**) are:
 
 - $Y^{a=1}$: The outcome if the individual receives treatment ($a = 1$)
 - $Y^{a=0}$: The outcome if the individual does not receive treatment ($a = 0$)
+:::
 
-An **individual causal effect** exists when $Y^{a=1} \neq Y^{a=0}$ for an individual. For example, if Zeus would die if transplanted ($Y^{a=1} = 1$) but survive if not transplanted ($Y^{a=0} = 0$), then heart transplant has a causal effect on Zeus's outcome.
+::: {#def-individual-causal-effect}
+## Individual Causal Effect
+
+An **individual causal effect** exists when $Y^{a=1} \neq Y^{a=0}$ for an individual.
+:::
+
+For example, if Zeus would die if transplanted ($Y^{a=1} = 1$) but survive if not transplanted ($Y^{a=0} = 0$), then heart transplant has a causal effect on Zeus's outcome.
 
 ::: {.notes}
 These counterfactual outcomes represent what *would* happen under each treatment condition. The notation $Y^a$ denotes the counterfactual outcome under treatment level $a$. This framework was formally developed in the statistical literature and is fundamental to causal inference.
@@ -44,9 +56,23 @@ These counterfactual outcomes represent what *would* happen under each treatment
 
 ### The Fundamental Problem
 
-The fundamental problem of causal inference is that we can only observe one of the two counterfactual outcomes for each individual. If Zeus receives a heart transplant, we observe $Y^{a=1}$ but not $Y^{a=0}$. The unobserved counterfactual outcome remains unknown.
+::: {#def-fundamental-problem}
+## The Fundamental Problem of Causal Inference
 
-Formally, for each individual, the observed outcome $Y$ equals the counterfactual outcome $Y^a$ corresponding to the treatment actually received: $Y = Y^A$. This equality is called **consistency**.
+The **fundamental problem of causal inference** is that we can only observe one of the two counterfactual outcomes for each individual.
+:::
+
+If Zeus receives a heart transplant, we observe $Y^{a=1}$ but not $Y^{a=0}$. The unobserved counterfactual outcome remains unknown.
+
+::: {#def-consistency-ch1}
+## Consistency
+
+Formally, for each individual, the observed outcome $Y$ equals the counterfactual outcome $Y^a$ corresponding to the treatment actually received:
+
+$$Y = Y^A.$$
+
+This equality is called **consistency**.
+:::
 
 ::: {.notes}
 Because of this missing data problem, individual causal effects cannot generally be identified (i.e., computed from observed data). We can never simultaneously observe both $Y^{a=1}$ and $Y^{a=0}$ for the same individual. This is why causal inference is fundamentally a missing data problem.
@@ -93,7 +119,8 @@ From Table 1.1, we can compute:
 - Risk if all treated: $\Pr[Y^{a=1} = 1] = 10/20 = 0.5$
 - Risk if all untreated: $\Pr[Y^{a=0} = 1] = 10/20 = 0.5$
 
-### Definition of Average Causal Effect
+::: {#def-average-causal-effect}
+## Average Causal Effect
 
 An **average causal effect** of treatment $A$ on outcome $Y$ is present if:
 
@@ -102,15 +129,26 @@ $$\Pr[Y^{a=1} = 1] \neq \Pr[Y^{a=0} = 1]$$
 or equivalently (using expected values):
 
 $$\E{Y^{a=1}} \neq \E{Y^{a=0}}$$
+:::
 
-In our population, treatment does *not* have an average causal effect because both risks equal 0.5. The **null hypothesis of no average causal effect** holds. However, this does not mean there are no individual effects.
+In our population, treatment does *not* have an average causal effect because both risks equal 0.5. However, this does not mean there are no individual effects.
+
+::: {#def-average-causal-null}
+## Null Hypothesis of No Average Causal Effect
+
+The **null hypothesis of no average causal effect** (also called the **average causal null hypothesis**) holds when $\Pr[Y^{a=1} = 1] = \Pr[Y^{a=0} = 1]$, or equivalently $\E{Y^{a=1}} = \E{Y^{a=0}}$.
+:::
 
 ::: {.notes}
 Even though the average causal effect is null, 12 individuals in Table 1.1 have individual causal effects. Six were harmed by treatment ($Y^{a=1} - Y^{a=0} = 1$), including Zeus, and six were helped ($Y^{a=1} - Y^{a=0} = -1$). The harmful and beneficial effects cancel out in the average.
 
 The average causal effect $\E{Y^{a=1}} - \E{Y^{a=0}}$ always equals the average of individual causal effects $\E{Y^{a=1} - Y^{a=0}}$, because a difference of averages equals the average of the differences.
+:::
 
-When there is no causal effect for *any* individual (i.e., $Y^{a=1} = Y^{a=0}$ for all individuals), we say the **sharp causal null hypothesis** is true. The sharp null implies the null hypothesis of no average effect.
+::: {#def-sharp-causal-null}
+## Sharp Causal Null Hypothesis
+
+The **sharp causal null hypothesis** holds when there is no causal effect for *any* individual, i.e., $Y^{a=1} = Y^{a=0}$ for all individuals. The sharp null implies the null hypothesis of no average effect.
 :::
 
 ## 1.3 Measures of Causal Effect (pp. 7)
@@ -119,21 +157,27 @@ When there is no causal effect for *any* individual (i.e., $Y^{a=1} = Y^{a=0}$ f
 
 When a causal effect exists, we can quantify its magnitude using different **effect measures**. The three most common for binary outcomes are:
 
-### Causal Risk Difference
+::: {#def-causal-risk-difference}
+## Causal Risk Difference
 
 $$\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]$$
+:::
 
 This additive measure equals zero under the null hypothesis. It measures the absolute difference in risk.
 
-### Causal Risk Ratio
+::: {#def-causal-risk-ratio}
+## Causal Risk Ratio
 
 $$\frac{\Pr[Y^{a=1} = 1]}{\Pr[Y^{a=0} = 1]}$$
+:::
 
 This multiplicative measure equals one under the null hypothesis. It measures how many times treatment increases (or decreases) the risk.
 
-### Causal Odds Ratio
+::: {#def-causal-odds-ratio}
+## Causal Odds Ratio
 
 $$\frac{\Pr[Y^{a=1} = 1] / \Pr[Y^{a=1} = 0]}{\Pr[Y^{a=0} = 1] / \Pr[Y^{a=0} = 0]}$$
+:::
 
 This also equals one under the null hypothesis.
 
@@ -158,8 +202,12 @@ In practice, we do not observe the counterfactual outcomes in Table 1.1. We only
 
 We can view our study population in two ways:
 
-1. **Fixed population**: The 20 individuals are the entire population of interest
-2. **Random sample**: The 20 individuals are a random sample from a larger "superpopulation"
+::: {#def-fixed-vs-superpopulation}
+## Fixed Population vs. Superpopulation
+
+- **Fixed population**: The 20 individuals are the entire population of interest.
+- **Random sample (superpopulation)**: The 20 individuals are a random sample from a larger "superpopulation."
+:::
 
 Under the superpopulation perspective, even if the true average causal effect is zero, our sample estimate might not be exactly zero due to **sampling variability**.
 
@@ -179,8 +227,12 @@ Until Chapter 10, we assume our population is extremely large to avoid statistic
 
 It's critical to distinguish:
 
-1. **Random error**: Due to sampling variability; reduced by larger sample sizes
-2. **Systematic error (bias)**: Due to flaws in study design; NOT reduced by larger samples
+::: {#def-random-systematic-error}
+## Random Error vs. Systematic Error
+
+- **Random error**: Error due to sampling variability; reduced by larger sample sizes.
+- **Systematic error (bias)**: Error due to flaws in study design; NOT reduced by larger samples.
+:::
 
 With a very large sample, random error becomes negligible, and systematic error dominates. This is why proper study design and appropriate methods are essential for causal inference.
 
@@ -232,6 +284,9 @@ The **associational risk** in the untreated: $\Pr[Y = 1|A = 0] = 3/7$
 
 ### Definitions of Association
 
+::: {#def-independence-ch1}
+## Independence and Association
+
 Treatment $A$ and outcome $Y$ are **independent** (not associated) when:
 
 $$\Pr[Y = 1|A = 1] = \Pr[Y = 1|A = 0]$$
@@ -240,11 +295,28 @@ or equivalently: $\E{Y|A = 1} = \E{Y|A = 0}$
 
 This is denoted $Y \ind A$.
 
-When this equality does not hold, $A$ and $Y$ are **associated** or **dependent**. Association measures include:
+When this equality does not hold, $A$ and $Y$ are **associated** or **dependent**.
+:::
 
-- **Associational risk difference**: $\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]$
-- **Associational risk ratio**: $\Pr[Y = 1|A = 1] / \Pr[Y = 1|A = 0]$  
-- **Associational odds ratio**: $\frac{\Pr[Y = 1|A = 1]/\Pr[Y = 0|A = 1]}{\Pr[Y = 1|A = 0]/\Pr[Y = 0|A = 0]}$
+Association measures include the associational risk difference, risk ratio, and odds ratio.
+
+::: {#def-associational-risk-difference}
+## Associational Risk Difference
+
+$$\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]$$
+:::
+
+::: {#def-associational-risk-ratio}
+## Associational Risk Ratio
+
+$$\Pr[Y = 1|A = 1] / \Pr[Y = 1|A = 0]$$
+:::
+
+::: {#def-associational-odds-ratio}
+## Associational Odds Ratio
+
+$$\frac{\Pr[Y = 1|A = 1]/\Pr[Y = 0|A = 1]}{\Pr[Y = 1|A = 0]/\Pr[Y = 0|A = 0]}$$
+:::
 
 ### Causation vs. Association
 
@@ -253,19 +325,16 @@ In our example:
 - **No causal effect**: $\Pr[Y^{a=1} = 1] = \Pr[Y^{a=0} = 1] = 0.5$
 - **Association present**: $\Pr[Y = 1|A = 1] = 0.54 \neq 0.43 = \Pr[Y = 1|A = 0]$
 
-::: {.notes}
 This demonstrates the fundamental principle: **Association is not causation**.
 
-The distinction is:
+::: {#def-causation-vs-association}
+## Causation vs. Association
 
-- **Causation**: Compares the *same* population under different treatment values
-  - "What if everyone had been treated?" vs. "What if everyone had been untreated?"
-  - Uses counterfactual risks: $\Pr[Y^{a=1} = 1]$ vs. $\Pr[Y^{a=0} = 1]$
+- **Causation**: Compares the *same* population under different treatment values ("What if everyone had been treated?" vs. "What if everyone had been untreated?"), using counterfactual risks: $\Pr[Y^{a=1} = 1]$ vs. $\Pr[Y^{a=0} = 1]$.
+- **Association**: Compares *different subsets* of the population ("What is the risk in those who were treated?" vs. "What is the risk in those who were untreated?"), using conditional risks: $\Pr[Y = 1|A = 1]$ vs. $\Pr[Y = 1|A = 0]$.
+:::
 
-- **Association**: Compares *different subsets* of the population
-  - "What is the risk in those who were treated?" vs. "What is the risk in those who were untreated?"
-  - Uses conditional risks: $\Pr[Y = 1|A = 1]$ vs. $\Pr[Y = 1|A = 0]$
-
+::: {.notes}
 In our example, there's an association because those who received transplants were sicker on average than those who didn't. This discrepancy between causation and association is called **confounding** (discussed in Chapter 7).
 :::
 
