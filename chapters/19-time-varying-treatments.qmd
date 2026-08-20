@@ -109,10 +109,13 @@ $$g_k : (\bar{a}_{k-1}, \bar{l}_k) \mapsto a_k.$$
 The counterfactual outcome under strategy $g$ is denoted $Y^g$.
 :::
 
-### Static Strategies
+::: {#def-static-strategy}
+## Static Strategies
 
 A **static strategy** assigns the same treatment value at every time point
 regardless of the evolving covariate history.
+:::
+
 Examples:
 
 - "Always treat": $g_k(\bar{a}_{k-1}, \bar{l}_k) = 1$ for all $k$.
@@ -122,9 +125,16 @@ Examples:
 The potential outcome under "always treat" is $Y^{\bar{a}_K = (1,1,\ldots,1)}$,
 often written $Y^{\bar{1}}$, and under "never treat" it is $Y^{\bar{0}}$.
 
-### Dynamic Strategies
+::: {#def-dynamic-strategy}
+## Dynamic Strategies
 
 A **dynamic strategy** adapts treatment decisions based on the individual's evolving history.
+The counterfactual $Y^g$ under a dynamic strategy $g$ is defined analogously to the static case —
+it is the outcome that would have been observed if, at every time $k$,
+treatment had been set according to $g_k$ applied to the individual's
+*counterfactual* covariate history under $g$.
+:::
+
 For example:
 
 - "Treat whenever the CD4 count falls below 200 cells/mm³."
@@ -132,10 +142,6 @@ For example:
 
 Dynamic strategies are clinically natural:
 many real-world treatment guidelines are themselves dynamic.
-The counterfactual $Y^g$ under a dynamic strategy $g$ is defined analogously to the static case —
-it is the outcome that would have been observed if, at every time $k$,
-treatment had been set according to $g_k$ applied to the individual's
-*counterfactual* covariate history under $g$.
 
 ::: {.notes}
 **Threshold strategies**: A common subclass of dynamic strategies are "threshold" or "if–then" rules,
