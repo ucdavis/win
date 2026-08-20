@@ -138,7 +138,11 @@ Adjust for $L$ to block the backdoor path.
 
 ### Variables to Exclude
 
-**Mediators**: Variables on the causal path from $A$ to $Y$
+::: {#def-mediator}
+## Mediator
+
+A **mediator** is a variable on the causal path from $A$ to $Y$.
+:::
 
 - ✗ Do NOT adjust (would remove part of the causal effect)
 

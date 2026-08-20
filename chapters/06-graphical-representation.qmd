@@ -81,6 +81,9 @@ ggdag(dag_main, stylized = TRUE) +
 
 ### DAG Terminology
 
+::: {#def-dag-terminology}
+## DAG Terminology
+
 For a node $W$ in a causal diagram:
 
 - A **parent** of $W$ is any node with a direct arrow into $W$
@@ -88,6 +91,7 @@ For a node $W$ in a causal diagram:
 - An **ancestor** of $W$ is any node from which $W$ is reachable by following arrows
 - A **descendant** of $W$ is any node reachable from $W$ by following arrows
 - A **path** between two nodes is any sequence of nodes connected by edges (arrows), regardless of direction
+:::
 
 In Figure 6.1: $L$ is a parent of $A$ and a parent of $Y$; $A$ is a child of $L$; $Y$ is a descendant of $L$ via two paths ($L \to Y$ directly, and $L \to A \to Y$).
 
@@ -170,20 +174,26 @@ Conditioning on a variable — by stratifying, restricting, or including it in a
 
 ### Three Fundamental Path Structures
 
-#### 1. Chain: $A \rightarrow B \rightarrow Y$
+::: {#def-path-structures}
+## Chain, Fork, and Collider
 
-- **Marginally**: $A$ and $Y$ are **associated** (open path $A \to B \to Y$)
-- **Conditional on $B$**: $A$ and $Y$ are **independent** — conditioning on the intermediate variable $B$ blocks the path
+Three structures describe how association flows along a three-node path, depending on whether the middle node $B$ is conditioned on:
 
-#### 2. Fork: $A \leftarrow B \rightarrow Y$
+**Chain** ($A \rightarrow B \rightarrow Y$):
 
-- **Marginally**: $A$ and $Y$ are **associated** (open path through common cause $B$)
-- **Conditional on $B$**: $A$ and $Y$ are **independent** — conditioning on the common cause $B$ blocks the non-causal association
+- Marginally: $A$ and $Y$ are **associated** (open path $A \to B \to Y$)
+- Conditional on $B$: $A$ and $Y$ are **independent** — conditioning on the intermediate variable $B$ blocks the path
 
-#### 3. Collider: $A \rightarrow B \leftarrow Y$
+**Fork** ($A \leftarrow B \rightarrow Y$):
 
-- **Marginally**: $A$ and $Y$ are **independent** (path blocked by collider $B$)
-- **Conditional on $B$**: $A$ and $Y$ are **dependent** — conditioning on a collider **opens** the previously blocked path
+- Marginally: $A$ and $Y$ are **associated** (open path through common cause $B$)
+- Conditional on $B$: $A$ and $Y$ are **independent** — conditioning on the common cause $B$ blocks the non-causal association
+
+**Collider** ($A \rightarrow B \leftarrow Y$):
+
+- Marginally: $A$ and $Y$ are **independent** (path blocked by collider $B$)
+- Conditional on $B$: $A$ and $Y$ are **dependent** — conditioning on a collider **opens** the previously blocked path
+:::
 
 ```{r}
 #| echo: false
@@ -298,9 +308,13 @@ $$\Pr[A = a \mid L = l] > 0 \quad \text{for all } a \text{ and all } l \text{ wi
 
 In structural equation terms, positivity requires that the function $f_A(L, U_A)$ is not deterministic — no value of $L$ should completely determine the treatment assignment $A$.
 
+::: {#def-positivity-violations}
+## Structural and Random Positivity Violations
+
 **Structural positivity violations** occur when $L$ deterministically forces $A$ to a particular value. In these strata, the counterfactual $Y^a$ cannot be identified from observational data regardless of sample size.
 
 **Random positivity violations** occur when, by chance, certain $(A, L)$ combinations do not appear in the finite sample, even though they have positive probability in the population.
+:::
 
 ::: {.notes}
 **Why positivity matters for the NPSEM:**

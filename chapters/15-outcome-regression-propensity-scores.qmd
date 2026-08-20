@@ -151,7 +151,8 @@ Propensity scores can be used to stratify the population and then standardize.
 
 ### Propensity Score Stratification
 
-**Procedure**:
+::: {#alg-propensity-stratification}
+## Propensity Score Stratification
 
 1. Estimate propensity score $\hat{e}(L_i)$ for all individuals
 2. Create strata (e.g., quintiles) of the propensity score
@@ -159,6 +160,7 @@ Propensity scores can be used to stratify the population and then standardize.
 4. Standardize across strata:
 
 $$\hE{Y^a} = \sum_{s=1}^S \hE{Y \mid A = a, \text{stratum } s} \times \Pr[\text{stratum } s]$$
+:::
 
 ### Checking Balance
 
@@ -204,11 +206,13 @@ Balance checking is a diagnostic tool, not a formal test. The goal is to achieve
 
 ### Matching Algorithms
 
-**1-to-1 nearest neighbor matching**:
+::: {#alg-nn-matching}
+## 1-to-1 Nearest Neighbor Matching
 
 1. For each treated individual, find the untreated individual with the closest propensity score
 2. Form matched pairs
 3. Compute the effect as the average within-pair difference
+:::
 
 **Matching with replacement**:
 
@@ -269,7 +273,11 @@ Clarifying terminology: propensity scores, treatment models, and MSMs.
 
 **Propensity score**: $e(L) = \Pr[A = 1 \mid L]$
 
-**Treatment model**: Any model for $\Pr[A \mid L]$ (or $f(A \mid L)$ for non-binary $A$)
+::: {#def-treatment-model}
+## Treatment Model
+
+A **treatment model** is any model for $\Pr[A \mid L]$ (or $f(A \mid L)$ for non-binary $A$).
+:::
 
 **Marginal structural model (MSM)**: Model for $\E{Y^a}$ or $\E{Y^a \mid V}$
 
@@ -311,6 +319,9 @@ Can we combine propensity scores with outcome regression?
 
 ### Doubly Robust Estimation
 
+::: {#def-doubly-robust}
+## Doubly Robust Estimator
+
 **Idea**: Use both a treatment model and an outcome model.
 
 **Estimator**: Fit outcome model within propensity score strata (or matched sets), then standardize.
@@ -321,6 +332,7 @@ Can we combine propensity scores with outcome regression?
 2. The outcome model is correct
 
 (But not necessarily both)
+:::
 
 ### Augmented IP Weighting (AIPW)
 
@@ -370,9 +382,13 @@ For continuous treatment $A$, the **generalized propensity score** is the condit
 $$f(A \mid L)$$
 :::
 
-**Balancing property**: Under conditional exchangeability,
+::: {#thm-gps-balancing}
+## Generalized Propensity Score Balancing Property
+
+Under conditional exchangeability,
 
 $$Y^a \ind A \mid f(A \mid L)$$
+:::
 
 ### Estimation
 

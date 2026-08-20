@@ -119,14 +119,24 @@ $$\Pr[Y = 1 \mid A = 1] - \Pr[Y = 1 \mid A = 0] \neq \Pr[Y^{a=1} = 1] - \Pr[Y^{a
 In structural terms, confounding exists when there is at least one open backdoor path from $A$ to $Y$ in the causal diagram.
 :::
 
+::: {#def-confounding-direction}
+## Positive and Negative Confounding
+
+**Positive confounding**: the crude estimate overstates the causal effect (or makes a harmful treatment look beneficial, or a beneficial treatment look even more beneficial).
+
+**Negative confounding**: the crude estimate understates the causal effect (or makes a beneficial treatment look harmful).
+
+The direction depends on the signs of the associations $L \to A$ and $L \to Y$.
+:::
+
+::: {#def-confounding-by-indication}
+## Confounding by Indication (Channeling Bias)
+
+**Confounding by indication**, also called **channeling bias**, occurs when the indication for treatment (e.g., higher disease severity) is itself a risk factor for the outcome, so that patients selected for treatment differ systematically in prognosis from those who are not.
+:::
+
 ::: {.notes}
-**Confounding can operate in any direction:**
-
-- **Positive confounding**: the crude estimate overstates the causal effect (or makes a harmful treatment look beneficial, or a beneficial treatment look even more beneficial)
-- **Negative confounding**: the crude estimate understates the causal effect (or makes a beneficial treatment look harmful)
-- The direction depends on the signs of the associations $L \to A$ and $L \to Y$
-
-In the drug example above, sicker patients (males) were more likely to receive treatment and had worse outcomes, so the drug appears harmful even though it has no effect. This is **confounding by indication** or **channeling bias**—the indication for treatment (higher disease severity) is itself a risk factor for the outcome.
+In the drug example above, sicker patients (males) were more likely to receive treatment and had worse outcomes, so the drug appears harmful even though it has no effect. This is an instance of confounding by indication.
 :::
 
 ## 7.2 Confounding and Exchangeability (pp. 80–82)

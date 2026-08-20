@@ -67,6 +67,9 @@ In practice, the g-formula is implemented by fitting parametric models
 for the outcome and each time-varying covariate, then computing expectations
 by Monte Carlo simulation:
 
+::: {#alg-g-formula-mc}
+## Monte Carlo Implementation of the G-Formula
+
 1. **Fit a model** for $\E{Y \mid \bar{A}_K = \bar{a}_K, \bar{L}_K = \bar{l}_K}$.
 2. **Fit models** for $f(l_k \mid \bar{a}_{k-1}, \bar{l}_{k-1})$ for each $k = 0, \ldots, K$.
 3. **Simulate** a large pseudo-population by drawing covariate histories
@@ -74,6 +77,7 @@ by Monte Carlo simulation:
    using the fitted covariate models.
 4. **Predict** the outcome for each simulated individual using the fitted outcome model.
 5. **Average** the predicted outcomes to estimate $\E{Y^{\bar{a}_K}}$.
+:::
 
 Repeat steps 3–5 for each comparison strategy to obtain the causal contrast.
 
@@ -167,12 +171,19 @@ Stabilized weights $SW^A$ also have expectation 1 but have substantially lower v
 because they incorporate the marginal probability of the observed treatment history.
 Extreme weights — weights far from 1 — are a diagnostic warning sign:
 they indicate violations of positivity or model misspecification.
+:::
 
-**Weight truncation**: A pragmatic approach to handle extreme weights
-is to truncate (or "trim") them at a high percentile (e.g., 99th percentile).
+::: {#def-weight-truncation}
+## Weight Truncation
+
+**Weight truncation** (or "trimming") is a pragmatic approach to handle extreme weights:
+truncate them at a high percentile (e.g., the 99th percentile).
+:::
+
 Truncation introduces a small bias but can substantially reduce variance.
 The analyst should report both truncated and untruncated results.
 
+::: {.notes}
 **Model for the treatment mechanism**:
 The denominator of $SW^A$ is estimated by fitting a model for $A_k$
 given $(\bar{A}_{k-1}, \bar{L}_k)$ at each time $k$ (e.g., logistic regression).
@@ -282,30 +293,45 @@ The blip function $\gamma_k$ captures the **incremental causal effect** of treat
 on the final outcome, nesting within the effect of earlier treatment decisions.
 A common parametric specification is the **linear SNMM**:
 
+::: {#def-linear-snmm}
+## Linear SNMM
+
 $$\gamma_k(\bar{a}_k, \bar{l}_k; \psi) = \psi_1 a_k + \psi_2 a_k \cdot \text{(modifier)},$$
 
 where the modifier might be a baseline or time-varying covariate.
+:::
 
 ### G-Estimation Algorithm
 
 The key insight behind g-estimation is that under sequential exchangeability,
-the **blipped-down outcome**
+the blipped-down outcome must be mean-independent of $A_k$
+conditional on $(\bar{A}_{k-1}, \bar{L}_k)$ when $\psi$ equals the true parameter.
+
+::: {#def-blipped-down-outcome}
+## Blipped-Down Outcome
+
+The **blipped-down outcome**
 
 $$H_k(\psi) = Y - \sum_{j=k}^{K} \gamma_j(\bar{A}_j, \bar{L}_j; \psi)$$
 
-(the outcome with the effect of treatment from time $k$ onward "removed")
-must be mean-independent of $A_k$ conditional on $(\bar{A}_{k-1}, \bar{L}_k)$
-when $\psi$ equals the true parameter.
-G-estimation exploits this to estimate $\psi$ by searching for the value
+is the outcome with the effect of treatment from time $k$ onward "removed."
+:::
+
+G-estimation exploits the mean-independence of $H_k(\psi)$ and $A_k$
+at the true parameter value to estimate $\psi$ by searching for the value
 that makes $A_k \ind H_k(\psi) \mid \bar{A}_{k-1}, \bar{L}_k$ for all $k$.
 
 Practically, this is often implemented via:
+
+::: {#alg-g-estimation-tv}
+## G-Estimation Algorithm for Time-Varying Treatments
 
 1. Fit a model for $A_k \mid \bar{A}_{k-1}, \bar{L}_k$ to obtain predicted probabilities $\hat{p}_k$.
 2. Construct residuals $R_k = A_k - \hat{p}_k$ (the "de-confounded" treatment residual).
 3. Estimate $\psi$ by solving the estimating equation
 
 $$\sum_i \sum_k R_{k,i} \cdot \frac{\partial}{\partial \psi} H_{k,i}(\psi) = 0.$$
+:::
 
 ::: {.notes}
 **Advantages of g-estimation**:
@@ -441,6 +467,9 @@ given correct models for the covariate and outcome processes.
 
 In practice, the big g-formula is implemented via a **parametric g-computation algorithm**:
 
+::: {#alg-g-computation}
+## Parametric G-Computation Algorithm
+
 1. Fit outcome model: $\E{Y \mid \bar{A}_K, \bar{C}_K = \bar{0}, \bar{L}_K}$.
 2. For each $k$, fit covariate models:
    $f(L_k \mid \bar{A}_{k-1}, \bar{C}_{k-1} = \bar{0}, \bar{L}_{k-1})$.
@@ -451,6 +480,7 @@ In practice, the big g-formula is implemented via a **parametric g-computation a
    draw $L_k$ from its fitted conditional model.
 5. Predict $Y$ for each simulated individual from the outcome model.
 6. Average the predictions.
+:::
 
 ::: {.notes}
 **Choice of g-method in practice**:

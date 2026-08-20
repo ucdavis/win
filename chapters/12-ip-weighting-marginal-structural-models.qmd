@@ -292,13 +292,17 @@ These weights create a pseudo-population of only uncensored individuals.
 
 ### Joint Weights for Treatment and Censoring
 
-When we have both confounding and censoring:
+When we have both confounding and censoring, the treatment and censoring weights are combined by multiplication:
+
+::: {#def-joint-weights-treatment-censoring}
+## Joint Weights for Treatment and Censoring
 
 $$W^{A,C} = W^A \times W^C = \frac{1}{\Pr[A \mid L]} \times \frac{1}{\Pr[C = 0 \mid A, L]}$$
 
 **Stabilized version**:
 
 $$SW^{A,C} = \frac{\Pr[A]}{\Pr[A \mid L]} \times \frac{\Pr[C = 0 \mid A]}{\Pr[C = 0 \mid A, L]}$$
+:::
 
 ### Example: NHEFS with Loss to Follow-up
 
@@ -321,8 +325,14 @@ $$C \ind Y^a \mid A, L$$
 1. **Treatment**: $Y^a \ind A \mid L$ (conditional exchangeability)
 2. **Censoring**: $C \ind Y^a \mid A, L$ (missing at random)
 3. **Positivity**: $\Pr[A = a \mid L] > 0$ and $\Pr[C = 0 \mid A, L] > 0$ for all $a, L$
+:::
 
-Missing at random (MAR) means censoring may depend on observed variables but not on the (unobserved) outcome. This is weaker than missing completely at random (MCAR).
+::: {#def-missing-at-random}
+## Missing at Random (MAR)
+
+Censoring is **missing at random (MAR)** if it is independent of the potential outcomes given the observed treatment and covariates, $C \ind Y^a \mid A, L$: censoring may depend on observed variables but not on the (unobserved) outcome.
+
+MAR is weaker than **missing completely at random (MCAR)**, under which censoring does not depend on either observed or unobserved variables.
 :::
 
 ## 12.7 A Likelihood Approach (pp. 173-174)

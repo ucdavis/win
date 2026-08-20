@@ -189,7 +189,11 @@ Individuals can be classified into **principal strata** based on potential treat
 4. **Defiers**: $A^{z=1} = 0, A^{z=0} = 1$ (do opposite of instrument)
 :::
 
-**Monotonicity assumption**: No defiers exist.
+::: {#def-iv-monotonicity}
+## Monotonicity Assumption
+
+The **monotonicity assumption** states that no defiers exist in the population.
+:::
 
 ::: {.notes}
 **Why monotonicity**:

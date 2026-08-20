@@ -58,10 +58,15 @@ All variables in a study can be measured with error:
 
 ---
 
-Measurement error can be represented using causal diagrams by distinguishing between:
+Measurement error can be represented using causal diagrams by distinguishing between
+true variables and measured variables.
 
-- **True variables**: The actual values we care about (denoted $A$, $Y$, $L$)
-- **Measured variables**: The values we observe (denoted $A^*$, $Y^*$, $L^*$)
+::: {#def-true-vs-measured-variables}
+## True Variables and Measured Variables
+
+The **true variables** are the actual values we care about (denoted $A$, $Y$, $L$).
+The **measured variables** are the values we observe (denoted $A^*$, $Y^*$, $L^*$).
+:::
 
 ### Causal DAG with Measurement Error
 
@@ -93,7 +98,11 @@ Mismeasured confounders are particularly problematic because they lead to **resi
 
 Suppose $L$ is a confounder of the $A$-$Y$ relationship, but we only observe $L^*$, a mismeasured version of $L$.
 
-**Consequence**: Adjusting for $L^*$ instead of $L$ leaves residual confounding.
+::: {#def-residual-confounding}
+## Residual Confounding
+
+**Residual confounding** occurs when adjusting for a mismeasured confounder $L^*$ instead of the true confounder $L$ leaves the backdoor path $A \leftarrow L \rightarrow Y$ only partially blocked, so that confounding bias remains even after adjustment.
+:::
 
 Even with perfect measurement of treatment $A$ and outcome $Y$, confounding cannot be fully eliminated if confounders are mismeasured.
 
@@ -104,9 +113,7 @@ Study the effect of physical activity $A$ on heart disease $Y$, adjusting for so
 
 **Problem**: SES is difficult to measure precisely. We use income $L^*$ as a proxy.
 
-**Result**: Income $L^*$ is associated with true SES $L$ but doesn't perfectly capture it. Adjusting for $L^*$ reduces but doesn't eliminate confounding by $L$.
-
-**Residual confounding**: The backdoor path $A \leftarrow L \rightarrow Y$ is only partially blocked by conditioning on $L^*$.
+**Result**: Income $L^*$ is associated with true SES $L$ but doesn't perfectly capture it. Adjusting for $L^*$ reduces but doesn't eliminate confounding by $L$ (residual confounding remains).
 :::
 
 ::: {.notes}
@@ -198,17 +205,25 @@ Measurement error in treatment creates unique challenges for causal inference.
 
 ### Types of Treatment Mismeasurement
 
-**Misclassification**: Binary treatment recorded incorrectly (yes/no exposure miscoded).
+::: {#def-treatment-mismeasurement-types}
+## Types of Treatment Mismeasurement
 
-**Measurement error**: Continuous treatment measured inaccurately (dose, duration miscoded).
+**Misclassification** is treatment mismeasurement for a binary treatment: exposure status is recorded incorrectly (yes/no miscoded).
+
+**Measurement error** (in this narrower sense) is treatment mismeasurement for a continuous treatment: the treatment level is measured inaccurately (dose, duration miscoded).
+:::
 
 ### Effect of Treatment Mismeasurement
 
 When treatment is mismeasured, we're effectively studying the effect of $A^*$ (measured) instead of $A$ (true).
 
-**General result**: Independent measurement error in treatment typically **biases estimates toward the null** (underestimates the true effect).
+::: {#thm-attenuation-independent-error}
+## Attenuation Toward the Null from Independent Measurement Error
 
-**Exception**: Differential measurement error can bias in any direction.
+Independent (nondifferential) measurement error in treatment typically **biases estimates toward the null** (underestimates the true effect).
+
+Differential measurement error, in contrast, can bias in any direction.
+:::
 
 ::: {#exm-treatment-mismeasurement}
 ## Attenuation from Independent Error

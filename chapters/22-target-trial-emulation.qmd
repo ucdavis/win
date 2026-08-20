@@ -84,11 +84,15 @@ is really asking about the effect of *taking* statins,
 not merely being assigned to the statin group.
 If adherence is poor, the ITT estimate will underestimate the biological efficacy of the drug.
 
-**ITT in observational data**:
 In observational data, there is no randomization, so the concept of "assigned treatment"
 must be replaced by "treatment initiated."
+:::
+
+::: {#def-as-initiated-analysis}
+## As-Initiated Analysis
+
 The closest analogue to the ITT effect in observational data
-is the "as-initiated" analysis (also called "intent-to-treat" by analogy),
+is the **as-initiated analysis** (also called "intent-to-treat" by analogy),
 which compares outcomes between individuals who initiated treatment versus those who did not,
 regardless of subsequent adherence.
 :::
@@ -148,17 +152,20 @@ The target trial framework makes this explicit by requiring the analyst to speci
 what the treatment strategy *is* over the entire follow-up,
 not just at the moment of treatment initiation.
 
-::: {.notes}
-**Active comparator designs**:
+::: {#def-active-comparator}
+## Active Comparator Design
 
 A well-designed target trial uses **active comparators** rather than comparing treated
 to completely untreated individuals.
 The "new user, active comparator" design, in which both strategies begin treatment
 (just of different types or at different thresholds), tends to produce better-calibrated
 observational estimates because it more closely mirrors the actual clinical decision.
+:::
+
 Comparing new users of drug A to non-users of any drug conflates the effect of drug A
 with the effect of the clinical decision to initiate any treatment.
 
+::: {.notes}
 **Intention-to-treat in the target trial**:
 The target trial ITT effect compares individuals by their *assigned* strategy at time zero,
 regardless of subsequent deviations.
@@ -305,15 +312,15 @@ This design ensures that each participant's follow-up genuinely begins
 at the moment of eligibility and strategy assignment,
 eliminating immortal time bias by construction.
 
-::: {.notes}
-**Prevalent user bias**:
+::: {#def-new-user-design}
+## Prevalent User Bias and the New User Design
 
-A related problem arises when including individuals who are already on treatment
-at the start of the observation window, rather than restricting to **new users**.
-Prevalent users have survived on treatment long enough to be observed —
-they are a selected, healthier subset of all who ever initiated treatment.
-Comparing prevalent users to never-users confounds the treatment effect
-with the selective survival required to be a prevalent user.
+**Prevalent user bias** arises when a study includes individuals who are already
+on treatment at the start of the observation window, rather than restricting to
+**new users**: prevalent users have survived on treatment long enough to be
+observed, so they are a selected, healthier subset of all who ever initiated
+treatment, and comparing prevalent users to never-users confounds the treatment
+effect with the selective survival required to be a prevalent user.
 The **new user design** (also called the active comparator, new user design)
 restricts to individuals who recently initiated treatment,
 eliminating prevalent user bias and aligning the observational study
@@ -327,6 +334,9 @@ more closely with a randomized trial.
 The target trial emulation framework provides a unifying conceptual scaffolding
 for all observational causal inference:
 
+::: {#alg-target-trial-emulation}
+## Steps in Target Trial Emulation
+
 1. **Specify** the target trial — the idealized randomized experiment
    that would answer the causal question.
 2. **Identify** the components of the target trial that can be emulated
@@ -335,6 +345,7 @@ for all observational causal inference:
    from the observational data under the required identifying assumptions.
 4. **Conduct** sensitivity analyses to assess the robustness of conclusions
    to violations of the identifying assumptions.
+:::
 
 ::: {#thm-target-trial-unification}
 ## The Target Trial as a Unifying Framework

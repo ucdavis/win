@@ -192,14 +192,15 @@ When estimating $\E{Y|A = 90}$ with no observations at $A = 90$:
 
 ### Kernel Smoothing
 
-**Idea**: Estimate $\E{Y|A = a}$ using a weighted average of nearby observations.
+::: {#def-kernel-smoothing}
+## Kernel Smoothing
+
+**Kernel smoothing** estimates $\E{Y|A = a}$ using a weighted average of nearby observations:
 
 $$\hE{Y|A = a} = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}$$
 
-where:
-
-- $K(\cdot)$ is a **kernel function** (e.g., Gaussian)
-- $h$ is the **bandwidth** (controls amount of smoothing)
+where $K(\cdot)$ is a **kernel function** (e.g., Gaussian) and $h$ is the **bandwidth**, which controls the amount of smoothing.
+:::
 
 **Bandwidth selection**:
 
