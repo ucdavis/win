@@ -40,16 +40,24 @@ The **time-varying treatment** at time $k$ is denoted $A_k$, which may be binary
 (e.g., $A_k = 1$ if the individual is on treatment at time $k$, 0 otherwise)
 or take more general values.
 
+::: {#def-treatment-history}
+## Treatment History
+
 The observed treatment **history** up to time $k$ is the vector
 
 $$\bar{A}_k = (A_0, A_1, \ldots, A_k).$$
+:::
 
-Similarly, define the **covariate history** up to time $k$ as
+::: {#def-covariate-history}
+## Covariate History
+
+The **covariate history** up to time $k$ is
 
 $$\bar{L}_k = (L_0, L_1, \ldots, L_k),$$
 
 where $L_k$ represents all measured covariates recorded at time $k$
 (e.g., clinical measurements, lab values, questionnaire responses).
+:::
 
 The outcome $Y$ is measured at the end of follow-up, after $A_K$.
 A common data structure in person-time format is therefore:
