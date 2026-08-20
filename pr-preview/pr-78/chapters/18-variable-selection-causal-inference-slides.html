@@ -380,7 +380,9 @@
 </section>
 <section id="variables-to-exclude" class="slide level2">
 <h2>Variables to Exclude</h2>
-<p><strong>Mediators</strong>: Variables on the causal path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span></p>
+<div id="def-mediator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Mediator)</strong></span> A <strong>mediator</strong> is a variable on the causal path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>.</p>
+</div>
 <ul>
 <li>✗ Do NOT adjust (would remove part of the causal effect)</li>
 </ul>
@@ -394,7 +396,7 @@
 <section id="colliders" class="slide level2">
 <h2>Colliders</h2>
 <div id="def-collider" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Collider)</strong></span> A <strong>collider</strong> on a path is a variable with two arrows pointing into it.</p>
+<p><span class="theorem-title"><strong>Definition 4 (Collider)</strong></span> A <strong>collider</strong> on a path is a variable with two arrows pointing into it.</p>
 <p><strong>Example</strong>: <span class="math display">\[A \to C \leftarrow U \to Y\]</span></p>
 <p><span class="math inline">\(C\)</span> is a collider on the path <span class="math inline">\(A \to C \leftarrow U \to Y\)</span>.</p>
 <p><strong>Property</strong>: This path is <strong>blocked</strong> by default (without conditioning on <span class="math inline">\(C\)</span>).</p>
@@ -435,7 +437,7 @@
 <section id="m-bias-butterfly-bias" class="slide level2">
 <h2>M-bias (Butterfly Bias)</h2>
 <div id="def-m-bias" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (M-Bias (Butterfly Bias))</strong></span> <strong>DAG structure</strong>:</p>
+<p><span class="theorem-title"><strong>Definition 5 (M-Bias (Butterfly Bias))</strong></span> <strong>DAG structure</strong>:</p>
 <pre><code>    U1 → L ← U2
      ↓         ↓
      A         Y</code></pre>
@@ -505,7 +507,7 @@
 <section id="intermediate-confounder" class="slide level2 scrollable">
 <h2>Intermediate Confounder</h2>
 <div id="def-intermediate-confounder" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Intermediate Confounder (Time-Dependent Confounder Affected by Prior Treatment))</strong></span> A variable <span class="math inline">\(L_1\)</span> is an <strong>intermediate confounder</strong> if:</p>
+<p><span class="theorem-title"><strong>Definition 6 (Intermediate Confounder (Time-Dependent Confounder Affected by Prior Treatment))</strong></span> A variable <span class="math inline">\(L_1\)</span> is an <strong>intermediate confounder</strong> if:</p>
 <ol type="1">
 <li><span class="math inline">\(L_1\)</span> is a confounder for the effect of <span class="math inline">\(A_1\)</span> on <span class="math inline">\(Y\)</span></li>
 <li><span class="math inline">\(L_1\)</span> is affected by prior treatment <span class="math inline">\(A_0\)</span></li>
@@ -555,7 +557,7 @@
 <section id="precision-variables" class="slide level2">
 <h2>Precision Variables</h2>
 <div id="def-precision-variable" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Precision Variable)</strong></span> <strong>Definition</strong>: Variables associated with the outcome but not with treatment (after accounting for confounders).</p>
+<p><span class="theorem-title"><strong>Definition 7 (Precision Variable)</strong></span> <strong>Definition</strong>: Variables associated with the outcome but not with treatment (after accounting for confounders).</p>
 <p><strong>Example DAG</strong>:</p>
 <pre><code>A → Y ← V</code></pre>
 <p><span class="math inline">\(V\)</span> is associated with <span class="math inline">\(Y\)</span> but not with <span class="math inline">\(A\)</span> (no arrow from <span class="math inline">\(V\)</span> to <span class="math inline">\(A\)</span> or shared causes).</p>

@@ -187,12 +187,16 @@
 </section>
 <section class="slide level2">
 
-<p>Up to now, we have focused on <strong>identification</strong>: determining whether causal effects can be computed from observed data under certain assumptions. Now we turn to <strong>estimation</strong>: using finite data to approximate those causal effects.</p>
+<p>Up to now, we have focused on identification. Now we turn to estimation.</p>
+<div id="def-identification-vs-estimation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Identification and Estimation)</strong></span> <strong>Identification</strong>: determining whether causal effects can be computed from observed data under certain assumptions.</p>
+<p><strong>Estimation</strong>: using finite data to approximate those causal effects.</p>
+</div>
 </section>
 <section id="key-concepts-in-statistical-estimation" class="slide level2">
 <h2>Key Concepts in Statistical Estimation</h2>
 <div id="def-estimand-estimator-estimate" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Estimand, Estimator, and Estimate)</strong></span> <strong>Estimand</strong>: The population parameter of interest (e.g., <span class="math inline">\(\Pr[Y = 1|A = a]\)</span> in the super-population).</p>
+<p><span class="theorem-title"><strong>Definition 2 (Estimand, Estimator, and Estimate)</strong></span> <strong>Estimand</strong>: The population parameter of interest (e.g., <span class="math inline">\(\Pr[Y = 1|A = a]\)</span> in the super-population).</p>
 <p><strong>Estimator</strong>: A rule for computing the estimand from sample data.</p>
 <p><strong>Estimate</strong>: The numerical value obtained by applying the estimator to a particular sample (a point estimate).</p>
 </div>
@@ -230,7 +234,7 @@
 <section id="consistency-of-estimators" class="slide level2">
 <h2>Consistency of Estimators</h2>
 <div id="def-consistent-estimator" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Consistent Estimator)</strong></span> An estimator is <strong>consistent</strong> if estimates get arbitrarily close to the true parameter as sample size increases.</p>
+<p><span class="theorem-title"><strong>Definition 3 (Consistent Estimator)</strong></span> An estimator is <strong>consistent</strong> if estimates get arbitrarily close to the true parameter as sample size increases.</p>
 <p><span class="math display">\[Pr\left[|\hat{\theta}_n - \theta| &gt; \epsilon\right] \rightarrow 0 \text{ as } n \rightarrow \infty, \text{ for all } \epsilon &gt; 0\]</span></p>
 </div>
 <p>The sample proportion <span class="math inline">\(\widehat{Pr}[Y = 1|A = a]\)</span> is a consistent estimator of <span class="math inline">\(\Pr[Y = 1|A = a]\)</span>.</p>
@@ -238,14 +242,16 @@
 <section id="confidence-intervals" class="slide level2 scrollable">
 <h2>Confidence Intervals</h2>
 <div id="def-confidence-interval" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Confidence Interval)</strong></span> A <strong>95% confidence interval</strong> quantifies uncertainty due to random sampling.</p>
+<p><span class="theorem-title"><strong>Definition 4 (Confidence Interval)</strong></span> A <strong>95% confidence interval</strong> quantifies uncertainty due to random sampling.</p>
 </div>
-<p><strong>Construction (Wald interval)</strong>:</p>
+<div id="alg-wald-interval" class="theorem algorithm">
+<p><span class="theorem-title"><strong>Algorithm 1 (Wald Interval Construction)</strong></span> &nbsp;</p>
 <ol type="1">
 <li>Compute point estimate <span class="math inline">\(\hat{p}\)</span></li>
 <li>Estimate standard error: <span class="math inline">\(\widehat{SE} = \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\)</span></li>
 <li>Compute interval: <span class="math inline">\(\hat{p} \pm 1.96 \times \widehat{SE}\)</span></li>
 </ol>
+</div>
 <p><strong>Example</strong>: For <span class="math inline">\(\hat{p} = 7/13 \approx 0.54\)</span> with <span class="math inline">\(n = 13\)</span>:</p>
 <ul>
 <li><span class="math inline">\(\widehat{SE} = \sqrt{(7/13)(6/13)/13} = 0.138\)</span></li>
@@ -256,14 +262,6 @@
 <p><strong>Correct interpretation</strong> (frequentist): In repeated sampling, 95% of such intervals will contain the true parameter.</p>
 <p><strong>Incorrect interpretation</strong>: “There is a 95% probability that the true parameter is in this interval.”</p>
 <p>The parameter is fixed (though unknown). The interval either contains it (probability 1) or doesn’t (probability 0).</p>
-<p><strong>Calibrated vs.&nbsp;valid intervals</strong>:</p>
-<ul>
-<li><strong>Calibrated</strong>: Contains the true parameter in exactly 95% of samples</li>
-<li><strong>Conservative</strong>: Contains the true parameter in &gt;95% of samples<br>
-</li>
-<li><strong>Valid</strong>: Calibrated or conservative (at least 95% coverage)</li>
-</ul>
-<p>Most commonly used intervals (like Wald intervals) are <strong>large-sample valid</strong>: guaranteed to be valid only in large samples.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -275,6 +273,12 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+<div id="def-calibrated-valid-intervals" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Calibrated, Conservative, and Valid Intervals)</strong></span> <strong>Calibrated</strong>: Contains the true parameter in exactly 95% of samples.</p>
+<p><strong>Conservative</strong>: Contains the true parameter in &gt;95% of samples.</p>
+<p><strong>Valid</strong>: Calibrated or conservative (at least 95% coverage).</p>
+</div>
+<p>Most commonly used intervals (like Wald intervals) are <strong>large-sample valid</strong>: guaranteed to be valid only in large samples.</p>
 </section></section>
 <section>
 <section id="estimation-of-causal-effects-pp.-134-136" class="title-slide slide level1 center" data-number="2">
@@ -369,12 +373,12 @@
 
 <p>The concept of a “super-population” is a useful fiction that allows us to apply statistical methods, but it raises important questions about the sources of randomness.</p>
 </section>
-<section id="two-sources-of-randomness" class="slide level2 scrollable">
+<section id="two-sources-of-randomness" class="slide level2">
 <h2>Two Sources of Randomness</h2>
-<ol type="1">
-<li><strong>Sampling variability</strong>: Random selection of individuals from a super-population</li>
-<li><strong>Nondeterministic counterfactuals</strong>: Intrinsic randomness in outcomes even with fixed treatment and covariates</li>
-</ol>
+<div id="def-sources-of-randomness" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Two Sources of Randomness)</strong></span> <strong>Sampling variability</strong>: Random selection of individuals from a super-population.</p>
+<p><strong>Nondeterministic counterfactuals</strong>: Intrinsic randomness in outcomes even with fixed treatment and covariates.</p>
+</div>
 </section>
 <section id="when-are-binomial-confidence-intervals-valid" class="slide level2 scrollable">
 <h2>When Are Binomial Confidence Intervals Valid?</h2>
@@ -442,7 +446,7 @@
 <section id="the-principle" class="slide level2">
 <h2>The Principle</h2>
 <div id="def-conditionality-principle" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Conditionality Principle)</strong></span> <strong>Conditionality principle</strong>: If a variable <span class="math inline">\(L\)</span> is independent of treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> under the intervention, we may condition on <span class="math inline">\(L\)</span> when computing estimates and standard errors without affecting validity.</p>
+<p><span class="theorem-title"><strong>Definition 7 (Conditionality Principle)</strong></span> <strong>Conditionality principle</strong>: If a variable <span class="math inline">\(L\)</span> is independent of treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> under the intervention, we may condition on <span class="math inline">\(L\)</span> when computing estimates and standard errors without affecting validity.</p>
 </div>
 </section>
 <section id="applications" class="slide level2">
@@ -497,7 +501,7 @@
 <section class="slide level2">
 
 <div id="def-curse-of-dimensionality" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Curse of Dimensionality)</strong></span> As the number of confounders or effect modifiers increases, nonparametric estimation becomes increasingly difficult. This is the <strong>curse of dimensionality</strong>.</p>
+<p><span class="theorem-title"><strong>Definition 8 (Curse of Dimensionality)</strong></span> As the number of confounders or effect modifiers increases, nonparametric estimation becomes increasingly difficult. This is the <strong>curse of dimensionality</strong>.</p>
 </div>
 </section>
 <section id="the-problem" class="slide level2 scrollable">

@@ -239,13 +239,15 @@
 <p><span class="math display">\[\text{IC} = \text{E}{\left[Y^{a=1,e=1}\right]} - \text{E}{\left[Y^{a=1,e=0}\right]} - \text{E}{\left[Y^{a=0,e=1}\right]} + \text{E}{\left[Y^{a=0,e=0}\right]}\]</span></p>
 <p>If <span class="math inline">\(\text{IC} \neq 0\)</span>, there is additive interaction.</p>
 </div>
-<aside class="notes">
-<p><strong>Interpretation of IC</strong>:</p>
+<div id="def-synergism-antagonism" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Synergism and Antagonism)</strong></span> Based on the sign of the interaction contrast:</p>
 <ul>
-<li>If <span class="math inline">\(\text{IC} &gt; 0\)</span>: <strong>Synergism</strong> or <strong>superadditivity</strong> (combined effect exceeds sum of individual effects)</li>
-<li>If <span class="math inline">\(\text{IC} &lt; 0\)</span>: <strong>Antagonism</strong> or <strong>subadditivity</strong> (combined effect is less than sum of individual effects)</li>
-<li>If <span class="math inline">\(\text{IC} = 0\)</span>: <strong>No interaction</strong> or <strong>additivity</strong> (combined effect equals sum of individual effects)</li>
+<li>If <span class="math inline">\(\text{IC} &gt; 0\)</span>: <strong>synergism</strong> or <strong>superadditivity</strong> (combined effect exceeds sum of individual effects)</li>
+<li>If <span class="math inline">\(\text{IC} &lt; 0\)</span>: <strong>antagonism</strong> or <strong>subadditivity</strong> (combined effect is less than sum of individual effects)</li>
+<li>If <span class="math inline">\(\text{IC} = 0\)</span>: <strong>no interaction</strong> or <strong>additivity</strong> (combined effect equals sum of individual effects)</li>
 </ul>
+</div>
+<aside class="notes">
 <p><strong>Important distinction</strong>:</p>
 <ul>
 <li><strong>Effect modification</strong> (Chapter 4): Effect of <span class="math inline">\(A\)</span> varies across levels of a baseline variable <span class="math inline">\(V\)</span></li>
@@ -410,7 +412,8 @@
 </section>
 <section id="four-response-types-binary-outcome" class="slide level2 scrollable">
 <h2>Four Response Types (Binary Outcome)</h2>
-<p>For a binary outcome, individuals can be classified into one of four types based on their four potential outcomes:</p>
+<div id="def-response-types" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Counterfactual Response Types)</strong></span> For a binary outcome, individuals can be classified into one of four types based on their four potential outcomes:</p>
 <ol type="1">
 <li><strong>Doomed</strong>: <span class="math inline">\(Y^{0,0} = Y^{1,0} = Y^{0,1} = Y^{1,1} = 1\)</span> (outcome occurs regardless of treatment)</li>
 <li><strong>Preventive via <span class="math inline">\(A\)</span> only</strong>: <span class="math inline">\(Y^{0,0} = Y^{0,1} = 1\)</span>, but <span class="math inline">\(Y^{1,0} = Y^{1,1} = 0\)</span></li>
@@ -418,14 +421,17 @@
 <li><strong>Preventive via both</strong>: <span class="math inline">\(Y^{0,0} = 1\)</span>, but <span class="math inline">\(Y^{1,0} = Y^{0,1} = Y^{1,1} = 0\)</span></li>
 <li><strong>Immune</strong>: <span class="math inline">\(Y^{0,0} = Y^{1,0} = Y^{0,1} = Y^{1,1} = 0\)</span> (outcome never occurs)</li>
 </ol>
-<p>And several other combinations…</p>
-<aside class="notes">
-<p>Actually, with four binary potential outcomes, there are <span class="math inline">\(2^4 = 16\)</span> possible response types. Many of these correspond to various patterns of interaction:</p>
+</div>
+<p>With four binary potential outcomes there are, more generally, <span class="math inline">\(2^4 = 16\)</span> possible response types; the five listed above are only a subset.</p>
+<div id="def-response-type-patterns" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Synergistic, Redundant, and Antagonistic Response Types)</strong></span> Many of the 16 possible response types correspond to various patterns of interaction:</p>
 <ul>
-<li><strong>Synergistic</strong> types: Individuals for whom the outcome is prevented only by the combination of both treatments</li>
-<li><strong>Redundant</strong> types: Individuals who benefit from either treatment alone (treatments are substitutes)</li>
-<li><strong>Antagonistic</strong> types: Individuals who benefit from one treatment alone but not from the combination</li>
+<li><strong>Synergistic</strong> types: individuals for whom the outcome is prevented only by the combination of both treatments</li>
+<li><strong>Redundant</strong> types: individuals who benefit from either treatment alone (treatments are substitutes)</li>
+<li><strong>Antagonistic</strong> types: individuals who benefit from one treatment alone but not from the combination</li>
 </ul>
+</div>
+<aside class="notes">
 <p>These response types are <strong>unobservable</strong>—we can never know which type an individual is because we only observe one potential outcome. However, the <em>distribution</em> of response types in the population determines whether interaction exists.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -489,13 +495,13 @@
 
 <p>An alternative framework for thinking about interaction is the <strong>sufficient cause model</strong>, developed by Kenneth Rothman.</p>
 <div id="def-sufficient-cause" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Sufficient Cause)</strong></span> A <strong>sufficient cause</strong> is a set of conditions that inevitably produces the outcome. Once all components of a sufficient cause are present, the outcome occurs.</p>
+<p><span class="theorem-title"><strong>Definition 6 (Sufficient Cause)</strong></span> A <strong>sufficient cause</strong> is a set of conditions that inevitably produces the outcome. Once all components of a sufficient cause are present, the outcome occurs.</p>
 </div>
 </section>
 <section id="components-of-sufficient-causes" class="slide level2 scrollable">
 <h2>Components of Sufficient Causes</h2>
 <div id="def-component-cause" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Component Cause)</strong></span> Each sufficient cause consists of <strong>component causes</strong>—individual factors that, together, are sufficient to produce the outcome.</p>
+<p><span class="theorem-title"><strong>Definition 7 (Component Cause)</strong></span> Each sufficient cause consists of <strong>component causes</strong>—individual factors that, together, are sufficient to produce the outcome.</p>
 </div>
 <div id="exm-sufficient-cause" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3 (Sufficient Cause Example)</strong></span> Consider lung cancer. Possible sufficient causes:</p>
@@ -534,7 +540,7 @@
 
 <p>Within the sufficient cause framework, we can define a specific type of interaction:</p>
 <div id="def-sufficient-cause-interaction" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Sufficient Cause Interaction)</strong></span> There is <strong>sufficient cause interaction</strong> between <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> if they are both component causes of the same sufficient cause.</p>
+<p><span class="theorem-title"><strong>Definition 8 (Sufficient Cause Interaction)</strong></span> There is <strong>sufficient cause interaction</strong> between <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> if they are both component causes of the same sufficient cause.</p>
 <p>In other words, <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> interact if there exists some sufficient cause containing both <span class="math inline">\(A\)</span> and <span class="math inline">\(E\)</span> as components.</p>
 </div>
 </section>

@@ -242,6 +242,9 @@
 <li>The denominator of the <strong>hazard</strong>—the number of individuals alive at <span class="math inline">\(k\)</span>—varies over time and its numerator includes only recent events. The hazard may increase or decrease over time.</li>
 </ul>
 <p>A frequent approach to quantify the treatment effect in survival analyses is to estimate the ratio of the hazards in the treated and the untreated, known as the hazard ratio. However, the hazard ratio is problematic for the reasons described in Fine Point 17.2. Therefore, the survival analyses in this book privilege survival/risk over hazard. However, that does not mean that we should completely ignore hazards. The estimation of hazards is often a useful intermediate step for the estimation of survivals and risks.</p>
+<div id="def-competing-event" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Competing Event)</strong></span> As described in Section 8.5, a <strong>competing event</strong> is an event (typically, death) that prevents the event of interest (e.g., stroke) from happening: individuals who die from other causes (say, cancer) cannot ever develop stroke.</p>
+</div>
 <div title="Fine Point 17.1: Competing Events">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -252,7 +255,7 @@
 <p><strong>Fine Point 17.1: Competing Events</strong></p>
 </div>
 <div class="callout-content">
-<p>As described in Section 8.5, a <strong>competing event</strong> is an event (typically, death) that prevents the event of interest (e.g., stroke) from happening: individuals who die from other causes (say, cancer) cannot ever develop stroke. In survival analyses, the key decision is whether to consider competing events a form of non-administrative censoring.</p>
+<p>In survival analyses, the key decision is whether to consider competing events a form of non-administrative censoring.</p>
 <ul>
 <li><p>If the competing event is considered a censoring event, then the analysis is effectively an attempt to simulate a population in which death from other causes is somehow either abolished or rendered independent of the risk factors for stroke. The resulting effect estimate is hard to interpret and may not correspond to a meaningful estimand. In addition, the censoring may introduce selection bias under the null, which would require adjustment using data on the measured risk factors for the event of interest.</p></li>
 <li><p>If the competing event is not considered a censoring event, then the analysis effectively sets the time to event to be infinite. That is, dead individuals are considered to have probability zero of developing stroke between their death and the administrative end of follow-up. The estimate of the effect of treatment on stroke is hard to interpret because a non-null estimate may arise from a direct effect of treatment on death, which would prevent the occurrence of stroke.</p></li>
@@ -274,7 +277,7 @@
 <p>In survival analyses, there are two main ways to arrange the analytic dataset.</p>
 <p>In the first data arrangement each row of the database corresponds to one person. This data format—often referred to as the “wide” format when there are time-varying treatments and confounders—is the one we have used so far in this book. In the analyses of the previous section, the dataset had 1629 rows, one per individual.</p>
 <div id="def-person-time-format" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Person-Time Data Format)</strong></span> In the second data arrangement each row of the database corresponds to a <strong>person-time</strong>. That is, the first row contains the information for person 1 at <span class="math inline">\(k = 0\)</span>, the second row the information for person 1 at <span class="math inline">\(k = 1\)</span>, and so on until the follow-up of person 1 ends. This person-time (or “long”) data format is the one we will use in most survival analyses in this chapter and in all analyses with time-varying treatments in Part III.</p>
+<p><span class="theorem-title"><strong>Definition 3 (Person-Time Data Format)</strong></span> In the second data arrangement each row of the database corresponds to a <strong>person-time</strong>. That is, the first row contains the information for person 1 at <span class="math inline">\(k = 0\)</span>, the second row the information for person 1 at <span class="math inline">\(k = 1\)</span>, and so on until the follow-up of person 1 ends. This person-time (or “long”) data format is the one we will use in most survival analyses in this chapter and in all analyses with time-varying treatments in Part III.</p>
 </div>
 <p>In our smoking cessation example, the person-time dataset has 176,764 rows, one per person-month.</p>
 </section>
@@ -283,7 +286,7 @@
 <p>To encode survival information through <span class="math inline">\(k\)</span> in the person-time data format, it is helpful to define a <strong>time-varying indicator of event</strong> <span class="math inline">\(D_k\)</span>. For each person at each month <span class="math inline">\(k\)</span>, the indicator <span class="math inline">\(D_k\)</span> takes value 1 if <span class="math inline">\(T \leq k\)</span> and value 0 if <span class="math inline">\(T &gt; k\)</span>.</p>
 <p>Using the time-varying outcome variable <span class="math inline">\(D_k\)</span>, we can define:</p>
 <div id="def-survival-risk-hazard" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Survival, Risk, and Hazard)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Definition 4 (Survival, Risk, and Hazard)</strong></span> &nbsp;</p>
 <ul>
 <li><strong>Survival</strong> at <span class="math inline">\(k\)</span>: <span class="math inline">\(\Pr[D_k = 0] = \Pr[T &gt; k]\)</span></li>
 <li><strong>Risk</strong> at <span class="math inline">\(k\)</span>: <span class="math inline">\(\Pr[D_k = 1] = \Pr[T \leq k]\)</span></li>
@@ -294,9 +297,13 @@
 </section>
 <section id="from-hazards-to-survival" class="slide level2">
 <h2>From Hazards to Survival</h2>
-<p>The survival probability at <span class="math inline">\(k\)</span> is the product of the conditional probabilities of having survived each interval between 0 and <span class="math inline">\(k\)</span>. More generally, the survival at <span class="math inline">\(k\)</span> is:</p>
+<p>The survival probability at <span class="math inline">\(k\)</span> is the product of the conditional probabilities of having survived each interval between 0 and <span class="math inline">\(k\)</span>.</p>
+<div id="thm-survival-from-hazards" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Survival as a Product of Hazards)</strong></span> The survival at <span class="math inline">\(k\)</span> is:</p>
 <p><span class="math display">\[\Pr[D_k = 0] = \prod_{m=1}^k \Pr[D_m = 0 \mid D_{m-1} = 0]\]</span></p>
-<p>That is, the survival at <span class="math inline">\(k\)</span> equals the product of one minus the hazard at all previous times. If we know the hazards through <span class="math inline">\(k\)</span> we can easily compute the survival at <span class="math inline">\(k\)</span> (or the risk at <span class="math inline">\(k\)</span>, which is just one minus the survival).</p>
+<p>That is, the survival at <span class="math inline">\(k\)</span> equals the product of one minus the hazard at all previous times.</p>
+</div>
+<p>If we know the hazards through <span class="math inline">\(k\)</span> we can easily compute the survival at <span class="math inline">\(k\)</span> (or the risk at <span class="math inline">\(k\)</span>, which is just one minus the survival).</p>
 <aside class="notes">
 <p><strong>Example</strong>: The survival at <span class="math inline">\(k = 2\)</span>, <span class="math inline">\(\Pr[D_2 = 0]\)</span>, is equal to the survival probability at <span class="math inline">\(k = 1\)</span>, <span class="math inline">\(\Pr[D_1 = 0]\)</span>, times the survival probability at <span class="math inline">\(k = 2\)</span> conditional on having survived through <span class="math inline">\(k = 1\)</span>, <span class="math inline">\(\Pr[D_2 = 0 \mid D_1 = 0]\)</span>.</p>
 <style type="text/css">
@@ -313,7 +320,10 @@
 </section>
 <section id="nonparametric-and-parametric-estimation" class="slide level2">
 <h2>Nonparametric and Parametric Estimation</h2>
-<p>The hazard at <span class="math inline">\(k\)</span>, <span class="math inline">\(\Pr[D_k = 1 \mid D_{k-1} = 0]\)</span>, can be estimated <strong>nonparametrically</strong> by dividing the number of cases during the interval <span class="math inline">\(k\)</span> by the number of individuals alive at the end of interval <span class="math inline">\(k - 1\)</span>. The resulting nonparametric estimate of the survival <span class="math inline">\(\Pr[D_k = 0]\)</span> at <span class="math inline">\(k\)</span> is referred to as the <strong>Kaplan-Meier</strong>, or <strong>product-limit</strong>, estimator.</p>
+<p>The hazard at <span class="math inline">\(k\)</span>, <span class="math inline">\(\Pr[D_k = 1 \mid D_{k-1} = 0]\)</span>, can be estimated <strong>nonparametrically</strong> by dividing the number of cases during the interval <span class="math inline">\(k\)</span> by the number of individuals alive at the end of interval <span class="math inline">\(k - 1\)</span>.</p>
+<div id="def-kaplan-meier-estimator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Kaplan-Meier (Product-Limit) Estimator)</strong></span> The resulting nonparametric estimate of the survival <span class="math inline">\(\Pr[D_k = 0]\)</span> at <span class="math inline">\(k\)</span> is referred to as the <strong>Kaplan-Meier</strong>, or <strong>product-limit</strong>, estimator.</p>
+</div>
 <p>An easy way to parametrically estimate the hazards is to fit a <strong>logistic regression model</strong> for <span class="math inline">\(\Pr[D_{k+1} = 1 \mid D_k = 0]\)</span> restricted to individuals who survived through <span class="math inline">\(k\)</span>. In our example, we can estimate the hazards in the treated and untreated by fitting:</p>
 <p><span class="math display">\[\text{logit}\,\Pr[D_{k+1} = 1 \mid D_k = 0, A] = \theta_{0,k} + \theta_1 A + \theta_2 (A \times k) + \theta_3 (A \times k^2)\]</span></p>
 <p>where <span class="math inline">\(\theta_{0,k} = \theta_0 + \theta_4 k + \theta_5 k^2\)</span> is a flexible time-varying intercept. The product terms between treatment <span class="math inline">\(A\)</span> and time allow the hazard ratio to vary over time (see Technical Point 17.1 for details on how a logistic model approximates a hazards model).</p>
@@ -336,6 +346,11 @@
 </div>
 </div>
 </div>
+<div id="def-survival-model-taxonomy" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Nonparametric, Parametric, and Semiparametric Models for Survival Analysis)</strong></span> <strong>Nonparametric</strong> approaches to survival analysis, like constructing Kaplan-Meier curves, make no assumptions about the distribution of the unobserved failure times due to administrative censoring.</p>
+<p><strong>Parametric</strong> models for survival analysis assume a particular statistical distribution (e.g., exponential, Weibull) for the failure times or hazards. The logistic model described in the main text to estimate hazards is an example of a parametric model.</p>
+<p>Other models for survival analysis, like the <strong>Cox proportional hazards model</strong> and the <strong>accelerated failure time (AFT) model</strong>, do not assume a particular distribution for the failure times or hazards. In particular, these models are agnostic about the shape of the hazard when all covariates in the model have value zero—often referred to as the baseline hazard. These models, however, impose a priori restrictions on the relation between the baseline hazard and the hazard under other combinations of covariate values. As a result, these methods are referred to as <strong>semiparametric</strong> methods.</p>
+</div>
 <div title="Fine Point 17.3: Models for Survival Analysis">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -347,9 +362,6 @@
 </div>
 <div class="callout-content">
 <p>Methods for survival analysis need to accommodate the expected censoring of failure times due to administrative end of follow-up.</p>
-<p><strong>Nonparametric</strong> approaches to survival analysis, like constructing Kaplan-Meier curves, make no assumptions about the distribution of the unobserved failure times due to administrative censoring.</p>
-<p><strong>Parametric</strong> models for survival analysis assume a particular statistical distribution (e.g., exponential, Weibull) for the failure times or hazards. The logistic model described in the main text to estimate hazards is an example of a parametric model.</p>
-<p>Other models for survival analysis, like the <strong>Cox proportional hazards model</strong> and the <strong>accelerated failure time (AFT) model</strong>, do not assume a particular distribution for the failure times or hazards. In particular, these models are agnostic about the shape of the hazard when all covariates in the model have value zero—often referred to as the baseline hazard. These models, however, impose a priori restrictions on the relation between the baseline hazard and the hazard under other combinations of covariate values. As a result, these methods are referred to as <strong>semiparametric</strong> methods.</p>
 </div>
 </div>
 </div>
@@ -403,9 +415,12 @@
 </section>
 <section id="correct-estimation-under-as-if-randomly-assigned-censoring" class="slide level2">
 <h2>Correct Estimation Under As-If Randomly Assigned Censoring</h2>
-<p>Under (as-if) randomly assigned censoring, the survival <span class="math inline">\(\Pr[D_k = 0 \mid A = a]\)</span> at <span class="math inline">\(k\)</span> is:</p>
+<div id="thm-survival-identification-censoring" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Identification of Survival Under As-If Randomly Assigned Censoring)</strong></span> Under (as-if) randomly assigned censoring, the survival <span class="math inline">\(\Pr[D_k = 0 \mid A = a]\)</span> at <span class="math inline">\(k\)</span> is:</p>
 <p><span class="math display">\[\Pr[D_k = 0 \mid A = a] = \prod_{m=1}^k \Pr[D_m = 0 \mid D_{m-1} = 0, C_m = 0, A = a] \quad \text{for } k &lt; k_\text{end}\]</span></p>
-<p>The estimation procedure is the same as described above except that we estimate the <strong>cause-specific hazard</strong> <span class="math inline">\(\Pr[D_{k+1} = 1 \mid D_k = 0, C_{k+1} = 0, A = a]\)</span>.</p>
+<p>This requires estimating the <strong>cause-specific hazard</strong> <span class="math inline">\(\Pr[D_{k+1} = 1 \mid D_k = 0, C_{k+1} = 0, A = a]\)</span>.</p>
+</div>
+<p>The estimation procedure is the same as described above except that we estimate the cause-specific hazard.</p>
 <p>Often we are not ready to assume that censoring is as if randomly assigned. When there is staggered entry, the calendar time at study entry may be associated with the outcome. Therefore, the above procedure will need to be adjusted for baseline confounders, which can be achieved through g-methods as described in the next sections.</p>
 </section></section>
 <section>
@@ -419,7 +434,10 @@
 </section>
 <section id="counterfactual-survivals" class="slide level2">
 <h2>Counterfactual Survivals</h2>
-<p>Let us define <span class="math inline">\(D^a_k\)</span> as a counterfactual time-varying indicator for death at <span class="math inline">\(k\)</span> under treatment level <span class="math inline">\(a\)</span> and no censoring. Suppose we want to compare the counterfactual survivals <span class="math inline">\(\Pr[D^{a=1}_{k+1} = 0]\)</span> and <span class="math inline">\(\Pr[D^{a=0}_{k+1} = 0]\)</span> that would have been observed if everybody had received treatment (<span class="math inline">\(a = 1\)</span>) and no treatment (<span class="math inline">\(a = 0\)</span>), respectively. The causal contrast of interest is:</p>
+<div id="def-counterfactual-survival" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Counterfactual Survival)</strong></span> Let <span class="math inline">\(D^a_k\)</span> denote a counterfactual time-varying indicator for death at <span class="math inline">\(k\)</span> under treatment level <span class="math inline">\(a\)</span> and no censoring. The counterfactual survival at <span class="math inline">\(k\)</span> under treatment level <span class="math inline">\(a\)</span> is <span class="math inline">\(\Pr[D^a_k = 0]\)</span>.</p>
+</div>
+<p>Suppose we want to compare the counterfactual survivals <span class="math inline">\(\Pr[D^{a=1}_{k+1} = 0]\)</span> and <span class="math inline">\(\Pr[D^{a=0}_{k+1} = 0]\)</span> that would have been observed if everybody had received treatment (<span class="math inline">\(a = 1\)</span>) and no treatment (<span class="math inline">\(a = 0\)</span>), respectively. The causal contrast of interest is:</p>
 <p><span class="math display">\[\Pr[D^{a=1}_{k+1} = 0] \text{ vs. } \Pr[D^{a=0}_{k+1} = 0] \quad \text{for } k = 0, 1, \ldots, k_\text{end} - 1\]</span></p>
 <p>Because of confounding, this contrast may not be validly estimated by the contrast of the survivals <span class="math inline">\(\Pr[D_{k+1} = 0 \mid A = 1]\)</span> and <span class="math inline">\(\Pr[D_{k+1} = 0 \mid A = 0]\)</span>.</p>
 </section>
@@ -457,8 +475,11 @@
 </section>
 <section id="identification-via-standardization" class="slide level2">
 <h2>Identification via Standardization</h2>
-<p>The survival <span class="math inline">\(\Pr[D^a_{k+1} = 0]\)</span> at <span class="math inline">\(k + 1\)</span> under treatment level <span class="math inline">\(a\)</span> is the weighted average of the survival conditional probabilities at <span class="math inline">\(k + 1\)</span> within levels of the covariates <span class="math inline">\(L\)</span> and treatment level <span class="math inline">\(A = a\)</span>, with the proportion of individuals in each level <span class="math inline">\(l\)</span> of <span class="math inline">\(L\)</span> as the weights. That is, under exchangeability, positivity, and consistency, <span class="math inline">\(\Pr[D^a_{k+1} = 0]\)</span> equals the standardized survival:</p>
+<p>The survival <span class="math inline">\(\Pr[D^a_{k+1} = 0]\)</span> at <span class="math inline">\(k + 1\)</span> under treatment level <span class="math inline">\(a\)</span> is the weighted average of the survival conditional probabilities at <span class="math inline">\(k + 1\)</span> within levels of the covariates <span class="math inline">\(L\)</span> and treatment level <span class="math inline">\(A = a\)</span>, with the proportion of individuals in each level <span class="math inline">\(l\)</span> of <span class="math inline">\(L\)</span> as the weights.</p>
+<div id="thm-survival-standardization-identification" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3 (Identification of Survival Under Standardization)</strong></span> Under exchangeability, positivity, and consistency, <span class="math inline">\(\Pr[D^a_{k+1} = 0]\)</span> equals the standardized survival:</p>
 <p><span class="math display">\[\sum_l \Pr[D_{k+1} = 0 \mid L = l, A = a]\, \Pr[L = l]\]</span></p>
+</div>
 </section>
 <section id="estimation" class="slide level2">
 <h2>Estimation</h2>
@@ -498,7 +519,7 @@
 <h2>Structural Nested AFT Models</h2>
 <p>We can, however, model the ratio of survival times under different treatment levels.</p>
 <div id="def-structural-nested-aft-model" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Structural Nested Accelerated Failure Time (AFT) Model)</strong></span> Let <span class="math inline">\(T^a_i\)</span> be the counterfactual time of survival for individual <span class="math inline">\(i\)</span> under treatment level <span class="math inline">\(a\)</span>. Suppose the effect of treatment is the same for every individual. We can then consider the <strong>structural nested accelerated failure time (AFT) model</strong>:</p>
+<p><span class="theorem-title"><strong>Definition 8 (Structural Nested Accelerated Failure Time (AFT) Model)</strong></span> Let <span class="math inline">\(T^a_i\)</span> be the counterfactual time of survival for individual <span class="math inline">\(i\)</span> under treatment level <span class="math inline">\(a\)</span>. Suppose the effect of treatment is the same for every individual. We can then consider the <strong>structural nested accelerated failure time (AFT) model</strong>:</p>
 <p><span class="math display">\[T^a_i / T^{a=0}_i = \text{exp}{\left\{(\right\}}-\psi_1 a)\]</span></p>
 <p>where <span class="math inline">\(\psi_1\)</span> measures the expansion (or contraction) of each individual’s survival time attributable to treatment.</p>
 </div>
@@ -563,6 +584,14 @@ Table&nbsp;1: Survival times under treatment and no treatment for each individua
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+<div id="def-blipped-down-artificially-censored" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9 (Blipped-Down and Artificially Censored Survival Times)</strong></span> For a given candidate value <span class="math inline">\(\psi\)</span>, the <strong>blipped-down</strong> survival time for treated individuals (<span class="math inline">\(A_i = 1\)</span>) is:</p>
+<p><span class="math display">\[U_i(\psi) = T_i \text{exp}{\left\{(\right\}}\psi A_i)\]</span></p>
+<p>This quantity equals <span class="math inline">\(T^{a=0}_i\)</span> if <span class="math inline">\(\psi\)</span> equals the true <span class="math inline">\(\psi_1\)</span>. Under no unmeasured confounding, <span class="math inline">\(U_i(\psi_1)\)</span> is independent of <span class="math inline">\(A_i\)</span> within levels of <span class="math inline">\(L_i\)</span>.</p>
+<p>To account for administrative censoring at time <span class="math inline">\(K\)</span>, the <strong>artificially censored</strong> version of <span class="math inline">\(U_i(\psi)\)</span> is:</p>
+<p><span class="math display">\[U^*_i(\psi) = \min\!\bigl(U_i(\psi),\; K \text{exp}{\left\{(\right\}}-\psi A_i)\bigr)\]</span></p>
+<p>with corresponding artificial censoring indicator <span class="math inline">\(\Delta^*_i(\psi) = \mathbf{1}[U_i(\psi) \leq K \text{exp}{\left\{(\right\}}-\psi A_i)]\)</span>.</p>
+</div>
 <div title="Technical Point 17.3: G-Estimation of Structural Nested AFT Models">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -574,12 +603,6 @@ Table&nbsp;1: Survival times under treatment and no treatment for each individua
 </div>
 <div class="callout-content">
 <p>The key challenge in g-estimation of structural nested AFT models is that administrative censoring creates selection bias when treatment affects the censoring indicator (see the main text above). The solution is to create “artificially censored” versions of the observed survival times.</p>
-<p>For a given candidate value <span class="math inline">\(\psi\)</span>, define the <strong>blipped-down</strong> survival time for treated individuals (<span class="math inline">\(A_i = 1\)</span>) as:</p>
-<p><span class="math display">\[U_i(\psi) = T_i \text{exp}{\left\{(\right\}}\psi A_i)\]</span></p>
-<p>This quantity equals <span class="math inline">\(T^{a=0}_i\)</span> if <span class="math inline">\(\psi\)</span> equals the true <span class="math inline">\(\psi_1\)</span>. Under no unmeasured confounding, <span class="math inline">\(U_i(\psi_1)\)</span> is independent of <span class="math inline">\(A_i\)</span> within levels of <span class="math inline">\(L_i\)</span>.</p>
-<p>To account for administrative censoring at time <span class="math inline">\(K\)</span>, we define an <strong>artificially censored</strong> version of <span class="math inline">\(U_i(\psi)\)</span>:</p>
-<p><span class="math display">\[U^*_i(\psi) = \min\!\bigl(U_i(\psi),\; K \text{exp}{\left\{(\right\}}-\psi A_i)\bigr)\]</span></p>
-<p>with corresponding artificial censoring indicator <span class="math inline">\(\Delta^*_i(\psi) = \mathbf{1}[U_i(\psi) \leq K \text{exp}{\left\{(\right\}}-\psi A_i)]\)</span>.</p>
 <p>The g-estimator solves the estimating equation</p>
 <p><span class="math display">\[\sum_i \bigl(A_i - \hat{\text{E}}{\left[A_i \mid L_i\right]}\bigr) \cdot h\!\bigl(U^*_i(\psi), \Delta^*_i(\psi)\bigr) = 0\]</span></p>
 <p>where <span class="math inline">\(h(\cdot)\)</span> is a score function (e.g., from a rank-based or weighted log-rank statistic) and <span class="math inline">\(\hat{\text{E}}{\left[A_i \mid L_i\right]}\)</span> is the estimated propensity score. By searching over <span class="math inline">\(\psi\)</span>, we find the value that makes treated and untreated individuals comparable in terms of their blipped-down survival times.</p>

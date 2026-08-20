@@ -527,10 +527,12 @@
 </section>
 <section id="joint-weights-for-treatment-and-censoring" class="slide level2">
 <h2>Joint Weights for Treatment and Censoring</h2>
-<p>When we have both confounding and censoring:</p>
-<p><span class="math display">\[W^{A,C} = W^A \times W^C = \frac{1}{\Pr[A \mid L]} \times \frac{1}{\Pr[C = 0 \mid A, L]}\]</span></p>
+<p>When we have both confounding and censoring, the treatment and censoring weights are combined by multiplication:</p>
+<div id="def-joint-weights-treatment-censoring" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Joint Weights for Treatment and Censoring)</strong></span> <span class="math display">\[W^{A,C} = W^A \times W^C = \frac{1}{\Pr[A \mid L]} \times \frac{1}{\Pr[C = 0 \mid A, L]}\]</span></p>
 <p><strong>Stabilized version</strong>:</p>
 <p><span class="math display">\[SW^{A,C} = \frac{\Pr[A]}{\Pr[A \mid L]} \times \frac{\Pr[C = 0 \mid A]}{\Pr[C = 0 \mid A, L]}\]</span></p>
+</div>
 </section>
 <section id="example-nhefs-with-loss-to-follow-up" class="slide level2 scrollable">
 <h2>Example: NHEFS with Loss to Follow-up</h2>
@@ -551,7 +553,6 @@
 <li><strong>Censoring</strong>: <span class="math inline">\(C \perp\!\!\!\perp Y^a \mid A, L\)</span> (missing at random)</li>
 <li><strong>Positivity</strong>: <span class="math inline">\(\Pr[A = a \mid L] &gt; 0\)</span> and <span class="math inline">\(\Pr[C = 0 \mid A, L] &gt; 0\)</span> for all <span class="math inline">\(a, L\)</span></li>
 </ol>
-<p>Missing at random (MAR) means censoring may depend on observed variables but not on the (unobserved) outcome. This is weaker than missing completely at random (MCAR).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -563,6 +564,10 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+<div id="def-missing-at-random" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Missing at Random (MAR))</strong></span> Censoring is <strong>missing at random (MAR)</strong> if it is independent of the potential outcomes given the observed treatment and covariates, <span class="math inline">\(C \perp\!\!\!\perp Y^a \mid A, L\)</span>: censoring may depend on observed variables but not on the (unobserved) outcome.</p>
+<p>MAR is weaker than <strong>missing completely at random (MCAR)</strong>, under which censoring does not depend on either observed or unobserved variables.</p>
+</div>
 </section></section>
 <section>
 <section id="a-likelihood-approach-pp.-173-174" class="title-slide slide level1 center" data-number="7">
@@ -576,7 +581,7 @@
 <section id="weighted-likelihood" class="slide level2">
 <h2>Weighted Likelihood</h2>
 <div id="def-weighted-likelihood" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Weighted Estimating Equations and Weighted Likelihood)</strong></span> The IP weighted estimator solves the <strong>weighted estimating equations</strong>:</p>
+<p><span class="theorem-title"><strong>Definition 8 (Weighted Estimating Equations and Weighted Likelihood)</strong></span> The IP weighted estimator solves the <strong>weighted estimating equations</strong>:</p>
 <p><span class="math display">\[\sum_{i=1}^n W^A_i \times \frac{\partial \log f(Y_i \mid A_i; \beta)}{\partial \beta} = 0\]</span></p>
 <p>This is equivalent to maximizing a <strong>weighted likelihood</strong>:</p>
 <p><span class="math display">\[L_W(\beta) = \prod_{i=1}^n [f(Y_i \mid A_i; \beta)]^{W^A_i}\]</span></p>

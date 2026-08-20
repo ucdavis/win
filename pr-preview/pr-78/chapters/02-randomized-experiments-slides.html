@@ -355,7 +355,10 @@
 <section id="association-equals-causation-under-exchangeability" class="slide level2">
 <h2>Association Equals Causation Under Exchangeability</h2>
 <p>When exchangeability holds, we can identify the average causal effect from observed data:</p>
-<p><span class="math display">\[\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]} = \text{E}{\left[Y|A = 1\right]} - \text{E}{\left[Y|A = 0\right]}\]</span></p>
+<div id="thm-association-equals-causation" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Association Equals Causation Under Exchangeability)</strong></span> Under exchangeability,</p>
+<p><span class="math display">\[\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]} = \text{E}{\left[Y|A = 1\right]} - \text{E}{\left[Y|A = 0\right]}.\]</span></p>
+</div>
 <p>The right side is the observed associational difference, which we can compute from Table 2.1. Under the exchangeability guaranteed by randomization, this associational difference equals the causal effect.</p>
 <p>In our example:</p>
 <ul>
@@ -559,11 +562,14 @@
 <li><strong>Enables subgroup analysis</strong>: Allows examination of effect modification (heterogeneous effects)</li>
 </ol>
 <p>Common forms include:</p>
+<div id="def-randomization-types" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Types of Conditional Randomization)</strong></span> &nbsp;</p>
 <ul>
-<li><strong>Stratified randomization</strong>: Randomize within strata defined by covariates</li>
-<li><strong>Block randomization</strong>: Randomize in blocks to ensure balanced sample sizes</li>
-<li><strong>Matched-pair randomization</strong>: Match individuals on covariates, then randomize within pairs</li>
+<li><strong>Stratified randomization</strong>: Randomize within strata defined by covariates.</li>
+<li><strong>Block randomization</strong>: Randomize in blocks to ensure balanced sample sizes.</li>
+<li><strong>Matched-pair randomization</strong>: Match individuals on covariates, then randomize within pairs.</li>
 </ul>
+</div>
 </section></section>
 <section>
 <section id="standardization-pp.-18-21" class="title-slide slide level1 center" data-number="3">
@@ -580,7 +586,7 @@
 <p><span class="math display">\[\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y|A = a, L = l\right]} \times \Pr[L = l]\]</span></p>
 <p>This formula weights the stratum-specific mean outcomes by the population distribution of <span class="math inline">\(L\)</span>.</p>
 <div id="def-standardization" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Standardization Formula)</strong></span> Under conditional exchangeability <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span>, the mean counterfactual outcome is:</p>
+<p><span class="theorem-title"><strong>Definition 4 (Standardization Formula)</strong></span> Under conditional exchangeability <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span>, the mean counterfactual outcome is:</p>
 <p><span class="math display">\[\text{E}{\left[Y^a\right]} = \sum_l \text{E}{\left[Y|A = a, L = l\right]} \times \Pr[L = l]\]</span></p>
 <p>where the sum is over all values <span class="math inline">\(l\)</span> of the covariate <span class="math inline">\(L\)</span>.</p>
 </div>
@@ -663,7 +669,7 @@
 <p>Each individual is weighted by the inverse of their probability of receiving the treatment they actually received:</p>
 <p><span class="math display">\[W^A = \frac{1}{\Pr[A|L]}\]</span></p>
 <div id="def-ipw" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Inverse Probability Weights)</strong></span> For an individual who received treatment <span class="math inline">\(A\)</span> and has covariates <span class="math inline">\(L\)</span>, the <strong>inverse probability weight</strong> is:</p>
+<p><span class="theorem-title"><strong>Definition 5 (Inverse Probability Weights)</strong></span> For an individual who received treatment <span class="math inline">\(A\)</span> and has covariates <span class="math inline">\(L\)</span>, the <strong>inverse probability weight</strong> is:</p>
 <p><span class="math display">\[W^A = \frac{1}{\Pr[A|L]}\]</span></p>
 <p>where <span class="math inline">\(\Pr[A|L]\)</span> is the probability (propensity) of receiving the treatment actually received, given covariates <span class="math inline">\(L\)</span>.</p>
 </div>
@@ -813,7 +819,7 @@
 <p>Both standardization and IPW require the <strong>positivity assumption</strong>: For all values of <span class="math inline">\(L\)</span> that occur in the population, there must be a non-zero probability of receiving each treatment level.</p>
 <p>Formally: If <span class="math inline">\(\Pr[L = l] &gt; 0\)</span>, then <span class="math inline">\(0 &lt; \Pr[A = a|L = l] &lt; 1\)</span> for all <span class="math inline">\(a\)</span>.</p>
 <div id="def-positivity" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Positivity)</strong></span> The <strong>positivity assumption</strong> (also called <strong>experimental treatment assignment</strong> or <strong>overlap</strong>) requires:</p>
+<p><span class="theorem-title"><strong>Definition 6 (Positivity)</strong></span> The <strong>positivity assumption</strong> (also called <strong>experimental treatment assignment</strong> or <strong>overlap</strong>) requires:</p>
 <p><span class="math display">\[0 &lt; \Pr[A = a|L = l] &lt; 1\]</span></p>
 <p>for all values <span class="math inline">\(l\)</span> such that <span class="math inline">\(\Pr[L = l] &gt; 0\)</span> and for all treatment levels <span class="math inline">\(a\)</span>.</p>
 </div>
@@ -856,14 +862,22 @@
 </section>
 <section id="the-intention-to-treat-effect" class="slide level2">
 <h2>2.1 The intention-to-treat effect</h2>
-<p>In randomized experiments, individuals may not receive or adhere to their assigned treatment. For example, someone randomized to receive a transplant may refuse it. The <strong>intention-to-treat (ITT) effect</strong> is the causal effect of treatment <em>assignment</em> (not treatment received).</p>
-<p>Let <span class="math inline">\(Z\)</span> denote random assignment and <span class="math inline">\(A\)</span> denote treatment actually received. The ITT effect is <span class="math inline">\(\text{E}{\left[Y^{z=1}\right]} - \text{E}{\left[Y^{z=0}\right]}\)</span>, while the <strong>per-protocol effect</strong> is <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\)</span>.</p>
+<p>In randomized experiments, individuals may not receive or adhere to their assigned treatment. For example, someone randomized to receive a transplant may refuse it.</p>
+<p>Let <span class="math inline">\(Z\)</span> denote random assignment and <span class="math inline">\(A\)</span> denote treatment actually received.</p>
+<div id="def-itt-ch2" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Intention-to-Treat (ITT) Effect)</strong></span> The <strong>intention-to-treat (ITT) effect</strong> is the causal effect of treatment <em>assignment</em> (not treatment received): <span class="math inline">\(\text{E}{\left[Y^{z=1}\right]} - \text{E}{\left[Y^{z=0}\right]}\)</span>.</p>
+</div>
+<div id="def-pp-ch2" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8 (Per-Protocol Effect)</strong></span> The <strong>per-protocol effect</strong> is the causal effect of treatment actually received: <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\)</span>.</p>
+</div>
 <p>ITT effects are always identified in randomized experiments (because <span class="math inline">\(Y^z \perp\!\!\!\perp Z\)</span> by randomization). Per-protocol effects require additional assumptions about non-adherence.</p>
 </section>
 <section id="the-null-hypothesis" class="slide level2">
 <h2>2.2 The null hypothesis</h2>
 <p>Chapter 1 distinguished the <strong>average causal null hypothesis</strong> (<span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} = \text{E}{\left[Y^{a=0}\right]}\)</span>) from the <strong>sharp causal null hypothesis</strong> (<span class="math inline">\(Y^{a=1} = Y^{a=0}\)</span> for all individuals).</p>
-<p>In randomized experiments, the sharp null allows for <strong>exact inference</strong> using permutation tests (Fisher’s randomization test). These tests are valid in finite samples without distributional assumptions.</p>
+<div id="def-permutation-test" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9 (Permutation Test (Fisher’s Randomization Test))</strong></span> Under the sharp causal null hypothesis, <strong>exact inference</strong> can be performed using a <strong>permutation test</strong> (also called <strong>Fisher’s randomization test</strong>), which is valid in finite samples without distributional assumptions.</p>
+</div>
 <p>Under the average null (but not the sharp null), standard large-sample inference (normal approximation, t-tests) is typically used.</p>
 </section></section>
 <section>
@@ -873,7 +887,10 @@
 </section>
 <section id="identification-and-exchangeability" class="slide level2">
 <h2>2.1 Identification and exchangeability</h2>
-<p>A causal quantity is <strong>identified</strong> if it can be expressed as a function of the observed data distribution. Exchangeability is a sufficient condition for identifying average causal effects.</p>
+<div id="def-identified-ch2" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 10 (Identified)</strong></span> A causal quantity is <strong>identified</strong> if it can be expressed as a function of the observed data distribution.</p>
+</div>
+<p>Exchangeability is a sufficient condition for identifying average causal effects.</p>
 <p>Under <span class="math inline">\(Y^a \perp\!\!\!\perp A\)</span>, we have: <span class="math display">\[\text{E}{\left[Y^a\right]} = \text{E}{\left[Y|A=a\right]}\]</span></p>
 <p>This is because: <span class="math display">\[\text{E}{\left[Y^a\right]} = \text{E}{\left[Y^a|A=a\right]} \quad \text{(by exchangeability)} = \text{E}{\left[Y|A=a\right]} \quad \text{(by consistency)}\]</span></p>
 <p>Similarly, under <span class="math inline">\(Y^a \perp\!\!\!\perp A | L\)</span>: <span class="math display">\[\text{E}{\left[Y^a|L=l\right]} = \text{E}{\left[Y|A=a, L=l\right]}\]</span></p>

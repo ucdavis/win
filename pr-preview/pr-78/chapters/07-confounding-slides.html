@@ -267,16 +267,15 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 <p><span class="math display">\[\Pr[Y = 1 \mid A = 1] - \Pr[Y = 1 \mid A = 0] \neq \Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]\]</span></p>
 <p>In structural terms, confounding exists when there is at least one open backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> in the causal diagram.</p>
 </div>
-<aside class="notes"><p><strong>Confounding can operate in any direction:</strong></p>
-<ul>
-<li>
-<strong>Positive confounding</strong>: the crude estimate overstates the causal effect (or makes a harmful treatment look beneficial, or a beneficial treatment look even more beneficial)</li>
-<li>
-<strong>Negative confounding</strong>: the crude estimate understates the causal effect (or makes a beneficial treatment look harmful)</li>
-<li>The direction depends on the signs of the associations <span class="math inline">\(L \to A\)</span> and <span class="math inline">\(L \to Y\)</span>
-</li>
-</ul>
-<p>In the drug example above, sicker patients (males) were more likely to receive treatment and had worse outcomes, so the drug appears harmful even though it has no effect. This is <strong>confounding by indication</strong> or <strong>channeling bias</strong>—the indication for treatment (higher disease severity) is itself a risk factor for the outcome.</p>
+<div id="def-confounding-direction" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Positive and Negative Confounding)</strong></span> <strong>Positive confounding</strong>: the crude estimate overstates the causal effect (or makes a harmful treatment look beneficial, or a beneficial treatment look even more beneficial).</p>
+<p><strong>Negative confounding</strong>: the crude estimate understates the causal effect (or makes a beneficial treatment look harmful).</p>
+<p>The direction depends on the signs of the associations <span class="math inline">\(L \to A\)</span> and <span class="math inline">\(L \to Y\)</span>.</p>
+</div>
+<div id="def-confounding-by-indication" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Confounding by Indication (Channeling Bias))</strong></span> <strong>Confounding by indication</strong>, also called <strong>channeling bias</strong>, occurs when the indication for treatment (e.g., higher disease severity) is itself a risk factor for the outcome, so that patients selected for treatment differ systematically in prognosis from those who are not.</p>
+</div>
+<aside class="notes"><p>In the drug example above, sicker patients (males) were more likely to receive treatment and had worse outcomes, so the drug appears harmful even though it has no effect. This is an instance of confounding by indication.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -334,7 +333,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 
 </section><section class="slide level2 scrollable"><p>The <strong>backdoor criterion</strong> (Chapter 6) provides a graphical condition for identifying sets of variables <span class="math inline">\(L\)</span> that suffice to eliminate confounding by adjustment.</p>
 <div id="def-backdoor-criterion-ch7" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Backdoor Criterion)</strong></span> A set of variables <span class="math inline">\(L\)</span> satisfies the <strong>backdoor criterion</strong> for the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> in a causal diagram if:</p>
+<p><span class="theorem-title"><strong>Definition 4 (Backdoor Criterion)</strong></span> A set of variables <span class="math inline">\(L\)</span> satisfies the <strong>backdoor criterion</strong> for the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> in a causal diagram if:</p>
 <ol type="1">
 <li>No variable in <span class="math inline">\(L\)</span> is a descendant of <span class="math inline">\(A\)</span>
 </li>
@@ -456,7 +455,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 </section><section class="slide level2"><p>The term <strong>confounder</strong> is commonly used in epidemiology to refer to a variable that should be adjusted for to eliminate confounding. However, the traditional criteria used to identify confounders differ from the structural (DAG-based) definition—and the two do not always agree.</p>
 </section><section id="the-traditional-epidemiological-criteria" class="slide level2 scrollable"><h2>The Traditional Epidemiological Criteria</h2>
 <div id="def-traditional-confounder-criteria" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Traditional Epidemiological Criteria for a Confounder)</strong></span> In the traditional approach, a variable <span class="math inline">\(C\)</span> is labeled a confounder of the <span class="math inline">\(A\)</span>–<span class="math inline">\(Y\)</span> association if it satisfies three criteria:</p>
+<p><span class="theorem-title"><strong>Definition 5 (Traditional Epidemiological Criteria for a Confounder)</strong></span> In the traditional approach, a variable <span class="math inline">\(C\)</span> is labeled a confounder of the <span class="math inline">\(A\)</span>–<span class="math inline">\(Y\)</span> association if it satisfies three criteria:</p>
 <ol type="1">
 <li>
 <span class="math inline">\(C\)</span> is associated with treatment <span class="math inline">\(A\)</span>
@@ -483,7 +482,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 </div>
 </div>
 <div id="def-structural-confounder" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Structural Confounder vs.&nbsp;Traditional Confounder)</strong></span> A variable <span class="math inline">\(L\)</span> is a <strong>structural confounder</strong> of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if it opens at least one backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> in the causal diagram. The structural definition depends on the causal structure, not on observed associations.</p>
+<p><span class="theorem-title"><strong>Definition 6 (Structural Confounder vs.&nbsp;Traditional Confounder)</strong></span> A variable <span class="math inline">\(L\)</span> is a <strong>structural confounder</strong> of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if it opens at least one backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> in the causal diagram. The structural definition depends on the causal structure, not on observed associations.</p>
 <p>The traditional epidemiological definition of confounder depends on observed associations (criteria 1 and 2) and may disagree with the structural definition in specific populations.</p>
 <p><strong>Best practice</strong>: Use the causal diagram (DAG) to identify the structural confounders and the appropriate adjustment set via the backdoor criterion.</p>
 </div>
@@ -532,7 +531,7 @@ Table&nbsp;1: Table 7.1. Hypothetical data from 20 individuals. A: treatment; L:
 </section><section class="slide level2"><p>The causal diagrams introduced in Chapter 6 represent relationships among <strong>observed</strong> variables (<span class="math inline">\(A\)</span>, <span class="math inline">\(L\)</span>, <span class="math inline">\(Y\)</span>, etc.). They do not directly represent counterfactual variables (<span class="math inline">\(Y^a\)</span>, <span class="math inline">\(L^a\)</span>, etc.). <strong>Single-World Intervention Graphs (SWIGs)</strong>, developed by Richardson and Robins (2014), extend causal diagrams to include counterfactual variables explicitly.</p>
 </section><section id="constructing-a-swig" class="slide level2"><h2>Constructing a SWIG</h2>
 <div id="def-swig" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Single-World Intervention Graph (SWIG))</strong></span> A SWIG for the intervention <span class="math inline">\(A = a\)</span> is obtained from the original causal diagram by the following operation:</p>
+<p><span class="theorem-title"><strong>Definition 7 (Single-World Intervention Graph (SWIG))</strong></span> A SWIG for the intervention <span class="math inline">\(A = a\)</span> is obtained from the original causal diagram by the following operation:</p>
 <ul>
 <li>
 <strong>Split each treatment node <span class="math inline">\(A\)</span></strong> into two parts:

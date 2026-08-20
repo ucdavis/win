@@ -229,11 +229,10 @@
 </section>
 <section class="slide level2">
 
-<p>Measurement error can be represented using causal diagrams by distinguishing between:</p>
-<ul>
-<li><strong>True variables</strong>: The actual values we care about (denoted <span class="math inline">\(A\)</span>, <span class="math inline">\(Y\)</span>, <span class="math inline">\(L\)</span>)</li>
-<li><strong>Measured variables</strong>: The values we observe (denoted <span class="math inline">\(A^*\)</span>, <span class="math inline">\(Y^*\)</span>, <span class="math inline">\(L^*\)</span>)</li>
-</ul>
+<p>Measurement error can be represented using causal diagrams by distinguishing between true variables and measured variables.</p>
+<div id="def-true-vs-measured-variables" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (True Variables and Measured Variables)</strong></span> The <strong>true variables</strong> are the actual values we care about (denoted <span class="math inline">\(A\)</span>, <span class="math inline">\(Y\)</span>, <span class="math inline">\(L\)</span>). The <strong>measured variables</strong> are the values we observe (denoted <span class="math inline">\(A^*\)</span>, <span class="math inline">\(Y^*\)</span>, <span class="math inline">\(L^*\)</span>).</p>
+</div>
 </section>
 <section id="causal-dag-with-measurement-error" class="slide level2">
 <h2>Causal DAG with Measurement Error</h2>
@@ -275,13 +274,14 @@
 <section id="effects-of-confounder-mismeasurement" class="slide level2 scrollable">
 <h2>Effects of Confounder Mismeasurement</h2>
 <p>Suppose <span class="math inline">\(L\)</span> is a confounder of the <span class="math inline">\(A\)</span>-<span class="math inline">\(Y\)</span> relationship, but we only observe <span class="math inline">\(L^*\)</span>, a mismeasured version of <span class="math inline">\(L\)</span>.</p>
-<p><strong>Consequence</strong>: Adjusting for <span class="math inline">\(L^*\)</span> instead of <span class="math inline">\(L\)</span> leaves residual confounding.</p>
+<div id="def-residual-confounding" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Residual Confounding)</strong></span> <strong>Residual confounding</strong> occurs when adjusting for a mismeasured confounder <span class="math inline">\(L^*\)</span> instead of the true confounder <span class="math inline">\(L\)</span> leaves the backdoor path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> only partially blocked, so that confounding bias remains even after adjustment.</p>
+</div>
 <p>Even with perfect measurement of treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span>, confounding cannot be fully eliminated if confounders are mismeasured.</p>
 <div id="exm-mismeasured-confounder" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Residual Confounding from Mismeasurement)</strong></span> Study the effect of physical activity <span class="math inline">\(A\)</span> on heart disease <span class="math inline">\(Y\)</span>, adjusting for socioeconomic status (SES) <span class="math inline">\(L\)</span>.</p>
 <p><strong>Problem</strong>: SES is difficult to measure precisely. We use income <span class="math inline">\(L^*\)</span> as a proxy.</p>
-<p><strong>Result</strong>: Income <span class="math inline">\(L^*\)</span> is associated with true SES <span class="math inline">\(L\)</span> but doesn’t perfectly capture it. Adjusting for <span class="math inline">\(L^*\)</span> reduces but doesn’t eliminate confounding by <span class="math inline">\(L\)</span>.</p>
-<p><strong>Residual confounding</strong>: The backdoor path <span class="math inline">\(A \leftarrow L \rightarrow Y\)</span> is only partially blocked by conditioning on <span class="math inline">\(L^*\)</span>.</p>
+<p><strong>Result</strong>: Income <span class="math inline">\(L^*\)</span> is associated with true SES <span class="math inline">\(L\)</span> but doesn’t perfectly capture it. Adjusting for <span class="math inline">\(L^*\)</span> reduces but doesn’t eliminate confounding by <span class="math inline">\(L\)</span> (residual confounding remains).</p>
 </div>
 <aside class="notes">
 <p><strong>Magnitude of bias</strong>:</p>
@@ -400,14 +400,18 @@
 </section>
 <section id="types-of-treatment-mismeasurement" class="slide level2">
 <h2>Types of Treatment Mismeasurement</h2>
-<p><strong>Misclassification</strong>: Binary treatment recorded incorrectly (yes/no exposure miscoded).</p>
-<p><strong>Measurement error</strong>: Continuous treatment measured inaccurately (dose, duration miscoded).</p>
+<div id="def-treatment-mismeasurement-types" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Types of Treatment Mismeasurement)</strong></span> <strong>Misclassification</strong> is treatment mismeasurement for a binary treatment: exposure status is recorded incorrectly (yes/no miscoded).</p>
+<p><strong>Measurement error</strong> (in this narrower sense) is treatment mismeasurement for a continuous treatment: the treatment level is measured inaccurately (dose, duration miscoded).</p>
+</div>
 </section>
 <section id="effect-of-treatment-mismeasurement" class="slide level2">
 <h2>Effect of Treatment Mismeasurement</h2>
 <p>When treatment is mismeasured, we’re effectively studying the effect of <span class="math inline">\(A^*\)</span> (measured) instead of <span class="math inline">\(A\)</span> (true).</p>
-<p><strong>General result</strong>: Independent measurement error in treatment typically <strong>biases estimates toward the null</strong> (underestimates the true effect).</p>
-<p><strong>Exception</strong>: Differential measurement error can bias in any direction.</p>
+<div id="thm-attenuation-independent-error" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Attenuation Toward the Null from Independent Measurement Error)</strong></span> Independent (nondifferential) measurement error in treatment typically <strong>biases estimates toward the null</strong> (underestimates the true effect).</p>
+<p>Differential measurement error, in contrast, can bias in any direction.</p>
+</div>
 <div id="exm-treatment-mismeasurement" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Attenuation from Independent Error)</strong></span> Study the effect of dietary sodium intake <span class="math inline">\(A\)</span> on blood pressure <span class="math inline">\(Y\)</span>.</p>
 <p><strong>Measurement</strong>: Sodium intake measured via 24-hour dietary recall <span class="math inline">\(A^*\)</span> (subject to recall error).</p>

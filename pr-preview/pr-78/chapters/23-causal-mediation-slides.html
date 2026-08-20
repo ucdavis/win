@@ -189,13 +189,12 @@
 </section>
 <section class="slide level2">
 
-<p>Classical mediation analysis, as popularized by Baron and Kenny (1986), decomposes the total effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> into:</p>
-<ul>
-<li>A <strong>direct effect</strong>: the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> not through <span class="math inline">\(M\)</span>.</li>
-<li>An <strong>indirect effect</strong> (mediated effect): the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> through <span class="math inline">\(M\)</span>.</li>
-</ul>
+<p>Classical mediation analysis, as popularized by Baron and Kenny (1986), decomposes the total effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> into a direct and an indirect effect.</p>
+<div id="def-direct-indirect-effect" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Direct and Indirect Effect)</strong></span> The <strong>direct effect</strong> is the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> not through <span class="math inline">\(M\)</span>. The <strong>indirect effect</strong> (or mediated effect) is the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> through <span class="math inline">\(M\)</span>.</p>
+</div>
 <div id="def-classical-mediation-decomposition" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Classical Mediation Decomposition)</strong></span> In a linear structural equation model,</p>
+<p><span class="theorem-title"><strong>Definition 2 (Classical Mediation Decomposition)</strong></span> In a linear structural equation model,</p>
 <p><span class="math display">\[Y = \beta_0 + \beta_1 A + \beta_2 M + \varepsilon_Y, \quad M = \alpha_0 + \alpha_1 A + \varepsilon_M,\]</span></p>
 <p>the indirect effect is <span class="math inline">\(\alpha_1 \cdot \beta_2\)</span> (the “product of coefficients”), the direct effect is <span class="math inline">\(\beta_1\)</span>, and the total effect is <span class="math inline">\(\beta_1 + \alpha_1 \cdot \beta_2\)</span>.</p>
 </div>
@@ -203,7 +202,7 @@
 <section id="criticisms-of-the-classical-approach" class="slide level2 scrollable">
 <h2>Criticisms of the Classical Approach</h2>
 <div id="def-classical-mediation-limitations" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Limitations of Classical Mediation Analysis)</strong></span> The classical approach fails in several important ways:</p>
+<p><span class="theorem-title"><strong>Definition 3 (Limitations of Classical Mediation Analysis)</strong></span> The classical approach fails in several important ways:</p>
 <ol type="1">
 <li><strong>Non-linear models</strong>: In logistic or survival regression, the “difference of coefficients” and “product of coefficients” methods do not estimate the same quantity and neither equals the natural indirect effect.</li>
 <li><strong>Interaction</strong>: If <span class="math inline">\(A\)</span> and <span class="math inline">\(M\)</span> interact in their effects on <span class="math inline">\(Y\)</span> (i.e., the effect of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span> differs by <span class="math inline">\(A\)</span>), classical mediation analysis misses this interaction entirely.</li>
@@ -241,12 +240,12 @@
 </ul>
 <p>The counterfactual framework provides precise definitions that make these scientific goals achievable without the ambiguities of the classical approach.</p>
 <div id="def-natural-direct" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Natural Direct Effect (NDE))</strong></span> The <strong>natural direct effect</strong> of <span class="math inline">\(A\)</span> (comparing <span class="math inline">\(a = 1\)</span> to <span class="math inline">\(a = 0\)</span>) is</p>
+<p><span class="theorem-title"><strong>Definition 4 (Natural Direct Effect (NDE))</strong></span> The <strong>natural direct effect</strong> of <span class="math inline">\(A\)</span> (comparing <span class="math inline">\(a = 1\)</span> to <span class="math inline">\(a = 0\)</span>) is</p>
 <p><span class="math display">\[\text{NDE} = \text{E}{\left[Y^{a=1, M^{a=0}}\right]} - \text{E}{\left[Y^{a=0, M^{a=0}}\right]},\]</span></p>
 <p>where <span class="math inline">\(Y^{a, m}\)</span> is the potential outcome under treatment <span class="math inline">\(a\)</span> and mediator value <span class="math inline">\(m\)</span>, and <span class="math inline">\(M^{a=0}\)</span> is the potential value of the mediator under no treatment. The NDE asks: what is the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if the mediator were “held” at the value it would have taken under no treatment?</p>
 </div>
 <div id="def-natural-indirect" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Natural Indirect Effect (NIE))</strong></span> The <strong>natural indirect effect</strong> of <span class="math inline">\(A\)</span> (comparing <span class="math inline">\(a = 1\)</span> to <span class="math inline">\(a = 0\)</span>) is</p>
+<p><span class="theorem-title"><strong>Definition 5 (Natural Indirect Effect (NIE))</strong></span> The <strong>natural indirect effect</strong> of <span class="math inline">\(A\)</span> (comparing <span class="math inline">\(a = 1\)</span> to <span class="math inline">\(a = 0\)</span>) is</p>
 <p><span class="math display">\[\text{NIE} = \text{E}{\left[Y^{a=1, M^{a=1}}\right]} - \text{E}{\left[Y^{a=1, M^{a=0}}\right]},\]</span></p>
 <p>which captures the effect of changing the mediator from <span class="math inline">\(M^{a=0}\)</span> to <span class="math inline">\(M^{a=1}\)</span> while holding treatment at <span class="math inline">\(a = 1\)</span>. The NIE asks: how much of the treatment effect is attributable to the change in <span class="math inline">\(M\)</span>?</p>
 </div>
@@ -258,20 +257,13 @@
 <p><span class="math display">\[\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]} = \text{NDE} + \text{NIE}.\]</span></p>
 </div>
 <p>On other scales (ratio, odds ratio), decompositions exist but are more complex.</p>
-<aside class="notes">
-<p><strong>Nested counterfactuals</strong>: The quantity <span class="math inline">\(Y^{a=1, M^{a=0}}\)</span> is a <strong>cross-world</strong> counterfactual: it asks about the outcome when treatment is set to 1 but the mediator takes the value it would have taken if treatment had been set to 0. This requires simultaneously imagining two different treatment worlds, which cannot be directly observed.</p>
-<p><strong>Identification</strong>: The NDE and NIE are identified under four conditions: (1) no unmeasured <span class="math inline">\(A\)</span>–<span class="math inline">\(Y\)</span> confounders, (2) no unmeasured <span class="math inline">\(M\)</span>–<span class="math inline">\(Y\)</span> confounders, (3) no unmeasured <span class="math inline">\(A\)</span>–<span class="math inline">\(M\)</span> confounders, and (4) no <span class="math inline">\(M\)</span>–<span class="math inline">\(Y\)</span> confounder that is itself caused by <span class="math inline">\(A\)</span>. Condition (4) is particularly restrictive: if treatment affects a common cause of <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>, the cross-world counterfactuals are not identified from observed data.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<div id="def-cross-world-counterfactual" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Cross-World Counterfactual)</strong></span> The quantity <span class="math inline">\(Y^{a=1, M^{a=0}}\)</span> is a <strong>cross-world</strong> counterfactual: it asks about the outcome when treatment is set to 1 but the mediator takes the value it would have taken if treatment had been set to 0. This requires simultaneously imagining two different treatment worlds, which cannot be directly observed.</p>
+</div>
+<div id="def-nde-nie-identification" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Identification of the NDE and NIE)</strong></span> The NDE and NIE are identified under four conditions: (1) no unmeasured <span class="math inline">\(A\)</span>–<span class="math inline">\(Y\)</span> confounders, (2) no unmeasured <span class="math inline">\(M\)</span>–<span class="math inline">\(Y\)</span> confounders, (3) no unmeasured <span class="math inline">\(A\)</span>–<span class="math inline">\(M\)</span> confounders, and (4) no <span class="math inline">\(M\)</span>–<span class="math inline">\(Y\)</span> confounder that is itself caused by <span class="math inline">\(A\)</span>.</p>
+</div>
+<p>Condition (4) is particularly restrictive: if treatment affects a common cause of <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>, the cross-world counterfactuals are not identified from observed data.</p>
 </section></section>
 <section>
 <section id="empirically-verifiable-mediation-p.-327" class="title-slide slide level1 center" data-number="3">
@@ -283,7 +275,7 @@
 <p>The natural direct and indirect effects require identifying assumptions that cannot be empirically verified — in particular, the cross-world consistency condition assumes that the potential outcome <span class="math inline">\(Y^{a=1, M^{a=0}}\)</span> is well-defined and corresponds to a realizable intervention. This is conceptually problematic when the mediator <span class="math inline">\(M\)</span> cannot in principle be manipulated independently of <span class="math inline">\(A\)</span>.</p>
 <p>An alternative is to focus on <strong>controlled direct effects</strong> and related estimands that do not require cross-world counterfactuals.</p>
 <div id="def-controlled-direct" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Controlled Direct Effect (CDE))</strong></span> The <strong>controlled direct effect</strong> of <span class="math inline">\(A\)</span> at mediator level <span class="math inline">\(m\)</span> is</p>
+<p><span class="theorem-title"><strong>Definition 8 (Controlled Direct Effect (CDE))</strong></span> The <strong>controlled direct effect</strong> of <span class="math inline">\(A\)</span> at mediator level <span class="math inline">\(m\)</span> is</p>
 <p><span class="math display">\[\text{CDE}(m) = \text{E}{\left[Y^{a=1, m}\right]} - \text{E}{\left[Y^{a=0, m}\right]},\]</span></p>
 <p>where both <span class="math inline">\(A\)</span> and <span class="math inline">\(M\)</span> are set simultaneously to specified values. The CDE asks: what is the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> when <span class="math inline">\(M\)</span> is held at level <span class="math inline">\(m\)</span> by external intervention?</p>
 </div>
@@ -293,21 +285,14 @@
 <h2>Empirical Content</h2>
 <p>The CDE corresponds to a <strong>physical intervention</strong>: setting <span class="math inline">\(M = m\)</span> for everyone in the population and then comparing treatment assignments. This is the kind of intervention that could, in principle, be conducted (e.g., in a sequential randomized trial that randomizes both <span class="math inline">\(A\)</span> and <span class="math inline">\(M\)</span>).</p>
 <p>The limitation of the CDE is that it does not provide a single measure of the “indirect effect”; rather, the CDE at <span class="math inline">\(m\)</span> captures the direct effect when the mediator is fixed at <span class="math inline">\(m\)</span>, and one obtains a different CDE for each value of <span class="math inline">\(m\)</span>.</p>
-<aside class="notes">
-<p><strong>Relationship between CDE and NDE</strong>:</p>
-<p>When there is no <span class="math inline">\(A \times M\)</span> interaction on the additive scale (i.e., <span class="math inline">\(\text{E}{\left[Y^{1,m}\right]} - \text{E}{\left[Y^{0,m}\right]}\)</span> does not depend on <span class="math inline">\(m\)</span>), the CDE equals the NDE for any value of <span class="math inline">\(m\)</span>. In this case, both estimands agree and the choice is immaterial. When interaction is present, they differ, and the analyst must decide which is of interest.</p>
-<p><strong>Four-way decomposition</strong>: VanderWeele (2014) proposed a four-way decomposition of the total effect into components due to: (1) the controlled direct effect (CDE at <span class="math inline">\(m = 0\)</span>), (2) a pure indirect effect (no interaction), (3) an interaction component attributable to the mediator, (4) an interaction component attributable to treatment. This decomposition is especially useful when <span class="math inline">\(A \times M\)</span> interaction is present and of scientific interest.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<div id="thm-cde-nde-equivalence" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (CDE–NDE Equivalence under No Interaction)</strong></span> When there is no <span class="math inline">\(A \times M\)</span> interaction on the additive scale (i.e., <span class="math inline">\(\text{E}{\left[Y^{1,m}\right]} - \text{E}{\left[Y^{0,m}\right]}\)</span> does not depend on <span class="math inline">\(m\)</span>), the CDE equals the NDE for any value of <span class="math inline">\(m\)</span>.</p>
+</div>
+<p>In this case, both estimands agree and the choice is immaterial. When interaction is present, they differ, and the analyst must decide which is of interest.</p>
+<div id="thm-four-way-decomposition" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3 (Four-Way Decomposition of the Total Effect)</strong></span> VanderWeele (2014) proposed a four-way decomposition of the total effect into components due to: (1) the controlled direct effect (CDE at <span class="math inline">\(m = 0\)</span>), (2) a pure indirect effect (no interaction), (3) an interaction component attributable to the mediator, (4) an interaction component attributable to treatment.</p>
+</div>
+<p>This decomposition is especially useful when <span class="math inline">\(A \times M\)</span> interaction is present and of scientific interest.</p>
 </section></section>
 <section>
 <section id="an-interventionist-theory-of-mediation-p.-329" class="title-slide slide level1 center" data-number="4">
@@ -319,7 +304,7 @@
 <p>The deepest conceptual challenge in mediation analysis arises from the cross-world nature of the NDE and NIE: <span class="math inline">\(Y^{a=1, M^{a=0}}\)</span> requires simultaneously setting <span class="math inline">\(A = 1\)</span> (at one level) and letting <span class="math inline">\(M\)</span> be as it would be if <span class="math inline">\(A = 0\)</span> (a different level). This is not the result of any single intervention on <span class="math inline">\((A, M)\)</span>.</p>
 <p>The <strong>interventionist</strong> approach resolves this by restricting attention to estimands that correspond to interventions that <em>could actually be performed</em>.</p>
 <div id="def-interventionist-mediation" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Interventionist (Stochastic) Mediation Estimands)</strong></span> Let <span class="math inline">\(Q\)</span> be a distribution over mediator values. Define the <strong>randomized interventional analogue</strong> of the indirect effect as</p>
+<p><span class="theorem-title"><strong>Definition 9 (Interventionist (Stochastic) Mediation Estimands)</strong></span> Let <span class="math inline">\(Q\)</span> be a distribution over mediator values. Define the <strong>randomized interventional analogue</strong> of the indirect effect as</p>
 <p><span class="math display">\[\text{rIIE} = \text{E}{\left[Y^{a=1, G_1}\right]} - \text{E}{\left[Y^{a=1, G_0}\right]},\]</span></p>
 <p>where <span class="math inline">\(G_a \sim Q(M^a)\)</span> denotes assigning the mediator at random from the distribution it would have under treatment <span class="math inline">\(a\)</span>.</p>
 </div>
@@ -328,9 +313,12 @@
 <section id="identification-of-interventionist-effects" class="slide level2">
 <h2>Identification of Interventionist Effects</h2>
 <p>The randomized interventional analogue of the indirect effect is identified under conditions that do not require assumption (4) from Section 23.2:</p>
-<p><span class="math display">\[\text{rIIE} = \text{E}{\left[ \int \text{E}{\left[Y \mid A = 1, M = m, C\right]}\, dF_{M \mid A=0, C}(m) \right]}
+<div id="thm-riie-identification" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4 (Identification of the Randomized Interventional Indirect Effect)</strong></span> <span class="math display">\[\text{rIIE} = \text{E}{\left[ \int \text{E}{\left[Y \mid A = 1, M = m, C\right]}\, dF_{M \mid A=0, C}(m) \right]}
 - \text{E}{\left[ \text{E}{\left[Y \mid A = 1, M, C\right]} \right]},\]</span></p>
-<p>where <span class="math inline">\(C\)</span> are baseline covariates sufficient to control confounding of both the <span class="math inline">\(A \to Y\)</span> and <span class="math inline">\(M \to Y\)</span> pathways. This expression can be estimated from observed data using outcome regression, IP weighting, or doubly robust methods.</p>
+<p>where <span class="math inline">\(C\)</span> are baseline covariates sufficient to control confounding of both the <span class="math inline">\(A \to Y\)</span> and <span class="math inline">\(M \to Y\)</span> pathways.</p>
+</div>
+<p>This expression can be estimated from observed data using outcome regression, IP weighting, or doubly robust methods.</p>
 <aside class="notes">
 <p><strong>Why the interventionist approach matters</strong>:</p>
 <p>The standard NDE requires cross-world consistency, which is often unjustifiable when the mediator cannot be independently manipulated. The interventionist approach by Vansteelandt and Daniel (2017) and the stochastic mediation approach by Didelez, Dawid, and Geneletti (2006) replace cross-world counterfactuals with stochastic interventions on the mediator, which are well-defined physically and identifiable under weaker assumptions.</p>
@@ -349,9 +337,12 @@
 </section>
 <section id="the-do-operator-and-mediation" class="slide level2">
 <h2>The Do-Operator and Mediation</h2>
-<p>In the structural causal model (SCM) framework of Pearl (2000), mediation is analyzed using the <strong>do-operator</strong> <span class="math inline">\(\text{do}(M = m)\)</span>, which represents an intervention that sets <span class="math inline">\(M\)</span> to a fixed value <span class="math inline">\(m\)</span> by removing all arrows into <span class="math inline">\(M\)</span> in the causal DAG.</p>
+<p>In the structural causal model (SCM) framework of Pearl (2000), mediation is analyzed using the do-operator.</p>
+<div id="def-do-operator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 10 (The Do-Operator)</strong></span> Pearl’s <strong>do-operator</strong> <span class="math inline">\(\text{do}(M = m)\)</span> represents an intervention that sets <span class="math inline">\(M\)</span> to a fixed value <span class="math inline">\(m\)</span> by removing all arrows into <span class="math inline">\(M\)</span> in the causal DAG.</p>
+</div>
 <div id="def-do-mediation" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Direct Effect via the Do-Operator)</strong></span> The <strong>controlled direct effect</strong> in Pearl’s framework is:</p>
+<p><span class="theorem-title"><strong>Definition 11 (Direct Effect via the Do-Operator)</strong></span> The <strong>controlled direct effect</strong> in Pearl’s framework is:</p>
 <p><span class="math display">\[\text{CDE}(m) = \text{E}{\left[Y \mid \text{do}(A = 1), \text{do}(M = m)\right]} - \text{E}{\left[Y \mid \text{do}(A = 0), \text{do}(M = m)\right]}.\]</span></p>
 <p>This is equivalent to the potential outcome expression <span class="math inline">\(\text{E}{\left[Y^{a=1,m}\right]} - \text{E}{\left[Y^{a=0,m}\right]}\)</span> under the consistency assumption.</p>
 </div>

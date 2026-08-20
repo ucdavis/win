@@ -364,13 +364,11 @@
 </section>
 <section id="kernel-smoothing" class="slide level2">
 <h2>Kernel Smoothing</h2>
-<p><strong>Idea</strong>: Estimate <span class="math inline">\(\text{E}{\left[Y|A = a\right]}\)</span> using a weighted average of nearby observations.</p>
+<div id="def-kernel-smoothing" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Kernel Smoothing)</strong></span> <strong>Kernel smoothing</strong> estimates <span class="math inline">\(\text{E}{\left[Y|A = a\right]}\)</span> using a weighted average of nearby observations:</p>
 <p><span class="math display">\[\hat{\text{E}}{\left[Y|A = a\right]} = \frac{\sum_i K\left(\frac{A_i - a}{h}\right) Y_i}{\sum_i K\left(\frac{A_i - a}{h}\right)}\]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(K(\cdot)\)</span> is a <strong>kernel function</strong> (e.g., Gaussian)</li>
-<li><span class="math inline">\(h\)</span> is the <strong>bandwidth</strong> (controls amount of smoothing)</li>
-</ul>
+<p>where <span class="math inline">\(K(\cdot)\)</span> is a <strong>kernel function</strong> (e.g., Gaussian) and <span class="math inline">\(h\)</span> is the <strong>bandwidth</strong>, which controls the amount of smoothing.</p>
+</div>
 <p><strong>Bandwidth selection</strong>:</p>
 <ul>
 <li>Large <span class="math inline">\(h\)</span>: More smoothing, use distant observations</li>
@@ -389,7 +387,7 @@
 <section id="definitions" class="slide level2">
 <h2>Definitions</h2>
 <div id="def-bias-variance-mse" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Bias, Variance, and Mean Squared Error)</strong></span> <strong>Bias</strong>: Systematic error, the difference between the expected value of the estimator and the true parameter.</p>
+<p><span class="theorem-title"><strong>Definition 4 (Bias, Variance, and Mean Squared Error)</strong></span> <strong>Bias</strong>: Systematic error, the difference between the expected value of the estimator and the true parameter.</p>
 <p><span class="math display">\[\text{Bias}(\hat{\theta}) = \text{E}{\left[\hat{\theta}\right]} - \theta\]</span></p>
 <p><strong>Variance</strong>: Random error, the variability of the estimator across repeated samples.</p>
 <p><span class="math display">\[\text{Var}(\hat{\theta}) = \text{E}{\left[(\hat{\theta} - \text{E}{\left[\hat{\theta}\right]})^2\right]}\]</span></p>

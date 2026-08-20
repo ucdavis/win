@@ -278,12 +278,14 @@
 </section>
 <section id="creating-the-pseudo-outcome" class="slide level2 scrollable">
 <h2>Creating the Pseudo-Outcome</h2>
-<p>Under <span class="math inline">\(H_0(\psi)\)</span>, we can construct:</p>
+<div id="def-pseudo-outcome" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Pseudo-Outcome)</strong></span> Under <span class="math inline">\(H_0(\psi)\)</span>, the <strong>pseudo-outcome</strong> is</p>
 <p><span class="math display">\[H(\psi) = Y - A(\psi_0 + \psi_1^{\top} L)\]</span></p>
-<p><strong>Key property</strong>: If <span class="math inline">\(H_0(\psi)\)</span> is true, then:</p>
+<p><strong>Key property</strong>: If <span class="math inline">\(H_0(\psi)\)</span> is true, then</p>
 <p><span class="math display">\[H(\psi) = Y^0 \text{ for all individuals}\]</span></p>
 <p>Since <span class="math inline">\(Y^0\)</span> is the potential outcome under no treatment, it should be independent of actual treatment <span class="math inline">\(A\)</span> given confounders <span class="math inline">\(L\)</span>:</p>
 <p><span class="math display">\[H(\psi) \perp\!\!\!\perp A \mid L\]</span></p>
+</div>
 <aside class="notes">
 <p><strong>Intuition</strong>:</p>
 <ol type="1">
@@ -316,11 +318,13 @@
 </section>
 <section id="g-estimation-algorithm" class="slide level2">
 <h2>G-Estimation Algorithm</h2>
-<p><strong>Step 1</strong>: Specify a structural nested model <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\]</span></p>
+<div id="alg-g-estimation" class="theorem algorithm">
+<p><span class="theorem-title"><strong>Algorithm 1 (G-Estimation Algorithm)</strong></span> <strong>Step 1</strong>: Specify a structural nested model <span class="math display">\[\text{E}{\left[Y^1 - Y^0 \mid L\right]} = \psi_0 + \psi_1^{\top} L\]</span></p>
 <p><strong>Step 2</strong>: For a candidate value <span class="math inline">\(\psi\)</span>, compute pseudo-outcome <span class="math display">\[H(\psi) = Y - A(\psi_0 + \psi_1^{\top} L)\]</span></p>
 <p><strong>Step 3</strong>: Test whether <span class="math inline">\(H(\psi) \perp\!\!\!\perp A \mid L\)</span> by fitting <span class="math display">\[\text{E}{\left[H(\psi) \mid A, L\right]} = \alpha_0 + \alpha_1 A + \alpha_2^{\top} L\]</span></p>
 <p><strong>Step 4</strong>: The correct <span class="math inline">\(\psi\)</span> is the one that makes <span class="math inline">\(\alpha_1 = 0\)</span></p>
 <p><strong>Step 5</strong>: In practice, solve the estimating equation: <span class="math display">\[\sum_{i=1}^n A_i[Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span> or more generally: <span class="math display">\[\sum_{i=1}^n U_i(\psi)[Y_i - A_i(\psi_0 + \psi_1^{\top} L_i)] = 0\]</span> where <span class="math inline">\(U_i(\psi)\)</span> is an appropriate function (often <span class="math inline">\(U_i = A_i\)</span> or <span class="math inline">\(U_i = A_i(1, L_i)^{\top}\)</span>).</p>
+</div>
 </section>
 <section id="example-simple-model" class="slide level2">
 <h2>Example: Simple Model</h2>
@@ -475,12 +479,14 @@
 </section>
 <section id="choice-of-estimating-functions" class="slide level2 scrollable">
 <h2>Choice of Estimating Functions</h2>
-<p>Common choices for <span class="math inline">\(U_{ij}\)</span>:</p>
+<div id="def-g-estimation-functions" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Choice of Estimating Functions for G-Estimation)</strong></span> Common choices for <span class="math inline">\(U_{ij}\)</span>:</p>
 <ol type="1">
 <li><strong>Simple</strong>: <span class="math inline">\(U_i = (A_i, A_i L_{i1}, A_i L_{i2}, \ldots)^{\top}\)</span></li>
 <li><strong>Optimal</strong>: <span class="math inline">\(U_i = (A_i - \text{E}{\left[A \mid L_i\right]})(1, L_{i1}, L_{i2}, \ldots)^{\top}\)</span></li>
 <li><strong>Doubly robust</strong>: More complex functions that achieve double robustness</li>
 </ol>
+</div>
 <p>The choice affects: - Efficiency (variance of estimator) - Robustness properties - Computational complexity</p>
 <aside class="notes">
 <p><strong>Practical consideration</strong>:</p>
@@ -510,9 +516,10 @@
 <section id="censoring-weights" class="slide level2">
 <h2>Censoring Weights</h2>
 <p>Let <span class="math inline">\(C = 1\)</span> if censored, <span class="math inline">\(C = 0\)</span> if observed.</p>
-<p><strong>Assumption</strong>: <span class="math inline">\(C \perp\!\!\!\perp Y^a \mid A, L\)</span> (censoring independent of potential outcomes given treatment and covariates)</p>
-<p><strong>Weighted estimating equation</strong>:</p>
+<div id="def-g-estimation-censoring" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (G-Estimation with Censoring Weights)</strong></span> Under the assumption <span class="math inline">\(C \perp\!\!\!\perp Y^a \mid A, L\)</span> (censoring independent of potential outcomes given treatment and covariates), the <strong>weighted estimating equation</strong> is</p>
 <p><span class="math display">\[\sum_{i: C_i = 0} \frac{1}{\Pr[C_i = 0 \mid A_i, L_i]} U_i(\psi)[Y_i - A_i \gamma(A_i, 0; \psi, L_i)] = 0\]</span></p>
+</div>
 <p>This weights each uncensored observation by the inverse probability of being uncensored.</p>
 </section>
 <section id="joint-treatment-and-censoring-weights" class="slide level2 scrollable">

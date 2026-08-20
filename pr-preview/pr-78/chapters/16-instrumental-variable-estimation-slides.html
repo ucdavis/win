@@ -367,7 +367,9 @@
 <li><strong>Defiers</strong>: <span class="math inline">\(A^{z=1} = 0, A^{z=0} = 1\)</span> (do opposite of instrument)</li>
 </ol>
 </div>
-<p><strong>Monotonicity assumption</strong>: No defiers exist.</p>
+<div id="def-iv-monotonicity" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Monotonicity Assumption)</strong></span> The <strong>monotonicity assumption</strong> states that no defiers exist in the population.</p>
+</div>
 <aside class="notes">
 <p><strong>Why monotonicity</strong>:</p>
 <p>If defiers exist, the IV estimand can be severely biased. With monotonicity:</p>
@@ -392,7 +394,7 @@
 <section id="local-average-treatment-effect-late" class="slide level2">
 <h2>Local Average Treatment Effect (LATE)</h2>
 <div id="def-late" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Local Average Treatment Effect (LATE))</strong></span> Under the IV conditions plus monotonicity, the IV estimand equals</p>
+<p><span class="theorem-title"><strong>Definition 5 (Local Average Treatment Effect (LATE))</strong></span> Under the IV conditions plus monotonicity, the IV estimand equals</p>
 <p><span class="math display">\[\text{E}{\left[Y^{a=1} - Y^{a=0} \mid \text{Complier}\right]},\]</span></p>
 <p>the <strong>local average treatment effect (LATE)</strong> — the average causal effect in compliers, not in the full population.</p>
 </div>
@@ -478,7 +480,7 @@
 <section id="conditional-iv-estimation" class="slide level2 scrollable">
 <h2>Conditional IV Estimation</h2>
 <div id="def-conditional-iv" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Conditional Instrumental Variable)</strong></span> Given measured covariates <span class="math inline">\(L\)</span>, <span class="math inline">\(Z\)</span> is a <strong>conditional instrumental variable</strong> for the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if:</p>
+<p><span class="theorem-title"><strong>Definition 6 (Conditional Instrumental Variable)</strong></span> Given measured covariates <span class="math inline">\(L\)</span>, <span class="math inline">\(Z\)</span> is a <strong>conditional instrumental variable</strong> for the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if:</p>
 <ol type="1">
 <li><strong>Conditional relevance</strong>: <span class="math inline">\(Z \not\perp\!\!\!\perp A \mid L\)</span></li>
 <li><strong>Conditional exchangeability</strong>: <span class="math inline">\(Y^a \perp\!\!\!\perp Z \mid L\)</span></li>
@@ -583,7 +585,7 @@
 <section id="survivor-average-causal-effect-sace" class="slide level2">
 <h2>Survivor Average Causal Effect (SACE)</h2>
 <div id="def-sace" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Survivor Average Causal Effect)</strong></span> The <strong>survivor average causal effect (SACE)</strong> is:</p>
+<p><span class="theorem-title"><strong>Definition 7 (Survivor Average Causal Effect)</strong></span> The <strong>survivor average causal effect (SACE)</strong> is:</p>
 <p><span class="math display">\[\text{E}{\left[Y^{a=1} - Y^{a=0} \mid S^{a=1} = 1, S^{a=0} = 1\right]}\]</span></p>
 <p>where <span class="math inline">\(S^a\)</span> is an indicator for surviving (or remaining uncensored) under treatment <span class="math inline">\(a\)</span>.</p>
 <p>This is the effect in <strong>always-survivors</strong> - those who would survive under both treatment and control.</p>

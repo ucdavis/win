@@ -200,6 +200,8 @@
 <section id="implementation-via-parametric-models" class="slide level2 scrollable">
 <h2>Implementation via Parametric Models</h2>
 <p>In practice, the g-formula is implemented by fitting parametric models for the outcome and each time-varying covariate, then computing expectations by Monte Carlo simulation:</p>
+<div id="alg-g-formula-mc" class="theorem algorithm">
+<p><span class="theorem-title"><strong>Algorithm 1 (Monte Carlo Implementation of the G-Formula)</strong></span> &nbsp;</p>
 <ol type="1">
 <li><strong>Fit a model</strong> for <span class="math inline">\(\text{E}{\left[Y \mid \bar{A}_K = \bar{a}_K, \bar{L}_K = \bar{l}_K\right]}\)</span>.</li>
 <li><strong>Fit models</strong> for <span class="math inline">\(f(l_k \mid \bar{a}_{k-1}, \bar{l}_{k-1})\)</span> for each <span class="math inline">\(k = 0, \ldots, K\)</span>.</li>
@@ -207,6 +209,7 @@
 <li><strong>Predict</strong> the outcome for each simulated individual using the fitted outcome model.</li>
 <li><strong>Average</strong> the predicted outcomes to estimate <span class="math inline">\(\text{E}{\left[Y^{\bar{a}_K}\right]}\)</span>.</li>
 </ol>
+</div>
 <p>Repeat steps 3–5 for each comparison strategy to obtain the causal contrast.</p>
 <aside class="notes">
 <p><strong>Why Monte Carlo?</strong> The sum in the g-formula is over all possible covariate histories <span class="math inline">\(\bar{l}_K\)</span>. With <span class="math inline">\(K\)</span> time points and even moderately many covariates at each time point, the number of possible histories grows exponentially, making direct summation infeasible. Monte Carlo simulation sidesteps this by sampling from the covariate models.</p>
@@ -258,7 +261,22 @@
 <aside class="notes">
 <p><strong>Why stabilized weights</strong>:</p>
 <p>Unstabilized weights <span class="math inline">\(W^A\)</span> have expectation 1 by construction, but their variance can be very large when some covariate histories are rare. Stabilized weights <span class="math inline">\(SW^A\)</span> also have expectation 1 but have substantially lower variance because they incorporate the marginal probability of the observed treatment history. Extreme weights — weights far from 1 — are a diagnostic warning sign: they indicate violations of positivity or model misspecification.</p>
-<p><strong>Weight truncation</strong>: A pragmatic approach to handle extreme weights is to truncate (or “trim”) them at a high percentile (e.g., 99th percentile). Truncation introduces a small bias but can substantially reduce variance. The analyst should report both truncated and untruncated results.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div id="def-weight-truncation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Weight Truncation)</strong></span> <strong>Weight truncation</strong> (or “trimming”) is a pragmatic approach to handle extreme weights: truncate them at a high percentile (e.g., the 99th percentile).</p>
+</div>
+<p>Truncation introduces a small bias but can substantially reduce variance. The analyst should report both truncated and untruncated results.</p>
+<aside class="notes">
 <p><strong>Model for the treatment mechanism</strong>: The denominator of <span class="math inline">\(SW^A\)</span> is estimated by fitting a model for <span class="math inline">\(A_k\)</span> given <span class="math inline">\((\bar{A}_{k-1}, \bar{L}_k)\)</span> at each time <span class="math inline">\(k\)</span> (e.g., logistic regression). The numerator is estimated by fitting a model for <span class="math inline">\(A_k\)</span> given only <span class="math inline">\(\bar{A}_{k-1}\)</span>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -276,7 +294,7 @@
 <h2>Censoring Weights</h2>
 <p>When follow-up is incomplete due to loss to follow-up or other forms of censoring, a second set of weights is needed to correct for selection bias introduced by censoring.</p>
 <div id="def-censoring-weights" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Stabilized Censoring IP Weights)</strong></span> Let <span class="math inline">\(C_k\)</span> be an indicator of censoring at time <span class="math inline">\(k\)</span> (1 = censored, 0 = not censored). The stabilized censoring IP weight is</p>
+<p><span class="theorem-title"><strong>Definition 5 (Stabilized Censoring IP Weights)</strong></span> Let <span class="math inline">\(C_k\)</span> be an indicator of censoring at time <span class="math inline">\(k\)</span> (1 = censored, 0 = not censored). The stabilized censoring IP weight is</p>
 <p><span class="math display">\[SW^C = \prod_{k=0}^{K} \frac{\Pr[C_k = 0 \mid \bar{C}_{k-1} = 0, \bar{A}_{k-1}]}
 {\Pr[C_k = 0 \mid \bar{C}_{k-1} = 0, \bar{A}_{k-1}, \bar{L}_k]}.\]</span></p>
 </div>
@@ -291,7 +309,7 @@
 
 <p>The g-formula and IP weighting each depend on a single set of correctly specified models: the g-formula requires correct models for the outcome and each covariate; IP weighting requires correct models for the treatment (and censoring) mechanism at each time. <strong>Doubly robust estimators</strong> combine both approaches and are consistent if <em>at least one</em> of the two sets of models is correctly specified.</p>
 <div id="def-dr-tv" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Doubly Robust Estimator (Augmented IPW))</strong></span> The augmented inverse probability weighted (AIPW) estimator for the counterfactual mean <span class="math inline">\(\text{E}{\left[Y^{\bar{a}_K}\right]}\)</span> takes the form</p>
+<p><span class="theorem-title"><strong>Definition 6 (Doubly Robust Estimator (Augmented IPW))</strong></span> The augmented inverse probability weighted (AIPW) estimator for the counterfactual mean <span class="math inline">\(\text{E}{\left[Y^{\bar{a}_K}\right]}\)</span> takes the form</p>
 <p><span class="math display">\[\hat{\text{E}}{\left[Y^{\bar{a}_K}\right]}_{\text{DR}} =
 \frac{1}{n} \sum_{i=1}^n \left[
   \hat{m}(\bar{A}_{K,i}) +
@@ -331,27 +349,36 @@
 
 <p><strong>G-estimation</strong> — the third g-method — focuses on directly modeling the <strong>structural nested mean model</strong> (SNMM), which describes how treatment at each time <span class="math inline">\(k\)</span> modifies the counterfactual mean outcome, conditional on the history up to <span class="math inline">\(k\)</span>.</p>
 <div id="def-snmm" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Structural Nested Mean Model (SNMM))</strong></span> A structural nested mean model specifies the <strong>blip-down function</strong> <span class="math inline">\(\gamma_k(\bar{a}_k, \bar{l}_k; \psi)\)</span>, which represents the effect on the outcome of setting treatment at time <span class="math inline">\(k\)</span> from <span class="math inline">\(a_k\)</span> to <span class="math inline">\(0\)</span>, given the past history <span class="math inline">\((\bar{a}_{k-1}, \bar{l}_k)\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 7 (Structural Nested Mean Model (SNMM))</strong></span> A structural nested mean model specifies the <strong>blip-down function</strong> <span class="math inline">\(\gamma_k(\bar{a}_k, \bar{l}_k; \psi)\)</span>, which represents the effect on the outcome of setting treatment at time <span class="math inline">\(k\)</span> from <span class="math inline">\(a_k\)</span> to <span class="math inline">\(0\)</span>, given the past history <span class="math inline">\((\bar{a}_{k-1}, \bar{l}_k)\)</span>:</p>
 <p><span class="math display">\[\text{E}{\left[Y^{\bar{a}_k, \bar{0}_{k+1}} - Y^{\bar{a}_{k-1}, \bar{0}_k} \mid \bar{A}_{k-1} = \bar{a}_{k-1}, \bar{L}_k = \bar{l}_k\right]}
 = \gamma_k(\bar{a}_k, \bar{l}_k; \psi),\]</span></p>
 <p>where <span class="math inline">\(\bar{0}_j\)</span> denotes no treatment from time <span class="math inline">\(j\)</span> onward.</p>
 </div>
 <p>The blip function <span class="math inline">\(\gamma_k\)</span> captures the <strong>incremental causal effect</strong> of treatment at time <span class="math inline">\(k\)</span> on the final outcome, nesting within the effect of earlier treatment decisions. A common parametric specification is the <strong>linear SNMM</strong>:</p>
-<p><span class="math display">\[\gamma_k(\bar{a}_k, \bar{l}_k; \psi) = \psi_1 a_k + \psi_2 a_k \cdot \text{(modifier)},\]</span></p>
+<div id="def-linear-snmm" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8 (Linear SNMM)</strong></span> <span class="math display">\[\gamma_k(\bar{a}_k, \bar{l}_k; \psi) = \psi_1 a_k + \psi_2 a_k \cdot \text{(modifier)},\]</span></p>
 <p>where the modifier might be a baseline or time-varying covariate.</p>
+</div>
 </section>
 <section id="g-estimation-algorithm" class="slide level2 scrollable">
 <h2>G-Estimation Algorithm</h2>
-<p>The key insight behind g-estimation is that under sequential exchangeability, the <strong>blipped-down outcome</strong></p>
+<p>The key insight behind g-estimation is that under sequential exchangeability, the blipped-down outcome must be mean-independent of <span class="math inline">\(A_k\)</span> conditional on <span class="math inline">\((\bar{A}_{k-1}, \bar{L}_k)\)</span> when <span class="math inline">\(\psi\)</span> equals the true parameter.</p>
+<div id="def-blipped-down-outcome" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9 (Blipped-Down Outcome)</strong></span> The <strong>blipped-down outcome</strong></p>
 <p><span class="math display">\[H_k(\psi) = Y - \sum_{j=k}^{K} \gamma_j(\bar{A}_j, \bar{L}_j; \psi)\]</span></p>
-<p>(the outcome with the effect of treatment from time <span class="math inline">\(k\)</span> onward “removed”) must be mean-independent of <span class="math inline">\(A_k\)</span> conditional on <span class="math inline">\((\bar{A}_{k-1}, \bar{L}_k)\)</span> when <span class="math inline">\(\psi\)</span> equals the true parameter. G-estimation exploits this to estimate <span class="math inline">\(\psi\)</span> by searching for the value that makes <span class="math inline">\(A_k \perp\!\!\!\perp H_k(\psi) \mid \bar{A}_{k-1}, \bar{L}_k\)</span> for all <span class="math inline">\(k\)</span>.</p>
+<p>is the outcome with the effect of treatment from time <span class="math inline">\(k\)</span> onward “removed.”</p>
+</div>
+<p>G-estimation exploits the mean-independence of <span class="math inline">\(H_k(\psi)\)</span> and <span class="math inline">\(A_k\)</span> at the true parameter value to estimate <span class="math inline">\(\psi\)</span> by searching for the value that makes <span class="math inline">\(A_k \perp\!\!\!\perp H_k(\psi) \mid \bar{A}_{k-1}, \bar{L}_k\)</span> for all <span class="math inline">\(k\)</span>.</p>
 <p>Practically, this is often implemented via:</p>
+<div id="alg-g-estimation-tv" class="theorem algorithm">
+<p><span class="theorem-title"><strong>Algorithm 2 (G-Estimation Algorithm for Time-Varying Treatments)</strong></span> &nbsp;</p>
 <ol type="1">
 <li>Fit a model for <span class="math inline">\(A_k \mid \bar{A}_{k-1}, \bar{L}_k\)</span> to obtain predicted probabilities <span class="math inline">\(\hat{p}_k\)</span>.</li>
 <li>Construct residuals <span class="math inline">\(R_k = A_k - \hat{p}_k\)</span> (the “de-confounded” treatment residual).</li>
 <li>Estimate <span class="math inline">\(\psi\)</span> by solving the estimating equation</li>
 </ol>
 <p><span class="math display">\[\sum_i \sum_k R_{k,i} \cdot \frac{\partial}{\partial \psi} H_{k,i}(\psi) = 0.\]</span></p>
+</div>
 <aside class="notes">
 <p><strong>Advantages of g-estimation</strong>:</p>
 <ul>
@@ -381,7 +408,7 @@
 <h2>Rank-Preserving Structural Failure Time Models</h2>
 <p>A related family of models, <strong>rank-preserving structural failure time models</strong> (RP-SFTMs), extends g-estimation to survival outcomes.</p>
 <div id="def-rp-sftm" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Rank-Preserving Structural Failure Time Model (RP-SFTM))</strong></span> An RP-SFTM posits that treatment <span class="math inline">\(a_k\)</span> accelerates or decelerates the failure time by a multiplicative factor <span class="math inline">\(\text{exp}{\left\{(\right\}}\psi a_k)\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 10 (Rank-Preserving Structural Failure Time Model (RP-SFTM))</strong></span> An RP-SFTM posits that treatment <span class="math inline">\(a_k\)</span> accelerates or decelerates the failure time by a multiplicative factor <span class="math inline">\(\text{exp}{\left\{(\right\}}\psi a_k)\)</span>.</p>
 </div>
 <p>G-estimation proceeds by finding the <span class="math inline">\(\psi\)</span> that makes the “counterfactual failure time under no treatment” independent of <span class="math inline">\(A_k\)</span> given past history.</p>
 </section></section>
@@ -400,7 +427,7 @@
 <h2>Handling Censoring via IP Weighting</h2>
 <p>The censoring IP weight <span class="math inline">\(SW^C\)</span> (defined in Section 21.2) addresses this by upweighting uncensored individuals whose counterparts in the same covariate stratum were censored. An individual who is uncensored despite having covariate values that typically lead to censoring receives a high weight, making them represent themselves and those who were censored.</p>
 <div id="def-seq-censoring-exchangeability" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8 (Sequential Censoring Exchangeability)</strong></span> Sequential censoring exchangeability holds if, for every time <span class="math inline">\(k\)</span>,</p>
+<p><span class="theorem-title"><strong>Definition 11 (Sequential Censoring Exchangeability)</strong></span> Sequential censoring exchangeability holds if, for every time <span class="math inline">\(k\)</span>,</p>
 <p><span class="math display">\[C_k \perp\!\!\!\perp Y^{\bar{a}_K, \bar{c}=\bar{0}} \mid \bar{C}_{k-1} = \bar{0}, \bar{A}_{k-1}, \bar{L}_k.\]</span></p>
 </div>
 <p>Under this condition, the combined weight <span class="math inline">\(SW^{A,C} = SW^A \cdot SW^C\)</span> consistently estimates the counterfactual mean in the uncensored pseudo-population.</p>
@@ -433,7 +460,7 @@
 
 <p>The most general form of the g-formula — sometimes called the <strong>big g-formula</strong> — encompasses all time-varying treatments, time-varying covariates, time-varying censoring, and time-varying outcomes within a single unified expression.</p>
 <div id="def-big-g-formula" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 9 (The Big G-Formula)</strong></span> Under sequential exchangeability (for both treatment and censoring), positivity, and consistency, the counterfactual mean under joint strategy <span class="math inline">\((\bar{g}, \bar{c}=\bar{0})\)</span> is</p>
+<p><span class="theorem-title"><strong>Definition 12 (The Big G-Formula)</strong></span> Under sequential exchangeability (for both treatment and censoring), positivity, and consistency, the counterfactual mean under joint strategy <span class="math inline">\((\bar{g}, \bar{c}=\bar{0})\)</span> is</p>
 <p><span class="math display">\[\text{E}{\left[Y^{g, \bar{c}=\bar{0}}\right]} = \sum_{\bar{l}_K}
 \text{E}{\left[Y \mid \bar{A}_K = \bar{g}(\bar{l}_K), \bar{C}_K = \bar{0}, \bar{L}_K = \bar{l}_K\right]}
 \prod_{k=0}^K f(l_k \mid \bar{A}_{k-1} = \bar{g}_{k-1}, \bar{C}_{k-1} = \bar{0}, \bar{L}_{k-1} = \bar{l}_{k-1}),\]</span></p>
@@ -444,6 +471,8 @@
 <section id="practical-implementation" class="slide level2 scrollable">
 <h2>Practical Implementation</h2>
 <p>In practice, the big g-formula is implemented via a <strong>parametric g-computation algorithm</strong>:</p>
+<div id="alg-g-computation" class="theorem algorithm">
+<p><span class="theorem-title"><strong>Algorithm 3 (Parametric G-Computation Algorithm)</strong></span> &nbsp;</p>
 <ol type="1">
 <li>Fit outcome model: <span class="math inline">\(\text{E}{\left[Y \mid \bar{A}_K, \bar{C}_K = \bar{0}, \bar{L}_K\right]}\)</span>.</li>
 <li>For each <span class="math inline">\(k\)</span>, fit covariate models: <span class="math inline">\(f(L_k \mid \bar{A}_{k-1}, \bar{C}_{k-1} = \bar{0}, \bar{L}_{k-1})\)</span>.</li>
@@ -452,6 +481,7 @@
 <li>Predict <span class="math inline">\(Y\)</span> for each simulated individual from the outcome model.</li>
 <li>Average the predictions.</li>
 </ol>
+</div>
 <aside class="notes">
 <p><strong>Choice of g-method in practice</strong>:</p>
 <table class="caption-top">

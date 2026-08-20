@@ -301,19 +301,21 @@
 </section>
 <section id="alternative-reference-distributions" class="slide level2 scrollable">
 <h2>Alternative Reference Distributions</h2>
-<p><strong>Options for standardization</strong>:</p>
+<div id="def-standardization-distributions" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Reference Distributions for Standardization)</strong></span> The g-formula can standardize the mean outcome under treatment <span class="math inline">\(a\)</span> to different reference distributions of <span class="math inline">\(L\)</span>:</p>
 <ol type="1">
 <li><strong>Population distribution</strong>: <span class="math inline">\(\sum_{\ell} \text{E}{\left[Y \mid A = a, L = \ell\right]} \Pr[L = \ell]\)</span> (standard g-formula)</li>
 <li><strong>Treated distribution</strong>: <span class="math inline">\(\sum_{\ell} \text{E}{\left[Y \mid A = a, L = \ell\right]} \Pr[L = \ell \mid A = 1]\)</span></li>
 <li><strong>Untreated distribution</strong>: <span class="math inline">\(\sum_{\ell} \text{E}{\left[Y \mid A = a, L = \ell\right]} \Pr[L = \ell \mid A = 0]\)</span></li>
 <li><strong>External distribution</strong>: <span class="math inline">\(\sum_{\ell} \text{E}{\left[Y \mid A = a, L = \ell\right]} \Pr_{\text{ext}}[L = \ell]\)</span></li>
 </ol>
+</div>
 </section>
 <section id="att-vs-ate" class="slide level2">
 <h2>ATT vs ATE</h2>
 <p><strong>Average treatment effect (ATE)</strong>: <span class="math display">\[\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\]</span> Standardized to the population (or sample) distribution of <span class="math inline">\(L\)</span>.</p>
 <div id="def-att" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Average Treatment Effect in the Treated (ATT))</strong></span> The <strong>average treatment effect in the treated (ATT)</strong> is</p>
+<p><span class="theorem-title"><strong>Definition 4 (Average Treatment Effect in the Treated (ATT))</strong></span> The <strong>average treatment effect in the treated (ATT)</strong> is</p>
 <p><span class="math display">\[\text{E}{\left[Y^{a=1} \mid A = 1\right]} - \text{E}{\left[Y^{a=0} \mid A = 1\right]},\]</span></p>
 <p>standardized to the distribution of <span class="math inline">\(L\)</span> among the treated. The g-formula estimator for the ATT is</p>
 <p><span class="math display">\[\hat{\text{E}}{\left[Y^a \mid A = 1\right]} = \frac{1}{n_1} \sum_{i: A_i = 1} \hat{\text{E}}{\left[Y \mid A = a, L = L_i\right]},\]</span></p>
@@ -495,7 +497,7 @@
 <section id="dose-response-curve" class="slide level2 scrollable">
 <h2>Dose-Response Curve</h2>
 <div id="def-dose-response" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Dose-Response Curve)</strong></span> The <strong>dose-response curve</strong> is the function <span class="math inline">\(a \mapsto \text{E}{\left[Y^a\right]}\)</span> showing how the mean potential outcome varies with treatment level <span class="math inline">\(a\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 5 (Dose-Response Curve)</strong></span> The <strong>dose-response curve</strong> is the function <span class="math inline">\(a \mapsto \text{E}{\left[Y^a\right]}\)</span> showing how the mean potential outcome varies with treatment level <span class="math inline">\(a\)</span>.</p>
 <p>For continuous treatment, this is a smooth curve rather than discrete points.</p>
 </div>
 <p><strong>Example</strong>: Effect of smoking intensity (cigarettes/day) on lung function</p>
@@ -538,12 +540,14 @@
 <p><span class="math display">\[\text{logit} \Pr[Y = 1 \mid A, L] = \beta_0 + \beta_1 A + \beta_2^{\top} L + \beta_3^{\top} (A \times L)\]</span></p>
 <p><strong>G-formula</strong>: <span class="math display">\[\hat{\Pr}[Y^a = 1] = \frac{1}{n} \sum_{i=1}^n \text{expit}(\hat{\beta}_0 + \hat{\beta}_1 a + \hat{\beta}_2^{\top} L_i + \hat{\beta}_3^{\top} (a \times L_i))\]</span></p>
 <p>where <span class="math inline">\(\text{expit}(x) = \frac{e^x}{1 + e^x}\)</span>.</p>
-<p><strong>Causal measures</strong>:</p>
+<div id="def-gformula-effect-measures" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (G-Formula Estimators of Causal Effect Measures)</strong></span> &nbsp;</p>
 <ul>
 <li><strong>Risk difference</strong>: <span class="math inline">\(\hat{\Pr}[Y^{a=1} = 1] - \hat{\Pr}[Y^{a=0} = 1]\)</span></li>
 <li><strong>Risk ratio</strong>: <span class="math inline">\(\frac{\hat{\Pr}[Y^{a=1} = 1]}{\hat{\Pr}[Y^{a=0} = 1]}\)</span></li>
 <li><strong>Odds ratio</strong>: <span class="math inline">\(\frac{\hat{\Pr}[Y^{a=1} = 1] / \hat{\Pr}[Y^{a=1} = 0]}{\hat{\Pr}[Y^{a=0} = 1] / \hat{\Pr}[Y^{a=0} = 0]}\)</span></li>
 </ul>
+</div>
 </section>
 <section id="ip-weighting-for-binary-outcomes" class="slide level2">
 <h2>IP Weighting for Binary Outcomes</h2>

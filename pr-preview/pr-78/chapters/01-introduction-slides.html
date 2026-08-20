@@ -222,9 +222,12 @@
 </section>
 <section id="the-fundamental-problem" class="slide level2">
 <h2>The Fundamental Problem</h2>
-<p>The fundamental problem of causal inference is that we can only observe one of the two counterfactual outcomes for each individual. If Zeus receives a heart transplant, we observe <span class="math inline">\(Y^{a=1}\)</span> but not <span class="math inline">\(Y^{a=0}\)</span>. The unobserved counterfactual outcome remains unknown.</p>
+<div id="def-fundamental-problem" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (The Fundamental Problem of Causal Inference)</strong></span> The <strong>fundamental problem of causal inference</strong> is that we can only observe one of the two counterfactual outcomes for each individual.</p>
+</div>
+<p>If Zeus receives a heart transplant, we observe <span class="math inline">\(Y^{a=1}\)</span> but not <span class="math inline">\(Y^{a=0}\)</span>. The unobserved counterfactual outcome remains unknown.</p>
 <div id="def-consistency-ch1" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Consistency)</strong></span> Formally, for each individual, the observed outcome <span class="math inline">\(Y\)</span> equals the counterfactual outcome <span class="math inline">\(Y^a\)</span> corresponding to the treatment actually received:</p>
+<p><span class="theorem-title"><strong>Definition 4 (Consistency)</strong></span> Formally, for each individual, the observed outcome <span class="math inline">\(Y\)</span> equals the counterfactual outcome <span class="math inline">\(Y^a\)</span> corresponding to the treatment actually received:</p>
 <p><span class="math display">\[Y = Y^A.\]</span></p>
 <p>This equality is called <strong>consistency</strong>.</p>
 </div>
@@ -369,16 +372,18 @@
 <li>Risk if all untreated: <span class="math inline">\(\Pr[Y^{a=0} = 1] = 10/20 = 0.5\)</span></li>
 </ul>
 <div id="def-average-causal-effect" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Average Causal Effect)</strong></span> An <strong>average causal effect</strong> of treatment <span class="math inline">\(A\)</span> on outcome <span class="math inline">\(Y\)</span> is present if:</p>
+<p><span class="theorem-title"><strong>Definition 5 (Average Causal Effect)</strong></span> An <strong>average causal effect</strong> of treatment <span class="math inline">\(A\)</span> on outcome <span class="math inline">\(Y\)</span> is present if:</p>
 <p><span class="math display">\[\Pr[Y^{a=1} = 1] \neq \Pr[Y^{a=0} = 1]\]</span></p>
 <p>or equivalently (using expected values):</p>
 <p><span class="math display">\[\text{E}{\left[Y^{a=1}\right]} \neq \text{E}{\left[Y^{a=0}\right]}\]</span></p>
 </div>
-<p>In our population, treatment does <em>not</em> have an average causal effect because both risks equal 0.5. The <strong>null hypothesis of no average causal effect</strong> holds. However, this does not mean there are no individual effects.</p>
+<p>In our population, treatment does <em>not</em> have an average causal effect because both risks equal 0.5. However, this does not mean there are no individual effects.</p>
+<div id="def-average-causal-null" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Null Hypothesis of No Average Causal Effect)</strong></span> The <strong>null hypothesis of no average causal effect</strong> (also called the <strong>average causal null hypothesis</strong>) holds when <span class="math inline">\(\Pr[Y^{a=1} = 1] = \Pr[Y^{a=0} = 1]\)</span>, or equivalently <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} = \text{E}{\left[Y^{a=0}\right]}\)</span>.</p>
+</div>
 <aside class="notes">
 <p>Even though the average causal effect is null, 12 individuals in Table 1.1 have individual causal effects. Six were harmed by treatment (<span class="math inline">\(Y^{a=1} - Y^{a=0} = 1\)</span>), including Zeus, and six were helped (<span class="math inline">\(Y^{a=1} - Y^{a=0} = -1\)</span>). The harmful and beneficial effects cancel out in the average.</p>
 <p>The average causal effect <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} - \text{E}{\left[Y^{a=0}\right]}\)</span> always equals the average of individual causal effects <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0}\right]}\)</span>, because a difference of averages equals the average of the differences.</p>
-<p>When there is no causal effect for <em>any</em> individual (i.e., <span class="math inline">\(Y^{a=1} = Y^{a=0}\)</span> for all individuals), we say the <strong>sharp causal null hypothesis</strong> is true. The sharp null implies the null hypothesis of no average effect.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -390,6 +395,9 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+<div id="def-sharp-causal-null" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Sharp Causal Null Hypothesis)</strong></span> The <strong>sharp causal null hypothesis</strong> holds when there is no causal effect for <em>any</em> individual, i.e., <span class="math inline">\(Y^{a=1} = Y^{a=0}\)</span> for all individuals. The sharp null implies the null hypothesis of no average effect.</p>
+</div>
 </section></section>
 <section>
 <section id="measures-of-causal-effect-pp.-7" class="title-slide slide level1 center" data-number="3">
@@ -400,15 +408,15 @@
 
 <p>When a causal effect exists, we can quantify its magnitude using different <strong>effect measures</strong>. The three most common for binary outcomes are:</p>
 <div id="def-causal-risk-difference" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Causal Risk Difference)</strong></span> <span class="math display">\[\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]\]</span></p>
+<p><span class="theorem-title"><strong>Definition 8 (Causal Risk Difference)</strong></span> <span class="math display">\[\Pr[Y^{a=1} = 1] - \Pr[Y^{a=0} = 1]\]</span></p>
 </div>
 <p>This additive measure equals zero under the null hypothesis. It measures the absolute difference in risk.</p>
 <div id="def-causal-risk-ratio" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Causal Risk Ratio)</strong></span> <span class="math display">\[\frac{\Pr[Y^{a=1} = 1]}{\Pr[Y^{a=0} = 1]}\]</span></p>
+<p><span class="theorem-title"><strong>Definition 9 (Causal Risk Ratio)</strong></span> <span class="math display">\[\frac{\Pr[Y^{a=1} = 1]}{\Pr[Y^{a=0} = 1]}\]</span></p>
 </div>
 <p>This multiplicative measure equals one under the null hypothesis. It measures how many times treatment increases (or decreases) the risk.</p>
 <div id="def-causal-odds-ratio" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Causal Odds Ratio)</strong></span> <span class="math display">\[\frac{\Pr[Y^{a=1} = 1] / \Pr[Y^{a=1} = 0]}{\Pr[Y^{a=0} = 1] / \Pr[Y^{a=0} = 0]}\]</span></p>
+<p><span class="theorem-title"><strong>Definition 10 (Causal Odds Ratio)</strong></span> <span class="math display">\[\frac{\Pr[Y^{a=1} = 1] / \Pr[Y^{a=1} = 0]}{\Pr[Y^{a=0} = 1] / \Pr[Y^{a=0} = 0]}\]</span></p>
 </div>
 <p>This also equals one under the null hypothesis.</p>
 <aside class="notes">
@@ -440,13 +448,16 @@
 
 <p>In practice, we do not observe the counterfactual outcomes in Table 1.1. We only observe data from a sample of individuals. This introduces <strong>random variability</strong>.</p>
 </section>
-<section id="sample-vs.-superpopulation" class="slide level2 scrollable">
+<section id="sample-vs.-superpopulation" class="slide level2">
 <h2>Sample vs.&nbsp;Superpopulation</h2>
 <p>We can view our study population in two ways:</p>
-<ol type="1">
-<li><strong>Fixed population</strong>: The 20 individuals are the entire population of interest</li>
-<li><strong>Random sample</strong>: The 20 individuals are a random sample from a larger “superpopulation”</li>
-</ol>
+<div id="def-fixed-vs-superpopulation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 11 (Fixed Population vs.&nbsp;Superpopulation)</strong></span> &nbsp;</p>
+<ul>
+<li><strong>Fixed population</strong>: The 20 individuals are the entire population of interest.</li>
+<li><strong>Random sample (superpopulation)</strong>: The 20 individuals are a random sample from a larger “superpopulation.”</li>
+</ul>
+</div>
 <p>Under the superpopulation perspective, even if the true average causal effect is zero, our sample estimate might not be exactly zero due to <strong>sampling variability</strong>.</p>
 <aside class="notes">
 <p>For example, suppose we randomly sample 20 individuals from a superpopulation where <span class="math inline">\(\text{E}{\left[Y^{a=1}\right]} = \text{E}{\left[Y^{a=0}\right]} = 0.5\)</span> (true null effect). We might observe <span class="math inline">\(\hat{\text{E}}{\left[Y^{a=1}\right]} = 0.55\)</span> and <span class="math inline">\(\hat{\text{E}}{\left[Y^{a=0}\right]} = 0.45\)</span> in our sample just by chance.</p>
@@ -469,13 +480,16 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="two-types-of-error" class="slide level2 scrollable">
+<section id="two-types-of-error" class="slide level2">
 <h2>Two Types of Error</h2>
 <p>It’s critical to distinguish:</p>
-<ol type="1">
-<li><strong>Random error</strong>: Due to sampling variability; reduced by larger sample sizes</li>
-<li><strong>Systematic error (bias)</strong>: Due to flaws in study design; NOT reduced by larger samples</li>
-</ol>
+<div id="def-random-systematic-error" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 12 (Random Error vs.&nbsp;Systematic Error)</strong></span> &nbsp;</p>
+<ul>
+<li><strong>Random error</strong>: Error due to sampling variability; reduced by larger sample sizes.</li>
+<li><strong>Systematic error (bias)</strong>: Error due to flaws in study design; NOT reduced by larger samples.</li>
+</ul>
+</div>
 <p>With a very large sample, random error becomes negligible, and systematic error dominates. This is why proper study design and appropriate methods are essential for causal inference.</p>
 </section></section>
 <section>
@@ -621,19 +635,22 @@
 <section id="definitions-of-association" class="slide level2">
 <h2>Definitions of Association</h2>
 <div id="def-independence-ch1" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8 (Independence and Association)</strong></span> Treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> are <strong>independent</strong> (not associated) when:</p>
+<p><span class="theorem-title"><strong>Definition 13 (Independence and Association)</strong></span> Treatment <span class="math inline">\(A\)</span> and outcome <span class="math inline">\(Y\)</span> are <strong>independent</strong> (not associated) when:</p>
 <p><span class="math display">\[\Pr[Y = 1|A = 1] = \Pr[Y = 1|A = 0]\]</span></p>
 <p>or equivalently: <span class="math inline">\(\text{E}{\left[Y|A = 1\right]} = \text{E}{\left[Y|A = 0\right]}\)</span></p>
 <p>This is denoted <span class="math inline">\(Y \perp\!\!\!\perp A\)</span>.</p>
 <p>When this equality does not hold, <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> or <strong>dependent</strong>.</p>
 </div>
-<p>Association measures include:</p>
-<ul>
-<li><strong>Associational risk difference</strong>: <span class="math inline">\(\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]\)</span></li>
-<li><strong>Associational risk ratio</strong>: <span class="math inline">\(\Pr[Y = 1|A = 1] / \Pr[Y = 1|A = 0]\)</span><br>
-</li>
-<li><strong>Associational odds ratio</strong>: <span class="math inline">\(\frac{\Pr[Y = 1|A = 1]/\Pr[Y = 0|A = 1]}{\Pr[Y = 1|A = 0]/\Pr[Y = 0|A = 0]}\)</span></li>
-</ul>
+<p>Association measures include the associational risk difference, risk ratio, and odds ratio.</p>
+<div id="def-associational-risk-difference" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 14 (Associational Risk Difference)</strong></span> <span class="math display">\[\Pr[Y = 1|A = 1] - \Pr[Y = 1|A = 0]\]</span></p>
+</div>
+<div id="def-associational-risk-ratio" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15 (Associational Risk Ratio)</strong></span> <span class="math display">\[\Pr[Y = 1|A = 1] / \Pr[Y = 1|A = 0]\]</span></p>
+</div>
+<div id="def-associational-odds-ratio" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 16 (Associational Odds Ratio)</strong></span> <span class="math display">\[\frac{\Pr[Y = 1|A = 1]/\Pr[Y = 0|A = 1]}{\Pr[Y = 1|A = 0]/\Pr[Y = 0|A = 0]}\]</span></p>
+</div>
 </section>
 <section id="causation-vs.-association" class="slide level2">
 <h2>Causation vs.&nbsp;Association</h2>
@@ -642,21 +659,15 @@
 <li><strong>No causal effect</strong>: <span class="math inline">\(\Pr[Y^{a=1} = 1] = \Pr[Y^{a=0} = 1] = 0.5\)</span></li>
 <li><strong>Association present</strong>: <span class="math inline">\(\Pr[Y = 1|A = 1] = 0.54 \neq 0.43 = \Pr[Y = 1|A = 0]\)</span></li>
 </ul>
-<aside class="notes">
 <p>This demonstrates the fundamental principle: <strong>Association is not causation</strong>.</p>
-<p>The distinction is:</p>
+<div id="def-causation-vs-association" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17 (Causation vs.&nbsp;Association)</strong></span> &nbsp;</p>
 <ul>
-<li><strong>Causation</strong>: Compares the <em>same</em> population under different treatment values
-<ul>
-<li>“What if everyone had been treated?” vs.&nbsp;“What if everyone had been untreated?”</li>
-<li>Uses counterfactual risks: <span class="math inline">\(\Pr[Y^{a=1} = 1]\)</span> vs.&nbsp;<span class="math inline">\(\Pr[Y^{a=0} = 1]\)</span></li>
-</ul></li>
-<li><strong>Association</strong>: Compares <em>different subsets</em> of the population
-<ul>
-<li>“What is the risk in those who were treated?” vs.&nbsp;“What is the risk in those who were untreated?”</li>
-<li>Uses conditional risks: <span class="math inline">\(\Pr[Y = 1|A = 1]\)</span> vs.&nbsp;<span class="math inline">\(\Pr[Y = 1|A = 0]\)</span></li>
-</ul></li>
+<li><strong>Causation</strong>: Compares the <em>same</em> population under different treatment values (“What if everyone had been treated?” vs.&nbsp;“What if everyone had been untreated?”), using counterfactual risks: <span class="math inline">\(\Pr[Y^{a=1} = 1]\)</span> vs.&nbsp;<span class="math inline">\(\Pr[Y^{a=0} = 1]\)</span>.</li>
+<li><strong>Association</strong>: Compares <em>different subsets</em> of the population (“What is the risk in those who were treated?” vs.&nbsp;“What is the risk in those who were untreated?”), using conditional risks: <span class="math inline">\(\Pr[Y = 1|A = 1]\)</span> vs.&nbsp;<span class="math inline">\(\Pr[Y = 1|A = 0]\)</span>.</li>
 </ul>
+</div>
+<aside class="notes">
 <p>In our example, there’s an association because those who received transplants were sicker on average than those who didn’t. This discrepancy between causation and association is called <strong>confounding</strong> (discussed in Chapter 7).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {

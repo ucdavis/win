@@ -304,7 +304,6 @@
 <li>Expert opinion</li>
 </ul>
 <p>to identify the set of confounders <span class="math inline">\(L\)</span> that, if measured and adjusted for, would render the treated and untreated exchangeable.</p>
-<p>If there exist <strong>unmeasured confounders</strong>—variables that affect both treatment and outcome but are not in <span class="math inline">\(L\)</span>—then conditional exchangeability fails, and our causal effect estimates will be biased.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -316,6 +315,9 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+<div id="def-unmeasured-confounders" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Unmeasured Confounders)</strong></span> <strong>Unmeasured confounders</strong> are variables that affect both treatment and outcome but are not included in the measured covariates <span class="math inline">\(L\)</span>. If unmeasured confounders exist, conditional exchangeability fails, and causal effect estimates will be biased.</p>
+</div>
 </section></section>
 <section>
 <section id="positivity-pp.-29-30" class="title-slide slide level1 center" data-number="3">
@@ -326,12 +328,12 @@
 
 <p>The second identifiability condition is <strong>positivity</strong>, also called the experimental treatment assignment assumption.</p>
 <div id="def-positivity" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Positivity)</strong></span> <strong>Positivity</strong> requires that, for every combination of values of <span class="math inline">\(L\)</span> for which <span class="math inline">\(\Pr[L] &gt; 0\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 5 (Positivity)</strong></span> <strong>Positivity</strong> requires that, for every combination of values of <span class="math inline">\(L\)</span> for which <span class="math inline">\(\Pr[L] &gt; 0\)</span>:</p>
 <p><span class="math display">\[\Pr[A = a | L] &gt; 0 \quad \text{for all } a\]</span></p>
 <p>In words: every individual has a non-zero probability of receiving every level of treatment, conditional on their measured covariates.</p>
 </div>
 </section>
-<section id="why-positivity-matters" class="slide level2 scrollable">
+<section id="why-positivity-matters" class="slide level2">
 <h2>Why Positivity Matters</h2>
 <p>Without positivity, we cannot estimate causal effects for all individuals. If certain individuals (with specific values of <span class="math inline">\(L\)</span>) have zero probability of receiving treatment, we cannot learn about their counterfactual outcome under treatment from the data.</p>
 <div id="exm-positivity-violation" class="theorem example">
@@ -339,20 +341,22 @@
 <p><span class="math display">\[\Pr[A = 1 | \text{Age} = 90] = 0\]</span></p>
 <p>We cannot estimate <span class="math inline">\(\text{E}{\left[Y^{a=1} | \text{Age} = 90\right]}\)</span> from the data because we have no treated 90-year-olds to observe.</p>
 </div>
+<div id="def-positivity-violation-types" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Types of Positivity Violations)</strong></span> <strong>Positivity violations</strong> can occur due to:</p>
+<ul>
+<li><strong>Structural violations</strong>: Some individuals cannot receive treatment (e.g., males cannot receive a pregnancy intervention).</li>
+<li><strong>Random violations</strong>: By chance, no individuals with certain covariate values received treatment in the sample.</li>
+<li><strong>Practical violations</strong>: Treatment is theoretically possible but extremely rare for certain subgroups.</li>
+</ul>
+<p><strong>Near-violations</strong> occur when <span class="math inline">\(\Pr[A = a | L]\)</span> is very close to 0 or 1, which can also cause problems, leading to unstable estimates with large variance.</p>
+</div>
 <aside class="notes">
-<p><strong>Positivity violations</strong> can occur due to:</p>
-<ol type="1">
-<li><strong>Structural violations</strong>: Some individuals cannot receive treatment (e.g., males cannot receive a pregnancy intervention)</li>
-<li><strong>Random violations</strong>: By chance, no individuals with certain covariate values received treatment in our sample</li>
-<li><strong>Practical violations</strong>: Treatment is theoretically possible but extremely rare for certain subgroups</li>
-</ol>
 <p>When positivity is violated, we must either:</p>
 <ul>
 <li>Restrict our causal question to the subpopulation where positivity holds</li>
 <li>Make additional modeling assumptions (with their own limitations)</li>
 <li>Accept that we cannot answer the original causal question with the available data</li>
 </ul>
-<p>In practice, <strong>near-violations</strong> of positivity (where <span class="math inline">\(\Pr[A = a | L]\)</span> is very close to 0 or 1) can also cause problems, leading to unstable estimates with large variance.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -374,14 +378,16 @@
 
 <p>The third identifiability condition is <strong>consistency</strong>. Unlike exchangeability and positivity, consistency is not about the relationship between treatment and outcome. Instead, it concerns the definition of the counterfactual outcome itself.</p>
 <div id="def-consistency" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Consistency)</strong></span> The <strong>consistency assumption</strong> states that:</p>
+<p><span class="theorem-title"><strong>Definition 7 (Consistency)</strong></span> The <strong>consistency assumption</strong> states that:</p>
 <p><span class="math display">\[Y = Y^A\]</span></p>
 <p>In words: the observed outcome <span class="math inline">\(Y\)</span> for an individual equals their counterfactual outcome <span class="math inline">\(Y^a\)</span> under the treatment level <span class="math inline">\(a\)</span> that they actually received.</p>
 </div>
 </section>
 <section id="well-defined-interventions" class="slide level2">
 <h2>Well-Defined Interventions</h2>
-<p>For consistency to hold, the treatment must be <strong>well-defined</strong>. This means we must be able to precisely specify what it means to receive treatment level <span class="math inline">\(a\)</span>.</p>
+<div id="def-well-defined-treatment" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8 (Well-Defined Treatment)</strong></span> For consistency to hold, the treatment must be <strong>well-defined</strong>: we must be able to precisely specify what it means to receive treatment level <span class="math inline">\(a\)</span>.</p>
+</div>
 <div id="exm-ill-defined-treatment" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3 (Ill-Defined Treatment Example)</strong></span> Consider “exercise” as a treatment. What does <span class="math inline">\(A = 1\)</span> (receives exercise) mean?</p>
 <ul>
@@ -396,8 +402,6 @@
 <p>When treatment is not well-defined, we have <strong>treatment variation irrelevance</strong>. Different versions of “treatment” may have different effects on the outcome. In this case:</p>
 <p><span class="math display">\[Y = Y^{A,K}\]</span></p>
 <p>where <span class="math inline">\(K\)</span> represents the specific version of treatment received.</p>
-<p>For consistency to hold, we need either: 1. <strong>No treatment variation</strong>: All individuals who receive <span class="math inline">\(A = a\)</span> receive exactly the same intervention 2. <strong>Treatment variation irrelevance</strong>: Different versions of treatment have the same effect on the outcome (which is often implausible)</p>
-<p>This is sometimes called the <strong>Stable Unit Treatment Value Assumption (SUTVA)</strong>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -409,6 +413,14 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+<div id="def-sutva" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9 (Stable Unit Treatment Value Assumption (SUTVA))</strong></span> For consistency to hold, we need either:</p>
+<ul>
+<li><strong>No treatment variation</strong>: All individuals who receive <span class="math inline">\(A = a\)</span> receive exactly the same intervention.</li>
+<li><strong>Treatment variation irrelevance</strong>: Different versions of treatment have the same effect on the outcome (often implausible).</li>
+</ul>
+<p>This requirement is sometimes called the <strong>Stable Unit Treatment Value Assumption (SUTVA)</strong>.</p>
+</div>
 </section></section>
 <section>
 <section id="consistency-second-link-counterfactuals-to-observed-data-pp.-32-34" class="title-slide slide level1 center" data-number="5">
@@ -419,7 +431,7 @@
 
 <p>The consistency assumption also requires that there is no <strong>interference</strong> between individuals.</p>
 <div id="def-no-interference" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (No Interference)</strong></span> <strong>Interference</strong> occurs when one individual’s treatment affects another individual’s outcome. For consistency to hold, we need:</p>
+<p><span class="theorem-title"><strong>Definition 10 (No Interference)</strong></span> <strong>Interference</strong> occurs when one individual’s treatment affects another individual’s outcome. For consistency to hold, we need:</p>
 <p><span class="math display">\[Y_i = Y_i^{A_i}\]</span></p>
 <p>The outcome for individual <span class="math inline">\(i\)</span> depends only on individual <span class="math inline">\(i\)</span>’s treatment, not on other individuals’ treatments.</p>
 </div>
@@ -455,7 +467,9 @@
 </section>
 <section id="temporal-consistency" class="slide level2">
 <h2>Temporal Consistency</h2>
-<p>Consistency also requires that the <strong>timing</strong> of treatment and outcome measurement is well-defined.</p>
+<div id="def-temporal-consistency" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 11 (Temporal Consistency)</strong></span> Consistency also requires that the <strong>timing</strong> of treatment and outcome measurement is well-defined: we must specify when treatment is received and when the outcome is measured.</p>
+</div>
 <aside class="notes">
 <p>If we ask “What is the effect of treatment on the outcome?”, we must specify:</p>
 <ul>
@@ -484,7 +498,7 @@
 
 <p>A useful framework for thinking about identifiability conditions in observational studies is the <strong>target trial</strong>.</p>
 <div id="def-target-trial" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Target Trial)</strong></span> The <strong>target trial</strong> is the (hypothetical) randomized experiment we would conduct if we could. By specifying the target trial, we clarify:</p>
+<p><span class="theorem-title"><strong>Definition 12 (Target Trial)</strong></span> The <strong>target trial</strong> is the (hypothetical) randomized experiment we would conduct if we could. By specifying the target trial, we clarify:</p>
 <ol type="1">
 <li>The causal question we are trying to answer</li>
 <li>The treatment comparison of interest</li>

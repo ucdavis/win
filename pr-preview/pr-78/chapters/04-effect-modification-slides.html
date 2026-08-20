@@ -216,7 +216,6 @@
 <li>The causal effect <strong>varies</strong> or is <strong>heterogeneous</strong> across levels of <span class="math inline">\(V\)</span></li>
 <li>Effect modification is a <strong>property of the population</strong>, not of individuals</li>
 </ul>
-<p><strong>Notation</strong>: We write <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0} | V = v\right]}\)</span> to denote the average causal effect in the subpopulation with <span class="math inline">\(V = v\)</span>. This is a <strong>conditional average treatment effect</strong>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -228,6 +227,9 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+<div id="def-cate" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Conditional Average Treatment Effect)</strong></span> The <strong>conditional average treatment effect</strong> (CATE) in the subpopulation with <span class="math inline">\(V = v\)</span> is <span class="math inline">\(\text{E}{\left[Y^{a=1} - Y^{a=0} | V = v\right]}\)</span>.</p>
+</div>
 </section>
 <section id="effect-modification-depends-on-the-scale" class="slide level2">
 <h2>Effect Modification Depends on the Scale</h2>
@@ -416,7 +418,7 @@
 </ol>
 <p>These are different scientific questions with different implications.</p>
 <div id="def-confounder-vs-modifier" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Confounder vs.&nbsp;Effect Modifier)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Definition 3 (Confounder vs.&nbsp;Effect Modifier)</strong></span> &nbsp;</p>
 <ul>
 <li>A <strong>confounder</strong> is a variable that, if not adjusted for, biases the estimate of the average causal effect</li>
 <li>An <strong>effect modifier</strong> is a variable across which the causal effect differs</li>
@@ -448,12 +450,14 @@
 <li>We must adjust for age</li>
 <li>We should report age-specific effects</li>
 </ul>
-<aside class="notes">
-<p><strong>Key distinction</strong>:</p>
+<div id="def-confounding-vs-modification-distinction" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Confounding as Bias, Effect Modification as Finding)</strong></span> &nbsp;</p>
 <ul>
-<li><strong>Confounding is a bias</strong> to be removed through adjustment</li>
-<li><strong>Effect modification is a finding</strong> to be reported and understood</li>
+<li><strong>Confounding is a bias</strong> to be removed through adjustment.</li>
+<li><strong>Effect modification is a finding</strong> to be reported and understood.</li>
 </ul>
+</div>
+<aside class="notes">
 <p>When a variable is both a confounder and an effect modifier: 1. We must adjust for it to eliminate bias 2. We should present stratum-specific effects (not just an overall adjusted effect)</p>
 <p><strong>Common mistake</strong>: Treating an effect modifier as if it were only a confounder, adjusting for it and reporting only an overall effect, thereby obscuring important heterogeneity.</p>
 <style type="text/css">
@@ -480,7 +484,7 @@
 <section id="matching-methods" class="slide level2 scrollable">
 <h2>Matching Methods</h2>
 <div id="def-matching" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Matching)</strong></span> <strong>Matching</strong> creates treatment and control groups that are similar with respect to measured covariates <span class="math inline">\(L\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 5 (Matching)</strong></span> <strong>Matching</strong> creates treatment and control groups that are similar with respect to measured covariates <span class="math inline">\(L\)</span>.</p>
 </div>
 <p>Common approaches:</p>
 <ol type="1">
@@ -572,14 +576,15 @@
 <h2>Regression Models for Effect Modification</h2>
 <p>Regression models provide a flexible framework for handling effect modification:</p>
 <p><strong>Model with effect modification</strong>: <span class="math display">\[\text{E}{\left[Y | A, V, L\right]} = \beta_0 + \beta_1 A + \beta_2 V + \beta_3 A \times V + \beta_4^T L\]</span></p>
-<p>The <strong>interaction term</strong> <span class="math inline">\(\beta_3 A \times V\)</span> captures effect modification:</p>
+<div id="def-interaction-term" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Interaction Term (Regression))</strong></span> The <strong>interaction term</strong> <span class="math inline">\(\beta_3 A \times V\)</span> captures effect modification:</p>
 <ul>
-<li>If <span class="math inline">\(\beta_3 = 0\)</span>: No effect modification by <span class="math inline">\(V\)</span></li>
-<li>If <span class="math inline">\(\beta_3 \neq 0\)</span>: Effect of <span class="math inline">\(A\)</span> differs by <span class="math inline">\(V\)</span></li>
+<li>If <span class="math inline">\(\beta_3 = 0\)</span>: No effect modification by <span class="math inline">\(V\)</span>.</li>
+<li>If <span class="math inline">\(\beta_3 \neq 0\)</span>: Effect of <span class="math inline">\(A\)</span> differs by <span class="math inline">\(V\)</span>.</li>
 </ul>
-<aside class="notes">
-<p><strong>Important distinctions</strong>:</p>
-<p><strong>Statistical interaction</strong> (in regression models):</p>
+</div>
+<div id="def-statistical-interaction-vs-effect-modification" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Statistical Interaction vs.&nbsp;Effect Modification)</strong></span> <strong>Statistical interaction</strong> (in regression models):</p>
 <ul>
 <li>Refers to product terms like <span class="math inline">\(A \times V\)</span> in a model</li>
 <li>Is model-dependent and scale-dependent</li>
@@ -597,6 +602,8 @@
 <li>Effect modification on the risk ratio scale corresponds to interaction in a log-linear model</li>
 <li>Absence of statistical interaction does NOT guarantee absence of effect modification (it depends on the model and scale)</li>
 </ul>
+</div>
+<aside class="notes">
 <p><strong>Best practice</strong>: Report stratum-specific effects directly rather than relying solely on interaction terms. This makes the findings more transparent and interpretable.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {

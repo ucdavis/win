@@ -203,7 +203,8 @@
 </div>
 </div>
 </section><section id="dag-terminology" class="slide level2"><h2>DAG Terminology</h2>
-<p>For a node <span class="math inline">\(W\)</span> in a causal diagram:</p>
+<div id="def-dag-terminology" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (DAG Terminology)</strong></span> For a node <span class="math inline">\(W\)</span> in a causal diagram:</p>
 <ul>
 <li>A <strong>parent</strong> of <span class="math inline">\(W\)</span> is any node with a direct arrow into <span class="math inline">\(W\)</span>
 </li>
@@ -212,6 +213,7 @@
 <li>A <strong>descendant</strong> of <span class="math inline">\(W\)</span> is any node reachable from <span class="math inline">\(W\)</span> by following arrows</li>
 <li>A <strong>path</strong> between two nodes is any sequence of nodes connected by edges (arrows), regardless of direction</li>
 </ul>
+</div>
 <p>In Figure 6.1: <span class="math inline">\(L\)</span> is a parent of <span class="math inline">\(A\)</span> and a parent of <span class="math inline">\(Y\)</span>; <span class="math inline">\(A\)</span> is a child of <span class="math inline">\(L\)</span>; <span class="math inline">\(Y\)</span> is a descendant of <span class="math inline">\(L\)</span> via two paths (<span class="math inline">\(L \to Y\)</span> directly, and <span class="math inline">\(L \to A \to Y\)</span>).</p>
 </section><section id="what-dag-arrows-represent" class="slide level2"><h2>What DAG Arrows Represent</h2>
 <p>The <strong>presence</strong> of an arrow <span class="math inline">\(V \to W\)</span> encodes the assumption that <span class="math inline">\(V\)</span> has a direct causal effect on <span class="math inline">\(W\)</span> (i.e., not entirely mediated by other variables explicitly shown in the graph).</p>
@@ -243,7 +245,7 @@
 </section><section class="slide level2"><p>Causal diagrams encode information about which variables are <strong>marginally independent</strong> (independent unconditionally, before conditioning on any variable). We can read this information directly from the graph structure.</p>
 </section><section id="open-and-blocked-paths" class="slide level2"><h2>Open and Blocked Paths</h2>
 <div id="def-open-blocked-path" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Open and Blocked Paths)</strong></span> A path between two nodes <span class="math inline">\(V\)</span> and <span class="math inline">\(W\)</span> is either <strong>open</strong> or <strong>blocked</strong>:</p>
+<p><span class="theorem-title"><strong>Definition 3 (Open and Blocked Paths)</strong></span> A path between two nodes <span class="math inline">\(V\)</span> and <span class="math inline">\(W\)</span> is either <strong>open</strong> or <strong>blocked</strong>:</p>
 <ul>
 <li>A path is <strong>blocked</strong> if it contains a <strong>collider</strong> node — a node where two arrowheads meet on the path: <span class="math inline">\(\cdots \to C \leftarrow \cdots\)</span>
 </li>
@@ -297,30 +299,24 @@
 
 </section><section class="slide level2"><p>Conditioning on a variable — by stratifying, restricting, or including it in a regression — can change independence relationships. Whether conditioning on a variable opens or blocks a path depends on whether that variable is a <strong>collider</strong> or a <strong>non-collider</strong> on the path.</p>
 </section><section id="three-fundamental-path-structures" class="slide level2"><h2>Three Fundamental Path Structures</h2>
-<h3 id="chain-a-rightarrow-b-rightarrow-y">1. Chain: <span class="math inline">\(A \rightarrow B \rightarrow Y\)</span>
-</h3>
+<div id="def-path-structures" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Chain, Fork, and Collider)</strong></span> Three structures describe how association flows along a three-node path, depending on whether the middle node <span class="math inline">\(B\)</span> is conditioned on:</p>
+<p><strong>Chain</strong> (<span class="math inline">\(A \rightarrow B \rightarrow Y\)</span>):</p>
 <ul>
-<li>
-<strong>Marginally</strong>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> (open path <span class="math inline">\(A \to B \to Y\)</span>)</li>
-<li>
-<strong>Conditional on <span class="math inline">\(B\)</span></strong>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> — conditioning on the intermediate variable <span class="math inline">\(B\)</span> blocks the path</li>
+<li>Marginally: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> (open path <span class="math inline">\(A \to B \to Y\)</span>)</li>
+<li>Conditional on <span class="math inline">\(B\)</span>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> — conditioning on the intermediate variable <span class="math inline">\(B\)</span> blocks the path</li>
 </ul>
-<h3 id="fork-a-leftarrow-b-rightarrow-y">2. Fork: <span class="math inline">\(A \leftarrow B \rightarrow Y\)</span>
-</h3>
+<p><strong>Fork</strong> (<span class="math inline">\(A \leftarrow B \rightarrow Y\)</span>):</p>
 <ul>
-<li>
-<strong>Marginally</strong>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> (open path through common cause <span class="math inline">\(B\)</span>)</li>
-<li>
-<strong>Conditional on <span class="math inline">\(B\)</span></strong>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> — conditioning on the common cause <span class="math inline">\(B\)</span> blocks the non-causal association</li>
+<li>Marginally: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>associated</strong> (open path through common cause <span class="math inline">\(B\)</span>)</li>
+<li>Conditional on <span class="math inline">\(B\)</span>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> — conditioning on the common cause <span class="math inline">\(B\)</span> blocks the non-causal association</li>
 </ul>
-<h3 id="collider-a-rightarrow-b-leftarrow-y">3. Collider: <span class="math inline">\(A \rightarrow B \leftarrow Y\)</span>
-</h3>
+<p><strong>Collider</strong> (<span class="math inline">\(A \rightarrow B \leftarrow Y\)</span>):</p>
 <ul>
-<li>
-<strong>Marginally</strong>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> (path blocked by collider <span class="math inline">\(B\)</span>)</li>
-<li>
-<strong>Conditional on <span class="math inline">\(B\)</span></strong>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> — conditioning on a collider <strong>opens</strong> the previously blocked path</li>
+<li>Marginally: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> (path blocked by collider <span class="math inline">\(B\)</span>)</li>
+<li>Conditional on <span class="math inline">\(B\)</span>: <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are <strong>dependent</strong> — conditioning on a collider <strong>opens</strong> the previously blocked path</li>
 </ul>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -396,7 +392,7 @@
 </tbody>
 </table>
 <div id="def-d-separation" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (D-separation)</strong></span> Two variables are <strong>d-separated</strong> given <span class="math inline">\(Z\)</span> if every path between them is blocked given <span class="math inline">\(Z\)</span>. D-separated variables are (conditionally) independent in any distribution generated by the NPSEM.</p>
+<p><span class="theorem-title"><strong>Definition 5 (D-separation)</strong></span> Two variables are <strong>d-separated</strong> given <span class="math inline">\(Z\)</span> if every path between them is blocked given <span class="math inline">\(Z\)</span>. D-separated variables are (conditionally) independent in any distribution generated by the NPSEM.</p>
 </div>
 </section></section><section><section id="positivity-and-structural-causal-models-pp.-6869" class="title-slide slide level1 center" data-number="4"><h1>
 <span class="header-section-number">4</span> 6.4 Positivity and Structural Causal Models (pp.&nbsp;68–69)</h1>
@@ -410,8 +406,10 @@
 <p>The <strong>positivity assumption</strong> requires that every individual has a positive probability of receiving each treatment level:</p>
 <p><span class="math display">\[\Pr[A = a \mid L = l] &gt; 0 \quad \text{for all } a \text{ and all } l \text{ with } \Pr[L = l] &gt; 0\]</span></p>
 <p>In structural equation terms, positivity requires that the function <span class="math inline">\(f_A(L, U_A)\)</span> is not deterministic — no value of <span class="math inline">\(L\)</span> should completely determine the treatment assignment <span class="math inline">\(A\)</span>.</p>
-<p><strong>Structural positivity violations</strong> occur when <span class="math inline">\(L\)</span> deterministically forces <span class="math inline">\(A\)</span> to a particular value. In these strata, the counterfactual <span class="math inline">\(Y^a\)</span> cannot be identified from observational data regardless of sample size.</p>
+<div id="def-positivity-violations" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Structural and Random Positivity Violations)</strong></span> <strong>Structural positivity violations</strong> occur when <span class="math inline">\(L\)</span> deterministically forces <span class="math inline">\(A\)</span> to a particular value. In these strata, the counterfactual <span class="math inline">\(Y^a\)</span> cannot be identified from observational data regardless of sample size.</p>
 <p><strong>Random positivity violations</strong> occur when, by chance, certain <span class="math inline">\((A, L)\)</span> combinations do not appear in the finite sample, even though they have positive probability in the population.</p>
+</div>
 <aside class="notes"><p><strong>Why positivity matters for the NPSEM:</strong></p>
 <p>When <span class="math inline">\(\Pr[A = a \mid L = l] = 0\)</span> for some <span class="math inline">\(l\)</span>, we observe no individuals with treatment <span class="math inline">\(a\)</span> in stratum <span class="math inline">\(L = l\)</span>. We cannot therefore identify the counterfactual <span class="math inline">\(Y^a\)</span> in that stratum from observational data. The causal effect is then not identifiable using standard methods (IP weighting, standardization, etc.) — a situation captured formally by the positivity assumption.</p>
 <p><strong>Consistency revisited:</strong></p>
@@ -433,7 +431,7 @@
 </section><section id="confounding-bias" class="slide level2 scrollable"><h2>Confounding Bias</h2>
 <p><strong>Confounding</strong> is present when there is an open <strong>backdoor path</strong> from treatment <span class="math inline">\(A\)</span> to outcome <span class="math inline">\(Y\)</span>.</p>
 <div id="def-backdoor-path" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Backdoor Path)</strong></span> A <strong>backdoor path</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> is any path that:</p>
+<p><span class="theorem-title"><strong>Definition 7 (Backdoor Path)</strong></span> A <strong>backdoor path</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span> is any path that:</p>
 <ol type="1">
 <li>Starts with an arrow <strong>pointing into</strong> <span class="math inline">\(A\)</span> (i.e., begins <span class="math inline">\(\cdots \to A\)</span>)</li>
 <li>Ends at <span class="math inline">\(Y\)</span>
@@ -442,7 +440,7 @@
 <p>Such paths represent non-causal flows of association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> induced by common causes.</p>
 </div>
 <div id="def-dag-confounding" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Confounding (Structural Definition))</strong></span> <strong>Confounding</strong> of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> exists when there is at least one open backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 8 (Confounding (Structural Definition))</strong></span> <strong>Confounding</strong> of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> exists when there is at least one open backdoor path from <span class="math inline">\(A\)</span> to <span class="math inline">\(Y\)</span>.</p>
 <p>In the diagram <span class="math inline">\(L \to A\)</span>, <span class="math inline">\(L \to Y\)</span>, <span class="math inline">\(A \to Y\)</span>: the path <span class="math inline">\(A \leftarrow L \to Y\)</span> is a backdoor path. Since <span class="math inline">\(L\)</span> is a non-collider on this path and has not been conditioned on, the path is open. There is therefore confounding.</p>
 </div>
 <div class="cell">
@@ -455,7 +453,7 @@
 </div>
 </section><section id="the-backdoor-criterion" class="slide level2 scrollable"><h2>The Backdoor Criterion</h2>
 <div id="def-backdoor-criterion" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Backdoor Criterion)</strong></span> A set of measured variables <span class="math inline">\(L\)</span> satisfies the <strong>backdoor criterion</strong> for estimating the causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if:</p>
+<p><span class="theorem-title"><strong>Definition 9 (Backdoor Criterion)</strong></span> A set of measured variables <span class="math inline">\(L\)</span> satisfies the <strong>backdoor criterion</strong> for estimating the causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> if:</p>
 <ol type="1">
 <li>No variable in <span class="math inline">\(L\)</span> is a descendant of <span class="math inline">\(A\)</span>
 </li>
@@ -497,7 +495,7 @@
           display:block!important;
       }</style></aside></section><section id="selection-bias" class="slide level2"><h2>Selection Bias</h2>
 <div id="def-dag-selection-bias" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Selection Bias (Structural Definition))</strong></span> <strong>Selection bias</strong> arises when the analysis conditions on a variable <span class="math inline">\(C\)</span> that is a collider (or ancestor/descendant of a collider) on a path between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 10 (Selection Bias (Structural Definition))</strong></span> <strong>Selection bias</strong> arises when the analysis conditions on a variable <span class="math inline">\(C\)</span> that is a collider (or ancestor/descendant of a collider) on a path between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>.</p>
 <p><strong>Structural representation:</strong></p>
 <p><span class="math display">\[A \longrightarrow C \longleftarrow Y\]</span></p>
 <p>Restricting the analysis to individuals with <span class="math inline">\(C = 1\)</span> (e.g., individuals selected into the study) opens the path <span class="math inline">\(A \to C \leftarrow Y\)</span> and induces a spurious association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>.</p>
@@ -523,7 +521,7 @@
           display:block!important;
       }</style></aside></section><section id="measurement-bias" class="slide level2"><h2>Measurement Bias</h2>
 <div id="def-dag-measurement-bias" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8 (Measurement Bias (Structural Definition))</strong></span> <strong>Measurement bias</strong> (information bias) occurs when a variable is measured imperfectly. In the causal diagram, we distinguish:</p>
+<p><span class="theorem-title"><strong>Definition 11 (Measurement Bias (Structural Definition))</strong></span> <strong>Measurement bias</strong> (information bias) occurs when a variable is measured imperfectly. In the causal diagram, we distinguish:</p>
 <ul>
 <li>
 <span class="math inline">\(A\)</span>: the true (unmeasured or imperfectly measured) treatment</li>

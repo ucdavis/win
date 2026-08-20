@@ -320,7 +320,8 @@
 </section>
 <section id="propensity-score-stratification" class="slide level2 scrollable">
 <h2>Propensity Score Stratification</h2>
-<p><strong>Procedure</strong>:</p>
+<div id="alg-propensity-stratification" class="theorem algorithm">
+<p><span class="theorem-title"><strong>Algorithm 1 (Propensity Score Stratification)</strong></span> &nbsp;</p>
 <ol type="1">
 <li>Estimate propensity score <span class="math inline">\(\hat{e}(L_i)\)</span> for all individuals</li>
 <li>Create strata (e.g., quintiles) of the propensity score</li>
@@ -328,6 +329,7 @@
 <li>Standardize across strata:</li>
 </ol>
 <p><span class="math display">\[\hat{\text{E}}{\left[Y^a\right]} = \sum_{s=1}^S \hat{\text{E}}{\left[Y \mid A = a, \text{stratum } s\right]} \times \Pr[\text{stratum } s]\]</span></p>
+</div>
 </section>
 <section id="checking-balance" class="slide level2 scrollable">
 <h2>Checking Balance</h2>
@@ -382,12 +384,14 @@
 </section>
 <section id="matching-algorithms" class="slide level2 scrollable">
 <h2>Matching Algorithms</h2>
-<p><strong>1-to-1 nearest neighbor matching</strong>:</p>
+<div id="alg-nn-matching" class="theorem algorithm">
+<p><span class="theorem-title"><strong>Algorithm 2 (1-to-1 Nearest Neighbor Matching)</strong></span> &nbsp;</p>
 <ol type="1">
 <li>For each treated individual, find the untreated individual with the closest propensity score</li>
 <li>Form matched pairs</li>
 <li>Compute the effect as the average within-pair difference</li>
 </ol>
+</div>
 <p><strong>Matching with replacement</strong>:</p>
 <ul>
 <li>Each untreated individual can be matched to multiple treated individuals</li>
@@ -458,7 +462,9 @@
 <section id="definitions" class="slide level2">
 <h2>Definitions</h2>
 <p><strong>Propensity score</strong>: <span class="math inline">\(e(L) = \Pr[A = 1 \mid L]\)</span></p>
-<p><strong>Treatment model</strong>: Any model for <span class="math inline">\(\Pr[A \mid L]\)</span> (or <span class="math inline">\(f(A \mid L)\)</span> for non-binary <span class="math inline">\(A\)</span>)</p>
+<div id="def-treatment-model" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Treatment Model)</strong></span> A <strong>treatment model</strong> is any model for <span class="math inline">\(\Pr[A \mid L]\)</span> (or <span class="math inline">\(f(A \mid L)\)</span> for non-binary <span class="math inline">\(A\)</span>).</p>
+</div>
 <p><strong>Marginal structural model (MSM)</strong>: Model for <span class="math inline">\(\text{E}{\left[Y^a\right]}\)</span> or <span class="math inline">\(\text{E}{\left[Y^a \mid V\right]}\)</span></p>
 </section>
 <section id="relationship" class="slide level2 scrollable">
@@ -506,7 +512,8 @@
 </section>
 <section id="doubly-robust-estimation" class="slide level2 scrollable">
 <h2>Doubly Robust Estimation</h2>
-<p><strong>Idea</strong>: Use both a treatment model and an outcome model.</p>
+<div id="def-doubly-robust" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Doubly Robust Estimator)</strong></span> <strong>Idea</strong>: Use both a treatment model and an outcome model.</p>
 <p><strong>Estimator</strong>: Fit outcome model within propensity score strata (or matched sets), then standardize.</p>
 <p><strong>Double robustness</strong>: The estimator is consistent if EITHER:</p>
 <ol type="1">
@@ -514,12 +521,13 @@
 <li>The outcome model is correct</li>
 </ol>
 <p>(But not necessarily both)</p>
+</div>
 </section>
 <section id="augmented-ip-weighting-aipw" class="slide level2 scrollable">
 <h2>Augmented IP Weighting (AIPW)</h2>
 <p><strong>Advanced approach</strong>: Combine IP weighting with outcome modeling.</p>
 <div id="def-aipw" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Augmented IP Weighting (AIPW))</strong></span> The <strong>augmented inverse-probability-weighted (AIPW) estimator</strong> is</p>
+<p><span class="theorem-title"><strong>Definition 5 (Augmented IP Weighting (AIPW))</strong></span> The <strong>augmented inverse-probability-weighted (AIPW) estimator</strong> is</p>
 <p><span class="math display">\[\hat{\text{E}}{\left[Y^a\right]} = \frac{1}{n}\sum_{i=1}^n \left[\frac{I(A_i = a) Y_i}{f(a \mid L_i)} - \frac{I(A_i = a) - f(a \mid L_i)}{f(a \mid L_i)} m(a, L_i)\right],\]</span></p>
 <p>where <span class="math inline">\(m(a, L) = \hat{\text{E}}{\left[Y \mid A = a, L\right]}\)</span> is the outcome model.</p>
 </div>
@@ -562,11 +570,13 @@
 <section id="generalized-propensity-score" class="slide level2">
 <h2>Generalized Propensity Score</h2>
 <div id="def-generalized-propensity-score" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Generalized Propensity Score)</strong></span> For continuous treatment <span class="math inline">\(A\)</span>, the <strong>generalized propensity score</strong> is the conditional density:</p>
+<p><span class="theorem-title"><strong>Definition 6 (Generalized Propensity Score)</strong></span> For continuous treatment <span class="math inline">\(A\)</span>, the <strong>generalized propensity score</strong> is the conditional density:</p>
 <p><span class="math display">\[f(A \mid L)\]</span></p>
 </div>
-<p><strong>Balancing property</strong>: Under conditional exchangeability,</p>
+<div id="thm-gps-balancing" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Generalized Propensity Score Balancing Property)</strong></span> Under conditional exchangeability,</p>
 <p><span class="math display">\[Y^a \perp\!\!\!\perp A \mid f(A \mid L)\]</span></p>
+</div>
 </section>
 <section id="estimation" class="slide level2">
 <h2>Estimation</h2>
